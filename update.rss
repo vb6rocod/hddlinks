@@ -1,0 +1,306 @@
+﻿<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name="onePartView"
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemXPC="20"
+	itemYPC="20"
+	itemWidthPC="30"
+	itemHeightPC="10"
+	capXPC="51"
+	capYPC="19"
+	capHeightPC="10"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	showHeader=no
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=no
+>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+	
+	<text redraw="yes" offsetXPC=50 offsetYPC=20 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  <script>
+	  playerS = getStringArrayAt(playerSArray, playernIndex);
+	  print("player=",playerS);
+	  playerS;
+	  </script>
+	</text>
+	<text redraw="yes" offsetXPC=50 offsetYPC=30 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  <script>
+	  print("auto=",autoS);
+	  autoS = getStringArrayAt(autoSArray, autonIndex);
+	  autoS;
+	  </script>
+	</text>
+
+	
+	<itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+				{
+					"../etc/translate/rss/image/IMAGE_NEWRSS_MENU_BTFOC.bmp";
+				}
+				else
+				{
+					"";
+				}
+			</script>
+		</image>
+
+		<text offsetXPC=0 offsetYPC=25 widthPC=100 heightPC=50 fontSize=17 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+			<script>
+				getStringArrayAt(itemTitleArray , -1);
+			</script>
+		</text>
+	</itemDisplay>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      idx = Integer(getFocusItemIndex());
+
+      if (majorContext == "items" &amp;&amp; idx &lt; 5)
+      {
+        if( userInput == "left" || userInput == "L")
+        {
+          if(idx == 0)
+          {
+            if(playernIndex == 0)
+              playernIndex = playernCount - 1;
+            else
+              playernIndex = playernIndex - 1;
+          
+          }
+          else if (idx == 1)
+          {
+            if(autonIndex == 0)
+              autonIndex = autonCount - 1;
+            else
+              autonIndex = autonIndex - 1;          
+          
+          }
+          ret = "true";
+          redrawDisplay();
+        }
+        else if( userInput == "right" ||userInput == "R" || userInput == "enter" || userInput == "ENTR" )
+        {
+          if(idx == 0)
+          {
+            playernIndex = playernIndex + 1;
+            if(playernIndex == playernCount)
+            {
+              playernIndex = 0;
+            }
+            
+          }
+          else if(idx == 1)
+          {
+            autonIndex = autonIndex + 1;
+            if(autonIndex == autonCount)
+            {
+              autonIndex = 0;
+            }
+            
+          }
+          ret = "true";
+          redrawDisplay();
+        }
+      }
+      ret;
+    </script>
+  </onUserInput>
+</mediaDisplay>
+
+<onExit>
+  player = getStringArrayAt(playerArray, playernIndex);
+  auto = getStringArrayAt(autoArray, autonIndex);
+  arr = null;
+  arr = pushBackStringArray(arr, player);
+  arr = pushBackStringArray(arr, auto);
+  writeStringToFile(optionsPath, arr);
+  }
+</onExit>
+
+<script>
+	optionsPath = "/usr/local/etc/dvdplayer/update.txt";
+	optionsArray = readStringFromFile(optionsPath);
+  pageTitle = "Setări actualizare";
+  if (optionsArray == null)
+  {
+    player = "0";
+    auto="0";
+  }
+  else
+  {
+    value = getStringArrayAt(optionsArray, 0);
+    player=value;
+    value = getStringArrayAt(optionsArray, 1);
+    if (value == "0" || value == "1")
+      auto=value;
+    else
+      auto="0";
+  }
+  playerArray = null;
+  
+  playernCount = 3;
+  
+  playerArray = pushBackStringArray(playerArray, "0");
+  playerArray = pushBackStringArray(playerArray, "10");
+  playerArray = pushBackStringArray(playerArray, "100");
+  playerArray = pushBackStringArray(playerArray, "1");
+  
+  playerSArray = null;
+  
+  playerSArray = pushBackStringArray(playerSArray, "E-Boda");
+  playerSArray = pushBackStringArray(playerSArray, "CS mod FW");
+  playerSArray = pushBackStringArray(playerSArray, "Kingul mod FW");
+  playerSArray = pushBackStringArray(playerSArray, "Altul....");
+ 
+  
+  playernIndex = 0;
+  
+  while(1)
+  {
+    s = getStringArrayAt(playerArray, playernIndex);
+    if(s == player)
+    {
+      break;
+    }
+    playernIndex = playernIndex + 1;
+    if(playernIndex == playernCount)
+    {
+      playernIndex = 0;
+      break;
+    }
+  }
+  autoArray = null;
+  
+  autonCount = 2;
+  
+  autoArray = pushBackStringArray(autoArray, "0");
+  autoArray = pushBackStringArray(autoArray, "1");
+  
+  autoSArray = null;
+  
+  autoSArray = pushBackStringArray(autoSArray, "NU");
+  autoSArray = pushBackStringArray(autoSArray, "DA");
+ 
+  
+  autonIndex = 0;
+  
+  while(1)
+  {
+    s = getStringArrayAt(autoArray, autonIndex);
+    if(s == auto)
+    {
+      break;
+    }
+    autonIndex = autonIndex + 1;
+    if(autonIndex == autonCount)
+    {
+      autonIndex = 0;
+      break;
+    }
+  }
+	itemTitleArray = null;
+	topUrl="/usr/local/etc/www/cgi-bin/scripts/update.rss";
+	dlok = loadXMLFile(topUrl);
+	if (dlok != null)
+	{
+		itemSize = getXMLElementCount("rss", "channel", "item");
+		print("itemSize = ", itemSize);
+
+		if(itemSize &gt; 0)
+		{
+			itemCount = 0;
+      	
+			while(1)
+			{
+				itemTitle  = getXMLText("rss", "channel", "item", itemCount, "title");
+				print("itemTitle = ", itemTitle);
+				itemTitleArray  = pushBackStringArray(itemTitleArray, itemTitle);
+      	
+				itemCount += 1;
+				if(itemCount == itemSize)
+				{
+					break;
+				}
+			}
+			setFocusItemIndex(0);
+			setItemFocus(0);
+			redrawDisplay();
+		}
+	}
+	redrawDisplay();
+</script>
+
+
+<channel>
+  <title>setări actualizare</title>
+  
+  <item>
+    <title>Model player</title>
+  </item>
+  
+  <item>
+    <title>Actualizare automata</title>
+  </item>
+
+</channel>
+
+</rss>
