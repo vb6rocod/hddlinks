@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+	
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="50"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="50"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(annotation); annotation;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
+		image/movies.png
+		</image>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+		
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+ret;
+</script>
+</onUserInput>
+		
+	</mediaDisplay>
+	
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>Onlinemoca - categorii</title>
+	<menu>main menu</menu>
+
+	
+	<item>
+	<title>FILME ONLINE</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/</link>
+	<annotation>FILME ONLINE</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Actiune</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/actiune/</link>
+	<annotation>Actiune</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Animatie</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/animatie/</link>
+	<annotation>Animatie</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Aventura</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/aventura/</link>
+	<annotation>Aventura</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Biografie</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/biografie/</link>
+	<annotation>Biografie</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Comedie</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/comedie/</link>
+	<annotation>Comedie</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Crima</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/crima/</link>
+	<annotation>Crima</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Documentar</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/documentar/</link>
+	<annotation>Documentar</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Dragoste</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/dragoste/</link>
+	<annotation>Dragoste</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Drama</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/drama/</link>
+	<annotation>Drama</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Familie</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/familie/</link>
+	<annotation>Familie</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Fantezie</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/fantezie/</link>
+	<annotation>Fantezie</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+
+	
+	<item>
+	<title>Horror</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/horror/</link>
+	<annotation>Horror</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Istoric</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/istoric/</link>
+	<annotation>Istoric</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Mister</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/mister/</link>
+	<annotation>Mister</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Muzical</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/muzical/</link>
+	<annotation>Muzical</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Pack-uri filme</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/pack-uri-filme/</link>
+	<annotation>Pack-uri filme</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Război</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/razboi/</link>
+	<annotation>Razboi</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Româneşti</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/romanesti/</link>
+	<annotation>Româneşti</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Romantic</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/romantic/</link>
+	<annotation>Romantic</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>SF</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/sf/</link>
+	<annotation>SF</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Sport</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/sport/</link>
+	<annotation>Sport</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Thriller</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/thriller/</link>
+	<annotation>Thriller</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>TV Show</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/tv-show/</link>
+	<annotation>TV Show</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	
+	<item>
+	<title>Western</title>
+	<link>http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca.php?query=,http://www.onlinemoca.com/category/filme-online/western/</link>
+	<annotation>Western</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	</channel>
+</rss>

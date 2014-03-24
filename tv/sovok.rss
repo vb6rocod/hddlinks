@@ -1,0 +1,1576 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  error_info          = "";
+</script>
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="50"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="50"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(titlu); titlu;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
+  image/tv_radio.png
+		</image>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+titlu="";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>TV Live - sovok.tv</title>
+	<menu>main menu</menu>
+
+    <item>
+    <title>Первый</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=1";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=2";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>НТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=3";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТНТ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=4";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТВ Центр</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=5";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Истоки</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=6";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Истоки инфо</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=7";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>РЕН федерал</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=8";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия 24</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=9";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия К</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=10";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=11";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>7ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=12";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Домашний</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=13";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>5 Канал</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=14";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>СТС</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=15";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Astra 3D</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=16";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>3Dsat TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=17";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>3DV promo</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=18";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>LuxeTV HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=19";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>HDmedia</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=20";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>КинопоказHD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=21";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>КинопоказHD2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=22";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>HD Life</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=23";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>High Life HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=24";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Телепутешествия HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=25";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Женский мир HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=26";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Спорт1 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=27";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Eurosport HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=28";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MTVN HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=29";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Astra HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=30";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>РБК</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=31";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>EuroNews</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=32";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ДТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=33";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Еврокино</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=34";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>НСТ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=35";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV1000</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=36";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Звезда</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=37";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Наше кино</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=38";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Муз ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=39";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>BridgeTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=40";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>VH1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=41";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>A-One</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=42";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>О2ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=43";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RuTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=44";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RusongTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=45";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Европа+ TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=46";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MusicBox RU</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=47";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MusicBox</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=48";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Спорт 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=49";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Eurosport</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=50";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Eurosport 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=51";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Карусель</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=52";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Nickelodeon</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=53";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Детский</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=54";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Discovery</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=55";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Animal Planet</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=56";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>National Geographic</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=57";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Моя планета</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=58";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RTG TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=59";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Открытый мир</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=60";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Подмосковье</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=61";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Техно 24</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=62";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Наука 2.0</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=63";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Зоопарк</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=64";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТДК</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=65";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Мать и Дитя</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=66";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Мир</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=67";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>2x2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=68";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV sale</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=69";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV club</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=70";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TopShop TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=71";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Союз</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=72";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Style</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=73";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Amazing Life</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=74";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Agro TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=75";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Домашний телемагазин</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=76";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Юмор ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=77";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Эксперт ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=78";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>РТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=79";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>8 канал</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=80";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТТС</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=81";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Страна</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=82";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Первый игровой</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=83";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Инфоканал SD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=84";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Инфоканал HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=85";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Fashion One HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=86";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Mezzo HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=87";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Футбол</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=88";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Боец ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=89";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Улыбка ребёнка</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=90";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Радость моя</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=91";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>СГУ ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=92";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Дождь</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=93";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТБН</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=94";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Охота и Рыбалка</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=95";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MAN TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=96";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>World Fashion</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=97";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Russia Today</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=98";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>France 24</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=99";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV5 monde EUROPE</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=100";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Playboy TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file=http://sovok.tv/api.php?channel=101";
+    movie=getUrl(url);
+    titlu=movie;
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    </item>
+</channel>
+</rss>
+    

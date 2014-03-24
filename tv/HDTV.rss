@@ -1,0 +1,1141 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  error_info          = "";
+</script>
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="50"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="50"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(annotation); annotation;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
+  image/tv_radio.png
+		</image>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+titlu="";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>HDTV</title>
+	<menu>main menu</menu>
+
+    <item>
+    <title>MTV HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010001.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010001.stream</annotation>
+    </item>
+    
+    <item>
+    <title>MTV SD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z110001.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z110001.stream</annotation>
+    </item>
+    
+    <item>
+    <title>MTV Live HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010001.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010001.stream</annotation>
+    </item>
+    
+    <item>
+    <title>BBC HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010201.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010201.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Eurosport HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010601.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010601.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Eurosport 2 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010301.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010301.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Disney XD HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z020101.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z020101.stream</annotation>
+    </item>
+    
+    <item>
+    <title>ITV2 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z020102.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z020102.stream</annotation>
+    </item>
+    
+    <item>
+    <title>ITV3 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z020103.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z020103.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Comedy Central HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z020503.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z020503.stream</annotation>
+    </item>
+    
+    <item>
+    <title>MGM HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z020401.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z020401.stream</annotation>
+    </item>
+    
+    <item>
+    <title>History HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z020401.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z020401.stream</annotation>
+    </item>
+    
+    <item>
+    <title>ESPN America HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050201.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050201.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Nat Geo HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050203.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050203.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Nat Geo Wild HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050204.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050204.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Cinemax 1 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050221.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050221.stream</annotation>
+    </item>
+    
+    <item>
+    <title>CCTV News</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050222.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050222.stream</annotation>
+    </item>
+    
+    <item>
+    <title>FOX HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050224.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050224.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Nat Geo HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050225.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050225.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Sky Sports HD 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050226.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050226.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Sky News HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050227.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050227.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Sky Movies Modern Greats HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050228.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050228.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Sky Movies Drama & Romance HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050229.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050229.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Sky Movies SciFi & Horror HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050230.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050230.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Sky Movies Comedy HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050231.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050231.stream</annotation>
+    </item>
+    
+    <item>
+    <title>France 2 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010105.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010105.stream</annotation>
+    </item>
+    
+    <item>
+    <title>M6 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010106.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010106.stream</annotation>
+    </item>
+    
+    <item>
+    <title>TF1 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010107.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010107.stream</annotation>
+    </item>
+    
+    <item>
+    <title>France 24</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050213.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050213.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Sat.1 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010101.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010101.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Pro Sieben HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010102.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010102.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Kabel Eins HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010103.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010103.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Sixx HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010104.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010104.stream</annotation>
+    </item>
+    
+    <item>
+    <title>RTL HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z030101.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z030101.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Sport 1 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z030103.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z030103.stream</annotation>
+    </item>
+    
+    <item>
+    <title>RTL II HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z030104.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z030104.stream</annotation>
+    </item>
+    
+    <item>
+    <title>ZDF HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z030401.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z030401.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Das Erste HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z030402.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z030402.stream</annotation>
+    </item>
+    
+    <item>
+    <title>N24 HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050008.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050008.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Arte HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050218.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050218.stream</annotation>
+    </item>
+    
+    <item>
+    <title>VOX HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050220.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050220.stream</annotation>
+    </item>
+    
+    <item>
+    <title>NTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040001.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040001.stream</annotation>
+    </item>
+    
+    <item>
+    <title>PRVI KANAL RUSSIA</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040002.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040002.stream</annotation>
+    </item>
+    
+    <item>
+    <title>CTC</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040003.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040003.stream</annotation>
+    </item>
+    
+    <item>
+    <title>RUSSIA 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040005.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040005.stream</annotation>
+    </item>
+    
+    <item>
+    <title>RUSSIA 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040006.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040006.stream</annotation>
+    </item>
+    
+    <item>
+    <title>5 TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040007.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040007.stream</annotation>
+    </item>
+    
+    <item>
+    <title>RUSSIA 24</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040008.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040008.stream</annotation>
+    </item>
+    
+    <item>
+    <title>REN</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040009.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040009.stream</annotation>
+    </item>
+    
+    <item>
+    <title>MYZ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040010.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040010.stream</annotation>
+    </item>
+    
+    <item>
+    <title>OHOTNIK I RIBOLOV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040011.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040011.stream</annotation>
+    </item>
+    
+    <item>
+    <title>KINOPOKAZ HD-1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040012.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040012.stream</annotation>
+    </item>
+    
+    <item>
+    <title>TELEPUTESHESTVIYA HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040013.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040013.stream</annotation>
+    </item>
+    
+    <item>
+    <title>KINOPOKAZ HD-2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040014.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040014.stream</annotation>
+    </item>
+    
+    <item>
+    <title>JENSKII MIR</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040015.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040015.stream</annotation>
+    </item>
+    
+    <item>
+    <title>LIFE</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040016.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040016.stream</annotation>
+    </item>
+    
+    <item>
+    <title>SPORT</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040017.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040017.stream</annotation>
+    </item>
+    
+    <item>
+    <title>EUROSPORT HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040018.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040018.stream</annotation>
+    </item>
+    
+    <item>
+    <title>NAT. GEO</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040019.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040019.stream</annotation>
+    </item>
+    
+    <item>
+    <title>NAT. GEO WILD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040020.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040020.stream</annotation>
+    </item>
+    
+    <item>
+    <title>SPORT 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z040021.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z040021.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Italia 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010501.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010501.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Canale 5</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z010502.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z010502.stream</annotation>
+    </item>
+    
+    <item>
+    <title>Discovery Channel HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050208.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050208.stream</annotation>
+    </item>
+    
+    <item>
+    <title>FOX crime</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050209.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050209.stream</annotation>
+    </item>
+    
+    <item>
+    <title>FOX</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050210.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050210.stream</annotation>
+    </item>
+    
+    <item>
+    <title>National Geographics HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050223.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050223.stream</annotation>
+    </item>
+    
+    <item>
+    <title>RAI 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050214.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050214.stream</annotation>
+    </item>
+    
+    <item>
+    <title>RAI 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050215.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050215.stream</annotation>
+    </item>
+    
+    <item>
+    <title>RAI News</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://tv.futubox.com:1935/live/z050217.stream";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://tv.futubox.com:1935/live/z050217.stream</annotation>
+    </item>
+    </channel>
+</rss>

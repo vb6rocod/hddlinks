@@ -1,0 +1,831 @@
+<?xml version='1.0' encoding='UTF8' ?><rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  error_info          = "";
+</script>
+<onEnter>
+  cachePath = getStoragePath("key");
+  optionsPath = cachePath + "onehd.dat";
+  optionsArray = readStringFromFile(optionsPath);
+  if(optionsArray == null)
+  {
+    buf = "60000";
+  }
+  else
+  {
+    buf = getStringArrayAt(optionsArray, 0);
+  }
+  startitem = "middle";
+  info = "2=download, 3=stop download, 1=check dl. status";
+  setRefreshTime(1);
+</onEnter>
+<onExit>
+  arr = null;
+  arr = pushBackStringArray(arr, buf);
+  print("arr=",arr);
+
+  writeStringToFile(optionsPath, arr);
+</onExit>
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="80"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="80"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="55" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    <script>"4/6 salt +- 100, 7/9 salt +- 500 0= Buffer: " + buf;</script>
+		</text>
+  	<text redraw="yes" offsetXPC="75" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(info); info;</script>
+		</text>
+
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "14"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+titlu="";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "nine" || userInput == "9")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= -500;
+    if(idx &gt;= itemCount)
+    idx = itemCount-1;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "seven" || userInput == "7")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= 500;
+    if(idx &lt; 0)
+      idx = 0;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "six" || userInput == "6")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= -100;
+    if(idx &gt;= itemCount)
+    idx = itemCount-1;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "four" || userInput == "4")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= 100;
+    if(idx &lt; 0)
+      idx = 0;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if (userInput == "one" || userInput == "1")
+{
+  showIdle();
+  info=getUrl("http://127.0.0.1/cgi-bin/scripts/util/info_rtmp.php");
+  cancelIdle();
+  ret="true";
+}
+else if (userInput == "two" || userInput == "2")
+{
+  showIdle();
+  url1="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=" + getItemInfo(getFocusItemIndex(),"down");
+  dummy=getUrl(url1);
+  cancelIdle();
+  info = "Start download";
+  movie="http://127.0.0.1/cgi-bin/scripts/tv/rock_d.cgi";
+  dummy=getUrl(movie);
+  ret="true";
+}
+else if (userInput == "three" || userInput == "3")
+{
+ topUrl="http://127.0.0.1/cgi-bin/scripts/util/info_rtmp.cgi";
+ dummy=getUrl(topUrl);
+ info= "Stop download";
+ ret = "true";
+}
+else if (userInput == "zero" || userInput == "0")
+{
+		if (buf == "60000")
+           buf = "40000";
+		else if (buf == "40000")
+           buf = "20000";
+        else if (buf == "20000")
+          buf = "10000";
+        else if (buf == "10000")
+          buf = "8000";
+        else if (buf == "8000")
+          buf = "6000";
+        else if (buf == "6000")
+          buf = "4000";
+        else if (buf == "4000")
+          buf = "2000";
+        else if (buf == "2000")
+          buf = "1000";
+        else if (buf == "1000")
+          buf = "500";
+        else if (buf == "500")
+          buf = "400";
+        else if (buf == "400")
+          buf = "300";
+        else if (buf == "300")
+          buf = "200";
+        else if (buf == "200")
+          buf = "100";
+        else if (buf == "100")
+          buf = "0";
+        else if (buf == "0")
+          buf = "60000";
+        else
+		 buf = "60000";
+  ret = "true";
+}
+redrawDisplay();
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>OneHD - Other</title>
+	<menu>main menu</menu>
+
+    <item>
+    <title>One HD:accoustic (0:50:45)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3Aaccoustic.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3Aaccoustic.mp4</down>
+    <annotation>mp4:accoustic.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:ALEJANDRO SANZ (1:36:03)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AALEJANDRO+SANZ.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AALEJANDRO+SANZ.mp4</down>
+    <annotation>mp4:ALEJANDRO SANZ.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Amelia A film by Edouard Lock (0:59:54)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AAmelia_A_film_by_Edouard_Lock.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AAmelia_A_film_by_Edouard_Lock.mp4</down>
+    <annotation>mp4:Amelia_A_film_by_Edouard_Lock.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Bach - Concertul Brandemburgic (1:39:17)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ABach+-+Concertul+Brandemburgic.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ABach+-+Concertul+Brandemburgic.mp4</down>
+    <annotation>mp4:Bach - Concertul Brandemburgic.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Billboard Music Awards 2011 (2:07:11)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ABillboard+Music+Awards+2011.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ABillboard+Music+Awards+2011.mp4</down>
+    <annotation>mp4:Billboard Music Awards 2011.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Brian Setzer Orchestra It is Gonna Rock (1:37:39)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ABrian+Setzer+Orchestra+It+is+Gonna+Rock.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ABrian+Setzer+Orchestra+It+is+Gonna+Rock.mp4</down>
+    <annotation>mp4:Brian Setzer Orchestra It is Gonna Rock.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Celine Dion - That s Just the Woman in Me (0:32:38)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ACeline+Dion-That+s+Just+the+Woman+in+Me.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ACeline+Dion-That+s+Just+the+Woman+in+Me.mp4</down>
+    <annotation>mp4:Celine Dion-That s Just the Woman in Me.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Cesaria Evora - Live (0:49:07)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ACesaria+Evora-Live.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ACesaria+Evora-Live.mp4</down>
+    <annotation>mp4:Cesaria Evora-Live.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Cesaria Evora - The Movie (0:52:14)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ACesaria+Evora-The+Movie.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ACesaria+Evora-The+Movie.mp4</down>
+    <annotation>mp4:Cesaria Evora-The Movie.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Crossroads Guitar Festival 2010 Part 1 (2:22:09)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ACrossroads+Guitar+Festival+2010+Part+1.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ACrossroads+Guitar+Festival+2010+Part+1.mp4</down>
+    <annotation>mp4:Crossroads Guitar Festival 2010 Part 1.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Crossroads Guitar Festival 2010 Part 2 (2:17:19)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ACrossroads+Guitar+Festival+2010+Part+2.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ACrossroads+Guitar+Festival+2010+Part+2.mp4</down>
+    <annotation>mp4:Crossroads Guitar Festival 2010 Part 2.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Earth - HD (1:39:08)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AEarth+-+HD.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AEarth+-+HD.mp4</down>
+    <annotation>mp4:Earth - HD.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Earth Wind and Fire Chicago - Live (1:32:28)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AEarth+Wind+and+Fire+Chicago-Live.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AEarth+Wind+and+Fire+Chicago-Live.mp4</down>
+    <annotation>mp4:Earth Wind and Fire Chicago-Live.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Elvis Costello - Live in Memphis (1:23:48)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AElvis_Costello-Live_in_Memphis.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AElvis_Costello-Live_in_Memphis.mp4</down>
+    <annotation>mp4:Elvis_Costello-Live_in_Memphis.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Elvis on Tour 1972 (1:33:10)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AElvis+on+Tour+1972.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AElvis+on+Tour+1972.mp4</down>
+    <annotation>mp4:Elvis on Tour 1972.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:fhd - anilove (1:25:12)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3Afhd-anilove.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3Afhd-anilove.mp4</down>
+    <annotation>mp4:fhd-anilove.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Frank Sinatra - 1967 TV Special with Ella Fitzgerald (0:56:09)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AFrank+Sinatra+-+1967+TV+Special+with+Ella+Fitzgerald.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AFrank+Sinatra+-+1967+TV+Special+with+Ella+Fitzgerald.mp4</down>
+    <annotation>mp4:Frank Sinatra - 1967 TV Special with Ella Fitzgerald.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Frank Sinatra - Concert for the Americas  with Buddy Rich (1:25:58)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AFrank_Sinatra-Concert_for_the_Americas+_with_Buddy_Rich.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AFrank_Sinatra-Concert_for_the_Americas+_with_Buddy_Rich.mp4</down>
+    <annotation>mp4:Frank_Sinatra-Concert_for_the_Americas _with_Buddy_Rich.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Genesis When In Rome (1:17:36)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AGenesis+When+In+Rome.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AGenesis+When+In+Rome.mp4</down>
+    <annotation>mp4:Genesis When In Rome.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Jazz Big Band Graz - Electric Poetry (1:32:56)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AJazz+Big+Band+Graz-Electric+Poetry.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AJazz+Big+Band+Graz-Electric+Poetry.mp4</down>
+    <annotation>mp4:Jazz Big Band Graz-Electric Poetry.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Jazz Natalie Cole Live Feat Diana Krall 2002 Dvd Rip (0:15:21)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AJazz+Natalie+Cole+Live+Feat+Diana+Krall+2002+Dvd+Rip.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AJazz+Natalie+Cole+Live+Feat+Diana+Krall+2002+Dvd+Rip.mp4</down>
+    <annotation>mp4:Jazz Natalie Cole Live Feat Diana Krall 2002 Dvd Rip.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Joao Bosco - Ivan Lins - Gonzalo Rubalcaba (1:25:59)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AJoao+Bosco-Ivan+Lins-Gonzalo+Rubalcaba.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AJoao+Bosco-Ivan+Lins-Gonzalo+Rubalcaba.mp4</down>
+    <annotation>mp4:Joao Bosco-Ivan Lins-Gonzalo Rubalcaba.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:John Miles - Music (0:06:11)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AJohn_Miles-Music.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AJohn_Miles-Music.mp4</down>
+    <annotation>mp4:John_Miles-Music.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Kyoto Autumn Color (1:23:38)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AKyoto_Autumn_Color.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AKyoto_Autumn_Color.mp4</down>
+    <annotation>mp4:Kyoto_Autumn_Color.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Marcus Miller and Herbie Hancock - Live at Tokyo Jazz 2005 (2:09:28)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AMarcus+Miller+and+Herbie+Hancock+-+Live+at+Tokyo+Jazz+2005.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AMarcus+Miller+and+Herbie+Hancock+-+Live+at+Tokyo+Jazz+2005.mp4</down>
+    <annotation>mp4:Marcus Miller and Herbie Hancock - Live at Tokyo Jazz 2005.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Peter Cincotti - Live in NYC (0:52:16)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3APeter+Cincotti-Live+in+NYC.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3APeter+Cincotti-Live+in+NYC.mp4</down>
+    <annotation>mp4:Peter Cincotti-Live in NYC.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Sommernachtskonzert (1:22:09)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ASommernachtskonzert.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ASommernachtskonzert.mp4</down>
+    <annotation>mp4:Sommernachtskonzert.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Stanley Jordan Trio - The Paris Concert (1:45:24)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AStanley_Jordan_Trio-The_Paris_Concert.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AStanley_Jordan_Trio-The_Paris_Concert.mp4</down>
+    <annotation>mp4:Stanley_Jordan_Trio-The_Paris_Concert.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Stomp Live (1:49:29)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AStomp_Live.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AStomp_Live.mp4</down>
+    <annotation>mp4:Stomp_Live.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Tchaikovsky - Swan Lake (2:09:07)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ATchaikovsky-Swan_Lake.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ATchaikovsky-Swan_Lake.mp4</down>
+    <annotation>mp4:Tchaikovsky-Swan_Lake.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Tchaikovsky Sleeping Beauty (2:12:27)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ATchaikovsky_Sleeping_Beauty.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ATchaikovsky_Sleeping_Beauty.mp4</down>
+    <annotation>mp4:Tchaikovsky_Sleeping_Beauty.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Tchaikovsky The Nutcracker (1:28:19)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ATchaikovsky_The_Nutcracker.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ATchaikovsky_The_Nutcracker.mp4</down>
+    <annotation>mp4:Tchaikovsky_The_Nutcracker.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:The Piano Concertos (1:31:41)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AThe_Piano_Concertos.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AThe_Piano_Concertos.mp4</down>
+    <annotation>mp4:The_Piano_Concertos.mp4</annotation>
+    </item>
+
+    <item>
+    <title>One HD:Tupac Live at The House Of Blues 2010 (1:31:07)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ATupac+Live+at+The+House+Of+Blues+2010.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ATupac+Live+at+The+House+Of+Blues+2010.mp4</down>
+    <annotation>mp4:Tupac Live at The House Of Blues 2010.mp4</annotation>
+    </item>
+    </channel>
+</rss>

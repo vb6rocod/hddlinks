@@ -1,0 +1,194 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+
+<onEnter>
+print("enter seek popup.rss");
+bReturn = 1;
+vidProgress = getEnv("videoStatus");
+elapsed = getStringArrayAt(vidProgress, 0);
+total = getStringArrayAt(vidProgress, 1);
+img1="/usr/local/etc/www/cgi-bin/scripts/util/image/podcast_seek_bar_bg.bmp";
+img2="/usr/local/etc/www/cgi-bin/scripts/util/image/podcast_seek_bar_fg.bmp";
+/* if total time is longer than 30 seconds */
+if (total &lt; 30)
+{
+	step_left = 1;
+	step_right = 1;
+}
+else
+{
+	step_left = 10;
+	step_right = 30;
+}
+if (total &gt; 0 &amp;&amp; total &lt; 1000000)
+{
+  arg_time = total;
+	x = Integer(arg_time / 60);
+	h = Integer(arg_time / 3600);
+	s = arg_time - (x * 60);
+	m = x - (h * 60);
+	if(h &lt; 10) 
+		ret_string = "0" + sprintf("%s:", h);
+	else
+		ret_string = sprintf("%s:", h);
+	if(m &lt; 10)  ret_string += "0";
+	ret_string += sprintf("%s:", m);
+	if(s &lt; 10)  ret_string += "0";
+	ret_string += sprintf("%s", s);
+  stream_total = ret_string;
+}
+else
+{
+  stream_total = "";
+}
+redrawDisplay();
+</onEnter>
+
+<mediaDisplay
+	name=photoView
+	viewAreaXPC=22.27
+	viewAreaYPC=60
+	viewAreaWidthPC=59.77
+	viewAreaHeightPC=21.39
+
+	topArea.heightPC=0
+	topArea.yPC=100
+	bottomYPC=100
+
+	drawItemBorder=no
+
+	showHeader=no
+	showDefaultInfo=no
+
+	backgroundColor=-1:-1:-1
+	itemBackgroundColor =-1:-1:-1
+	itemGrid.elementBackground = -1:-1:-1
+>
+
+<backgroundDisplay name=bestv_seek_popup_bg>
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+	<script>
+	"/usr/local/etc/www/cgi-bin/scripts/util/image/podcast_seek_bg.jpg";
+	</script>
+	</image>
+</backgroundDisplay>
+
+<text offsetXPC=10 offsetYPC=30 heightPC=15 backgroundColor=-1:-1:-1 foregroundColor=250:250:250 useBackgroundSurface=yes fontSize=12 widthPC=80>
+Press LEFT / RIGHT then OK to seek to desired time.
+</text>
+
+<image redraw=yes offsetXPC=10 offsetYPC=60 widthPC=80 heightPC=9>
+<script>
+"/usr/local/etc/www/cgi-bin/scripts/util/image/podcast_seek_bar_bg.bmp";
+</script>
+</image>
+
+<image redraw=yes offsetXPC=10 offsetYPC=60 heightPC=9>
+<script>
+"/usr/local/etc/www/cgi-bin/scripts/util/image/podcast_seek_bar_fg.bmp";
+</script>
+<widthPC>
+<script>
+(elapsed/total)*80;
+</script>
+</widthPC>
+</image>
+
+<text offsetXPC=10 offsetYPC=72 heightPC=12 backgroundColor=-1:-1:-1 foregroundColor=250:250:250 useBackgroundSurface=yes fontSize=11.2 widthPC=50>
+<script>
+    arg_time = elapsed;
+		x = Integer(arg_time / 60);
+		h = Integer(arg_time / 3600);
+		s = arg_time - (x * 60);
+		m = x - (h * 60);
+		if(h &lt; 10) 
+			ret_string = "0" + sprintf("%s:", h);
+		else
+			ret_string = sprintf("%s:", h);
+		if(m &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s:", m);
+		if(s &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s", s);
+    stream_elapsed = ret_string ;
+    stream_elapsed;
+</script>
+</text>
+
+<text offsetXPC=80 offsetYPC=72 heightPC=12 backgroundColor=-1:-1:-1 foregroundColor=250:250:250 useBackgroundSurface=yes fontSize=11.2 widthPC=50>
+<script>
+stream_total;
+</script>
+</text>
+
+<onUserInput>
+ret = "false";
+input = currentUserInput();
+print("1user input is : ", input);
+if (input == "right" || input == "R")
+{
+	elapsed = Add(elapsed, step_right);
+	if (elapsed &gt; total)
+	{
+		elapsed = total;
+	}
+	redrawDisplay("widget");
+	ret = "true";
+}
+else if (input == "left" || input == "L")
+{
+	elapsed = Minus(elapsed, step_left);
+	if (elapsed &lt; 0)
+	{
+		elapsed = 0;
+	}
+	redrawDisplay("widget");
+	ret = "true";
+}
+else if (input == "enter" || input == "ENTR")
+{
+	bReturn = 0;
+	postMessage("return");
+	/* avoid transition effect */
+	redrawDisplay("no");
+	ret = "true";
+}
+if (input == "return" || input == "RET")
+{
+	print("LOUIS - bReturn : ",bReturn);
+	if (bReturn == 1)
+	{
+		elapsed = -1;
+	}
+	/* avoid transition effect */
+	redrawDisplay("no");
+	ret = "false";
+}
+else if (input == "video_completed" || input == "video_stop")
+{
+	bReturn = 0;
+	playItemURL(-1, 1);
+	postMessage("return");
+	postMessage("return");
+}
+ret;
+</onUserInput>
+</mediaDisplay>
+
+
+<channel>
+<itemSize>
+0
+</itemSize>
+</channel>
+
+<onExit>
+	stream_total="";
+setReturnString(elapsed);
+/* enable drawbackbuffer */
+setRefreshTime(-1);
+redrawDisplay("yes");
+
+</onExit>
+
+</rss>

@@ -1,0 +1,2480 @@
+<?xml version='1.0' encoding='UTF8' ?><rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  error_info          = "";
+</script>
+<onEnter>
+  cachePath = getStoragePath("key");
+  optionsPath = cachePath + "onehd.dat";
+  optionsArray = readStringFromFile(optionsPath);
+  if(optionsArray == null)
+  {
+    buf = "60000";
+  }
+  else
+  {
+    buf = getStringArrayAt(optionsArray, 0);
+  }
+  startitem = "middle";
+  info = "2=download, 3=stop download, 1=check dl. status";
+  setRefreshTime(1);
+</onEnter>
+<onExit>
+  arr = null;
+  arr = pushBackStringArray(arr, buf);
+  print("arr=",arr);
+
+  writeStringToFile(optionsPath, arr);
+</onExit>
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="80"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="80"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="55" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    <script>"4/6 salt +- 100, 7/9 salt +- 500 0= Buffer: " + buf;</script>
+		</text>
+  	<text redraw="yes" offsetXPC="75" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(info); info;</script>
+		</text>
+
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "14"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+titlu="";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "nine" || userInput == "9")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= -500;
+    if(idx &gt;= itemCount)
+    idx = itemCount-1;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "seven" || userInput == "7")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= 500;
+    if(idx &lt; 0)
+      idx = 0;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "six" || userInput == "6")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= -100;
+    if(idx &gt;= itemCount)
+    idx = itemCount-1;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "four" || userInput == "4")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= 100;
+    if(idx &lt; 0)
+      idx = 0;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if (userInput == "one" || userInput == "1")
+{
+  showIdle();
+  info=getUrl("http://127.0.0.1/cgi-bin/scripts/util/info_rtmp.php");
+  cancelIdle();
+  ret="true";
+}
+else if (userInput == "two" || userInput == "2")
+{
+  showIdle();
+  url1="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=" + getItemInfo(getFocusItemIndex(),"down");
+  dummy=getUrl(url1);
+  cancelIdle();
+  info = "Start download";
+  movie="http://127.0.0.1/cgi-bin/scripts/tv/rock_d.cgi";
+  dummy=getUrl(movie);
+  ret="true";
+}
+else if (userInput == "three" || userInput == "3")
+{
+ topUrl="http://127.0.0.1/cgi-bin/scripts/util/info_rtmp.cgi";
+ dummy=getUrl(topUrl);
+ info= "Stop download";
+ ret = "true";
+}
+else if (userInput == "zero" || userInput == "0")
+{
+		if (buf == "60000")
+           buf = "40000";
+		else if (buf == "40000")
+           buf = "20000";
+        else if (buf == "20000")
+          buf = "10000";
+        else if (buf == "10000")
+          buf = "8000";
+        else if (buf == "8000")
+          buf = "6000";
+        else if (buf == "6000")
+          buf = "4000";
+        else if (buf == "4000")
+          buf = "2000";
+        else if (buf == "2000")
+          buf = "1000";
+        else if (buf == "1000")
+          buf = "500";
+        else if (buf == "500")
+          buf = "400";
+        else if (buf == "400")
+          buf = "300";
+        else if (buf == "300")
+          buf = "200";
+        else if (buf == "200")
+          buf = "100";
+        else if (buf == "100")
+          buf = "0";
+        else if (buf == "0")
+          buf = "60000";
+        else
+		 buf = "60000";
+  ret = "true";
+}
+redrawDisplay();
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>OneHD - Classics</title>
+	<menu>main menu</menu>
+641
+
+    <item>
+    <title>12 Cellister - Berlin Philarmonic 40 Years</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=MTIgQ2VsbGlzdGVyIC0gQmVybGluIFBoaWxhcm1vbmljIDQwIFllYXJzLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1709590354";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>MTIgQ2VsbGlzdGVyIC0gQmVybGluIFBoaWxhcm1vbmljIDQwIFllYXJzLm1wNA%3D%3D</down>
+    <annotation>MTIgQ2VsbGlzdGVyIC0gQmVybGluIFBoaWxhcm1vbmljIDQwIFllYXJzLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Accoustic Choir</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=YWNjb3VzdGljLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?344776080";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>YWNjb3VzdGljLm1wNA%3D%3D</down>
+    <annotation>YWNjb3VzdGljLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Alice Adventures in Wonderland</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QWxpY2UgQWR2ZW50dXJlcyBpbiBXb25kZXJsYW5kLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1668500969";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QWxpY2UgQWR2ZW50dXJlcyBpbiBXb25kZXJsYW5kLm1wNA%3D%3D</down>
+    <annotation>QWxpY2UgQWR2ZW50dXJlcyBpbiBXb25kZXJsYW5kLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Andre Rieu - And The Waltz Goes On</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QW5kcmUgUmlldSAtIEFuZCBUaGUgV2FsdHogR29lcyBPbi5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1703630515";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QW5kcmUgUmlldSAtIEFuZCBUaGUgV2FsdHogR29lcyBPbi5tcDQ%3D</down>
+    <annotation>QW5kcmUgUmlldSAtIEFuZCBUaGUgV2FsdHogR29lcyBPbi5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Andre Rieu - Home For Holidays</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QW5kcmUgUmlldSAtIEhvbWUgRm9yIEhvbGlkYXlzLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?149136423";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QW5kcmUgUmlldSAtIEhvbWUgRm9yIEhvbGlkYXlzLm1wNA%3D%3D</down>
+    <annotation>QW5kcmUgUmlldSAtIEhvbWUgRm9yIEhvbGlkYXlzLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Andre Rieu - Under The Stars</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QW5kcmUgUmlldSAtIFVuZGVyIFRoZSBTdGFycy5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?934716558";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QW5kcmUgUmlldSAtIFVuZGVyIFRoZSBTdGFycy5tcDQ%3D</down>
+    <annotation>QW5kcmUgUmlldSAtIFVuZGVyIFRoZSBTdGFycy5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Andrew Lloyd Webber - Love Never Dies</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QW5kcmV3IExsb3lkIFdlYmJlciAtIExvdmUgTmV2ZXIgRGllcy5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2056305360";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QW5kcmV3IExsb3lkIFdlYmJlciAtIExvdmUgTmV2ZXIgRGllcy5tcDQ%3D</down>
+    <annotation>QW5kcmV3IExsb3lkIFdlYmJlciAtIExvdmUgTmV2ZXIgRGllcy5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Anna Bolena</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QW5uYSBCb2xlbmEubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?664075790";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QW5uYSBCb2xlbmEubXA0</down>
+    <annotation>QW5uYSBCb2xlbmEubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Anton Bruckner - Symphony No 8</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QW50b24gQnJ1Y2tuZXIgLSBTeW1waG9ueSBObyA4Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?738028080";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QW50b24gQnJ1Y2tuZXIgLSBTeW1waG9ueSBObyA4Lm1wNA%3D%3D</down>
+    <annotation>QW50b24gQnJ1Y2tuZXIgLSBTeW1waG9ueSBObyA4Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Arcadi Volodos In Viena</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Vm9sb2Rvc19Jbl9WaWVuYS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?888428540";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Vm9sb2Rvc19Jbl9WaWVuYS5tcDQ%3D</down>
+    <annotation>Vm9sb2Rvc19Jbl9WaWVuYS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Ariadne auf Naxos</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QXJpYWRuZSBhdWYgTmF4b3MubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1617823941";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QXJpYWRuZSBhdWYgTmF4b3MubXA0</down>
+    <annotation>QXJpYWRuZSBhdWYgTmF4b3MubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Bach  - Concertul Brandemburgic</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QmFjaCAtIENvbmNlcnR1bCBCcmFuZGVtYnVyZ2ljLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2074705890";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QmFjaCAtIENvbmNlcnR1bCBCcmFuZGVtYnVyZ2ljLm1wNA%3D%3D</down>
+    <annotation>QmFjaCAtIENvbmNlcnR1bCBCcmFuZGVtYnVyZ2ljLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Bach Fest</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QmFjaCBGZXN0Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1277197164";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QmFjaCBGZXN0Lm1wNA%3D%3D</down>
+    <annotation>QmFjaCBGZXN0Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Barenboim - Mozart</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QmFyZW5ib2ltIC0gTW96YXJ0Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?77363575";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QmFyZW5ib2ltIC0gTW96YXJ0Lm1wNA%3D%3D</down>
+    <annotation>QmFyZW5ib2ltIC0gTW96YXJ0Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Berlin Philarmoniker Gala</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QmVybGluIFBoaWxhcm1vbmlrZXIgR2FsYS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2074095744";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QmVybGluIFBoaWxhcm1vbmlrZXIgR2FsYS5tcDQ%3D</down>
+    <annotation>QmVybGluIFBoaWxhcm1vbmlrZXIgR2FsYS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Bernstein - Beethoven Haydn</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QmVybnN0ZWluIC0gQmVldGhvdmVuIEhheWRuLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2006803749";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QmVybnN0ZWluIC0gQmVldGhvdmVuIEhheWRuLm1wNA%3D%3D</down>
+    <annotation>QmVybnN0ZWluIC0gQmVldGhvdmVuIEhheWRuLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Brahms - Violin Concerto Dvorak - Symphony No 9</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QnJhaG1zIC0gVmlvbGluIENvbmNlcnRvIER2b3JhayAtIFN5bXBob255IE5vIDkubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1592788920";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QnJhaG1zIC0gVmlvbGluIENvbmNlcnRvIER2b3JhayAtIFN5bXBob255IE5vIDkubXA0</down>
+    <annotation>QnJhaG1zIC0gVmlvbGluIENvbmNlcnRvIER2b3JhayAtIFN5bXBob255IE5vIDkubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Brahms Symphony no1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QnJhaG1zIFN5bXBob255IG5vMS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?310685007";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QnJhaG1zIFN5bXBob255IG5vMS5tcDQ%3D</down>
+    <annotation>QnJhaG1zIFN5bXBob255IG5vMS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Bruckner-Symphony No7</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=QnJ1Y2tuZXItU3ltcGhvbnkgTm83Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1181797294";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>QnJ1Y2tuZXItU3ltcGhvbnkgTm83Lm1wNA%3D%3D</down>
+    <annotation>QnJ1Y2tuZXItU3ltcGhvbnkgTm83Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Carmen 3D</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Q2FybWVuIDNELm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?796598778";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Q2FybWVuIDNELm1wNA%3D%3D</down>
+    <annotation>Q2FybWVuIDNELm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Cecilia and Bryn at Glyndebourne</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Q2VjaWxpYSBhbmQgQnJ5bl9hdF9HbHluZGVib3VybmUubTR2";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1358973825";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Q2VjaWxpYSBhbmQgQnJ5bl9hdF9HbHluZGVib3VybmUubTR2</down>
+    <annotation>Q2VjaWxpYSBhbmQgQnJ5bl9hdF9HbHluZGVib3VybmUubTR2</annotation>
+    </item>
+
+    <item>
+    <title>Celibidache conducts BPO</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Q2VsaWJpZGFjaGUgY29uZHVjdHMgQlBPLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?563747867";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Q2VsaWJpZGFjaGUgY29uZHVjdHMgQlBPLm1wNA%3D%3D</down>
+    <annotation>Q2VsaWJpZGFjaGUgY29uZHVjdHMgQlBPLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Celtic Woman - Belive</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Q2VsdGljIFdvbWFuIC0gQmVsaXZlLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1721982506";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Q2VsdGljIFdvbWFuIC0gQmVsaXZlLm1wNA%3D%3D</down>
+    <annotation>Q2VsdGljIFdvbWFuIC0gQmVsaXZlLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Chopin  - The Piano Concertos</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGhlX1BpYW5vX0NvbmNlcnRvcy5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?135079054";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGhlX1BpYW5vX0NvbmNlcnRvcy5tcDQ%3D</down>
+    <annotation>VGhlX1BpYW5vX0NvbmNlcnRvcy5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>CLEOPATRE act I</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Q0xFT1BBVFJFIGFjdCBJLm00dg%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?633897593";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Q0xFT1BBVFJFIGFjdCBJLm00dg%3D%3D</down>
+    <annotation>Q0xFT1BBVFJFIGFjdCBJLm00dg==</annotation>
+    </item>
+
+    <item>
+    <title>CLEOPATRE act II</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Q0xFT1BBVFJFIGFjdCBJSS5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?549928775";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Q0xFT1BBVFJFIGFjdCBJSS5tNHY%3D</down>
+    <annotation>Q0xFT1BBVFJFIGFjdCBJSS5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Concertino integral</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Q29uY2VydGlubyBpbnRlZ3JhbCBNYXJ0aWUyNC5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?56289749";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Q29uY2VydGlubyBpbnRlZ3JhbCBNYXJ0aWUyNC5tNHY%3D</down>
+    <annotation>Q29uY2VydGlubyBpbnRlZ3JhbCBNYXJ0aWUyNC5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>David Garett - Live</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=RGF2aWQgR2FyZXR0IC0gTGl2ZS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1763505146";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>RGF2aWQgR2FyZXR0IC0gTGl2ZS5tcDQ%3D</down>
+    <annotation>RGF2aWQgR2FyZXR0IC0gTGl2ZS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Decca Bartoli - Mission</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=RGVjY2EgQmFydG9saSAtIE1pc3Npb24ubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?421299829";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>RGVjY2EgQmFydG9saSAtIE1pc3Npb24ubXA0</down>
+    <annotation>RGVjY2EgQmFydG9saSAtIE1pc3Npb24ubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Doctor Atomic</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=RG9jdG9yIEF0b21pYy5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1660255463";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>RG9jdG9yIEF0b21pYy5tNHY%3D</down>
+    <annotation>RG9jdG9yIEF0b21pYy5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Dvorak Symphony no9</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=RHZvcmFrIFN5bXBob255IG5vOS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1004276906";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>RHZvcmFrIFN5bXBob255IG5vOS5tcDQ%3D</down>
+    <annotation>RHZvcmFrIFN5bXBob255IG5vOS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Europa Konzert from Prague</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=RXVyb3BhIEtvbnplcnQgZnJvbSBQcmFndWUubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1297610649";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>RXVyb3BhIEtvbnplcnQgZnJvbSBQcmFndWUubXA0</down>
+    <annotation>RXVyb3BhIEtvbnplcnQgZnJvbSBQcmFndWUubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Faur Requiem</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=RmF1ciBSZXF1aWVtLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?827789109";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>RmF1ciBSZXF1aWVtLm1wNA%3D%3D</down>
+    <annotation>RmF1ciBSZXF1aWVtLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Fellini Jazz and Co</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=RmVsbGluaSBKYXp6IGFuZCBDby5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1034630820";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>RmVsbGluaSBKYXp6IGFuZCBDby5tcDQ%3D</down>
+    <annotation>RmVsbGluaSBKYXp6IGFuZCBDby5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Flute Concertos at Sanssouci</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Rmx1dGUgQ29uY2VydG9zIGF0IFNhbnNzb3VjaS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1838319740";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Rmx1dGUgQ29uY2VydG9zIGF0IFNhbnNzb3VjaS5tcDQ%3D</down>
+    <annotation>Rmx1dGUgQ29uY2VydG9zIGF0IFNhbnNzb3VjaS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Gala Sanct Petersburg</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R2FsYSBTYW5jdCBQZXRlcnNidXJnLm00dg%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1620147048";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R2FsYSBTYW5jdCBQZXRlcnNidXJnLm00dg%3D%3D</down>
+    <annotation>R2FsYSBTYW5jdCBQZXRlcnNidXJnLm00dg==</annotation>
+    </item>
+
+    <item>
+    <title>Glazunov Raymonda</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R2xhenVub3YgUmF5bW9uZGEubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1349061233";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R2xhenVub3YgUmF5bW9uZGEubXA0</down>
+    <annotation>R2xhenVub3YgUmF5bW9uZGEubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Gluck - Orfeo ed Euridice</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R2x1Y2sgLSBPcmZlbyBlZCBFdXJpZGljZS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1775806599";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R2x1Y2sgLSBPcmZlbyBlZCBFdXJpZGljZS5tcDQ%3D</down>
+    <annotation>R2x1Y2sgLSBPcmZlbyBlZCBFdXJpZGljZS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Goat Rodeo - Live</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R29hdCBSb2RlbyAtIExpdmUubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1802840884";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R29hdCBSb2RlbyAtIExpdmUubXA0</down>
+    <annotation>R29hdCBSb2RlbyAtIExpdmUubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Maahler 9</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1hYWhsZXIgOS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?105590733";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1hYWhsZXIgOS5tcDQ%3D</down>
+    <annotation>R3VzdGF2IE1hYWhsZXIgOS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler - Das Lied</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciAtIERhcyBMaWVkLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?784131736";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciAtIERhcyBMaWVkLm1wNA%3D%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciAtIERhcyBMaWVkLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciAxLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?865217486";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciAxLm1wNA%3D%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciAxLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler 10</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciAxMC5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?946058230";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciAxMC5tcDQ%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciAxMC5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciAyLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?469252485";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciAyLm1wNA%3D%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciAyLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler 3</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciAzLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?634145367";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciAzLm1wNA%3D%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciAzLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler 4</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciA0Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?78629767";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciA0Lm1wNA%3D%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciA0Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler 5</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciA1Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1993797123";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciA1Lm1wNA%3D%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciA1Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler 6</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciA2Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1018278221";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciA2Lm1wNA%3D%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciA2Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler 7</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciA3Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?433737818";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciA3Lm1wNA%3D%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciA3Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Gustav Mahler 8</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=R3VzdGF2IE1haGxlciA4Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?932278203";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>R3VzdGF2IE1haGxlciA4Lm1wNA%3D%3D</down>
+    <annotation>R3VzdGF2IE1haGxlciA4Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Handel - Rinaldo</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SGFuZGVsIC0gUmluYWxkby5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?824868095";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SGFuZGVsIC0gUmluYWxkby5tcDQ%3D</down>
+    <annotation>SGFuZGVsIC0gUmluYWxkby5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Hansel and Grettel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SGFuc2VsIGFuZCBHcmV0dGVsLm00dg%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?83341738";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SGFuc2VsIGFuZCBHcmV0dGVsLm00dg%3D%3D</down>
+    <annotation>SGFuc2VsIGFuZCBHcmV0dGVsLm00dg==</annotation>
+    </item>
+
+    <item>
+    <title>Hendel - Alcina</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SGVuZGVsIC0gQWxjaW5hLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1209576941";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SGVuZGVsIC0gQWxjaW5hLm1wNA%3D%3D</down>
+    <annotation>SGVuZGVsIC0gQWxjaW5hLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Il Mondo Della Luna 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SWwgTW9uZG8gRGVsbGEgTHVuYSAyLm00dg%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?370300532";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SWwgTW9uZG8gRGVsbGEgTHVuYSAyLm00dg%3D%3D</down>
+    <annotation>SWwgTW9uZG8gRGVsbGEgTHVuYSAyLm00dg==</annotation>
+    </item>
+
+    <item>
+    <title>Il Mondo Della Luna1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SWwgTW9uZG8gRGVsbGEgTHVuYTEubTR2";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1237622349";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SWwgTW9uZG8gRGVsbGEgTHVuYTEubTR2</down>
+    <annotation>SWwgTW9uZG8gRGVsbGEgTHVuYTEubTR2</annotation>
+    </item>
+
+    <item>
+    <title>Il Trittico</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SWwgVHJpdHRpY28ubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1509287571";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SWwgVHJpdHRpY28ubXA0</down>
+    <annotation>SWwgVHJpdHRpY28ubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Il Volo-Takes Flight</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SWwgVm9sby1UYWtlcyBGbGlnaHQubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?353635145";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SWwgVm9sby1UYWtlcyBGbGlnaHQubXA0</down>
+    <annotation>SWwgVm9sby1UYWtlcyBGbGlnaHQubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Irina Iordachescu  - Works by Marius Herea</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SXJpbmEgSW9yZGFjaGVzY3UgLSBXb3JrcyBieSBNYXJpdXMgSGVyZWEubTR2";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1653757417";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SXJpbmEgSW9yZGFjaGVzY3UgLSBXb3JrcyBieSBNYXJpdXMgSGVyZWEubTR2</down>
+    <annotation>SXJpbmEgSW9yZGFjaGVzY3UgLSBXb3JrcyBieSBNYXJpdXMgSGVyZWEubTR2</annotation>
+    </item>
+
+    <item>
+    <title>Israel Philarmonic Orchestra</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SXNyYWVsIFBoaWxhcm1vbmljIE9yY2hlc3RyYS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?976187763";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SXNyYWVsIFBoaWxhcm1vbmljIE9yY2hlc3RyYS5tcDQ%3D</down>
+    <annotation>SXNyYWVsIFBoaWxhcm1vbmljIE9yY2hlc3RyYS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Itzhak Perlman conducts the Israel Orchestra</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SXR6aGFrIFBlcmxtYW4gY29uZHVjdHMgdGhlIElzLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?523503649";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SXR6aGFrIFBlcmxtYW4gY29uZHVjdHMgdGhlIElzLm1wNA%3D%3D</down>
+    <annotation>SXR6aGFrIFBlcmxtYW4gY29uZHVjdHMgdGhlIElzLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Jan Sibleius Concert 2010</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=SmFuIFNpYmxlaXVzIENvbmNlcnQgMjAxMC5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?77250397";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>SmFuIFNpYmxlaXVzIENvbmNlcnQgMjAxMC5tNHY%3D</down>
+    <annotation>SmFuIFNpYmxlaXVzIENvbmNlcnQgMjAxMC5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Karajan - Mozart Violin Concerto No5</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=S2FyYWphbiAtIE1vemFydCBWaW9saW4gQ29uY2VydG8gTm81Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1719144958";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>S2FyYWphbiAtIE1vemFydCBWaW9saW4gQ29uY2VydG8gTm81Lm1wNA%3D%3D</down>
+    <annotation>S2FyYWphbiAtIE1vemFydCBWaW9saW4gQ29uY2VydG8gTm81Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Katherine Jenkins -  Live at the O2 Arena</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=S2F0aGVyaW5lIEplbmtpbnMgLSAgTGl2ZSBhdCB0aGUgTzIgQXJlbmEubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2074487591";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>S2F0aGVyaW5lIEplbmtpbnMgLSAgTGl2ZSBhdCB0aGUgTzIgQXJlbmEubXA0</down>
+    <annotation>S2F0aGVyaW5lIEplbmtpbnMgLSAgTGl2ZSBhdCB0aGUgTzIgQXJlbmEubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Keeping Score - Ives Holidays Symphony</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=S2VlcGluZyBTY29yZSAtIEl2ZXMgSG9saWRheXMgU3ltcGhvbnkubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1911397176";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>S2VlcGluZyBTY29yZSAtIEl2ZXMgSG9saWRheXMgU3ltcGhvbnkubXA0</down>
+    <annotation>S2VlcGluZyBTY29yZSAtIEl2ZXMgSG9saWRheXMgU3ltcGhvbnkubXA0</annotation>
+    </item>
+
+    <item>
+    <title>King Roger</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=S2luZyBSb2dlci5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?7042665";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>S2luZyBSb2dlci5tNHY%3D</down>
+    <annotation>S2luZyBSb2dlci5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Kyoto_Autumn_Color</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=S3lvdG9fQXV0dW1uX0NvbG9yLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?594757439";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>S3lvdG9fQXV0dW1uX0NvbG9yLm1wNA%3D%3D</down>
+    <annotation>S3lvdG9fQXV0dW1uX0NvbG9yLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Leo Delibes - Copellia</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TGVvIERlbGliZXMgLSBDb3BlbGxpYS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?78416212";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TGVvIERlbGliZXMgLSBDb3BlbGxpYS5tcDQ%3D</down>
+    <annotation>TGVvIERlbGliZXMgLSBDb3BlbGxpYS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Leo Delibes - Lakme</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TGVvIERlbGliZXMgLSBMYWttZS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?178331167";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TGVvIERlbGliZXMgLSBMYWttZS5tcDQ%3D</down>
+    <annotation>TGVvIERlbGliZXMgLSBMYWttZS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Les Miserables 25th Anniversary</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TGVzIE1pc2VyYWJsZXMgMjV0aCBBbm5pdmVyc2FyeS5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?242646780";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TGVzIE1pc2VyYWJsZXMgMjV0aCBBbm5pdmVyc2FyeS5tNHY%3D</down>
+    <annotation>TGVzIE1pc2VyYWJsZXMgMjV0aCBBbm5pdmVyc2FyeS5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Lucerne Festival</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=THVjZXJuZSBGZXN0aXZhbC5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?495104889";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>THVjZXJuZSBGZXN0aXZhbC5tcDQ%3D</down>
+    <annotation>THVjZXJuZSBGZXN0aXZhbC5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Madama Butterfly</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TWFkYW1hIEJ1dHRlcmZseS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?990841051";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TWFkYW1hIEJ1dHRlcmZseS5tcDQ%3D</down>
+    <annotation>TWFkYW1hIEJ1dHRlcmZseS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Mahler - Des Knaben Wunderhorn Adagio from Symphony 10</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TWFobGVyIC0gRGVzIEtuYWJlbiBXdW5kZXJob3JuIEFkYWdpbyBmcm9tIFN5bXBob255IDEwLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1268281162";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TWFobGVyIC0gRGVzIEtuYWJlbiBXdW5kZXJob3JuIEFkYWdpbyBmcm9tIFN5bXBob255IDEwLm1wNA%3D%3D</down>
+    <annotation>TWFobGVyIC0gRGVzIEtuYWJlbiBXdW5kZXJob3JuIEFkYWdpbyBmcm9tIFN5bXBob255IDEwLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Mahler - Origins and Legacy</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TWFobGVyIC0gT3JpZ2lucyBhbmQgTGVnYWN5Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1884593848";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TWFobGVyIC0gT3JpZ2lucyBhbmQgTGVnYWN5Lm1wNA%3D%3D</down>
+    <annotation>TWFobGVyIC0gT3JpZ2lucyBhbmQgTGVnYWN5Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Mahler - Symphony No2 Mariss Jansons</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TWFyaXNzIEphbnNvbnMubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1034030746";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TWFyaXNzIEphbnNvbnMubXA0</down>
+    <annotation>TWFyaXNzIEphbnNvbnMubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Mahler Symphony No 8</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TWFobGVyIFN5bXBob255IE5vIDgubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1461702966";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TWFobGVyIFN5bXBob255IE5vIDgubXA0</down>
+    <annotation>TWFobGVyIFN5bXBob255IE5vIDgubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Mahler- Symphony no1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TWFobGVyLSBTeW1waG9ueSBubzEubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?210827464";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TWFobGVyLSBTeW1waG9ueSBubzEubXA0</down>
+    <annotation>TWFobGVyLSBTeW1waG9ueSBubzEubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Matheus-Passion</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=bWF0aGV1cy1wYXNzaW9uLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?209712488";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>bWF0aGV1cy1wYXNzaW9uLm1wNA%3D%3D</down>
+    <annotation>bWF0aGV1cy1wYXNzaW9uLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Meistersinger from Nurenberg1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TWVpc3RlcnNpbmdlciBmcm9tIE51cmVuYmVyZzEubTR2";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?61522793";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TWVpc3RlcnNpbmdlciBmcm9tIE51cmVuYmVyZzEubTR2</down>
+    <annotation>TWVpc3RlcnNpbmdlciBmcm9tIE51cmVuYmVyZzEubTR2</annotation>
+    </item>
+
+    <item>
+    <title>Meistersinger from Nurenberg2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TWVpc3RlcnNpbmdlciBmcm9tIE51cmVuYmVyZzIubTR2";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?456785219";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TWVpc3RlcnNpbmdlciBmcm9tIE51cmVuYmVyZzIubTR2</down>
+    <annotation>TWVpc3RlcnNpbmdlciBmcm9tIE51cmVuYmVyZzIubTR2</annotation>
+    </item>
+
+    <item>
+    <title>Meistersinger from Nurenberg3</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TWVpc3RlcnNpbmdlciBmcm9tIE51cmVuYmVyZzMubTR2";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?288686160";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TWVpc3RlcnNpbmdlciBmcm9tIE51cmVuYmVyZzMubTR2</down>
+    <annotation>TWVpc3RlcnNpbmdlciBmcm9tIE51cmVuYmVyZzMubTR2</annotation>
+    </item>
+
+    <item>
+    <title>Mozart - Die Zauberfloete</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=RGllIFphdWJlcmZsb2V0ZS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1502974153";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>RGllIFphdWJlcmZsb2V0ZS5tcDQ%3D</down>
+    <annotation>RGllIFphdWJlcmZsb2V0ZS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Mozart - Idomenee I - Croft  Beuron  Karthauser  Delunsch</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TW96YXJ0IC0gSWRvbWVuZWUgKEkpIC0gQ3JvZnRfIEJldXJvbl8gS2FydGhhdXNlcl8gRGVsdW5zY2gubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?318766373";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TW96YXJ0IC0gSWRvbWVuZWUgKEkpIC0gQ3JvZnRfIEJldXJvbl8gS2FydGhhdXNlcl8gRGVsdW5zY2gubXA0</down>
+    <annotation>TW96YXJ0IC0gSWRvbWVuZWUgKEkpIC0gQ3JvZnRfIEJldXJvbl8gS2FydGhhdXNlcl8gRGVsdW5zY2gubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Mozart - Idomenee II - Croft  Beuron  Karthauser  Delunsch</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TW96YXJ0IC0gSWRvbWVuZWUgKElJKSAtIENyb2Z0XyBCZXVyb25fIEthcnRoYXVzZXJfIERlbHVuc2NoLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1676255938";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TW96YXJ0IC0gSWRvbWVuZWUgKElJKSAtIENyb2Z0XyBCZXVyb25fIEthcnRoYXVzZXJfIERlbHVuc2NoLm1wNA%3D%3D</down>
+    <annotation>TW96YXJ0IC0gSWRvbWVuZWUgKElJKSAtIENyb2Z0XyBCZXVyb25fIEthcnRoYXVzZXJfIERlbHVuc2NoLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Mozart - Idomenee III - Croft  Beuron  Karthauser  Delunsch</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TW96YXJ0IC0gSWRvbWVuZWUgKElJSSkgLSBDcm9mdF8gQmV1cm9uXyBLYXJ0aGF1c2VyXyBEZWx1bnNjaC5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?975537276";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TW96YXJ0IC0gSWRvbWVuZWUgKElJSSkgLSBDcm9mdF8gQmV1cm9uXyBLYXJ0aGF1c2VyXyBEZWx1bnNjaC5tcDQ%3D</down>
+    <annotation>TW96YXJ0IC0gSWRvbWVuZWUgKElJSSkgLSBDcm9mdF8gQmV1cm9uXyBLYXJ0aGF1c2VyXyBEZWx1bnNjaC5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Nature Colors</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=bmF0dXJlX2NvbG9ycy5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1804271512";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>bmF0dXJlX2NvbG9ycy5tcDQ%3D</down>
+    <annotation>bmF0dXJlX2NvbG9ycy5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Nelsons Bronfman at Lucerne</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TmVsc29ucyBCcm9uZm1hbiBhdCBMdWNlcm5lLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1841533705";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TmVsc29ucyBCcm9uZm1hbiBhdCBMdWNlcm5lLm1wNA%3D%3D</down>
+    <annotation>TmVsc29ucyBCcm9uZm1hbiBhdCBMdWNlcm5lLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>New Year Concert</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TmV3IFllYXIgQ29uY2VydC5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?382092789";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TmV3IFllYXIgQ29uY2VydC5tcDQ%3D</down>
+    <annotation>TmV3IFllYXIgQ29uY2VydC5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Nielsen Symphony no3</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=TmllbHNlbiBTeW1waG9ueSBubzMubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?790224096";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>TmllbHNlbiBTeW1waG9ueSBubzMubXA0</down>
+    <annotation>TmllbHNlbiBTeW1waG9ueSBubzMubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Nobuyuki Tsuji - Live at Carnegie Hall</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Tm9idXl1a2kgVHN1amkgLSBMaXZlIGF0IENhcm5lZ2llIEhhbGwubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1528514169";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Tm9idXl1a2kgVHN1amkgLSBMaXZlIGF0IENhcm5lZ2llIEhhbGwubXA0</down>
+    <annotation>Tm9idXl1a2kgVHN1amkgLSBMaXZlIGF0IENhcm5lZ2llIEhhbGwubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Pagny Baryton</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=UGFnbnkgQmFyeXRvbi5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1752818327";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>UGFnbnkgQmFyeXRvbi5tcDQ%3D</down>
+    <annotation>UGFnbnkgQmFyeXRvbi5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Placido Domingo and Ana Maria Martinez - Amor Vida de mi Vida</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=UGxhY2lkbyBEb21pbmdvIGFuZCBBbmEgTWFyaWEgTWFydGluZXotQW1vciBWaWRhIGRlIG1pIFZpZGEubTR2";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1863914955";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>UGxhY2lkbyBEb21pbmdvIGFuZCBBbmEgTWFyaWEgTWFydGluZXotQW1vciBWaWRhIGRlIG1pIFZpZGEubTR2</down>
+    <annotation>UGxhY2lkbyBEb21pbmdvIGFuZCBBbmEgTWFyaWEgTWFydGluZXotQW1vciBWaWRhIGRlIG1pIFZpZGEubTR2</annotation>
+    </item>
+
+    <item>
+    <title>Renee Fleming - Salzburg Recital</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=UmVuZWUgRmxlbWluZyAtIFNhbHpidXJnIFJlY2l0YWwubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1920585781";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>UmVuZWUgRmxlbWluZyAtIFNhbHpidXJnIFJlY2l0YWwubXA0</down>
+    <annotation>UmVuZWUgRmxlbWluZyAtIFNhbHpidXJnIFJlY2l0YWwubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Richard Strauss - Salome</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=UmljaGFyZCBTdHJhdXNzIC0gU2Fsb21lLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2056865949";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>UmljaGFyZCBTdHJhdXNzIC0gU2Fsb21lLm1wNA%3D%3D</down>
+    <annotation>UmljaGFyZCBTdHJhdXNzIC0gU2Fsb21lLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Richard Wagner - Tannhaeuser</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=UmljaGFyZCBXYWduZXIgLSBUYW5uaGFldXNlci5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?430020308";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>UmljaGFyZCBXYWduZXIgLSBUYW5uaGFldXNlci5tcDQ%3D</down>
+    <annotation>UmljaGFyZCBXYWduZXIgLSBUYW5uaGFldXNlci5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Roger Cicero - Live at Montreux</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Um9nZXIgQ2ljZXJvIC0gTGl2ZSBhdCBNb250cmV1eC5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?982414314";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Um9nZXIgQ2ljZXJvIC0gTGl2ZSBhdCBNb250cmV1eC5tcDQ%3D</down>
+    <annotation>Um9nZXIgQ2ljZXJvIC0gTGl2ZSBhdCBNb250cmV1eC5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Salzburg Festival 2010</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=U2FsemJ1cmcgRmVzdGl2YWwgMjAxMC5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1489596830";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>U2FsemJ1cmcgRmVzdGl2YWwgMjAxMC5tcDQ%3D</down>
+    <annotation>U2FsemJ1cmcgRmVzdGl2YWwgMjAxMC5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Salzburg Festival 2011</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=U2FsemJ1cmcgRmVzdGl2YWwgMjAxMS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?680787098";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>U2FsemJ1cmcgRmVzdGl2YWwgMjAxMS5tcDQ%3D</down>
+    <annotation>U2FsemJ1cmcgRmVzdGl2YWwgMjAxMS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Schumann at Pier2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=U2NodW1hbm4gYXQgUGllcjIubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?330630935";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>U2NodW1hbm4gYXQgUGllcjIubXA0</down>
+    <annotation>U2NodW1hbm4gYXQgUGllcjIubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Shostakovich - Symphony No8</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=U2hvc3Rha292aWNoIC0gU3ltcGhvbnkgTm84Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1626054057";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>U2hvc3Rha292aWNoIC0gU3ltcGhvbnkgTm84Lm1wNA%3D%3D</down>
+    <annotation>U2hvc3Rha292aWNoIC0gU3ltcGhvbnkgTm84Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Sissel - Northern Lights</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=U2lzc2VsIC0gTm9ydGhlcm4gTGlnaHRzLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?181728705";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>U2lzc2VsIC0gTm9ydGhlcm4gTGlnaHRzLm1wNA%3D%3D</down>
+    <annotation>U2lzc2VsIC0gTm9ydGhlcm4gTGlnaHRzLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Sommernachtskonzert</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=U29tbWVybmFjaHRza29uemVydC5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1389523472";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>U29tbWVybmFjaHRza29uemVydC5tcDQ%3D</down>
+    <annotation>U29tbWVybmFjaHRza29uemVydC5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>STOMP LIVE </title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=U3RvbXBfTGl2ZS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?555134880";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>U3RvbXBfTGl2ZS5tcDQ%3D</down>
+    <annotation>U3RvbXBfTGl2ZS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Strauss II - Die Fledermaus</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=U3RyYXVzc19JSS1EaWVfRmxlZGVybWF1cy5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?633859587";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>U3RyYXVzc19JSS1EaWVfRmxlZGVybWF1cy5tNHY%3D</down>
+    <annotation>U3RyYXVzc19JSS1EaWVfRmxlZGVybWF1cy5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Sybelius Symphony no5</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=U3liZWxpdXMgU3ltcGhvbnkgbm81Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1129704777";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>U3liZWxpdXMgU3ltcGhvbnkgbm81Lm1wNA%3D%3D</down>
+    <annotation>U3liZWxpdXMgU3ltcGhvbnkgbm81Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Tamerlano1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGFtZXJsYW5vMS5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2138528610";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGFtZXJsYW5vMS5tNHY%3D</down>
+    <annotation>VGFtZXJsYW5vMS5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Tamerlano2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGFtZXJsYW5vMi5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1759793904";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGFtZXJsYW5vMi5tNHY%3D</down>
+    <annotation>VGFtZXJsYW5vMi5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Tango - La Ventana</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGFuZ28tTGEgVmVudGFuYS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?262748049";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGFuZ28tTGEgVmVudGFuYS5tcDQ%3D</down>
+    <annotation>VGFuZ28tTGEgVmVudGFuYS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Tarja Turunen and Harus In Concert Live at Sibelius Hall </title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGFyamEuVHVydW5lbi5hbmQuSGFydXMuSW4uQ29uY2VydC5MaXZlLmF0LlNpYmVsaXVzLkhhbGwuMjAxMS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1997978300";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGFyamEuVHVydW5lbi5hbmQuSGFydXMuSW4uQ29uY2VydC5MaXZlLmF0LlNpYmVsaXVzLkhhbGwuMjAxMS5tcDQ%3D</down>
+    <annotation>VGFyamEuVHVydW5lbi5hbmQuSGFydXMuSW4uQ29uY2VydC5MaXZlLmF0LlNpYmVsaXVzLkhhbGwuMjAxMS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Tchaikovski-Symphonies 4-6</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGNoYWlrb3Zza2ktU3ltcGhvbmllcyA0LTYubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?933541045";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGNoYWlrb3Zza2ktU3ltcGhvbmllcyA0LTYubXA0</down>
+    <annotation>VGNoYWlrb3Zza2ktU3ltcGhvbmllcyA0LTYubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Tchaikovsky - Eugene Onegin</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGNoYWlrb3Zza3ktRXVnZW5lX09uZWdpbi5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1623563170";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGNoYWlrb3Zza3ktRXVnZW5lX09uZWdpbi5tNHY%3D</down>
+    <annotation>VGNoYWlrb3Zza3ktRXVnZW5lX09uZWdpbi5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Tchaikovsky - Pique Dame</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGNoYWlrb3Zza3ktUGlxdWVfRGFtZS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1415693843";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGNoYWlrb3Zza3ktUGlxdWVfRGFtZS5tcDQ%3D</down>
+    <annotation>VGNoYWlrb3Zza3ktUGlxdWVfRGFtZS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Tchaikovsky - Swan Lake</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGNoYWlrb3Zza3ktU3dhbl9MYWtlLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?986056274";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGNoYWlrb3Zza3ktU3dhbl9MYWtlLm1wNA%3D%3D</down>
+    <annotation>VGNoYWlrb3Zza3ktU3dhbl9MYWtlLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Tchaikovsky Sleeping Beauty</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGNoYWlrb3Zza3lfU2xlZXBpbmdfQmVhdXR5Lm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1613917256";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGNoYWlrb3Zza3lfU2xlZXBpbmdfQmVhdXR5Lm1wNA%3D%3D</down>
+    <annotation>VGNoYWlrb3Zza3lfU2xlZXBpbmdfQmVhdXR5Lm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Tchaikovsky The Nutcracker</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGNoYWlrb3Zza3lfVGhlX051dGNyYWNrZXIubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?186480097";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGNoYWlrb3Zza3lfVGhlX051dGNyYWNrZXIubXA0</down>
+    <annotation>VGNoYWlrb3Zza3lfVGhlX051dGNyYWNrZXIubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Thais</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGhhaXMubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?787993434";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGhhaXMubXA0</down>
+    <annotation>VGhhaXMubXA0</annotation>
+    </item>
+
+    <item>
+    <title>The Minotaur</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGhlX01pbm90YXVyLm00dg%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?499296706";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGhlX01pbm90YXVyLm00dg%3D%3D</down>
+    <annotation>VGhlX01pbm90YXVyLm00dg==</annotation>
+    </item>
+
+    <item>
+    <title>The Philarmonics Waltzes 2011</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGhlIFBoaWxhcm1vbmljcyBXYWx0emVzIDIwMTEubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1737396708";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGhlIFBoaWxhcm1vbmljcyBXYWx0emVzIDIwMTEubXA0</down>
+    <annotation>VGhlIFBoaWxhcm1vbmljcyBXYWx0emVzIDIwMTEubXA0</annotation>
+    </item>
+
+    <item>
+    <title>The Rakes - Progress</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGhlIFJha2VzIC0gUHJvZ3Jlc3MubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?469514077";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGhlIFJha2VzIC0gUHJvZ3Jlc3MubXA0</down>
+    <annotation>VGhlIFJha2VzIC0gUHJvZ3Jlc3MubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Three Oranges</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VGhyZWVfT3Jhbmdlcy5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1427888978";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VGhyZWVfT3Jhbmdlcy5tNHY%3D</down>
+    <annotation>VGhyZWVfT3Jhbmdlcy5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Tosca</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VG9zY2EubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1870578541";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VG9zY2EubXA0</down>
+    <annotation>VG9zY2EubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Ttchaikovsky-The.nutcracker</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=dGNoYWlrb3Zza3kudGhlLm51dGNyYWNrZXIubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1225505491";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>dGNoYWlrb3Zza3kudGhlLm51dGNyYWNrZXIubXA0</down>
+    <annotation>dGNoYWlrb3Zza3kudGhlLm51dGNyYWNrZXIubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Un Ballo in Maschera</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VW5fQmFsbG9faW5fTWFzY2hlcmEubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2019545105";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VW5fQmFsbG9faW5fTWFzY2hlcmEubXA0</down>
+    <annotation>VW5fQmFsbG9faW5fTWFzY2hlcmEubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Upior Operze - Royal Albert Hall</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VXBpb3JfT3BlcnplLVJveWFsX0FsYmVydF9IYWxsLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?973831459";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VXBpb3JfT3BlcnplLVJveWFsX0FsYmVydF9IYWxsLm1wNA%3D%3D</down>
+    <annotation>VXBpb3JfT3BlcnplLVJveWFsX0FsYmVydF9IYWxsLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Valdbuhne</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VmFsZGJ1aG5lLm00dg%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1437419421";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VmFsZGJ1aG5lLm00dg%3D%3D</down>
+    <annotation>VmFsZGJ1aG5lLm00dg==</annotation>
+    </item>
+
+    <item>
+    <title>Venice - New Year Concert 2011</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VmVuaWNlLU5ldy5ZZWFyLkNvbmNlcnQuMjAxMS5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2081090419";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VmVuaWNlLU5ldy5ZZWFyLkNvbmNlcnQuMjAxMS5tNHY%3D</down>
+    <annotation>VmVuaWNlLU5ldy5ZZWFyLkNvbmNlcnQuMjAxMS5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Verdi - Nabucco</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VmVyZGkgLSBOYWJ1Y2NvLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1590580601";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VmVyZGkgLSBOYWJ1Y2NvLm1wNA%3D%3D</down>
+    <annotation>VmVyZGkgLSBOYWJ1Y2NvLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Vienna Philharmonic New Year Concert.2013</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Vmllbm5hIFBoaWxoYXJtb25pYyBOZXcgWWVhciBDb25jZXJ0LjIwMTMubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1587434274";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Vmllbm5hIFBoaWxoYXJtb25pYyBOZXcgWWVhciBDb25jZXJ0LjIwMTMubXA0</down>
+    <annotation>Vmllbm5hIFBoaWxoYXJtb25pYyBOZXcgWWVhciBDb25jZXJ0LjIwMTMubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Virgin Jaroussky</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=VmlyZ2luIEphcm91c3NreS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1232181831";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>VmlyZ2luIEphcm91c3NreS5tcDQ%3D</down>
+    <annotation>VmlyZ2luIEphcm91c3NreS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>Vivaldi Les Quatre Saisons</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Vml2YWxkaS5MZXMuUXVhdHJlLlNhaXNvbnMubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1246932152";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Vml2YWxkaS5MZXMuUXVhdHJlLlNhaXNvbnMubXA0</down>
+    <annotation>Vml2YWxkaS5MZXMuUXVhdHJlLlNhaXNvbnMubXA0</annotation>
+    </item>
+
+    <item>
+    <title>VOEGL</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Vk9FR0wubTR2";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2035608789";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Vk9FR0wubTR2</down>
+    <annotation>Vk9FR0wubTR2</annotation>
+    </item>
+
+    <item>
+    <title>Waldemar Malicki Filarmonica</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=V2FsZGVtYXIgTWFsaWNraSBGaWxhcm1vbmljYS5tcDQ%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?1602316762";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>V2FsZGVtYXIgTWFsaWNraSBGaWxhcm1vbmljYS5tcDQ%3D</down>
+    <annotation>V2FsZGVtYXIgTWFsaWNraSBGaWxhcm1vbmljYS5tcDQ=</annotation>
+    </item>
+
+    <item>
+    <title>War Requiem</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=V2FyIFJlcXVpZW0ubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?246612530";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>V2FyIFJlcXVpZW0ubXA0</down>
+    <annotation>V2FyIFJlcXVpZW0ubXA0</annotation>
+    </item>
+
+    <item>
+    <title>William Shakespeare - Romeo and Juliet</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=V2lsbGlhbSBTaGFrZXNwZWFyZSAtIFJvbWVvIGFuZCBKdWxpZXQubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?560212760";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>V2lsbGlhbSBTaGFrZXNwZWFyZSAtIFJvbWVvIGFuZCBKdWxpZXQubXA0</down>
+    <annotation>V2lsbGlhbSBTaGFrZXNwZWFyZSAtIFJvbWVvIGFuZCBKdWxpZXQubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Za Ondezoka</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=WmFfT25kZXpva2EubXA0";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?775669013";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>WmFfT25kZXpva2EubXA0</down>
+    <annotation>WmFfT25kZXpva2EubXA0</annotation>
+    </item>
+
+    <item>
+    <title>Zoroastre</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=Wm9yb2FzdHJlLm1wNA%3D%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?781835238";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>Wm9yb2FzdHJlLm1wNA%3D%3D</down>
+    <annotation>Wm9yb2FzdHJlLm1wNA==</annotation>
+    </item>
+
+    <item>
+    <title>Zwergkrug1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=WndlcmdrcnVnMS5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?2098107409";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>WndlcmdrcnVnMS5tNHY%3D</down>
+    <annotation>WndlcmdrcnVnMS5tNHY=</annotation>
+    </item>
+
+    <item>
+    <title>Zwergkrug2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=WndlcmdrcnVnMi5tNHY%3D";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi?135057636";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>WndlcmdrcnVnMi5tNHY%3D</down>
+    <annotation>WndlcmdrcnVnMi5tNHY=</annotation>
+    </item>
+    </channel>
+</rss>

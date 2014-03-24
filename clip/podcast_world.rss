@@ -1,0 +1,110 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+
+<channel>
+	<title>World</title>
+	<menu>Video Podcast World</menu>
+
+<item>
+<title>НТВ новости</title>
+<link>http://feeds.feedburner.com/ntv/</link>
+</item>
+
+<item>
+<title>iTele, le journal</title>
+<link>http://podcast12.streamakaci.com/iTELE/iTELElejournal.xml</link>
+</item>
+
+<item>
+<title>European Journal: The Magazine from Brussels | Deutsche Welle</title>
+<link>http://rss.dw-world.de/xml/podcast_european-journal</link>
+</item>
+
+<item>
+<title>Global Pulse</title>
+<link>http://www.linktv.org/rss/general/globalpulse.xml</link>
+</item>
+
+<item>
+<title>Mosaic Intelligence Report</title>
+<link>http://www.linktv.org/rss/general/MIR.xml</link>
+</item>
+
+<item>
+<title>ABC World News with Dane Sawyer</title>
+<link>http://abcnews.go.com/xmldata/xmlPodcast?id=1478958</link>
+</item>
+
+<item>
+<title>ZDFheute-Nachrichten</title>
+<link>http://content.zdf.de/podcast/zdf_heute/heute.xml</link>
+</item>
+
+<item>
+<title>EuroNews - No Comment</title>
+<link>http://feeds.feedburner.com/Euronews-NoComment?format=xml</link>
+</item>
+
+<item>
+<title>Mosaic: World News From The Middle East</title>
+<link>http://www.linktv.org/rss/hq/mosaic.xml</link>
+</item>
+
+<item>
+<title>TéléZapping</title>
+<link>http://www.lemonde.fr/podcast-tele-zapping2.xml</link>
+</item>
+
+<item>
+<title>Global National Video Podcast</title>
+<link>http://feeds.feedburner.com/GlobalNationalVideoPodcast?format=xml</link>
+</item>
+
+<item>
+<title>Der RTL AKTUELL Video-Podcast</title>
+<link>http://bilder.rtl.de/podcast/vp_RTLAktuell/vp_RTLAktuell_podcast.xml</link>
+</item>
+
+<item>
+<title>Free Speech TV</title>
+<link>http://freespeechtv.blip.tv/rss</link>
+</item>
+
+<item>
+<title>Telejornal -RTP-Portugal</title>
+<link>http://ww1.rtp.pt/multimedia/videocast/gera_podcast_tv.php?prog=1103</link>
+</item>
+
+<item>
+<title>logo!-Nachrichten</title>
+<link>http://content.zdf.de/podcast/zdf_logo/logo_v.xml</link>
+</item>
+
+<item>
+<title>VilaWeb TV</title>
+<link>http://www.vilaweb.tv/rss.php</link>
+</item>
+
+<item>
+<title>Kassensturz</title>
+<link>http://feeds.sf.tv/podcast/kassensturz</link>
+</item>
+
+<item>
+<title>Rundschau</title>
+<link>http://feeds.sf.tv/podcast/rundschau</link>
+</item>
+
+<item>
+<title>ECO</title>
+<link>http://feeds.sf.tv/podcast/eco</link>
+</item>
+
+<item>
+<title>svt.se - Aktuellt 21</title>
+<link>http://feeds.feedburner.com/svtse-poddtv-aktuellt</link>
+</item>
+
+</channel>
+</rss>

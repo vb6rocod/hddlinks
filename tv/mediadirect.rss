@@ -1,0 +1,2393 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<onEnter>
+  storagePath = getStoragePath("tmp");
+  storagePath_stream = storagePath + "stream.dat";
+  startitem = "middle";
+  setRefreshTime(1);
+  server1 = "fms30.mediadirect.ro";
+  dinamic = "Da";
+  token_p="2deb479bf15a669454b937eb";
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="20"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="20"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle") + " (" + sprintf("%s / ", focus-(-1))+itemCount + ")";</script>
+		</text>
+
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    1=modifica aspect, dreapta pentru program
+		</text>
+
+		<text align="left" redraw="yes"
+          lines="18" fontSize=15
+		      offsetXPC=30 offsetYPC=25 widthPC=70 heightPC=65
+		      backgroundColor=0:0:0 foregroundColor=200:200:200>
+              <script>print(annotation); annotation;</script>
+		</text>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+server = "";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+else if (userInput == "two" || userInput == "2")
+{
+		if (server1 == "fms1.mediadirect.ro")
+           server1 = "fms2.mediadirect.ro";
+		else if (server1 == "fms2.mediadirect.ro")
+           server1 = "fms8.mediadirect.ro";
+		else if (server1 == "fms8.mediadirect.ro")
+          server1 = "fms15.mediadirect.ro";
+		else if (server1 == "fms15.mediadirect.ro")
+          server1 = "fms27.mediadirect.ro";
+		else if (server1 == "fms27.mediadirect.ro")
+          server1 = "fms30.mediadirect.ro";
+		else if (server1 == "fms30.mediadirect.ro")
+          server1 = "fms32.mediadirect.ro";
+		else if (server1 == "fms32.mediadirect.ro")
+          server1 = "fms38.mediadirect.ro";
+		else if (server1 == "fms38.mediadirect.ro")
+          server1 = "fms42.mediadirect.ro";
+		else if (server1 == "fms42.mediadirect.ro")
+          server1 = "fms1.mediadirect.ro";
+        else
+		 server1 = "fms1.mediadirect.ro";
+  redrawDisplay();
+  ret = "true";
+}
+else if (userInput == "one" || userInput == "1")
+{
+ if (dinamic == "Nu")
+   dinamic = "Da";
+ else if (dinamic == "Da")
+   dinamic = "Nu";
+  redrawDisplay();
+  ret = "true";
+}
+else if(userInput == "right" || userInput == "R")
+{
+showIdle();
+idx = Integer(getFocusItemIndex());
+url_canal = "http://127.0.0.1/cgi-bin/scripts/tv/php/dolce_prog.php?file=" + getItemInfo(idx,"id");
+annotation = getURL(url_canal);
+cancelIdle();
+redrawDisplay();
+ret = "true";
+}
+else
+{
+annotation = " ";
+redrawDisplay();
+ret = "false";
+}
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+	</item_template>
+
+<channel>
+	<title>MediaDirect</title>
+	<menu>main menu</menu>
+<!-- http://www.mediadirect.ro/tv/ -->
+
+     <item>
+     <title>Mooz HD</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-a%20live3/_definst_?token=9087352f867b99b48013298cb30d8a3e" + token_p + "%20-y%20moozhd_low,rtmp://" + server + ":1935/live3/_definst_";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Mooz HD");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10272</id>
+     </item>
+     
+     <item>
+     <title>Mooz Hits</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/moozhits";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Mooz Hits");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10273</id>
+     </item>
+     
+     <item>
+     <title>Mooz RO</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/moozro";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Mooz RO");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10274</id>
+     </item>
+     
+     <item>
+     <title>Mooz Dance</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/moozdance";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Mooz Dance");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10275</id>
+     </item>
+     
+     <item>
+     <title>Dolce Sport</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/dolcesport";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Dolce Sport");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10212</id>
+     </item>
+     
+     <item>
+     <title>Dolce Sport 2</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/dolcesport2";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Dolce Sport 2");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10225</id>
+     </item>
+     
+     <item>
+     <title>Dolce Sport 3</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/uefa5";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Dolce Sport 3");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+     <item>
+     <title>Dolce Sport HD</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/dolcesporthd";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Dolce Sport HD");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10281</id>
+     </item>
+     
+     <item>
+     <title>FilmBox</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/filmbox";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "FilmBox");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10236</id>
+     </item>
+
+     <item>
+     <title>FilmBoxHD</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/filmboxhd";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "FilmBoxHD");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10239</id>
+     </item>
+          
+     <item>
+     <title>FilmBox Extra</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/filmboxextra";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "FilmBox Extra");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10237</id>
+     </item>
+     
+     <item>
+     <title>FilmBox Family</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/filmboxfamily";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "FilmBox Family");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10238</id>
+     </item>
+
+     <item>
+     <title>AXN</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/axn";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "AXN");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10033</id>
+     </item>
+     
+     <item>
+     <title>AXN Sci-Fi</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/axnscifi";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "AXN Sci-Fi");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10072</id>
+     </item>
+          
+     <item>
+     <title>AXN Crime</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/axncrime";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "AXN Crime");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10073</id>
+     </item>
+     
+     <item>
+     <title>AXN Spin</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/axnspin";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "AXN Spin");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10298</id>
+     </item>
+     
+     <item>
+     <title>TV 1000</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tv1000";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TV 1000");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10060</id>
+     </item>
+     
+     <item>
+     <title>Comedy Central Extra</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/comedycentral";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Comedy Central Extra");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10270</id>
+     </item>
+     
+     <item>
+     <title>FilmPlus</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/filmplus";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "FilmPlus");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+     <item>
+     <title>TCM</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tcm";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TCM");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10054</id>
+     </item>
+     
+     <item>
+     <title>Duck TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/ducktv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Duck TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10130</id>
+     </item>
+     
+     <item>
+     <title>Disney Junior</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/disneyjr";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Disney Junior");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10263</id>
+     </item>
+     
+     <item>
+     <title>Disney</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/disney";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Disney");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10018</id>
+     </item>
+     
+     <item>
+     <title>Cartoon Network</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/cartoon";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Cartoon Network");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10053</id>
+     </item>
+     
+     <item>
+     <title>Nickelodeon</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/nickelodeon";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Nickelodeon");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10110</id>
+     </item>
+     
+     <item>
+     <title>Nick Jr</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/nickjr";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Nick Jr");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+     <item>
+     <title>PVTV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/pescartv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "PVTV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10204</id>
+     </item>
+     
+     <item>
+     <title>Fight Box</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/FightBox";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Fight Box");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+     <item>
+     <title>Viasat explorer</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/explorer";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Viasat explorer");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10039</id>
+     </item>
+     
+     <item>
+     <title>Viasat history</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/history";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Viasat history");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10040</id>
+     </item>
+     
+     <item>
+     <title>Viasat nature</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/nature";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Viasat nature");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10293</id>
+     </item>
+     
+     <item>
+     <title>Travel Mix</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/travelmix";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Travel Mix");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10231</id>
+     </item>
+     
+     <item>
+     <title>Travel Channel</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/travelchannel";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Travel Channel");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10086</id>
+     </item>
+     
+     <item>
+     <title>Docu Box HD</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/DocuBox";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Docu Box HD");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+     <item>
+     <title>Fashion TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/fashiontv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Fashion TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10078</id>
+     </item>
+
+     <item>
+     <title>Fashion BOX HD</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/FashionBox";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Fashion BOX HD");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10197</id>
+     </item>
+          
+     <item>
+     <title>TVR HD</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvrhd";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR HD");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10190</id>
+     </item>
+     
+     <item>
+     <title>TVR 1</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvr1";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR 1");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10001</id>
+     </item>
+     
+     <item>
+     <title>TVR 2</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvr2";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR 2");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10002</id>
+     </item>
+     
+     <item>
+     <title>TVR 3</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvr3";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR 3");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10167</id>
+     </item>
+     
+     <item>
+     <title>TVR International</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvr";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR International");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10015</id>
+     </item>
+     
+     <item>
+     <title>TVR News</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvrinfo";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR News");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+     <item>
+     <title>TVR Cluj</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvrcluj";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR Cluj");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10153</id>
+     </item>
+     
+     <item>
+     <title>TVR Timisoara</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvrtimisoara";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR Timisoara");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10220</id>
+     </item>
+     
+     <item>
+     <title>TVR Iasi</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvriasi";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR Iasi");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10154</id>
+     </item>
+     
+     <item>
+     <title>TVR Craiova</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvrcraiova";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR Craiova");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10219</id>
+     </item>
+     
+     <item>
+     <title>TVR Targu Mures</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/tvrmures";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR Targu Mures");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10221</id>
+     </item>
+     
+     <item>
+     <title>Antena 3</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/antena_3";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Antena 3");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10055</id>
+     </item>
+     
+     <item>
+     <title>Realitatea</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/realitatea";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Realitatea");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10019</id>
+     </item>
+     
+     <item>
+     <title>Money</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/money";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Money");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10076</id>
+     </item>
+     
+     <item>
+     <title>Romania TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/rtv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Romania TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10245</id>
+     </item>
+     
+     <item>
+     <title>KanalD</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/kanald";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "KanalD");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10097</id>
+     </item>
+     
+     <item>
+     <title>OTV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/otv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "OTV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+     <item>
+     <title>National TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/nationaltv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "National TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10031</id>
+     </item>
+     
+     <item>
+     <title>N24</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/n24";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "N24");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10048</id>
+     </item>
+     
+     <item>
+     <title>B1</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/b1";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "B1");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10022</id>
+     </item>
+     
+     <item>
+     <title>Transilvania Look</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/transilvanialook";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Transilvania Look");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10252</id>
+     </item>
+     
+     <item>
+     <title>Transilvania Live</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/transilvanialive";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Transilvania Live");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10217</id>
+     </item>
+     
+     <item>
+     <title>Somes TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/somes";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Somes TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+     <item>
+     <title>Neptun TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/neptuntv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Neptun TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10151</id>
+     </item>
+     
+     <item>
+     <title>Giga TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/gigatv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Giga TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10249</id>
+     </item>
+     
+     <item>
+     <title>Trinitas</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/trinitas";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Trinitas");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10145</id>
+     </item>
+     
+     <item>
+     <title>Alfa & Omega</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/alfatv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Alfa & Omega");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10137</id>
+     </item>
+     
+     <item>
+     <title>Speranta TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/sperantatv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Speranta TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10134</id>
+     </item>
+     
+     <item>
+     <title>Nasul TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/nasultv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Nasul TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10256</id>
+     </item>
+     
+     <item>
+     <title>City TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/citytv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "City TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10258</id>
+     </item>
+     
+     <item>
+     <title>Inedit TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/inedittv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Inedit TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10300</id>
+     </item>
+     
+     <item>
+     <title>Valea Prahovei TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/valeaprahovei";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Valea Prahovei TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10214</id>
+     </item>
+     
+     <item>
+     <title>H2O TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/h2o";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "H2O TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10029</id>
+     </item>
+
+     <item>
+     <title>RTL Klub</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/rtlklub";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "RTL Klub");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+          
+     <item>
+     <title>DW</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/dw";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "DW");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10131</id>
+     </item>
+     
+     <item>
+     <title>CNN</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/cnn";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "CNN");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10115</id>
+     </item>
+     
+     <item>
+     <title>France 24</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/france24";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "France 24");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10128</id>
+     </item>
+     
+     <item>
+     <title>Hit music channel</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/musicchannel";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Hit music channel");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10299</id>
+     </item>
+     
+     <item>
+     <title>Kiss TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/kiss";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Kiss TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10008</id>
+     </item>
+     
+     <item>
+     <title>UTV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/utv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "UTV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10096</id>
+     </item>
+     
+     <item>
+     <title>Favorit</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/favorit";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Favorit");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10071</id>
+     </item>
+     
+     <item>
+     <title>Party</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/party";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Party");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+     <item>
+     <title>Taraf</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/taraf";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Taraf");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10101</id>
+     </item>
+     
+     <item>
+     <title>Etno</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/etno";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Etno");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10037</id>
+     </item>
+     
+     <item>
+     <title>Mynele</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/mynele";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Mynele");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10206</id>
+     </item>
+     
+     <item>
+     <title>Bollywood TV</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/bollywoodtv";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Bollywood TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10246</id>
+     </item>
+     
+     <item>
+     <title>Bollywood Classic</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/bollywoodclassic";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Bollywood Classic");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id>10248</id>
+     </item>
+     
+     <item>
+     <title>Bolly Show</title>
+     <onClick>
+     <script>
+     showIdle();
+	if (dinamic == "Da")
+	  server = getUrl("http://127.0.0.1/cgi-bin/scripts/util/mediadirect_server.php?file=1");
+    else
+      server = server1;
+	movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static1.mediadirect.ro/player-preload/swf/preloader/preloader.swf,rtmp://fms30.mediadirect.ro/live3/_definst_/bollyshow";
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Bolly Show");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+     <id></id>
+     </item>
+     
+  </channel>
+</rss>

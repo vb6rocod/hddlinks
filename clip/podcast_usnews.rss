@@ -1,0 +1,111 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<channel>
+	<title>Us News</title>
+	<menu>Video Podcast US News</menu>
+
+<item>
+<title>Anderson Cooper 360° Daily</title>
+<link>http://rss.cnn.com/services/podcasting/ac360/rss.xml</link>
+</item>
+
+<item>
+<title>The Larry King Podcast</title>
+<link>http://rss.cnn.com/services/podcasting/lkl/rss.xml</link>
+</item>
+
+<item>
+<title>ABC News : Nightline</title>
+<link>http://feeds.abcnews.com/abcnews/nightlinevideopodcast</link>
+</item>
+
+<item>
+<title>NBC TODAY show</title>
+<link>http://podcast.msnbc.com/audio/podcast/MSNBC-TDY-PODCAST-M4V.xml</link>
+</item>
+
+<item>
+<title>CBS Evening News with Katie Couric</title>
+<link>http://feeds.cbsnews.com/podcast_eveningnews_video_1</link>
+</item>
+
+<item>
+<title>Fox News: YOUR WORLD WITH NEIL CAVUTO</title>
+<link>http://feeds.foxnews.com/podcasts/NeilCavutosCommonSense?format=xml</link>
+</item>
+
+<item>
+<title>Fox News: THE O'REILLY FACTOR</title>
+<link>http://feeds.foxnews.com/podcasts/TalkingPoints?format=xml</link>
+</item>
+
+<item>
+<title>CNBC's "Options Action"</title>
+<link>http://podcast.cnbc.com/mmpodcast/optionsaction.xml</link>
+</item>
+
+<item>
+<title>Democracy Now! Video</title>
+<link>http://www.democracynow.org/podcast-video.xml</link>
+</item>
+
+<item>
+<title>The CNN Daily (video)</title>
+<link>http://rss.cnn.com/services/podcasting/cnnnewsroom/rss.xml</link>
+</item>
+
+<item>
+<title>CNN In Case You Missed It (video)</title>
+<link>http://rss.cnn.com/services/podcasting/incaseyoumissed/rss.xml</link>
+</item>
+
+<item>
+<title>Video: Face the Nation</title>
+<link>http://feeds.cbsnews.com/podcast_nation_video_1?format=xml</link>
+</item>
+
+<item>
+<title>FOX News Flash</title>
+<link>http://feeds.foxnews.com/podcasts/FoxNewsFlash?format=xml</link>
+</item>
+
+<item>
+<title>ABC Good Morning America</title>
+<link>http://abcnews.go.com/xmldata/xmlPodcast?id=1474766</link>
+</item>
+
+<item>
+<title>Video: CBS Evening News with Katie Couric</title>
+<link>http://feeds.cbsnews.com/podcast_eveningnews_video_1?format=xml</link>
+</item>
+
+<item>
+<title>Washington Week Video Podcast | PBS</title>
+<link>http://feeds.pbs.org/pbs/weta/washingtonweek-video</link>
+</item>
+
+<item>
+<title>State of the Union (video)</title>
+<link>http://rss.cnn.com/services/podcasting/lateedition/rss.xml</link>
+</item>
+
+<item>
+<title>This Week in the Pentagon</title>
+<link>http://www.pentagonchannel.mil/podcast/xml/PC_ThisWeekinthePentagon.xml</link>
+</item>
+
+<item>
+<title>Chairman of the Joint Chiefs of Staff</title>
+<link>http://www.pentagonchannel.mil/podcast/xml/PC_VideoCJCS.xml</link>
+</item>
+
+<item>
+<title>CNN : Reliable Sources</title>
+<link>http://rss.cnn.com/services/podcasting/reliablesources/rss.xml</link>
+</item>
+
+</channel>
+
+</rss>
+     

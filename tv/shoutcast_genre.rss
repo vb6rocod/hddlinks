@@ -1,0 +1,1630 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  pageTitle = "Free Internet Radio Stations";
+</onEnter>
+
+	<mediaDisplay name=photoView
+	  columnCount=5
+	  rowCount=7
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+		itemImageXPC="10"
+		backgroundColor="0:0:0"
+		imageBorderColor="15:20:230"
+		imageBorderPC="0"
+		itemBackgroundColor="0:0:0"
+		centerHeightPC=70
+		centerXPC=10
+		centerYPC=18
+		itemGapXPC=1
+		itemGapYPC=1
+		sideTopHeightPC=15
+		bottomYPC=90
+
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=yes
+		idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+		>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+    <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=26 backgroundColor=0:0:0 foregroundColor=200:200:200>
+      All Genres
+    </text>
+    <image offsetXPC=0 offsetYPC=15 widthPC=100 heightPC=1>../etc/translate/rss/image/gradient_line.bmp</image>
+    <image offsetXPC=65 offsetYPC=2 widthPC=30 heightPC=12>
+      ../etc/translate/rss/image/shoutcast.gif
+      <widthPC>
+        <script>
+          546 / 154 * 12 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          95 - 546 / 154 * 12 * screenYp / screenXp;
+        </script>
+      </offsetXPC>
+    </image>
+
+    <onUserInput>
+    <script>
+    ret = "false";
+    userInput = currentUserInput();
+
+    if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+    {
+      itemSize = getPageInfo("itemCount");
+      idx = Integer(getFocusItemIndex());
+      if (userInput == "pagedown" || userInput == "PD")
+      {
+        idx -= -40;
+        if(idx &gt;= itemSize)
+          idx = itemSize-1;
+      }
+      else
+      {
+        idx -= 40;
+        if(idx &lt; 0)
+          idx = 0;
+      }
+
+      print("new idx: "+idx);
+      setFocusItemIndex(idx);
+    	setItemFocus(0);
+      redrawDisplay();
+      ret = "true";
+    }
+    ret;
+    </script>
+    </onUserInput>
+
+		<itemDisplay>
+			<text align="center" lines="2" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 fontSize=15>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "name");
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "150:150:150"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+		</itemDisplay>
+	</mediaDisplay>
+
+<channel>
+<title></title>
+
+
+
+  <item>
+  <name>30s</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=30s,genre</link>
+  </item>
+  
+  <item>
+  <name>40s</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=40s,genre</link>
+  </item>
+  
+  <item>
+  <name>50s</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=50s,genre</link>
+  </item>
+  
+  <item>
+  <name>60s</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=60s,genre</link>
+  </item>
+  
+  <item>
+  <name>70s</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=70s,genre</link>
+  </item>
+  
+  <item>
+  <name>80s</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=80s,genre</link>
+  </item>
+  
+  <item>
+  <name>90s</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=90s,genre</link>
+  </item>
+  
+  <item>
+  <name>Acid House</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Acid+House,genre</link>
+  </item>
+  
+  <item>
+  <name>Acid Jazz</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Acid+Jazz,genre</link>
+  </item>
+  
+  <item>
+  <name>Acoustic Blues</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Acoustic+Blues,genre</link>
+  </item>
+  
+  <item>
+  <name>Adult</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Adult,genre</link>
+  </item>
+  
+  <item>
+  <name>Adult Album Alternative</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Adult+Album+Alternative,genre</link>
+  </item>
+  
+  <item>
+  <name>Adult Alternative</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Adult+Alternative,genre</link>
+  </item>
+  
+  <item>
+  <name>Adult Contemporary</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Adult+Contemporary,genre</link>
+  </item>
+  
+  <item>
+  <name>African</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=African,genre</link>
+  </item>
+  
+  <item>
+  <name>Alt-Country</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Alt-Country,genre</link>
+  </item>
+  
+  <item>
+  <name>Alternative</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Alternative,genre</link>
+  </item>
+  
+  <item>
+  <name>Alternative Folk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Alternative+Folk,genre</link>
+  </item>
+  
+  <item>
+  <name>Alternative Rap</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Alternative+Rap,genre</link>
+  </item>
+  
+  <item>
+  <name>Ambient</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Ambient,genre</link>
+  </item>
+  
+  <item>
+  <name>Americana</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Americana,genre</link>
+  </item>
+  
+  <item>
+  <name>Anime</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Anime,genre</link>
+  </item>
+  
+  <item>
+  <name>Anniversary</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Anniversary,genre</link>
+  </item>
+  
+  <item>
+  <name>Arabic</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Arabic,genre</link>
+  </item>
+  
+  <item>
+  <name>Asian</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Asian,genre</link>
+  </item>
+  
+  <item>
+  <name>Avant Garde</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Avant+Garde,genre</link>
+  </item>
+  
+  <item>
+  <name>Bachata</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Bachata,genre</link>
+  </item>
+  
+  <item>
+  <name>Banda</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Banda,genre</link>
+  </item>
+  
+  <item>
+  <name>Barbershop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Barbershop,genre</link>
+  </item>
+  
+  <item>
+  <name>Baroque</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Baroque,genre</link>
+  </item>
+  
+  <item>
+  <name>Best Of</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Best+Of,genre</link>
+  </item>
+  
+  <item>
+  <name>Big Band</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Big+Band,genre</link>
+  </item>
+  
+  <item>
+  <name>Big Beat</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Big+Beat,genre</link>
+  </item>
+  
+  <item>
+  <name>Birthday</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Birthday,genre</link>
+  </item>
+  
+  <item>
+  <name>Black Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Black+Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>BlogTalk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=BlogTalk,genre</link>
+  </item>
+  
+  <item>
+  <name>Bluegrass</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Bluegrass,genre</link>
+  </item>
+  
+  <item>
+  <name>Blues</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Blues,genre</link>
+  </item>
+  
+  <item>
+  <name>Bollywood</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Bollywood,genre</link>
+  </item>
+  
+  <item>
+  <name>Bop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Bop,genre</link>
+  </item>
+  
+  <item>
+  <name>Bossa Nova</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Bossa+Nova,genre</link>
+  </item>
+  
+  <item>
+  <name>Brazilian</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Brazilian,genre</link>
+  </item>
+  
+  <item>
+  <name>Breakbeat</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Breakbeat,genre</link>
+  </item>
+  
+  <item>
+  <name>British Invasion</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=British+Invasion,genre</link>
+  </item>
+  
+  <item>
+  <name>Britpop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Britpop,genre</link>
+  </item>
+  
+  <item>
+  <name>Bubblegum Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Bubblegum+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Cajun/Zydeco</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Cajun%2FZydeco,genre</link>
+  </item>
+  
+  <item>
+  <name>Caribbean</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Caribbean,genre</link>
+  </item>
+  
+  <item>
+  <name>Celtic</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Celtic,genre</link>
+  </item>
+  
+  <item>
+  <name>Chamber</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Chamber,genre</link>
+  </item>
+  
+  <item>
+  <name>Chicago Blues</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Chicago+Blues,genre</link>
+  </item>
+  
+  <item>
+  <name>Chill</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Chill,genre</link>
+  </item>
+  
+  <item>
+  <name>Chinese</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Chinese,genre</link>
+  </item>
+  
+  <item>
+  <name>Choral</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Choral,genre</link>
+  </item>
+  
+  <item>
+  <name>Christian</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Christian,genre</link>
+  </item>
+  
+  <item>
+  <name>Christian Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Christian+Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Christian Rap</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Christian+Rap,genre</link>
+  </item>
+  
+  <item>
+  <name>Christian Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Christian+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Christmas</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Christmas,genre</link>
+  </item>
+  
+  <item>
+  <name>Classic Alternative</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classic+Alternative,genre</link>
+  </item>
+  
+  <item>
+  <name>Classic Christian</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classic+Christian,genre</link>
+  </item>
+  
+  <item>
+  <name>Classic Country</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classic+Country,genre</link>
+  </item>
+  
+  <item>
+  <name>Classic Jazz</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classic+Jazz,genre</link>
+  </item>
+  
+  <item>
+  <name>Classic Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classic+Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Classic R&amp;B</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classic+R%26amp%3BB,genre</link>
+  </item>
+  
+  <item>
+  <name>Classic Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classic+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Classical</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classical,genre</link>
+  </item>
+  
+  <item>
+  <name>Classical Period</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classical+Period,genre</link>
+  </item>
+  
+  <item>
+  <name>College</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=College,genre</link>
+  </item>
+  
+  <item>
+  <name>College</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=College,genre</link>
+  </item>
+  
+  <item>
+  <name>Comedy</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Comedy,genre</link>
+  </item>
+  
+  <item>
+  <name>Community</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Community,genre</link>
+  </item>
+  
+  <item>
+  <name>Contemporary Bluegrass</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Contemporary+Bluegrass,genre</link>
+  </item>
+  
+  <item>
+  <name>Contemporary Blues</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Contemporary+Blues,genre</link>
+  </item>
+  
+  <item>
+  <name>Contemporary Country</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Contemporary+Country,genre</link>
+  </item>
+  
+  <item>
+  <name>Contemporary Folk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Contemporary+Folk,genre</link>
+  </item>
+  
+  <item>
+  <name>Contemporary Gospel</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Contemporary+Gospel,genre</link>
+  </item>
+  
+  <item>
+  <name>Contemporary R&amp;B</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Contemporary+R%26amp%3BB,genre</link>
+  </item>
+  
+  <item>
+  <name>Contemporary Reggae</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Contemporary+Reggae,genre</link>
+  </item>
+  
+  <item>
+  <name>Cool Jazz</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Cool+Jazz,genre</link>
+  </item>
+  
+  <item>
+  <name>Country</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Country,genre</link>
+  </item>
+  
+  <item>
+  <name>Country Blues</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Country+Blues,genre</link>
+  </item>
+  
+  <item>
+  <name>Cumbia</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Cumbia,genre</link>
+  </item>
+  
+  <item>
+  <name>Dance</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Dance,genre</link>
+  </item>
+  
+  <item>
+  <name>Dance Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Dance+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Dancehall</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Dancehall,genre</link>
+  </item>
+  
+  <item>
+  <name>Dancepunk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Dancepunk,genre</link>
+  </item>
+  
+  <item>
+  <name>Decades</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Decades,genre</link>
+  </item>
+  
+  <item>
+  <name>Delta Blues</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Delta+Blues,genre</link>
+  </item>
+  
+  <item>
+  <name>Demo</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Demo,genre</link>
+  </item>
+  
+  <item>
+  <name>Dirty South</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Dirty+South,genre</link>
+  </item>
+  
+  <item>
+  <name>Disco</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Disco,genre</link>
+  </item>
+  
+  <item>
+  <name>Doo Wop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Doo+Wop,genre</link>
+  </item>
+  
+  <item>
+  <name>Downtempo</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Downtempo,genre</link>
+  </item>
+  
+  <item>
+  <name>Dream Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Dream+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Drum and Bass</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Drum+and+Bass,genre</link>
+  </item>
+  
+  <item>
+  <name>Dub</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Dub,genre</link>
+  </item>
+  
+  <item>
+  <name>Early Classical</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Early+Classical,genre</link>
+  </item>
+  
+  <item>
+  <name>East Coast Rap</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=East+Coast+Rap,genre</link>
+  </item>
+  
+  <item>
+  <name>Easy Listening</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Easy+Listening,genre</link>
+  </item>
+  
+  <item>
+  <name>Eclectic</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Eclectic,genre</link>
+  </item>
+  
+  <item>
+  <name>Educational</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Educational,genre</link>
+  </item>
+  
+  <item>
+  <name>Electric Blues</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Electric+Blues,genre</link>
+  </item>
+  
+  <item>
+  <name>Electro</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Electro,genre</link>
+  </item>
+  
+  <item>
+  <name>Electronic</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Electronic,genre</link>
+  </item>
+  
+  <item>
+  <name>Emo</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Emo,genre</link>
+  </item>
+  
+  <item>
+  <name>Environmental</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Environmental,genre</link>
+  </item>
+  
+  <item>
+  <name>Ethnic Fusion</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Ethnic+Fusion,genre</link>
+  </item>
+  
+  <item>
+  <name>European</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=European,genre</link>
+  </item>
+  
+  <item>
+  <name>Exotica</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Exotica,genre</link>
+  </item>
+  
+  <item>
+  <name>Experimental</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Experimental,genre</link>
+  </item>
+  
+  <item>
+  <name>Extreme Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Extreme+Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Female</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Female,genre</link>
+  </item>
+  
+  <item>
+  <name>Filipino</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Filipino,genre</link>
+  </item>
+  
+  <item>
+  <name>Folk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Folk,genre</link>
+  </item>
+  
+  <item>
+  <name>Folk Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Folk+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Freestyle</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Freestyle,genre</link>
+  </item>
+  
+  <item>
+  <name>French</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=French,genre</link>
+  </item>
+  
+  <item>
+  <name>Funk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Funk,genre</link>
+  </item>
+  
+  <item>
+  <name>Fusion</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Fusion,genre</link>
+  </item>
+  
+  <item>
+  <name>Gangsta Rap</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Gangsta+Rap,genre</link>
+  </item>
+  
+  <item>
+  <name>Garage</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Garage,genre</link>
+  </item>
+  
+  <item>
+  <name>Garage Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Garage+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Glam</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Glam,genre</link>
+  </item>
+  
+  <item>
+  <name>Gospel</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Gospel,genre</link>
+  </item>
+  
+  <item>
+  <name>Goth</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Goth,genre</link>
+  </item>
+  
+  <item>
+  <name>Government</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Government,genre</link>
+  </item>
+  
+  <item>
+  <name>Greek</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Greek,genre</link>
+  </item>
+  
+  <item>
+  <name>Grindcore</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Grindcore,genre</link>
+  </item>
+  
+  <item>
+  <name>Grunge</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Grunge,genre</link>
+  </item>
+  
+  <item>
+  <name>Hair Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hair+Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Halloween</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Halloween,genre</link>
+  </item>
+  
+  <item>
+  <name>Hanukkah</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hanukkah,genre</link>
+  </item>
+  
+  <item>
+  <name>Hard Bop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hard+Bop,genre</link>
+  </item>
+  
+  <item>
+  <name>Hard House</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hard+House,genre</link>
+  </item>
+  
+  <item>
+  <name>Hard Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hard+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Hardcore</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hardcore,genre</link>
+  </item>
+  
+  <item>
+  <name>Hawaiian/Pacific</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hawaiian%2FPacific,genre</link>
+  </item>
+  
+  <item>
+  <name>Healing</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Healing,genre</link>
+  </item>
+  
+  <item>
+  <name>Heartache</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Heartache,genre</link>
+  </item>
+  
+  <item>
+  <name>Heavy Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Heavy+Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Hindi</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hindi,genre</link>
+  </item>
+  
+  <item>
+  <name>Hip Hop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hip+Hop,genre</link>
+  </item>
+  
+  <item>
+  <name>Honeymoon</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Honeymoon,genre</link>
+  </item>
+  
+  <item>
+  <name>Honky Tonk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Honky+Tonk,genre</link>
+  </item>
+  
+  <item>
+  <name>Hot Country Hits</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Hot+Country+Hits,genre</link>
+  </item>
+  
+  <item>
+  <name>House</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=House,genre</link>
+  </item>
+  
+  <item>
+  <name>IDM</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=IDM,genre</link>
+  </item>
+  
+  <item>
+  <name>Idols</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Idols,genre</link>
+  </item>
+  
+  <item>
+  <name>Impressionist</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Impressionist,genre</link>
+  </item>
+  
+  <item>
+  <name>Indian</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Indian,genre</link>
+  </item>
+  
+  <item>
+  <name>Indie Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Indie+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Indie Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Indie+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Industrial</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Industrial,genre</link>
+  </item>
+  
+  <item>
+  <name>Inspirational</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Inspirational,genre</link>
+  </item>
+  
+  <item>
+  <name>Instrumental</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Instrumental,genre</link>
+  </item>
+  
+  <item>
+  <name>International</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=International,genre</link>
+  </item>
+  
+  <item>
+  <name>Jam Bands</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Jam+Bands,genre</link>
+  </item>
+  
+  <item>
+  <name>Japanese</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Japanese,genre</link>
+  </item>
+  
+  <item>
+  <name>Jazz</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Jazz,genre</link>
+  </item>
+  
+  <item>
+  <name>Jewish</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Jewish,genre</link>
+  </item>
+  
+  <item>
+  <name>JPOP</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=JPOP,genre</link>
+  </item>
+  
+  <item>
+  <name>Jungle</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Jungle,genre</link>
+  </item>
+  
+  <item>
+  <name>Kids</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Kids,genre</link>
+  </item>
+  
+  <item>
+  <name>Klezmer</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Klezmer,genre</link>
+  </item>
+  
+  <item>
+  <name>Korean</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Korean,genre</link>
+  </item>
+  
+  <item>
+  <name>Kwanzaa</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Kwanzaa,genre</link>
+  </item>
+  
+  <item>
+  <name>Latin</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Latin,genre</link>
+  </item>
+  
+  <item>
+  <name>Latin Dance</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Latin+Dance,genre</link>
+  </item>
+  
+  <item>
+  <name>Latin Jazz</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Latin+Jazz,genre</link>
+  </item>
+  
+  <item>
+  <name>Latin Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Latin+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Latin Rap/Hip-Hop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Latin+Rap%2FHip-Hop,genre</link>
+  </item>
+  
+  <item>
+  <name>Latin Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Latin+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>LGBT</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=LGBT,genre</link>
+  </item>
+  
+  <item>
+  <name>Light Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Light+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Lo-Fi</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Lo-Fi,genre</link>
+  </item>
+  
+  <item>
+  <name>Lounge</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Lounge,genre</link>
+  </item>
+  
+  <item>
+  <name>Love/Romance</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Love%2FRomance,genre</link>
+  </item>
+  
+  <item>
+  <name>Mariachi</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Mariachi,genre</link>
+  </item>
+  
+  <item>
+  <name>Meditation</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Meditation,genre</link>
+  </item>
+  
+  <item>
+  <name>Mediterranean</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Mediterranean,genre</link>
+  </item>
+  
+  <item>
+  <name>Merengue</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Merengue,genre</link>
+  </item>
+  
+  <item>
+  <name>Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Metalcore</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Metalcore,genre</link>
+  </item>
+  
+  <item>
+  <name>Middle Eastern</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Middle+Eastern,genre</link>
+  </item>
+  
+  <item>
+  <name>Misc</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Misc,genre</link>
+  </item>
+  
+  <item>
+  <name>Mixtapes</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Mixtapes,genre</link>
+  </item>
+  
+  <item>
+  <name>Modern</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Modern,genre</link>
+  </item>
+  
+  <item>
+  <name>Modern Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Modern+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Motown</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Motown,genre</link>
+  </item>
+  
+  <item>
+  <name>Neo-Soul</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Neo-Soul,genre</link>
+  </item>
+  
+  <item>
+  <name>New Acoustic</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=New+Acoustic,genre</link>
+  </item>
+  
+  <item>
+  <name>New Age</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=New+Age,genre</link>
+  </item>
+  
+  <item>
+  <name>New Wave</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=New+Wave,genre</link>
+  </item>
+  
+  <item>
+  <name>News</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=News,genre</link>
+  </item>
+  
+  <item>
+  <name>News</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=News,genre</link>
+  </item>
+  
+  <item>
+  <name>Noise Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Noise+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>North American</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=North+American,genre</link>
+  </item>
+  
+  <item>
+  <name>Old School</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Old+School,genre</link>
+  </item>
+  
+  <item>
+  <name>Old Time Radio</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Old+Time+Radio,genre</link>
+  </item>
+  
+  <item>
+  <name>Oldies</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Oldies,genre</link>
+  </item>
+  
+  <item>
+  <name>Opera</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Opera,genre</link>
+  </item>
+  
+  <item>
+  <name>Orchestral Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Orchestral+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Original Score</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Original+Score,genre</link>
+  </item>
+  
+  <item>
+  <name>Other Talk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Other+Talk,genre</link>
+  </item>
+  
+  <item>
+  <name>Party Mix</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Party+Mix,genre</link>
+  </item>
+  
+  <item>
+  <name>Patriotic</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Patriotic,genre</link>
+  </item>
+  
+  <item>
+  <name>Piano</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Piano,genre</link>
+  </item>
+  
+  <item>
+  <name>Piano Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Piano+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Political</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Political,genre</link>
+  </item>
+  
+  <item>
+  <name>Polka</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Polka,genre</link>
+  </item>
+  
+  <item>
+  <name>Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Pop-Reggae</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Pop-Reggae,genre</link>
+  </item>
+  
+  <item>
+  <name>Post-Punk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Post-Punk,genre</link>
+  </item>
+  
+  <item>
+  <name>Power Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Power+Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Power Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Power+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Praise/Worship</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Praise%2FWorship,genre</link>
+  </item>
+  
+  <item>
+  <name>Prog Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Prog+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Progressive</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Progressive,genre</link>
+  </item>
+  
+  <item>
+  <name>Progressive Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Progressive+Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Psychedelic</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Psychedelic,genre</link>
+  </item>
+  
+  <item>
+  <name>Public Radio</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Public+Radio,genre</link>
+  </item>
+  
+  <item>
+  <name>Punk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Punk,genre</link>
+  </item>
+  
+  <item>
+  <name>Quiet Storm</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Quiet+Storm,genre</link>
+  </item>
+  
+  <item>
+  <name>R&amp;B/Urban</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=R%26amp%3BB%2FUrban,genre</link>
+  </item>
+  
+  <item>
+  <name>Ragga</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Ragga,genre</link>
+  </item>
+  
+  <item>
+  <name>Rainy Day Mix</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Rainy+Day+Mix,genre</link>
+  </item>
+  
+  <item>
+  <name>Ranchera</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Ranchera,genre</link>
+  </item>
+  
+  <item>
+  <name>Rap</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Rap,genre</link>
+  </item>
+  
+  <item>
+  <name>Rap Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Rap+Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Reality</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Reality,genre</link>
+  </item>
+  
+  <item>
+  <name>Reggae</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Reggae,genre</link>
+  </item>
+  
+  <item>
+  <name>Reggae Roots</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Reggae+Roots,genre</link>
+  </item>
+  
+  <item>
+  <name>Reggaeton</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Reggaeton,genre</link>
+  </item>
+  
+  <item>
+  <name>Regional Mexican</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Regional+Mexican,genre</link>
+  </item>
+  
+  <item>
+  <name>Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Rock &amp; Roll</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Rock+%26amp%3B+Roll,genre</link>
+  </item>
+  
+  <item>
+  <name>Rock Steady</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Rock+Steady,genre</link>
+  </item>
+  
+  <item>
+  <name>Rockabilly</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Rockabilly,genre</link>
+  </item>
+  
+  <item>
+  <name>Romantic</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Romantic,genre</link>
+  </item>
+  
+  <item>
+  <name>Russian</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Russian,genre</link>
+  </item>
+  
+  <item>
+  <name>Salsa</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Salsa,genre</link>
+  </item>
+  
+  <item>
+  <name>Scanner</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Scanner,genre</link>
+  </item>
+  
+  <item>
+  <name>Seasonal/Holiday</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Seasonal%2FHoliday,genre</link>
+  </item>
+  
+  <item>
+  <name>Sermons/Services</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Sermons%2FServices,genre</link>
+  </item>
+  
+  <item>
+  <name>Sexy</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Sexy,genre</link>
+  </item>
+  
+  <item>
+  <name>Showtunes</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Showtunes,genre</link>
+  </item>
+  
+  <item>
+  <name>Shuffle</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Shuffle,genre</link>
+  </item>
+  
+  <item>
+  <name>Singer/Songwriter</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Singer%2FSongwriter,genre</link>
+  </item>
+  
+  <item>
+  <name>Ska</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Ska,genre</link>
+  </item>
+  
+  <item>
+  <name>Smooth Jazz</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Smooth+Jazz,genre</link>
+  </item>
+  
+  <item>
+  <name>Soca</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Soca,genre</link>
+  </item>
+  
+  <item>
+  <name>Soft Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Soft+Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Soul</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Soul,genre</link>
+  </item>
+  
+  <item>
+  <name>Soundtracks</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Soundtracks,genre</link>
+  </item>
+  
+  <item>
+  <name>South American</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=South+American,genre</link>
+  </item>
+  
+  <item>
+  <name>Southern Gospel</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Southern+Gospel,genre</link>
+  </item>
+  
+  <item>
+  <name>Space Age Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Space+Age+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Spiritual</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Spiritual,genre</link>
+  </item>
+  
+  <item>
+  <name>Spoken Word</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Spoken+Word,genre</link>
+  </item>
+  
+  <item>
+  <name>Sports</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Sports,genre</link>
+  </item>
+  
+  <item>
+  <name>Sports</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Sports,genre</link>
+  </item>
+  
+  <item>
+  <name>Surf</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Surf,genre</link>
+  </item>
+  
+  <item>
+  <name>Swing</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Swing,genre</link>
+  </item>
+  
+  <item>
+  <name>Symphony</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Symphony,genre</link>
+  </item>
+  
+  <item>
+  <name>Talk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Talk,genre</link>
+  </item>
+  
+  <item>
+  <name>Talk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Talk,genre</link>
+  </item>
+  
+  <item>
+  <name>Tamil</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Tamil,genre</link>
+  </item>
+  
+  <item>
+  <name>Tango</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Tango,genre</link>
+  </item>
+  
+  <item>
+  <name>Techno</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Techno,genre</link>
+  </item>
+  
+  <item>
+  <name>Technology</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Technology,genre</link>
+  </item>
+  
+  <item>
+  <name>Teen Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Teen+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Tejano</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Tejano,genre</link>
+  </item>
+  
+  <item>
+  <name>Themes</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Themes,genre</link>
+  </item>
+  
+  <item>
+  <name>Top 40</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Top+40,genre</link>
+  </item>
+  
+  <item>
+  <name>Traditional Folk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Traditional+Folk,genre</link>
+  </item>
+  
+  <item>
+  <name>Traditional Gospel</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Traditional+Gospel,genre</link>
+  </item>
+  
+  <item>
+  <name>Trance</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Trance,genre</link>
+  </item>
+  
+  <item>
+  <name>Travel Mix</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Travel+Mix,genre</link>
+  </item>
+  
+  <item>
+  <name>Tribal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Tribal,genre</link>
+  </item>
+  
+  <item>
+  <name>Tribute</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Tribute,genre</link>
+  </item>
+  
+  <item>
+  <name>Trip Hop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Trip+Hop,genre</link>
+  </item>
+  
+  <item>
+  <name>Trippy</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Trippy,genre</link>
+  </item>
+  
+  <item>
+  <name>Tropicalia</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Tropicalia,genre</link>
+  </item>
+  
+  <item>
+  <name>Turntablism</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Turntablism,genre</link>
+  </item>
+  
+  <item>
+  <name>Underground Hip-Hop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Underground+Hip-Hop,genre</link>
+  </item>
+  
+  <item>
+  <name>Urban Contemporary</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Urban+Contemporary,genre</link>
+  </item>
+  
+  <item>
+  <name>Valentine</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Valentine,genre</link>
+  </item>
+  
+  <item>
+  <name>Video Game Music</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Video+Game+Music,genre</link>
+  </item>
+  
+  <item>
+  <name>Vocal Jazz</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Vocal+Jazz,genre</link>
+  </item>
+  
+  <item>
+  <name>Wedding</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Wedding,genre</link>
+  </item>
+  
+  <item>
+  <name>West Coast Rap</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=West+Coast+Rap,genre</link>
+  </item>
+  
+  <item>
+  <name>Western</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Western,genre</link>
+  </item>
+  
+  <item>
+  <name>Winter</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Winter,genre</link>
+  </item>
+  
+  <item>
+  <name>Work Mix</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Work+Mix,genre</link>
+  </item>
+  
+  <item>
+  <name>World Folk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=World+Folk,genre</link>
+  </item>
+  
+  <item>
+  <name>World Fusion</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=World+Fusion,genre</link>
+  </item>
+  
+  <item>
+  <name>World Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=World+Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Worldbeat</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Worldbeat,genre</link>
+  </item>
+  
+  <item>
+  <name>Xtreme</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Xtreme,genre</link>
+  </item>
+  
+  <item>
+  <name>Zouk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Zouk,genre</link>
+  </item>
+  </channel>
+</rss>
+

@@ -1,0 +1,294 @@
+﻿<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=onePartView
+	sideLeftWidthPC = 15
+	sideRightWidthPC = 0
+
+	sideColorRight="0:0:0"
+	sideColorLeft="0:0:0"
+	headerImageWidthPC="0"
+	selectMenuOnRight=no
+	autoSelectMenu=no
+	autoSelectItem=no
+	headerImageXPC="10"
+	headerXPC="10"
+	itemImageXPC="12"
+	itemImageYPC="18"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="30"
+	itemYPC="18"
+	capXPC="20"
+	capYPC="17"
+	capWidthPC="70"
+	capHeightPC="7"
+	itemBackgroundColor="0:0:0"
+	itemHeightPC="8"
+	itemWidthPC="40"
+	itemPerPage="8"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader=no
+	showDefaultInfo=yes
+	infoYPC=90
+	fontSize=18
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+	>
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=80 offsetYPC=1 widthPC=15 heightPC=10>
+    ../etc/translate/rss/image/YouTubeLogo.jpg
+    <widthPC>
+      <script>
+        300 / 152 * 10 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 300 / 152 * 10 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+	</image>
+  <text offsetXPC=80 offsetYPC=90 widthPC=5 heightPC=5 fontSize=14 backgroundColor=8:8:16 foregroundColor=100:100:100>
+    <script>youtubeRegion;</script>
+  </text>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+        <itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+				{
+					"../etc/translate/rss/image/IMAGE_NEWRSS_MENU_BTFOC.bmp";
+				}
+				else
+				{
+					"";
+				}
+			</script>
+		</image>
+
+		<text offsetXPC=0 offsetYPC=25 widthPC=100 heightPC=50 fontSize=17 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+			<script>
+				getStringArrayAt(itemTitleArray , -1);
+			</script>
+		</text>
+	</itemDisplay>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+      userInput = currentUserInput();
+      print("*** userInput=",userInput);
+      
+      if (userInput == "pagedown" || userInput == "pageup")
+      {
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -8;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 8;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+      	setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+
+</mediaDisplay>
+
+	<item_template>	
+  	<mediaDisplay name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+        		</mediaDisplay>
+  	<onClick>
+  	  <script>
+  	     idx = Integer(getFocusItemIndex());
+	       url = youtubeApiCategoryBaseURL + getStringArrayAt(termArray, idx)+"?";
+	       if(lr != null)
+	         url += "lr="+lr+"&amp;";
+	       title = getStringArrayAt(itemTitleArray, idx);
+	       
+	       arr = null;
+         arr = pushBackStringArray(arr, url);
+         arr = pushBackStringArray(arr, title);
+         print("arr=",arr);
+         print("storagePath=",storagePath);
+	       
+	       writeStringToFile(storagePath, arr);
+  	  </script>
+  	</onClick> 
+		<link>rss_file:///usr/local/etc/www/cgi-bin/scripts/clip/youtube/yt_search_feed.rss</link>
+	</item_template>
+<!--
+!-->
+	<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+  
+    youtubeCategoriesURL = "http://gdata.youtube.com/schemas/2007/categories.cat";
+    youtubeApiCategoryBaseURL = "http://gdata.youtube.com/feeds/api/videos/-/";
+  
+    storagePath = getStoragePath("tmp") + "youtubeRSS.dat";
+  	pageTitle = "Categorii";
+  
+    cachePath = getStoragePath("key");
+    optionsArray = readStringFromFile(cachePath + "youtubeOptions.dat");
+    if(optionsArray == null)
+    {
+      youtubeRegion = readStringFromFile(cachePath + "youtubeRegion.dat");
+      if(youtubeRegion == null)
+        youtubeRegion = "US";
+      hd = 1;
+      username = " ";
+    }
+    else
+    {
+      youtubeRegion = getStringArrayAt(optionsArray, 0);
+      hd = getStringArrayAt(optionsArray, 1);
+      username = getStringArrayAt(optionsArray, 2);
+    }
+    
+    if(youtubeRegion=="AU") lr="en"; else
+    if(youtubeRegion=="BR") lr="pt"; else
+    if(youtubeRegion=="GB") lr="en"; else
+    if(youtubeRegion=="DE") lr="de"; else
+    if(youtubeRegion=="NL") lr="nl"; else
+    if(youtubeRegion=="HK") lr="zh-Hans"; else
+    if(youtubeRegion=="IE") lr="ga"; else
+    if(youtubeRegion=="ES") lr="es"; else
+    if(youtubeRegion=="IT") lr="it"; else
+    if(youtubeRegion=="CA") lr="en"; else
+    if(youtubeRegion=="MX") lr="es"; else
+    if(youtubeRegion=="NZ") lr="en"; else
+    if(youtubeRegion=="PL") lr="pl"; else
+    if(youtubeRegion=="RU") lr="ru"; else
+    if(youtubeRegion=="US") lr="en"; else
+    if(youtubeRegion=="TW") lr="zh-Hans"; else
+    if(youtubeRegion=="FR") lr="fr"; else
+    if(youtubeRegion=="KR") lr="ko"; else
+    if(youtubeRegion=="JP") lr="ja"; else
+      lr=null;
+  
+		itemTitleArray = null;
+		termArray = null;
+
+		topUrl = youtubeCategoriesURL;
+		dlok = loadXMLFile(topUrl);
+		if (dlok != null)
+		{
+			itemSize = getXMLElementCount("app:categories", "atom:category");
+			itemLength = itemSize;
+
+			if(itemLength &gt; 0)
+			{
+				itemCount = 0;
+        	
+				while(itemSize != 0)
+				{
+					deprecated  = getXMLElementCount("app:categories", "atom:category", itemCount, "yt:deprecated");
+					if(deprecated == 0)
+					{
+  					itemTitle  = getXMLAttribute("app:categories", "atom:category", itemCount, "label");
+  					term  = getXMLAttribute("app:categories", "atom:category", itemCount, "term");
+  					
+  					itemTitleArray  = pushBackStringArray(itemTitleArray, itemTitle);
+  					termArray  = pushBackStringArray(termArray, term);
+  				}
+  				else
+  				{
+  					itemSize -= 1;
+  				}
+        	
+					itemCount += 1;
+					if(itemCount == itemLength)
+					{
+						break;
+					}
+				}
+				setFocusItemIndex(0);
+				setItemFocus(0);
+				redrawDisplay();
+			}
+		}
+	</onEnter>
+
+	<channel>
+		<title>YouTube: Video Categories</title>
+		<link>/usr/local/etc/www/cgi-bin/scripts/clip/youtube/yt_categories.rss</link>
+		<media:thumbnail url="../etc/translate/rss/image/youtube.gif" width="120" height="90" />
+
+    <itemSize>
+    	<script>
+    		itemSize;
+    	</script>
+    </itemSize>
+
+	</channel>
+</rss>

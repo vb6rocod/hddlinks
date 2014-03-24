@@ -1,0 +1,43 @@
+<?xml version="1.0"   encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<mediaDisplay name=photoView
+
+   showHeader=no
+   showDefaultInfo=no   
+   drawItemBorder = no	
+   backgroundColor=0:0:0
+
+   sideTopHeightPC = 0
+   sideLeftWidthPC = 0
+   sideRightWidthPC = 0
+   sideBottomHeightPC = 0
+   bottomYPC = 100
+>
+
+<text redraw="yes" offsetXPC=5 offsetYPC=5 widthPC=90 heightPC=90 fontSize=14 lines=20  backgroundColor="0:0:0" foregroundColor="100:200:255">
+* Folosiţi tastele 0-9 sau PREV/NEXT pentru o navigare mai uşoară.
+* Download Manager: Puteţi descărca filme, seriale sau clipuri pe HDD sau USB, dacă pe pagină apare sus "Apăsaţi 2 pentru download". Pentru a beneficia de această posibilitate trebuie să creaţi un director numit „download” pe USB, pentru a descărca acolo fişierul. Dacă aveţi HDD intern, directorul „download” este creat automat. Ordinea de căutare a directorului „download” este USB, HDD intern. Puteţi observa procesul de descărcare în Download Manager (cu tasta 3 sau la filme şi seriale, având un link explicit). Informaţia este actualizată automat la un interval de circa 10 secunde. Sunt trei culori în funcţie de stadiul descărcării. Pentru a opri/reporni descărcarea trebuie să vă poziţionati pe descărcarea respectivă şi să apăsaţi tasta 2. Cu tasta 3 opriţi şi ştergeţi toate descărcările din listă iar cu tasta 1 ştergeti din listă un fişier deja descărcat. Atenţie, lista nu se şterge singură! Dacă depăseşte 100 de înregistrări nu mai accepta altele, deci trebuie să ştergeţi din fişierele descărcate din când în când.
+* La filme şi seriale, şi în general unde sunt afişate linkurile, ţineti minte că acele linkuri nu au o viaţă prea lunga şi trebuie să fie regenerate. Să presupunem că aţi văzut 30 de minute şi apoi aţi oprit. Dacă vreţi să vizionaţi din nou, trebuie să vă întoarceţi la pagina precedentă şi să regeneraţi linkurile. Un caz special este la peteava.ro: dacă nu merge din prima, repetaţi figura descrisă mai sus (return şi regenerare link).
+* La filme/seriale şi la sectiunea adult aveţi posibilitatea să faceţi seek (adică salt la diferite momente ale filmelor). La filme/seriale accesaţi linkul unde scrie "With seek SDK4". După ce filmul porneşte, după 15-20 secunde apăsaţi tastele Stanga/Dreapta, o să apară o bară cu poziţia în timp la care vă aflaţi. Apăsaţi repetat dreapta (avans) sau stânga (înapoi) până ajungeţi la momentul dorit. Apăsaţi apoi Enter pentru a face saltul. Atenţie însă, nu toate serverele oferă aceasta posibilitate. Alte taste utile: "0" sau "1" pentru pauză, "Enter" pentru play (utile in special pentru HD500 plus).
+</text>
+
+<onUserInput>
+    handled = "false";
+    userInput = currentUserInput();
+    print("userInput=",userInput);
+    focusIndex = getFocusItemIndex();
+    if ("enter" == userInput) {
+      postMessage("return");
+    }
+</onUserInput>
+</mediaDisplay>
+
+<channel>
+<title>notice Dialog</title>
+<link>noticeDialog.rss</link>
+
+<itemSize>0</itemSize>
+
+</channel>
+</rss>

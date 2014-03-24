@@ -1,0 +1,441 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<script>
+la = getItemInfoArray("cur");
+fa = getItemInfoArray("for");
+</script>
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"	
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="50"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="50"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+>		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
+		image/mele/weather.png
+		</image>
+		<idleImage idleImageWidthPC=10 idleImageHeightPC=10> image/POPUP_LOADING_01.png </idleImage>
+		<idleImage idleImageWidthPC=10 idleImageHeightPC=10> image/POPUP_LOADING_02.png </idleImage>
+		<idleImage idleImageWidthPC=10 idleImageHeightPC=10> image/POPUP_LOADING_03.png </idleImage>
+		<idleImage idleImageWidthPC=10 idleImageHeightPC=10> image/POPUP_LOADING_04.png </idleImage>
+		<idleImage idleImageWidthPC=10 idleImageHeightPC=10> image/POPUP_LOADING_05.png </idleImage>
+		<idleImage idleImageWidthPC=10 idleImageHeightPC=10> image/POPUP_LOADING_06.png </idleImage>
+		<idleImage idleImageWidthPC=10 idleImageHeightPC=10> image/POPUP_LOADING_07.png </idleImage>
+		<idleImage idleImageWidthPC=10 idleImageHeightPC=10> image/POPUP_LOADING_08.png </idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+		
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+ret;
+</script>
+</onUserInput>
+		
+	</mediaDisplay>
+<item_template>
+<link>
+<script>"http://weather.yahooapis.com/forecastrss?p="+getStringArrayAt(la, -1)+"&amp;u=c";
+</script>
+</link>
+<forcast>
+<script>"http://api.wunderground.com/auto/wui/geo/ForecastXML/index.xml?query="+getStringArrayAt(fa, -1)+",Romania";
+</script>
+</forcast>
+<mediaDisplay name=weatherViewRss
+              curConditionXPC=10
+		curConditionYPC=20
+		curConditionWPC=15
+		curConditionHPC=4
+		curConditionResultXPC=27
+		curConditionResultWPC=18
+              curConditionFontSize=22
+		curConditionFontColor="120:250:200"
+
+		timePictureXPC=7
+		timePictureYPC=15
+		timePictureWidthPC=50
+		timePictureHeightPC=45
+		
+    		curConditionURLBase="./IMS_Modules/Weather/image/weather/%s.png"
+		curConditionLogoXPC=43
+		curConditionLogoYPC=20
+		curConditionLogoWPC=10
+		curConditionLogoHPC=15
+
+		curWeatherXPC=13
+		curWeatherYPC=13
+		curWeatherWPC=15
+		curWeatherHPC=5
+		curWeatherFontSize=22
+		curWeatherFontColor="250:130:80"
+
+		forcastDays=2
+		useForcast=no
+              forcastDaysGapXPC=23
+
+              forcastDateXPC=20
+              forcastDateYPC=63
+		forcastDateWPC=15
+		forcastDateHPC=5
+		forcastDateFontSize=22
+		forcastDateColor="250:230:80"
+
+		forcastCondXPC=21
+              forcastCondYPC=71
+              forcastCondWPC=15
+		forcastCondHPC=5
+		forcastCondFontSize=22
+		
+              forcastLogoURLBase="./IMS_Modules/Weather/image/weather/%s.png"
+		forcastLogoXPC=10
+    		forcastLogoYPC=68
+		forcastLogoWPC=10
+		forcastLogoHPC=15
+
+    		forcastTempXPC=20.5
+    		forcastTempYPC=78
+		forcastTempWPC=20
+		forcastTempHPC=5
+              forcastTempFontSize=22
+
+
+		mapPictureXPC="63" 
+		mapPictureYPC="14"
+		mapPictureWidthPC="27"
+		mapPictureHeightPC="70"
+	>
+	<background>
+		<text offsetXPC=0  offsetYPC= 0 widthPC=100 heightPC=100 
+		backgroundColor=33:40:58 cornerRounding=10/>	
+		<text offsetXPC=5  offsetYPC= 10 widthPC=90 heightPC=78 
+		backgroundColor=46:51:68 cornerRounding=5/>
+		<text offsetXPC=5.5  offsetYPC= 10.89 widthPC=89 heightPC=76.61 
+		backgroundColor=27:35:51 cornerRounding=5/>		
+		
+		<text offsetXPC=12  offsetYPC=3 widthPC=60 heightPC=7 fontSize=22
+		backgroundColor=33:40:58 foregroundColor=245:255:255>
+			<script_replace>
+				getItemInfo(0, "title");
+			</script_replace>
+		</text>
+	</background>
+
+	</mediaDisplay>
+	</item_template>
+<channel>
+<title>România</title>
+<link>./IMS_Modules/Weather/scripts/map/Romania.rss</link>
+<media:thumbnail url="./IMS_Modules/Weather/image/weather.jpg"/>
+
+<item>
+<title>Arad</title>
+<cur>ROXX0024</cur>
+<for>Arad</for>
+</item>
+<item>
+<title>Bacău</title>
+<cur>ROXX0023</cur>
+<for>Bacau</for>
+</item>
+<item>
+<title>Baia Mare</title>
+<cur>ROXX0047</cur>
+<for>Baia%20Mare</for>
+</item>
+<item>
+<title>Botoşani</title>
+<cur>ROXX0018</cur>
+<for>Botosani</for>
+</item>
+<item>
+<title>Brăila</title>
+<cur>ROXX0001</cur>
+<for>Braila</for>
+</item>
+<item>
+<title>Braşov</title>
+<cur>ROXX0002</cur>
+<for>Brasov</for>
+</item>
+<item>
+<title>Bucureşti</title>
+<cur>ROXX0003</cur>
+<for>Bucharest</for>
+</item>
+<item>
+<title>Buzău</title>
+<cur>ROXX0004</cur>
+<for>Buzau</for>
+</item>
+<item>
+<title>Calafat</title>
+<cur>ROXX0042</cur>
+<for>Calafat</for>
+</item>
+<item>
+<title>Călăraşi</title>
+<cur>ROXX0032</cur>
+<for>Calarasi</for>
+</item>
+<item>
+<title>Câmpina</title>
+<cur>ROXX0005</cur>
+<for>Campina</for>
+</item>
+<item>
+<title>Caransebeş</title>
+<cur>ROXX0026</cur>
+<for>Caransebes</for>
+</item>
+<item>
+<title>Ceahlău: Toaca</title>
+<cur>ROXX0021</cur>
+<for>Ceahlau%20Toaca</for>
+</item>
+<item>
+<title>Cluj-Napoca</title>
+<cur>ROXX0022</cur>
+<for>Cluj%2dNapoca</for>
+</item>
+<item>
+<title>Constanţa</title>
+<cur>ROXX0034</cur>
+<for>Constanta</for>
+</item>
+<item>
+<title>Craiova</title>
+<cur>ROXX0007</cur>
+<for>Craiova</for>
+</item>
+<item>
+<title>Drobeta Tr. Severin</title>
+<cur>ROXX0031</cur>
+<for>Drobeta%20Tr%2e%20Severin</for>
+</item>
+<item>
+<title>Focşani</title>
+<cur>ROXX0008</cur>
+<for>Focsani</for>
+</item>
+<item>
+<title>Galaţi</title>
+<cur>ROXX0009</cur>
+<for>Galati</for>
+</item>
+<item>
+<title>Gheorghieni</title>
+<cur>ROXX0035</cur>
+<for>Gheorgheni</for>
+</item>
+<item>
+<title>Giurgiu</title>
+<cur>ROXX0010</cur>
+<for>Giurgiu</for>
+</item>
+<item>
+<title>Iaşi</title>
+<cur>ROXX0020</cur>
+<for>Iasi</for>
+</item>
+<item>
+<title>Oradea</title>
+<cur>ROXX0019</cur>
+<for>Oradea</for>
+</item>
+<item>
+<title>Petroşani</title>
+<cur>ROXX0036</cur>
+<for>Petrosani</for>
+</item>
+<item>
+<title>Piteşti</title>
+<cur>ROXX0011</cur>
+<for>Pitesti</for>
+</item>
+<item>
+<title>Ploieşti</title>
+<cur>ROXX0012</cur>
+<for>Ploiesti</for>
+</item>
+<item>
+<title>Prundu</title>
+<cur>ROXX0037</cur>
+<for>Prundu</for>
+</item>
+<item>
+<title>Râmnicu Vilcea</title>
+<cur>ROXX0028</cur>
+<for>Rimnicu%20Vilcea</for>
+</item>
+<item>
+<title>Roşiori de Vede</title>
+<cur>ROXX0013</cur>
+<for>Rosiori%20de%20Vede</for>
+</item>
+<item>
+<title>Satu Mare</title>
+<cur>ROXX0038</cur>
+<for>Satu%20Mare</for>
+</item>
+<item>
+<title>Şase Martie</title>
+<cur>ROXX0045</cur>
+<for>Sase%20Martie</for>
+</item>
+<item>
+<title>Sebeş</title>
+<cur>ROXX0044</cur>
+<for>Sebes</for>
+</item>
+<item>
+<title>Sibiu</title>
+<cur>ROXX0014</cur>
+<for>Sibiu</for>
+</item>
+<item>
+<title>Sighetu Marmaţiei</title>
+<cur>ROXX0017</cur>
+<for>Sighetu%20Marmatiei</for>
+</item>
+<item>
+<title>Slatina</title>
+<cur>ROXX0015</cur>
+<for>Slatina</for>
+</item>
+<item>
+<title>Slobozia</title>
+<cur>ROXX0016</cur>
+<for>Slobozia</for>
+</item>
+<item>
+<title>Suceava</title>
+<cur>ROXX0046</cur>
+<for>Suceava</for>
+</item>
+<item>
+<title>Sulina</title>
+<cur>ROXX0030</cur>
+<for>Sulina</for>
+</item>
+<item>
+<title>Tălmaciu</title>
+<cur>ROXX0039</cur>
+<for>Talmaciu</for>
+</item>
+<item>
+<title>Târgu Mures</title>
+<cur>ROXX0043</cur>
+<for>Targu Mures</for>
+</item>
+<item>
+<title>Timişoara</title>
+<cur>ROXX0040</cur>
+<for>Timisoara</for>
+</item>
+<item>
+<title>Târgovişte</title>
+<cur>ROXX0041</cur>
+<for>Tirgoviste</for>
+</item>
+<item>
+<title>Vârful Omu</title>
+<cur>ROXX0025</cur>
+<for>Vf%2e%20Omu</for>
+</item>
+</channel></rss>

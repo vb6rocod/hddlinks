@@ -1,0 +1,479 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=threePartsView
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemImageXPC="27"
+	itemImageYPC="18"
+	itemXPC="40"
+	itemYPC="18"
+	itemWidthPC="54"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+  menuXPC=10
+  menuYPC=25
+  menuWidthPC=15
+  menuHeightPC=8
+	showHeader=no
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=yes
+	infoYPC=90
+	fontSize=16
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=80 offsetYPC=1 widthPC=15 heightPC=10>
+    ../etc/translate/rss/image/YouTubeLogo.jpg
+    <widthPC>
+      <script>
+        300 / 152 * 10 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 300 / 152 * 10 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+	</image>
+
+  <text offsetXPC=85 offsetYPC=90 widthPC=11 heightPC=5 fontSize=14 backgroundColor=8:8:16 foregroundColor=100:100:100>
+    <script>
+    if(time=="today") "Today"; else
+    if(time=="this_week") "This week"; else
+    if(time=="this_month") "This month"; else
+    "";
+    </script>
+  </text>
+
+  <text offsetXPC=80 offsetYPC=90 widthPC=5 heightPC=5 fontSize=14 backgroundColor=8:8:16 foregroundColor=100:100:100>
+    <script>youtubeRegion;</script>
+  </text>
+		<itemDisplay>
+			<text align="left" lines="1" cornerRounding=5 offsetXPC=0 offsetYPC=2 widthPC=100 heightPC=96>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					getStringArrayAt(titleArray , idx);
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "14"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>	
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+
+      if (userInput == "pagedown" || userInput == "pageup")
+      {
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+      	setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      else if(majorContext == "items" &amp;&amp; userInput == "right")
+      {
+        idx = getFocusItemIndex();
+        url = getStringArrayAt(idArray, idx);
+        title = getStringArrayAt(titleArray, idx);
+        
+        arr = null;
+        arr = pushBackStringArray(arr, url);
+        arr = pushBackStringArray(arr, title);
+        print("arr=",arr);
+        print("storagePath=",storagePath);
+        
+        writeStringToFile(storagePath, arr);
+        act = doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/clip/youtube/yt_entry.rss");
+        print("********** doModalRss=",act);
+        if(act != null)
+        {
+          jumpToLink("searchLink");
+        }
+        ret = "true";
+      }
+      else if (majorContext == "items" &amp;&amp; (userInput == "video_play" || userInput == "play"))
+       {
+        idx = getFocusItemIndex();
+        url = getStringArrayAt(urlArray, idx);
+        showIdle();
+        mode = 0;
+	      type="video/mp4"; 
+        url1 = "http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=" + url;
+        movie=getUrl(url1);
+        cancelIdle();
+        playItemUrl(movie,10);
+        ret = "true";
+       }
+      ret;
+    </script>
+  </onUserInput>
+</mediaDisplay>
+
+<onExit>
+    playItemURL(-1, 1);
+    setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+  if(mode == 1)
+  {
+    setRefreshTime(-1);
+    
+    startIndex = (page - 1) * maxResults + 1;
+    url = feedUrl+"?time="+time+"&amp;start-index="+startIndex+"&amp;max-results="+maxResults;
+
+    print("Start to load feed:",url);
+    
+    dlok = loadXMLFile(url);
+    if (dlok != null)
+    {
+    	itemSize = getXMLElementCount("feed","entry");
+    	if(itemSize == 0)
+    	  postMessage("return");
+    	print("Item Size = ", itemSize);
+    
+    	totalResults = getXMLText("feed", "openSearch:totalResults");
+    	startIndex = getXMLText("feed", "openSearch:startIndex");
+    	itemsPerPage = getXMLText("feed", "openSearch:itemsPerPage");
+    	
+    	print("totalResults=",totalResults);
+    	print("startIndex=",startIndex);
+    	print("itemsPerPage=",itemsPerPage);
+    
+    	count=0;
+    	while(itemSize != 0)
+    	{
+    	  title     = getXMLText("feed","entry",count,"title");
+    	  id        = getXMLText("feed","entry",count,"id");
+    	  url       = getXMLAttribute("feed","entry",count,"media:group","media:player","url");
+    	  thumbnail = getXMLAttribute("feed","entry",count,"media:group","media:thumbnail",0,"url");
+    	  
+    	  titleArray  = pushBackStringArray(titleArray, title);
+    	  urlArray    = pushBackStringArray(urlArray, url);
+    	  idArray     = pushBackStringArray(idArray, id);
+    	  thumbnailArray = pushBackStringArray(thumbnailArray, thumbnail);
+      
+    	  count += 1;
+    	  if (count == itemSize)
+    	  {
+    		  break;
+    	  }
+    	}
+    	print("title array =", titleArray);
+    	setFocusItemIndex(0);
+    	redrawDisplay();
+    }
+  }
+  else if(mode == 0)
+  {
+   /* Nothing */
+  }
+</onRefresh>
+
+<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  cachePath = getStoragePath("key");
+  optionsArray = readStringFromFile(cachePath + "youtubeOptions.dat");
+  if(optionsArray == null)
+  {
+    youtubeRegion = readStringFromFile(cachePath + "youtubeRegion.dat");
+    if(youtubeRegion == null)
+      youtubeRegion = "US";
+    hd = 1;
+    username = " ";
+  }
+  else
+  {
+    youtubeRegion = getStringArrayAt(optionsArray, 0);
+    hd = getStringArrayAt(optionsArray, 1);
+    username = getStringArrayAt(optionsArray, 2);
+  }
+  
+  page = 1;
+  maxResults = 20;
+
+  storagePath = getStoragePath("tmp");
+  storagePath = storagePath + "youtubeRSS.dat";
+  arr = readStringFromFile(storagePath);
+  print("******* Initialize: "+arr);
+  feedUrl = getStringArrayAt(arr, 0);
+  pageTitle = getStringArrayAt(arr, 1);
+
+  titleArray = null;
+  thumbnailArray = null;
+  urlArray = null;
+  idArray = null;
+  time = "today";
+  page = 1;
+  mode = 1;
+  setRefreshTime(1);
+</onEnter>
+
+<submenu>
+  <title>Forward</title>
+  <onClick>
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    idArray = null;
+    next = page * maxResults;
+    if( next &lt; totalResults )
+    {
+      page = page + 1;
+      setRefreshTime(1);
+    }
+  </onClick>
+</submenu>
+
+<submenu>
+  <title>Back</title>
+  <onClick>
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    idArray = null;
+    if(page &gt; 1)
+    {
+      page = page - 1;
+      setRefreshTime(1);
+    }
+  </onClick>
+</submenu>
+
+<submenu>
+  <title>Today</title>
+  <onClick>
+    time = "today";
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    idArray = null;
+    page = 1;
+    setRefreshTime(1);
+  </onClick>
+</submenu>
+
+<submenu>
+  <title>This week</title>
+  <onClick>
+    time = "this_week";
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    idArray = null;
+    page = 1;
+    setRefreshTime(1);
+  </onClick>
+</submenu>
+
+<submenu>
+  <title>This month</title>
+  <onClick>
+    time = "this_month";
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    idArray = null;
+    page = 1;
+    setRefreshTime(1);
+  </onClick>
+</submenu>
+
+<submenu>
+  <title>All time</title>
+  <onClick>
+    time = "all_time";
+    titleArray = null;
+    thumbnailArray = null;
+    urlArray = null;
+    idArray = null;
+    page = 1;
+    setRefreshTime(1);
+  </onClick>
+</submenu>
+
+<item_template>
+  <displayTitle>
+    <script>
+      getStringArrayAt(titleArray , -1);
+    </script>
+  </displayTitle>
+  
+  <media:thumbnail>
+    <script>
+      getStringArrayAt(thumbnailArray , -1);
+  	</script>
+  </media:thumbnail>
+      
+  <mediaDisplay name=threePartsView
+	    sideLeftWidthPC = 0
+	    sideRightWidthPC = 0
+      backgroundColor="8:8:8">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+        	</mediaDisplay>
+
+	<onClick>
+    idx = getFocusItemIndex();
+    url = getStringArrayAt(urlArray, idx);
+      historyPath = getStoragePath("key")+"translate.history_video.m3u";
+      historydat = readStringFromFile(historyPath);
+      if(historydat == null)
+        historydat = pushBackStringArray(historydat, "#EXTM3U");
+      historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+getStringArrayAt(titleArray, idx));
+      historydat = pushBackStringArray(historydat, url);
+      writeStringToFile(historyPath, historydat);
+      showIdle();
+      mode = 0;
+	    type="video/mp4"; 
+      url1 = "http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=" + url;
+      movie=getUrl(url1);
+      cancelIdle();
+    storagePath = getStoragePath("tmp");
+    storagePath_stream = storagePath + "stream.dat";
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, getStringArrayAt(titleArray, idx));
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+	</onClick>
+</item_template>
+
+	<searchLink>
+  	<mediaDisplay name="threePartsView">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+  	</mediaDisplay>
+    <link>rss_file:///usr/local/etc/www/cgi-bin/scripts/clip/youtube/yt_search_feed.rss</link>
+	</searchLink>
+
+<channel>
+	<title>
+	  <script>"Youtube: " + pageTitle;</script>
+	</title>
+	<link>../etc/translate/rss/yt_feed.rss</link>
+	
+<itemSize>
+	<script>itemSize;</script>
+</itemSize>
+
+</channel>
+</rss>

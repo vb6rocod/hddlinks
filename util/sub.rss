@@ -1,0 +1,692 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name="onePartView"
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemXPC="20"
+	itemYPC="20"
+	itemWidthPC="30"
+	itemHeightPC="10"
+	capXPC="51"
+	capYPC="19"
+	capHeightPC="10"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	showHeader=no
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=no
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <text offsetXPC=0 offsetYPC=70 widthPC=100 heightPC=30 fontSize=20 backgroundColor=0:0:255 foregroundColor=200:200:200>
+  </text>
+    		<text align="center" redraw="yes" offsetXPC="0" useBackgroundSurface="yes">
+  			<script>tline1;</script>
+  			<fontFile>
+  			<script>
+        fontname1;
+  			</script>
+  			</fontFile>
+  			<offsetYPC>
+  			<script>
+  			 99 + fontoffset1 - mt*wh; 			
+  			</script>
+  			</offsetYPC>
+  			<fontSize>
+  			<script>
+  			fontsize1;
+  			</script>
+  			</fontSize>
+  			<foregroundColor>
+  			<script>
+  			"0:0:0";
+  			</script>
+  			</foregroundColor>
+  			<backgroundColor>
+  			<script>
+  			if (transp1 == "-1:-1:-1" || transp1 == "255:0:255")
+          "128:128:128";
+        else
+          transp1;
+  			</script>
+  			</backgroundColor>
+  			<widthPC>
+  			<script>
+  			   100;
+  			</script> 
+  			</widthPC>
+  			<heightPC>
+  			<script>
+           wh;
+  			</script>
+  			</heightPC>
+  		</text>
+  		
+    		<text align="center" redraw="yes" useBackgroundSurface="no">
+  			<script>tline1;</script>
+<offsetXPC>
+  <script>
+   0 - 0.3*shw;
+  </script>
+</offsetXPC>
+  			<fontFile>
+  			<script>
+        fontname;
+  			</script>
+  			</fontFile>
+  			<offsetYPC>
+  			<script>
+  			 99 + fontoffset1 - mt*wh  - 0.3*shw; 			
+  			</script>
+  			</offsetYPC>
+  			<fontSize>
+  			<script>
+  			fontsize1;
+  			</script>
+  			</fontSize>
+  			<foregroundColor>
+  			<script>
+  			culoare1;
+  			</script>
+  			</foregroundColor>
+  			<backgroundColor>
+  			<script>
+        transp1;
+  			</script>
+  			</backgroundColor>
+  			<widthPC>
+  			<script>
+  			   100;
+  			</script> 
+  			</widthPC>
+  			<heightPC>
+  			<script>
+           wh;
+  			</script>
+  			</heightPC>
+  		</text>
+    		<text align="center" redraw="yes" offsetXPC="0" useBackgroundSurface="yes">
+  			<script>tline2;</script>
+  			<fontFile>
+  			<script>
+        fontname;
+  			</script>
+  			</fontFile>
+  			<offsetYPC>
+  			<script>
+  			 98 + fontoffset1 - wh; 			
+  			</script>
+  			</offsetYPC>
+  			<fontSize>
+  			<script>
+  			fontsize1;
+  			</script>
+  			</fontSize>
+  			<foregroundColor>
+  			<script>
+  			culoare1;
+  			</script>
+  			</foregroundColor>
+  			<backgroundColor>
+  			<script>
+        transp1;
+  			</script>
+  			</backgroundColor>
+  			<widthPC>
+  			<script>
+  			   100;
+  			</script> 
+  			</widthPC>
+  			<heightPC>
+  			<script>
+           wh;
+  			</script>
+  			</heightPC>
+  		</text>	
+	<text redraw="yes" offsetXPC=50 offsetYPC=20 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  <script>
+	  culoareS = getStringArrayAt(culoareSArray, culoareIndex);
+	  print("culoare=",culoareS);
+	  culoareS;
+	  </script>
+	</text>
+	<text redraw="yes" offsetXPC=50 offsetYPC=30 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  <script>
+	  print("transp=",transpS);
+	  transpS = getStringArrayAt(transpSArray, transpIndex);
+	  transpS;
+	  </script>
+	</text>
+	<text redraw="yes" offsetXPC=50 offsetYPC=40 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  <script>
+	  fontsize = getStringArrayAt(fontsizeArray, fontsizeIndex);
+	  print("fontsize=",fontsize);
+	  fontsize;
+	  </script>
+	</text>
+	<text redraw="yes" offsetXPC=50 offsetYPC=50 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  <script>
+	  fontoffset = getStringArrayAt(fontoffsetArray, fontoffsetIndex);
+	  print("fontoffset=",fontoffset);
+	  fontoffset;
+	  </script>
+	</text>
+	<text redraw="yes" offsetXPC=50 offsetYPC=60 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  <script>
+	  fontnameS = getStringArrayAt(fontnSArray, fontnIndex);
+	  print("fontname=",fontnameS);
+	  fontnameS;
+	  </script>
+	</text>
+	<itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+				{
+					"../etc/translate/rss/image/IMAGE_NEWRSS_MENU_BTFOC.bmp";
+				}
+				else
+				{
+					"";
+				}
+			</script>
+		</image>
+
+		<text offsetXPC=0 offsetYPC=25 widthPC=100 heightPC=50 fontSize=17 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+			<script>
+				getStringArrayAt(itemTitleArray , -1);
+			</script>
+		</text>
+	</itemDisplay>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      idx = Integer(getFocusItemIndex());
+
+      if (majorContext == "items" &amp;&amp; idx &lt; 5)
+      {
+        if( userInput == "left" || userInput == "L")
+        {
+          if(idx == 0)
+          {
+            if(culoareIndex == 0)
+              culoareIndex = culoareCount - 1;
+            else
+              culoareIndex = culoareIndex - 1;
+          
+          }
+          else if(idx == 1)
+          {
+            if(transpIndex == 0)
+              transpIndex = transpCount - 1;
+            else
+              transpIndex = transpIndex - 1;          
+          
+          }
+          else if (idx == 2)
+          {
+            if(fontsizeIndex == 0)
+              fontsizeIndex = fontsizeCount - 1;
+            else
+              fontsizeIndex = fontsizeIndex - 1;          
+          
+          }
+          else if (idx == 3)
+          {
+            if(fontoffsetIndex == 0)
+              fontoffsetIndex = fontoffsetCount - 1;
+            else
+              fontoffsetIndex = fontoffsetIndex - 1;          
+          
+          }
+          else if (idx == 4)
+          {
+            if(fontnIndex == 0)
+              fontnIndex = fontnCount - 1;
+            else
+              fontnIndex = fontnIndex - 1;          
+          
+          }
+          ret = "true";
+          redrawDisplay();
+        }
+        else if( userInput == "right" ||userInput == "R" || userInput == "enter" || userInput == "ENTR" )
+        {
+          if(idx == 0)
+          {
+            culoareIndex = culoareIndex + 1;
+            if(culoareIndex == culoareCount)
+            {
+              culoareIndex = 0;
+            }
+            
+          }
+          else if(idx == 1)
+          {
+            transpIndex = transpIndex + 1;
+            if(transpIndex == transpCount)
+            {
+              transpIndex = 0;
+            }
+            
+          }
+          else if(idx == 2)
+          {
+            fontsizeIndex = fontsizeIndex + 1;
+            if(fontsizeIndex == fontsizeCount)
+            {
+              fontsizeIndex = 0;
+            }
+            
+          }
+          else if(idx == 3)
+          {
+            fontoffsetIndex = fontoffsetIndex + 1;
+            if(fontoffsetIndex == fontoffsetCount)
+            {
+              fontoffsetIndex = 0;
+            }
+            
+          }
+          else if(idx == 4)
+          {
+            fontnIndex = fontnIndex + 1;
+            if(fontnIndex == fontnCount)
+            {
+              fontnIndex = 0;
+            }
+            
+          }
+          ret = "true";
+          redrawDisplay();
+        }
+      }
+      ret;
+    </script>
+  </onUserInput>
+</mediaDisplay>
+
+<onExit>
+  arr = null;
+    
+  culoare = getStringArrayAt(culoareArray, culoareIndex);
+  transp = getStringArrayAt(transpArray, transpIndex);
+  fontsize = getStringArrayAt(fontsizeArray, fontsizeIndex);
+  fontoffset = getStringArrayAt(fontoffsetArray, fontoffsetIndex);
+  fontn = getStringArrayAt(fontnArray, fontnIndex);
+  arr = pushBackStringArray(arr, culoare);
+  arr = pushBackStringArray(arr, transp);
+  arr = pushBackStringArray(arr, fontsize);
+  arr = pushBackStringArray(arr, fontoffset);
+  arr = pushBackStringArray(arr, fontn);
+  
+  print("arr=",arr);
+    
+  writeStringToFile(optionsPath, arr);
+  
+</onExit>
+
+<onEnter>
+
+  tline2 = "Setare font, poziţie, culoare, fundal şi mărime subtitrare";
+  tline1 = "abcdefghijklmnopqrstuvwxyzăîâşţ-ABCDEFGHIJKLMNOPQRSTUVWXYZĂÎÂŞŢ";
+  pageTitle = "Setări subtitrări online";
+  cachePath = getStoragePath("key");
+
+
+  optionsPath = cachePath + "sub.dat";
+  optionsArray = readStringFromFile(optionsPath);
+  if(optionsArray == null)
+  {
+    transp = "0:0:0";
+    culoare = "255:255:255";
+    fontsize = "20";
+    fontoffset = "0";
+    fontn = "1";
+  }
+  else
+  {
+    culoare = getStringArrayAt(optionsArray, 0);
+    transp = getStringArrayAt(optionsArray, 1);
+    fontsize = getStringArrayAt(optionsArray, 2);
+    fontoffset = getStringArrayAt(optionsArray, 3);
+    fontn = getStringArrayAt(optionsArray, 4);
+  }
+  fontnArray = null;
+  
+  fontnCount = 4;
+  
+  fontnArray = pushBackStringArray(fontnArray, "1");
+  fontnArray = pushBackStringArray(fontnArray, "2");
+  fontnArray = pushBackStringArray(fontnArray, "3");
+  fontnArray = pushBackStringArray(fontnArray, "4");
+  
+  fontnSArray = null;
+  
+  fontnSArray = pushBackStringArray(fontnSArray, "Arial");
+  fontnSArray = pushBackStringArray(fontnSArray, "Arial Rounded Bold");
+  fontnSArray = pushBackStringArray(fontnSArray, "Arial Narrow Bold");
+  fontnSArray = pushBackStringArray(fontnSArray, "Arial Rounded Bold (O)"); 
+  
+  fontnIndex = 0;
+  
+  while(1)
+  {
+    s = getStringArrayAt(fontnArray, fontnIndex);
+    if(s == fontn)
+    {
+      break;
+    }
+    fontnIndex = fontnIndex + 1;
+    if(fontnIndex == fontnCount)
+    {
+      fontnIndex = 0;
+      break;
+    }
+  }
+  
+  transpArray = null;
+  
+  transpCount = 7;
+  
+  transpArray = pushBackStringArray(transpArray, "255:0:255");
+  transpArray = pushBackStringArray(transpArray, "-1:-1:-1");
+  transpArray = pushBackStringArray(transpArray, "0:0:0");
+  transpArray = pushBackStringArray(transpArray, "128:128:128");
+  transpArray = pushBackStringArray(transpArray, "64:64:64");
+  transpArray = pushBackStringArray(transpArray, "0:64:128");
+  transpArray = pushBackStringArray(transpArray, "128:0:0");
+  
+  transpSArray = null;
+  
+  transpSArray = pushBackStringArray(transpSArray, "Transparent");
+  transpSArray = pushBackStringArray(transpSArray, "Transparent Egreat");
+  transpSArray = pushBackStringArray(transpSArray, "Negru");
+  transpSArray = pushBackStringArray(transpSArray, "Gri deschis");
+  transpSArray = pushBackStringArray(transpSArray, "Gri inchis");
+  transpSArray = pushBackStringArray(transpSArray, "Albastru");
+  transpSArray = pushBackStringArray(transpSArray, "Rosu"); 
+  
+  transpIndex = 0;
+  
+  while(1)
+  {
+    s = getStringArrayAt(transpArray, transpIndex);
+    if(s == transp)
+    {
+      break;
+    }
+    transpIndex = transpIndex + 1;
+    if(transpIndex == transpCount)
+    {
+      transpIndex = 0;
+      break;
+    }
+  }  
+  culoareArray = null;
+  
+  culoareCount = 7;
+  
+  culoareArray = pushBackStringArray(culoareArray, "254:254:254");
+  culoareArray = pushBackStringArray(culoareArray, "254:254:0");
+  culoareArray = pushBackStringArray(culoareArray, "232:175:32");
+  culoareArray = pushBackStringArray(culoareArray, "254:0:0");
+  culoareArray = pushBackStringArray(culoareArray, "0:254:0");
+  culoareArray = pushBackStringArray(culoareArray, "0:0:254");
+  culoareArray = pushBackStringArray(culoareArray, "0:0:0");
+
+  culoareSArray = null;
+  
+  culoareSArray = pushBackStringArray(culoareSArray, "Albă");
+  culoareSArray = pushBackStringArray(culoareSArray, "Galbenă");
+  culoareSArray = pushBackStringArray(culoareSArray, "Galbenă SDK3X");
+  culoareSArray = pushBackStringArray(culoareSArray, "Roşie");
+  culoareSArray = pushBackStringArray(culoareSArray, "Verde");
+  culoareSArray = pushBackStringArray(culoareSArray, "Albastrp");
+  culoareSArray = pushBackStringArray(culoareSArray, "Neagră");  
+  culoareIndex = 0;
+  
+  while(1)
+  {
+    s = getStringArrayAt(culoareArray, culoareIndex);
+    if(s == culoare)
+    {
+      break;
+    }
+    culoareIndex = culoareIndex + 1;
+    if(culoareIndex == culoareCount)
+    {
+      culoareIndex = 0;
+      break;
+    }
+  }
+
+  fontsizeArray = null;
+  
+  fontsizeCount = 8;
+  
+  fontsizeArray = pushBackStringArray(fontsizeArray, "18");
+  fontsizeArray = pushBackStringArray(fontsizeArray, "20");
+  fontsizeArray = pushBackStringArray(fontsizeArray, "22");
+  fontsizeArray = pushBackStringArray(fontsizeArray, "24");
+  fontsizeArray = pushBackStringArray(fontsizeArray, "26");
+  fontsizeArray = pushBackStringArray(fontsizeArray, "28");
+  fontsizeArray = pushBackStringArray(fontsizeArray, "30");
+  fontsizeArray = pushBackStringArray(fontsizeArray, "32");
+  
+  fontsizeIndex = 0;
+  
+  while(1)
+  {
+    s = getStringArrayAt(fontsizeArray, fontsizeIndex);
+    if(s == fontsize)
+    {
+      break;
+    }
+    fontsizeIndex = fontsizeIndex + 1;
+    if(fontsizeIndex == fontsizeCount)
+    {
+      fontsizeIndex = 0;
+      break;
+    }
+  } 
+  
+  fontoffsetArray = null;
+  
+  fontoffsetCount = 18;
+  
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "2");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "1.5");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "1");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "0.5");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "0");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-0.5");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-1");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-1.5");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-2");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-2.5");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-3");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-3.5");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-4");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-4.5");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-5");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-6");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-7");
+  fontoffsetArray = pushBackStringArray(fontoffsetArray, "-8");
+  
+  fontoffsetIndex = 0;
+  
+  while(1)
+  {
+    s = getStringArrayAt(fontoffsetArray, fontoffsetIndex);
+    if(s == fontoffset)
+    {
+      break;
+    }
+    fontoffsetIndex = fontoffsetIndex + 1;
+    if(fontoffsetIndex == fontoffsetCount)
+    {
+      fontoffsetIndex = 0;
+      break;
+    }
+  } 
+	itemTitleArray = null;
+	topUrl="/usr/local/etc/www/cgi-bin/scripts/util/sub.rss";
+	dlok = loadXMLFile(topUrl);
+	if (dlok != null)
+	{
+		itemSize = getXMLElementCount("rss", "channel", "item");
+		print("itemSize = ", itemSize);
+
+		if(itemSize &gt; 0)
+		{
+			itemCount = 0;
+      	
+			while(1)
+			{
+				itemTitle  = getXMLText("rss", "channel", "item", itemCount, "title");
+				print("itemTitle = ", itemTitle);
+				itemTitleArray  = pushBackStringArray(itemTitleArray, itemTitle);
+      	
+				itemCount += 1;
+				if(itemCount == itemSize)
+				{
+					break;
+				}
+			}
+			setFocusItemIndex(0);
+			setItemFocus(0);
+			redrawDisplay();
+		}
+	}
+
+redrawDisplay();
+executeScript("test");
+</onEnter>
+<test>
+culoare1 = culoare;
+transp1 = transp;
+fontsize1 = fontsize;
+fontoffset1 = fontoffset;
+if (fontn == "1")
+fontname="/usr/local/etc/www/cgi-bin/scripts/util/arial.ttf";
+else if (fontn == "2")
+fontname="/usr/local/etc/www/cgi-bin/scripts/util/arialrb.ttf";
+else if (fontn == "3")
+fontname="/usr/local/etc/www/cgi-bin/scripts/util/arialnb.ttf";
+else if (fontn == "4")
+fontname="/usr/local/etc/www/cgi-bin/scripts/util/arialrb2.ttf";
+
+if (fontn == "1")
+fontname1="/usr/local/etc/www/cgi-bin/scripts/util/arial.ttf";
+else if (fontn == "2")
+fontname1="/usr/local/etc/www/cgi-bin/scripts/util/arialrb.ttf";
+else if (fontn == "3")
+fontname1="/usr/local/etc/www/cgi-bin/scripts/util/arialnb.ttf";
+else if (fontn == "4")
+fontname1="/usr/local/etc/www/cgi-bin/scripts/util/arialrb2.ttf";
+
+if (fontn == "5")
+  shw=0;
+else
+  shw=1;
+if (fontsize &lt; 22)
+{
+  wh=7;
+  mt=2;
+}
+else
+{
+	if (fontsize &gt;=22 &amp;&amp; fontsize &lt; 26)
+		{
+			wh=8.5;
+			mt=2;
+		}	
+		else
+		{
+			wh=9;
+			mt=2.1;
+		}
+}
+redrawDisplay();
+</test>
+
+<channel>
+  <title>Setări subtitrări online</title>
+  
+  <item>
+    <title>Culoare subtitrare</title>
+  </item>
+
+  <item>
+    <title>Fundal subtitrare</title>
+  </item>
+
+  <item>
+    <title>Mărime font</title>
+  </item>
+
+  <item>
+    <title>Poziţie verticală</title>
+  </item>
+  
+  <item>
+    <title>Font</title>
+  </item>
+</channel>
+
+</rss>

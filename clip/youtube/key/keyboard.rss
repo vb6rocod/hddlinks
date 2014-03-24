@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<mediaDisplay name=photoView 
+  rowCount=4 
+  columnCount=12 
+  drawItemText="yes" 
+  menuBorderColor="0:0:0" 
+  sideColorBottom="0:0:0" 
+  sideColorTop="0:0:0" 
+  fontSize=22 
+  sideTopHeightPC=0 
+  itemImageXPC="10" 
+  itemOffsetXPC="14" 
+  itemOffsetYPC="30" 
+  itemWidthPC="5.5" 
+  itemHeightPC="10" 
+  backgroundColor="0:0:0" 
+  sliding="no" 
+  showHeader="no" 
+  showDefaultInfo=no 
+  rollItems=no 
+  idleImageXPC=45 
+  idleImageYPC=42 
+  idleImageWidthPC=10 
+  idleImageHeightPC=16>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+	<text redraw="no" align="left" offsetXPC="5" offsetYPC="0" widthPC="90" heightPC="15" fontSize="30" backgroundColor="-1:-1:-1" foregroundColor="200:200:200">
+		<script>getPageInfo("pageTitle");</script>
+	</text>
+  <image offsetXPC=82 offsetYPC=3 widthPC=15 heightPC=10>
+    ../etc/translate/rss/image/YouTubeLogo.jpg
+    <widthPC>
+      <script>
+        300 / 152 * 10 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 300 / 152 * 10 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+	</image>
+	<text redraw="yes" align="left" offsetXPC="10" offsetYPC="18" widthPC="80" heightPC="8" fontSize="18" backgroundColor="28:35:51" foregroundColor="200:200:200">
+		<script>inputText + "_";</script>
+		<foregroundColor>
+		  <script>if(firstUse == 1) "80:80:80"; else "200:200:200";</script>
+		</foregroundColor>
+	</text>
+	<text redraw="no" align="center" offsetXPC="10" offsetYPC="80" widthPC="80" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="140:140:140">&gt;&gt;| - gap, |&lt;&lt; - erase, # or play or stop - the completion of a set</text>
+	<text redraw="no" align="center" offsetXPC="10" offsetYPC="85" widthPC="80" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="140:140:140">info - the keyboard layout. Also working number buttons</text>
+	<itemDisplay>
+		<text align="center" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 fontSize=22 backgroundColor=33:40:58 foregroundColor=200:200:200>
+			<script>
+			  idx = getQueryItemIndex();
+				getStringArrayAt(itemTitleArray, idx-(-1));
+			</script>
+		</text>
+	</itemDisplay>
+	<onUserInput>
+		<script>
+			ret = "false";
+			inputNumber = null;
+			userInput = currentUserInput();
+			majorContext = getPageInfo("majorContext");
+
+			print("*** majorContext=",majorContext);
+			print("*** userInput=",userInput);
+
+			if(userInput == "one" || userInput == "1")
+				inputNumber = "1";
+			else if(userInput == "two" || userInput == "2")
+				inputNumber = "2";
+			else if(userInput == "three" || userInput == "3")
+				inputNumber = "3";
+			else if(userInput == "four" || userInput == "4")
+				inputNumber = "4";
+			else if(userInput == "five" || userInput == "5")
+				inputNumber = "5";
+			else if(userInput == "six" || userInput == "6")
+				inputNumber = "6";
+			else if(userInput == "seven" || userInput == "7")
+				inputNumber = "7";
+			else if(userInput == "eight" || userInput == "8")
+				inputNumber = "8";
+			else if(userInput == "nine" || userInput == "9")
+				inputNumber = "9";
+			else if(userInput == "zero" || userInput == "0")
+				inputNumber = "0";
+			else if(userInput == "pagedown" || userInput == "PD")
+				inputNumber = " ";
+			else if(userInput == "pageup" || userInput == "PG")
+		  {
+        firstUse = 0;		  
+				if(inputTextCount &gt; 0)
+				{
+					inputTextCount -= 1;
+					inputTextArray = deleteStringArrayAt(inputTextArray, inputTextCount);
+					inputText = "";
+					counter = 0;
+					while(1)
+					{
+						if(counter &gt;= inputTextCount)
+							break;
+						inputText += getStringArrayAt(inputTextArray, counter);
+						counter += 1;
+					}
+					redrawDisplay();
+				}
+				ret = "true";
+			}
+			else if(userInput == "video_play" || userInput == "video_stop")
+			{
+			  saveString = null;
+			  saveString  = pushBackStringArray(saveString, inputTextCount);
+			  saveString  = pushBackStringArray(saveString, inputTextArray);
+        writeStringToFile(getStoragePath("key")+"youtube_search.dat", saveString);
+				setReturnString(inputText);
+				postMessage("return");
+				ret = "true";
+			}
+			else if(userInput == "display" || userInput == "DISPLAY")
+			{
+				if (itemLocale == lr)
+					itemLocale = "en";
+				else
+					itemLocale = lr;
+				itemTitleArray = readStringFromFile("/usr/local/etc/www/cgi-bin/scripts/clip/youtube/key/dictionary_"+itemLocale+".str");
+				itemSize = getStringArrayAt(itemTitleArray, 0);
+				setFocusItemIndex(0);
+				redrawDisplay("item");
+				ret = "true";
+			}
+				
+			if (inputNumber != null)
+			{
+			  if(firstUse == 1)
+			  {
+			    if(inputNumber == " ")
+			      inputNumber = "";
+			    else
+			    {
+			      inputText = "";
+    	      inputTextArray = null;
+    	      inputTextCount = 0;
+			    }
+    		  firstUse = 0;
+    		  redrawDisplay();
+			  }
+			  if(inputNumber != "")
+			  {
+  				inputText += inputNumber;
+  				inputTextArray  = pushBackStringArray(inputTextArray, inputNumber);
+  				inputTextCount -= -1;
+  				redrawDisplay();
+  				ret = "true";
+  			}
+			}
+			ret;
+		</script>
+	</onUserInput>
+</mediaDisplay>
+
+<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  optionsPath = getStoragePath("key") + "youtubeOptions.dat";
+  optionsArray = readStringFromFile(optionsPath);
+  if(optionsArray == null)
+  {
+    youtubeRegion = " ";
+  }
+  else
+  {
+    youtubeRegion = getStringArrayAt(optionsArray, 0);
+  }
+  if(youtubeRegion=="AU") lr="en"; else
+  if(youtubeRegion=="BR") lr="pt"; else
+  if(youtubeRegion=="GB") lr="en"; else
+  if(youtubeRegion=="DE") lr="de"; else
+  if(youtubeRegion=="NL") lr="nl"; else
+  if(youtubeRegion=="HK") lr="zh-Hans"; else
+  if(youtubeRegion=="IE") lr="ga"; else
+  if(youtubeRegion=="ES") lr="es"; else
+  if(youtubeRegion=="IT") lr="it"; else
+  if(youtubeRegion=="CA") lr="en"; else
+  if(youtubeRegion=="MX") lr="es"; else
+  if(youtubeRegion=="NZ") lr="en"; else
+  if(youtubeRegion=="PL") lr="pl"; else
+  if(youtubeRegion=="RU") lr="ru"; else
+  if(youtubeRegion=="US") lr="en"; else
+  if(youtubeRegion=="TW") lr="zh-Hans"; else
+  if(youtubeRegion=="FR") lr="fr"; else
+  if(youtubeRegion=="KR") lr="ko"; else
+  if(youtubeRegion=="JP") lr="ja"; else
+    lr="en";
+
+	itemLocale = lr;
+	itemTitleArray = readStringFromFile("/usr/local/etc/www/cgi-bin/scripts/clip/youtube/key/dictionary_"+itemLocale+".str");
+	if(itemTitleArray == null)
+	{
+	 itemLocale = "en";
+	 itemTitleArray = readStringFromFile("/usr/local/etc/www/cgi-bin/scripts/clip/youtube/key/dictionary_"+itemLocale+".str");
+	}
+  itemSize = getStringArrayAt(itemTitleArray, 0);
+	inputTextCount = 0;
+	inputTextArray = null;
+  inputText = "";
+  saveString = readStringFromFile(getStoragePath("key")+"youtube_search.dat");
+  if(saveString != null)
+  {
+    inputTextCount = getStringArrayAt(saveString, 0);
+		counter = 0;
+		while(1)
+		{
+			if(counter &gt;= inputTextCount)
+				break;
+		  ch = getStringArrayAt(saveString, counter+1);
+			inputText += ch;
+			inputTextArray = pushBackStringArray(inputTextArray, ch);
+			counter += 1;
+		}
+  }
+  firstUse = 0;
+  if(inputText != "")
+    firstUse = 1;
+	setFocusItemIndex(0);
+	redrawDisplay();
+</onEnter>
+
+<item_template>
+	<onClick>
+		idx = getFocusItemIndex();
+		itemTitle = getStringArrayAt(itemTitleArray, idx-(-1));
+		if (itemTitle == "#" )
+		{
+		  saveString = null;
+		  saveString  = pushBackStringArray(saveString, inputTextCount);
+		  saveString  = pushBackStringArray(saveString, inputTextArray);
+        writeStringToFile(getStoragePath("key")+"youtube_search.dat", saveString);
+			setReturnString(inputText);
+			postMessage("return");
+			ret = "true";		}
+		else
+		{
+		  if(firstUse == 1)
+		  {
+	      inputText = "";
+	      inputTextArray = null;
+	      inputTextCount = 0;
+  		  firstUse = 0;
+		  }
+			inputText += itemTitle;
+			inputTextArray  = pushBackStringArray(inputTextArray, itemTitle);
+			inputTextCount -= -1;
+			redrawDisplay();
+		}
+		null;
+	</onClick>
+</item_template>
+
+<channel>
+  <title>Keyboard</title>
+  <itemSize>
+    <script>
+		itemSize;
+	</script>
+  </itemSize>
+</channel>
+
+</rss>

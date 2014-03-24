@@ -1,0 +1,812 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+	
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="45"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="45"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(annotation); annotation;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=61 offsetYPC=30 widthPC=30 heightPC=30>
+		<script>print(img); img;</script>
+		</image>
+		<idleImage> image/POPUP_LOADING_01.png </idleImage>
+		<idleImage> image/POPUP_LOADING_02.png </idleImage>
+		<idleImage> image/POPUP_LOADING_03.png </idleImage>
+		<idleImage> image/POPUP_LOADING_04.png </idleImage>
+		<idleImage> image/POPUP_LOADING_05.png </idleImage>
+		<idleImage> image/POPUP_LOADING_06.png </idleImage>
+		<idleImage> image/POPUP_LOADING_07.png </idleImage>
+		<idleImage> image/POPUP_LOADING_08.png </idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  img = getItemInfo(idx,"image");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+		
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+ret;
+</script>
+</onUserInput>
+		
+	</mediaDisplay>
+	
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>TV Live from www.tvdez.com</title>
+	<menu>main menu</menu>
+   
+    <item>
+    <title>Sport TV 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.tvdez.com/sporttv,rtmp://hs8hl2al9.thetvathome.com/estadio54/sporttv";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Sport TV 1</annotation>
+    <image>http://images.tvdez.com/sporttv.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sporttv.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Sport TV 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/sporttv2";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Sport TV 2</annotation>
+    <image>http://images.tvdez.com/sporttv2.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sporttv2.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+        
+    <item>
+    <title>Sport TV HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/sporttv";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Sport TV HD</annotation>
+    <image>http://images.tvdez.com/sporttvhd.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sporttvhd.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>SIC</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/sic";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>SIC</annotation>
+    <image>http://images.tvdez.com/sic.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sic.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>SIC Noticias</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://213.13.26.41/live/sicnoticias";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>SIC Noticias</annotation>
+    <image>http://images.tvdez.com/sicnoticias.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sicnoticias.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>SIC Radical</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/sicradical";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>SIC Radical</annotation>
+    <image>http://images.tvdez.com/sicradical.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sicradical.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>SIC Mulher</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/sicmulher";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>SIC Mulher</annotation>
+    <image>http://images.tvdez.com/sicmulher.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sicmulher.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>SIC Kids</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/sickids";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>SIC Kids</annotation>
+    <image>http://images.tvdez.com/sickids.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sickids.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>TVI</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/tvi";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>TVI</annotation>
+    <image>http://images.tvdez.com/tvi.png</image>
+    <media:thumbnail url="http://images.tvdez.com/tvi.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>TVI 24</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/tvi24";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>TVI 24</annotation>
+    <image>http://images.tvdez.com/tvi24.png</image>
+    <media:thumbnail url="http://images.tvdez.com/tvi24.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>RTP</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www0.rtp.pt/home/player.swf,rtmp://h2c.rtp.pt/livetv/2ch5h264";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>RTP</annotation>
+    <image>http://images.tvdez.com/rtp.png</image>
+    <media:thumbnail url="http://images.tvdez.com/rtp.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>RTP 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www0.rtp.pt/home/player.swf,rtmp://h2c.rtp.pt/livetv/2ch3h264";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>RTP 2</annotation>
+    <image>http://images.tvdez.com/rtp2.png</image>
+    <media:thumbnail url="http://images.tvdez.com/rtp2.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>RTP N</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www0.rtp.pt/home/player.swf,rtmp://h2c.rtp.pt/livetv/2ch64h264";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>RTP N</annotation>
+    <image>http://images.tvdez.com/rtpn.png</image>
+    <media:thumbnail url="http://images.tvdez.com/rtpn.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>RTP Memoria</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www0.rtp.pt/home/player.swf,rtmp://h2c.rtp.pt/livetv/2ch80h264";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>RTP Memoria</annotation>
+    <image>http://images.tvdez.com/rtpmemoria.png</image>
+    <media:thumbnail url="http://images.tvdez.com/rtpmemoria.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>RTP Internacional</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www0.rtp.pt/home/player.swf,rtmp://h2c.rtp.pt/livetv/2ch120h264";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>RTP Internacional</annotation>
+    <image>http://images.tvdez.com/rtpinternacional.png</image>
+    <media:thumbnail url="http://images.tvdez.com/rtpinternacional.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>RTP Acores</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www0.rtp.pt/home/player.swf,rtmp://50.30.32.198/rtpa/myStream.sdp";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>RTP Acores</annotation>
+    <image>http://images.tvdez.com/rtpacores.png</image>
+    <media:thumbnail url="http://images.tvdez.com/rtpacores.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Benfica TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/benficatv";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Benfica TV</annotation>
+    <image>http://images.tvdez.com/benficatv.png</image>
+    <media:thumbnail url="http://images.tvdez.com/benficatv.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Porto Canal</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://arrisco.flashwebtown.com/live/myStream.sdp";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Porto Canal</annotation>
+    <image>http://images.tvdez.com/portocanal.png</image>
+    <media:thumbnail url="http://images.tvdez.com/portocanal.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>AXN</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/axn";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>AXN</annotation>
+    <image>http://images.tvdez.com/axn.png</image>
+    <media:thumbnail url="http://images.tvdez.com/axn.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+        
+    <item>
+    <title>Sony Entertainment</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/sonyentertainment";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Sony Entertainment</annotation>
+    <image>http://images.tvdez.com/sonyentertainment.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sonyentertainment.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Syfy</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/syfy";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Syfy</annotation>
+    <image>http://images.tvdez.com/syfy.png</image>
+    <media:thumbnail url="http://images.tvdez.com/syfy.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>FOX</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/fox";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>FOX</annotation>
+    <image>http://images.tvdez.com/fox.png</image>
+    <media:thumbnail url="http://images.tvdez.com/fox.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>FOX Life</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/foxlife";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>FOX Life</annotation>
+    <image>http://images.tvdez.com/foxlife.png</image>
+    <media:thumbnail url="http://images.tvdez.com/foxlife.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>FOX Next</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/foxnext";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>FOX Next</annotation>
+    <image>http://images.tvdez.com/foxnext.png</image>
+    <media:thumbnail url="http://images.tvdez.com/foxnext.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Hollywood</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/hollywood";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Hollywood</annotation>
+    <image>http://images.tvdez.com/hollywood.png</image>
+    <media:thumbnail url="http://images.tvdez.com/hollywood.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>HBO</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://streamer.istreamlive.net/133_182/master10";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>HBO</annotation>
+    <image>http://images.tvdez.com/hbo.png</image>
+    <media:thumbnail url="http://images.tvdez.com/hbo.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+        
+    <item>
+    <title>VH1 Hits</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/vh1";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>VH1 Hits</annotation>
+    <image>http://images.tvdez.com/vh1.png</image>
+    <media:thumbnail url="http://images.tvdez.com/vh1.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Discovery Channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/discovery";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Discovery Channel</annotation>
+    <image>http://images.tvdez.com/discovery.png</image>
+    <media:thumbnail url="http://images.tvdez.com/discovery.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Odisseia</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/odisseia";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Odisseia</annotation>
+    <image>http://images.tvdez.com/odisseia.png</image>
+    <media:thumbnail url="http://images.tvdez.com/odisseia.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>National Geographic</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/nationalgeographic";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>National Geographic</annotation>
+    <image>http://images.tvdez.com/nationalgeographic.png</image>
+    <media:thumbnail url="http://images.tvdez.com/nationalgeographic.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+
+    
+    <item>
+    <title>Canal Panda</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/canalpanda";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Canal Panda</annotation>
+    <image>http://images.tvdez.com/canalpanda.png</image>
+    <media:thumbnail url="http://images.tvdez.com/canalpanda.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+
+        
+    <item>
+    <title>SBT</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://streamer.istreamlive.net/35_137/sbt";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>SBT</annotation>
+    <image>http://images.tvdez.com/sbt.png</image>
+    <media:thumbnail url="http://images.tvdez.com/sbt.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+        
+    <item>
+    <title>Band Sports</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://streamer.istreamlive.net/aliez/b2b652fa53f79683";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Band Sports</annotation>
+    <image>http://images.tvdez.com/bandsports.png</image>
+    <media:thumbnail url="http://images.tvdez.com/bandsports.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+            
+    <item>
+    <title>TVE</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://flash1.e-cast.co.nz:1935/live/tve3";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>TVE</annotation>
+    <image>http://images.tvdez.com/tve.png</image>
+    <media:thumbnail url="http://images.tvdez.com/tve.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>TVE 24H</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,http://195.10.10.201/rtve/24h.flv";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>TVE 24H</annotation>
+    <image>http://images.tvdez.com/tve24h.png</image>
+    <media:thumbnail url="http://images.tvdez.com/tve24h.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>France 24</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://stream2.france24.yacast.net:80/france24_live/fr/f24_livefr";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>France 24</annotation>
+    <image>http://images.tvdez.com/france24.png</image>
+    <media:thumbnail url="http://images.tvdez.com/france24.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+        
+    <item>
+    <title>Sky News</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,mms://live1.wm.skynews.servecast.net/skynews_wmlz_live300k";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Sky News</annotation>
+    <image>http://images.tvdez.com/skynews.png</image>
+    <media:thumbnail url="http://images.tvdez.com/skynews.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+        
+    <item>
+    <title>ESPN Brasil</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://streamer.istreamlive.net/35_137/esportestv01.sdp";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>ESPN Brasil</annotation>
+    <image>http://images.tvdez.com/espnbrasil.png</image>
+    <media:thumbnail url="http://images.tvdez.com/espnbrasil.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Eurosport</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://hs8hl2al9.thetvathome.com/estadio54/eurosport";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Eurosport</annotation>
+    <image>http://images.tvdez.com/eurosport.png</image>
+    <media:thumbnail url="http://images.tvdez.com/eurosport.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+        
+    <item>
+    <title>Eurosport News</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,http://a1439.l3192233438.c31922.g.lm.akamaistream.net/D/1439/31922/v0001/reflector:33438";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Eurosport News</annotation>
+    <image>http://images.tvdez.com/eurosportnews.png</image>
+    <media:thumbnail url="http://images.tvdez.com/eurosportnews.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Economico TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp89928.live.edgefcs.net:1935/live/EconomicoTV_MBR_750@19075";
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    <annotation>Economico TV</annotation>
+    <image>http://images.tvdez.com/economicotv.png</image>
+    <media:thumbnail url="http://images.tvdez.com/economicotv.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+
+    </channel>
+</rss>

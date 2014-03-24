@@ -1,0 +1,445 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name=threePartsView
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemImageXPC="32"
+	itemImageYPC="18"
+	itemXPC="39"
+	itemYPC="18"
+	itemHeightPC="0"
+	itemWidthPC="0"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	capXPC="88"
+	capYPC="17"
+	capHeightPC="10"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+  menuXPC=10
+  menuYPC=25
+  menuWidthPC=16
+  menuHeightPC=8
+	showHeader=no
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=no
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+  <image offsetXPC=80 offsetYPC=1 widthPC=15 heightPC=10>
+    ../etc/translate/rss/image/YouTubeLogo.jpg
+    <widthPC>
+      <script>
+        300 / 152 * 10 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        95 - 300 / 152 * 10 * screenYp / screenXp;
+      </script>
+    </offsetXPC>
+	</image>
+
+  <image offsetXPC=30 offsetYPC=18 widthPC=25 heightPC=25>
+    <script>thumbnail;</script>
+    <widthPC>
+      <script>
+        4 / 3 * 25 * screenYp / screenXp;
+      </script>
+    </widthPC>
+    <offsetXPC>
+      <script>
+        30 + 25 * (1 - 4 / 3 * screenYp / screenXp) / 2;
+      </script>
+    </offsetXPC>
+	</image>
+
+  <text offsetXPC=58 offsetYPC=17 widthPC=10 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=100:200:200>
+    Autor:
+  </text>
+  <text offsetXPC=68 offsetYPC=17 widthPC=30 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>author;</script>
+  </text>
+  <text offsetXPC=58 offsetYPC=24 widthPC=10 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=100:200:200>
+    Rating:
+  </text>
+  <text offsetXPC=68 offsetYPC=24 widthPC=30 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>Integer(rating*100)/100;</script>
+  </text>
+  <text offsetXPC=58 offsetYPC=31 widthPC=15 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=100:200:200>
+    Views:
+  </text>
+  <text offsetXPC=73 offsetYPC=31 widthPC=30 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>views;</script>
+  </text>
+  <text offsetXPC=58 offsetYPC=38 widthPC=10 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=100:200:200>
+    Durata:
+  </text>
+  <text offsetXPC=68 offsetYPC=38 widthPC=30 heightPC=5 fontSize=17 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>
+        x = Integer(duration / 60);
+        h = Integer(duration / 3600);
+        s = duration - (x * 60);
+        m = x - (h * 60);
+        time = sprintf("%s:", h);
+        if(m &lt; 10)  time += "0";
+        time += sprintf("%s:", m);
+        if(s &lt; 10)  time += "0";
+        time += sprintf("%s", s);
+        time;
+    </script>
+  </text>
+
+
+  <text lines="9" offsetXPC=28 offsetYPC=45 widthPC=62 heightPC=45 fontSize=16 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>description;</script>
+  </text>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+      userInput = currentUserInput();
+      print("*** userInput=",userInput);
+      print("*** menuIndex=",getFocusMenuIndex());
+      if (userInput == "video_play" || userInput == "play")
+       {
+        showIdle();
+        mode = 0;
+	      type="video/mp4"; 
+        url1 = "http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=" + url;
+        movie=getUrl(url1);
+        cancelIdle();
+        playItemUrl(movie,10);
+        ret = "true";
+       }
+      ret;
+    </script>
+  </onUserInput>
+</mediaDisplay>
+
+<onExit>
+    playItemURL(-1, 1);
+    setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+  if(mode == 0)
+  {
+    setRefreshTime(-1);
+    
+    url = feedUrl;
+
+    print("Start to load feed:",url);
+    
+    dlok = loadXMLFile(url);
+    if (dlok != null)
+    {
+    	itemSize = getXMLElementCount("entry");
+    	if(itemSize == 0)
+    	{
+    	  postMessage("return");
+    	}
+    	else
+    	{
+      	print("Item Size = ", itemSize);
+      
+    	  title       = getXMLText("entry","title");
+    	  description = getXMLText("entry","content");
+    	  author      = getXMLText("entry","author","name");
+    	  url         = getXMLAttribute("entry","media:group","media:player","url");
+    	  duration    = getXMLAttribute("entry","media:group","yt:duration","seconds");
+    	  rating      = getXMLAttribute("entry","gd:rating","average");
+    	  views       = getXMLAttribute("entry","yt:statistics","viewCount");
+    	  favor       = getXMLAttribute("entry","yt:statistics","favoriteCount");
+
+    	  pageTitle   = title;
+    	  
+    	  last_thumbnail = getXMLElementCount("entry","media:group","media:thumbnail")-1;
+    	  print("last_thumbnail=",last_thumbnail);
+    	  thumbnail = getXMLAttribute("entry","media:group","media:thumbnail",last_thumbnail,"url");
+    	  
+    	  relatedUrl = "";
+    	  responsesUrl = "";
+    	  
+    	  size = getXMLElementCount("entry","link");
+    	  count = 0;
+    	  while(1)
+    	  {
+    	    rel = getXMLAttribute("entry","link",count,"rel");
+    	    if(rel == "http://gdata.youtube.com/schemas/2007#video.related")
+    	    {
+    	      relatedUrl = getXMLAttribute("entry","link",count,"href");
+    	    }
+    	    else if(rel == "http://gdata.youtube.com/schemas/2007#video.responses")
+    	    {
+    	      responsesUrl = getXMLAttribute("entry","link",count,"href");
+    	    }
+    	    count += 1;
+    	    if(count == size)
+    	    {
+    	      break;
+    	    }
+    	  }
+    	  
+    	  tagsArray = null;
+
+    	  size = getXMLElementCount("entry","category");
+    	  count = 0;
+    	  while(1)
+    	  {
+    	    scheme = getXMLAttribute("entry","category",count,"scheme");
+    	    if(scheme == "http://gdata.youtube.com/schemas/2007/categories.cat" || scheme == "http://gdata.youtube.com/schemas/2007/keywords.cat")
+    	    {
+    	      term = getXMLAttribute("entry","category",count,"term");
+    	      tagsArray = pushBackStringArray(tagsArray, term);
+    	    }
+    	    count += 1;
+    	    if(count == size)
+    	    {
+    	      break;
+    	    }
+    	  }
+    	  
+    	  print("========",title);
+    	  print("========",description);
+    	  print("========",author);
+    	  print("========",url);
+    	  print("========",duration);
+    	  print("========",rating);
+    	  print("========",relatedUrl);
+    	  print("========",responsesUrl);
+    	  print("========",tagsArray);
+        
+      	redrawDisplay();
+      }
+    }
+  }
+  else if(mode == 1)
+  {
+   /* Nothing */
+  }
+</onRefresh>
+
+<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  cachePath = getStoragePath("key");
+  optionsArray = readStringFromFile(cachePath + "youtubeOptions.dat");
+  if(optionsArray == null)
+  {
+    youtubeRegion = readStringFromFile(cachePath + "youtubeRegion.dat");
+    if(youtubeRegion == null)
+      youtubeRegion = "RU";
+    hd = 1;
+    username = " ";
+  }
+  else
+  {
+    youtubeRegion = getStringArrayAt(optionsArray, 0);
+    hd = getStringArrayAt(optionsArray, 1);
+    username = getStringArrayAt(optionsArray, 2);
+  }
+
+  if(youtubeRegion=="AU") lr="en"; else
+  if(youtubeRegion=="BR") lr="pt"; else
+  if(youtubeRegion=="GB") lr="en"; else
+  if(youtubeRegion=="DE") lr="de"; else
+  if(youtubeRegion=="NL") lr="nl"; else
+  if(youtubeRegion=="HK") lr="zh-Hans"; else
+  if(youtubeRegion=="IE") lr="ga"; else
+  if(youtubeRegion=="ES") lr="es"; else
+  if(youtubeRegion=="IT") lr="it"; else
+  if(youtubeRegion=="CA") lr="en"; else
+  if(youtubeRegion=="MX") lr="es"; else
+  if(youtubeRegion=="NZ") lr="en"; else
+  if(youtubeRegion=="PL") lr="pl"; else
+  if(youtubeRegion=="RU") lr="ru"; else
+  if(youtubeRegion=="US") lr="en"; else
+  if(youtubeRegion=="TW") lr="zh-Hans"; else
+  if(youtubeRegion=="FR") lr="fr"; else
+  if(youtubeRegion=="KR") lr="ko"; else
+  if(youtubeRegion=="JP") lr="ja"; else
+    lr=null;
+  
+  storagePath = getStoragePath("tmp");
+  storagePath = storagePath + "youtubeRSS.dat";
+  arr = readStringFromFile(storagePath);
+  feedUrl = getStringArrayAt(arr, 0);
+  pageTitle = getStringArrayAt(arr, 1);
+  setReturnString("");
+
+  mode = 0;
+  setRefreshTime(1);
+</onEnter>
+
+<submenu>
+  <title>Play</title>
+  <onClick>
+    mode = 1;
+
+      historyPath = getStoragePath("key")+"translate.history_video.m3u";
+      historydat = readStringFromFile(historyPath);
+      if(historydat == null)
+        historydat = pushBackStringArray(historydat, "#EXTM3U");
+      historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+pageTitle);
+      historydat = pushBackStringArray(historydat, url);
+      writeStringToFile(historyPath, historydat);
+      showIdle();
+      mode = 0;
+	    type="video/mp4"; 
+      url1 = "http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=" + url;
+      movie=getUrl(url1);
+      cancelIdle();
+    storagePath = getStoragePath("tmp");
+    storagePath_stream = storagePath + "stream.dat";
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, pageTitle);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+	</onClick>
+</submenu>
+
+<submenu>
+  <title>Similar video</title>
+  <onClick>
+	if (relatedUrl != "")
+	{
+   url = relatedUrl+"?";
+   title = "Related Videos: "+title;
+   
+   arr = null;
+   arr = pushBackStringArray(arr, url);
+   arr = pushBackStringArray(arr, title);
+   print("arr=",arr);
+   print("storagePath=",storagePath);
+   
+   writeStringToFile(storagePath, arr);
+   setReturnString("related");
+   postMessage("return");
+	}
+   
+	null;
+  </onClick>
+</submenu>
+
+<submenu>
+  <title>Responses</title>
+  <onClick>
+	if (relatedUrl != "")
+	{
+   url = responsesUrl+"?";
+   title = "Responses: "+title;
+   
+   arr = null;
+   arr = pushBackStringArray(arr, url);
+   arr = pushBackStringArray(arr, title);
+   print("arr=",arr);
+   print("storagePath=",storagePath);
+   
+   writeStringToFile(storagePath, arr);
+   setReturnString("responses");
+   postMessage("return");
+	}
+	null;
+  </onClick>
+</submenu>
+
+<submenu>
+  <title>Tag List</title>
+  <onClick>
+	if (relatedUrl != "")
+	{
+   writeStringToFile(storagePath, tagsArray);
+   tag = doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/clip/youtube/yt_tags.rss");
+   if(tag != null)
+   {
+     title = "Tag: "+tag;
+     youtubeApiCategoryBaseURL = "http://gdata.youtube.com/feeds/api/videos/-/";
+     url = youtubeApiCategoryBaseURL + urlEncode(tag) + "?";
+     if(lr != null)
+       url += "lr="+lr+"&amp;";
+     
+     arr = null;
+     arr = pushBackStringArray(arr, url);
+     arr = pushBackStringArray(arr, title);
+     print("arr=",arr);
+     print("storagePath=",storagePath);
+     
+     writeStringToFile(storagePath, arr);
+     setReturnString("tag");
+     postMessage("return");
+   }
+	}
+	null;
+  </onClick>
+</submenu>
+
+<channel></channel>
+</rss>

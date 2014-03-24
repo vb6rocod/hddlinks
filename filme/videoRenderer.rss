@@ -1,0 +1,417 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  aspect_ratio=getCurrentSetting("$[ASPECT_RATIO]");
+  aspect_ratio1=aspect_ratio;
+  eboda = 1;
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  fullscreen = 0;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+    value = getStringArrayAt(rssconf, 10);
+    if(value != null &amp;&amp; value != "")
+      fullscreen = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  renderer_cmd_file   = "/tmp/xspf_renderer.dat";
+  renderer_status_file= "/tmp/xspf_renderer.status";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+
+  arr = readStringFromFile(storagePath_stream);
+  if(arr != null)
+  {
+    request_url     = getStringArrayAt(arr, 0);
+    request_options = getStringArrayAt(arr, 1);
+    stream_url      = getStringArrayAt(arr, 2);
+    url             = getStringArrayAt(arr, 3);
+    stream_type     = getStringArrayAt(arr, 4);
+    stream_title    = getStringArrayAt(arr, 5);
+    no_renderer     = getStringArrayAt(arr, 6);
+
+    historyPath = getStoragePath("key")+"translate.history_video.m3u";
+    historydat = readStringFromFile(historyPath);
+    if(historydat == null)
+      historydat = pushBackStringArray(historydat, "#EXTM3U");
+    historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+stream_title);
+    historydat = pushBackStringArray(historydat, request_url);
+    writeStringToFile(historyPath, historydat);
+  }
+  else
+  {
+    postMessage("return");
+  }
+  
+  show_info           = 0;
+  refresh_time        = 100;
+  
+  first_appearance    = 1;
+
+  renderer_status = "tuneing";
+  if(no_renderer != 1)
+  {
+    arr = null;
+    arr = pushBackStringArray(arr, renderer_status);
+    arr = pushBackStringArray(arr, request_url);
+    writeStringToFile(renderer_status_file, arr);
+  }
+  if(fullscreen == 0)
+    playItemURL(url, 0, "mediaDisplay", "previewWindow");
+  else
+    playItemURL(url, 0);
+  stream_elapsed = "Wait...";
+  check_counter = 15;
+  refresh_time = 100;
+  setRefreshTime(100);
+  cancelIdle();
+  redrawDisplay();
+</onEnter>
+
+<onExit>
+	playItemURL(-1, 1);
+	setRefreshTime(-1);
+	if (aspect_ratio1 != aspect_ratio)
+	   setAspectRatio(aspect_ratio);
+  renderer_status = "waiting";
+  if(no_renderer != 1)
+  {
+    arr = null;
+    arr = pushBackStringArray(arr, renderer_status);
+    arr = pushBackStringArray(arr, request_url);
+    writeStringToFile(renderer_status_file, arr);
+  }
+</onExit>
+
+<onRefresh>
+	stream_progress  = getPlaybackStatus();
+	buffer_progress  = getCachedStreamDataSize(0, 262144);
+	buffer           = getStringArrayAt(buffer_progress, 0);
+	play_elapsed     = getStringArrayAt(stream_progress, 0);
+	play_total       = getStringArrayAt(stream_progress, 1);
+	play_rest        = play_total - play_elapsed;
+	play_status      = getStringArrayAt(stream_progress, 3);
+	
+  check_counter -= 1;
+	
+	print(buffer, stream_progress);
+	
+	if (play_elapsed != 0)
+	{
+	  if(refresh_time != 1000)
+	  {
+      refresh_time = 1000;
+ 	    setRefreshTime(1000);
+	  }
+    if(renderer_status != "playing")
+	  {
+	    stream_status = 1;
+	    updatePlaybackProgress("delete", "mediaDisplay", "infoDisplay", "progressBar");
+	    renderer_status = "playing";
+      if(no_renderer != 1)
+      {
+        arr = null;
+        arr = pushBackStringArray(arr, renderer_status);
+        arr = pushBackStringArray(arr, request_url);
+        writeStringToFile(renderer_status_file, arr);
+      }
+      check_time = play_elapsed - (-2);
+      check_counter = 3;
+	  }
+
+    arg_time = play_elapsed;
+		x = Integer(arg_time / 60);
+		h = Integer(arg_time / 3600);
+		s = arg_time - (x * 60);
+		m = x - (h * 60);
+		if(h &lt; 10) 
+			ret_string = "0" + sprintf("%s:", h);
+		else
+			ret_string = sprintf("%s:", h);
+		if(m &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s:", m);
+		if(s &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s", s);
+    stream_elapsed = ret_string;
+  
+		if (play_total &gt; 0 &amp;&amp; play_total &lt; 1000000)
+		{
+		  arg_time = play_total;
+  		x = Integer(arg_time / 60);
+  		h = Integer(arg_time / 3600);
+  		s = arg_time - (x * 60);
+  		m = x - (h * 60);
+  		if(h &lt; 10) 
+  			ret_string = "0" + sprintf("%s:", h);
+  		else
+  			ret_string = sprintf("%s:", h);
+  		if(m &lt; 10)  ret_string += "0";
+  		ret_string += sprintf("%s:", m);
+  		if(s &lt; 10)  ret_string += "0";
+  		ret_string += sprintf("%s", s);
+		  stream_total = ret_string + " / ";
+		}
+		else
+		{
+		  stream_total = "";
+		}
+
+    if(show_info == 1 || play_elapsed &lt; first_appearance)
+    {
+    	updatePlaybackProgress(buffer_progress, "mediaDisplay", "infoDisplay", "progressBar");
+    }
+    
+    if(no_renderer != 1 &amp;&amp; (play_elapsed &gt; check_time || check_counter &lt;= 0))
+    {
+      check_counter = 3;
+      check_time = play_elapsed - (-2);
+      arr = readStringFromFile(renderer_cmd_file);
+      if(arr != null)
+      {
+        print("sub_Check");
+        arr_url     = getStringArrayAt(arr, 0);
+        arr_options = getStringArrayAt(arr, 1);
+        arr_title   = getStringArrayAt(arr, 2);
+        
+        if(arr_url == null)     arr_url = "";
+        if(arr_options == null) arr_options = "";
+        if(arr_title == null)   arr_title = "";
+        
+        if(arr_url == "{renderer-stop}")
+        {
+          writeStringToFile(renderer_cmd_file, "");
+          postMessage("video_stop");
+          stream_status = 0;
+        }
+        else if(arr_url == "{renderer-pause}")
+        {
+          writeStringToFile(renderer_cmd_file, "");
+          postMessage("video_pause");
+          stream_status = 2;
+        }
+        else if(arr_url == "{renderer-play}")
+        {
+          writeStringToFile(renderer_cmd_file, "");
+          postMessage("video_play");
+          stream_status = 1;
+        }
+        else if(request_url != arr_url || request_options != arr_options)
+        {
+    			postMessage("return");
+        }
+      }
+    }
+    if(stream_status == 2)
+    {
+      if(buffer == 100)
+      {
+        postMessage("video_play");
+        stream_status = 1;
+      }
+    }
+    else if(stream_status == 1)
+    {
+      if(buffer &lt; 15 &amp;&amp; play_rest &gt; 5)
+      {
+        postMessage("video_pause");
+        stream_status = 2;
+      }
+    }
+	}
+	else if (play_status == 0)
+	{
+		print("Media quit!");
+		postMessage("return");
+	}
+	else
+	{
+		print("no playing yet, update buffer progress ", buffer_progress);
+		updatePlaybackProgress(buffer_progress, "mediaDisplay", "infoDisplay", "progressBar");
+	}
+
+</onRefresh>
+
+<mediaDisplay name="threePartsView" 
+  showDefaultInfo="no" 
+  showHeader="no" 
+  sideLeftWidthPC="0" 
+  sideRightWidthPC="0" 
+  backgroundColor="0:0:0"
+  idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+  >
+
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+	
+
+	<infoDisplay offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="98">
+
+    <progressBar backgroundColor="10:105:150" offsetXPC="5" offsetYPC="70" widthPC="90" heightPC="20">
+
+      <!-- background image 
+        143:188:139
+  		<image redraw="yes" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" backgroundColor="200:200:200" foregroundColor="200:200:200">../etc/translate/rss/image/xspf_background.jpg</image>
+  		-->
+  
+  		<text lines="2" redraw="yes" offsetXPC="2" offsetYPC="4" widthPC="63" heightPC="66" fontSize="18" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+  			<script>stream_title;</script>
+  		</text>
+
+      <image redraw="yes" offsetXPC="87" offsetYPC="2" widthPC="9" heightPC="25">
+        <script>if(no_renderer != 1) "../etc/translate/rss/image/msr.png"; else "../etc/translate/rss/image/empty.png";</script>
+        <widthPC>
+          <script>
+            9 * screenYp / screenXp;
+          </script>
+        </widthPC>
+        <offsetXPC>
+          <script>
+            99 - 9 * screenYp / screenXp;
+          </script>
+        </offsetXPC>
+    	</image>
+
+  		<text align="right" redraw="yes" offsetXPC="2" offsetYPC="70" widthPC="94" heightPC="15" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="0:0:0">
+  			<script>stream_url;</script>
+  		</text>
+  		
+  		<bar offsetXPC="2" offsetYPC="88" widthPC="96" heightPC="10" barColor="250:127:0" progressColor="255:210:0" bufferColor="255:210:0"/>
+  		
+  		<text redraw="yes" offsetXPC="67" offsetYPC="30" widthPC="18" heightPC="40" fontSize="22" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+  			<script>stream_total;</script>
+  		</text>
+  		<text redraw="yes" offsetXPC="83" offsetYPC="30" widthPC="15" heightPC="40" fontSize="22" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+  			<script>stream_elapsed;</script>
+  		</text>
+
+  		<destructor offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100" color="-1:-1:-1"></destructor>
+  	</progressBar>
+
+	</infoDisplay>
+  <previewWindow windowColor="0:0:0" offsetXPC="0" widthPC="100" offsetYPC="0" heightPC="98">
+  </previewWindow>
+	<onUserInput>
+		input = currentUserInput();
+		print("**** input=",input);
+		ret = "false";
+    if (input == "display" || input == "DISPLAY")
+		{
+		  first_appearance = -1;
+		  show_info = 1 - show_info;
+		  print("show_info=",show_info);
+		  setRefreshTime(10);
+		  refresh_time = 10;
+		}
+		else
+    if (input == "enter" || input == "ENTR")
+		{
+	    postMessage("video_play");
+      stream_status = 1;
+      ret = "true";
+		}
+		else 
+		if (input == "zero" || input == "0")
+		      {
+        postMessage("video_pause");
+        stream_status = 2;
+        ret = "true";
+      }
+else if (input == "right" || input == "left" || input == "R" || input == "L")
+{
+	status = getPlaybackStatus();
+	playStatus = getStringArrayAt(status, 3);
+	if (playStatus == "2")
+	{
+		setEnv("videoStatus", status);
+		playItemURL(-1, 2);
+		print("LOUIS - link to seekpop");
+		timePoint = doModalRss("/usr/local/etc/www/cgi-bin/scripts/util/podcast_seekpopup.rss");
+		if (timePoint != -1)
+		{
+			playAtTime(timePoint);
+		}
+		postMessage("video_play");
+		ret = "true";
+	}
+}
+		else 
+		if (input == "one" || input == "1")
+		  {
+        if (aspect_ratio1 == "$[PAN_SCAN_4_BY_3]")
+          {
+          setAspectRatio("$[LETTER_BOX_4_BY_3]");
+          aspect_ratio1="$[LETTER_BOX_4_BY_3]";
+          }
+       else if (aspect_ratio1 == "$[LETTER_BOX_4_BY_3]")
+          {
+          setAspectRatio("$[WIDE_16_BY_9]");
+          aspect_ratio1="$[WIDE_16_BY_9]";
+          }
+       else if (aspect_ratio1 == "$[WIDE_16_BY_9]")
+          {
+          setAspectRatio("$[WIDE_16_BY_10]");
+          aspect_ratio1="$[WIDE_16_BY_10]";
+          }
+       else if (aspect_ratio1 == "$[WIDE_16_BY_10]")
+          {
+          setAspectRatio("$[PAN_SCAN_4_BY_3]");
+          aspect_ratio1="$[PAN_SCAN_4_BY_3]";
+          }          
+        ret = "true";
+      }
+else if (input == "zoom" || input == "zoom_in" || input == "zoom_out")
+{
+  ret="false";
+}
+		ret;
+	</onUserInput>
+	
+</mediaDisplay>
+
+
+<channel>
+	<title>video stream player</title>
+</channel>
+
+</rss>

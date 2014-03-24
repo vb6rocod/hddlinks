@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<onEnter>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  pageTitle = "Free Internet Radio Stations";
+</onEnter>
+
+	<mediaDisplay name=photoView
+	  columnCount=5
+	  rowCount=7
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+		itemImageXPC="10"
+		backgroundColor="0:0:0"
+		imageBorderColor="15:20:230"
+		imageBorderPC="0"
+		itemBackgroundColor="0:0:0"
+		centerHeightPC=70
+		centerXPC=10
+		centerYPC=18
+		itemGapXPC=1
+		itemGapYPC=1
+		sideTopHeightPC=15
+		bottomYPC=90
+
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=yes
+		idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+		>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+    <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=26 backgroundColor=0:0:0 foregroundColor=200:200:200>
+      Primary Genres
+    </text>
+    <image offsetXPC=0 offsetYPC=15 widthPC=100 heightPC=1>../etc/translate/rss/image/gradient_line.bmp</image>
+    <image offsetXPC=65 offsetYPC=2 widthPC=30 heightPC=12>
+      ../etc/translate/rss/image/shoutcast.gif
+      <widthPC>
+        <script>
+          546 / 154 * 12 * screenYp / screenXp;
+        </script>
+      </widthPC>
+      <offsetXPC>
+        <script>
+          95 - 546 / 154 * 12 * screenYp / screenXp;
+        </script>
+      </offsetXPC>
+    </image>
+
+    <onUserInput>
+    <script>
+    ret = "false";
+    userInput = currentUserInput();
+
+    if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+    {
+      itemSize = getPageInfo("itemCount");
+      idx = Integer(getFocusItemIndex());
+      if (userInput == "pagedown" || userInput == "PD")
+      {
+        idx -= -40;
+        if(idx &gt;= itemSize)
+          idx = itemSize-1;
+      }
+      else
+      {
+        idx -= 40;
+        if(idx &lt; 0)
+          idx = 0;
+      }
+
+      print("new idx: "+idx);
+      setFocusItemIndex(idx);
+    	setItemFocus(0);
+      redrawDisplay();
+      ret = "true";
+    }
+    ret;
+    </script>
+    </onUserInput>
+
+		<itemDisplay>
+			<text align="center" lines="2" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 fontSize=15>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "name");
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "150:150:150"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  					if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+		</itemDisplay>
+	</mediaDisplay>
+
+<channel>
+<title></title>
+
+
+
+  <item>
+  <name>Alternative</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Alternative,genre</link>
+  </item>
+  
+  <item>
+  <name>Blues</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Blues,genre</link>
+  </item>
+  
+  <item>
+  <name>Classical</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Classical,genre</link>
+  </item>
+  
+  <item>
+  <name>Country</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Country,genre</link>
+  </item>
+  
+  <item>
+  <name>Decades</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Decades,genre</link>
+  </item>
+  
+  <item>
+  <name>Easy Listening</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Easy+Listening,genre</link>
+  </item>
+  
+  <item>
+  <name>Electronic</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Electronic,genre</link>
+  </item>
+  
+  <item>
+  <name>Folk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Folk,genre</link>
+  </item>
+  
+  <item>
+  <name>Inspirational</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Inspirational,genre</link>
+  </item>
+  
+  <item>
+  <name>International</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=International,genre</link>
+  </item>
+  
+  <item>
+  <name>Jazz</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Jazz,genre</link>
+  </item>
+  
+  <item>
+  <name>Latin</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Latin,genre</link>
+  </item>
+  
+  <item>
+  <name>Metal</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Metal,genre</link>
+  </item>
+  
+  <item>
+  <name>Misc</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Misc,genre</link>
+  </item>
+  
+  <item>
+  <name>New Age</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=New+Age,genre</link>
+  </item>
+  
+  <item>
+  <name>Pop</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Pop,genre</link>
+  </item>
+  
+  <item>
+  <name>Public Radio</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Public+Radio,genre</link>
+  </item>
+  
+  <item>
+  <name>R&amp;B/Urban</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=R%26amp%3BB%2FUrban,genre</link>
+  </item>
+  
+  <item>
+  <name>Rap</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Rap,genre</link>
+  </item>
+  
+  <item>
+  <name>Reggae</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Reggae,genre</link>
+  </item>
+  
+  <item>
+  <name>Rock</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Rock,genre</link>
+  </item>
+  
+  <item>
+  <name>Seasonal/Holiday</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Seasonal%2FHoliday,genre</link>
+  </item>
+  
+  <item>
+  <name>Soundtracks</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Soundtracks,genre</link>
+  </item>
+  
+  <item>
+  <name>Talk</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Talk,genre</link>
+  </item>
+  
+  <item>
+  <name>Themes</name>
+  <link>http://127.0.0.1/cgi-bin/scripts/tv/shoutcast_station.php?query=Themes,genre</link>
+  </item>
+  </channel>
+</rss>
+

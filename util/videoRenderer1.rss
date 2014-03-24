@@ -1,0 +1,654 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<onEnter>
+  cachePath = getStoragePath("key");
+
+
+  optionsPath = cachePath + "sub.dat";
+  optionsArray = readStringFromFile(optionsPath);
+  if(optionsArray == null)
+  {
+    transp = "0:0:0";
+    culoare = "255:255:255";
+    fontsize = "20";
+    fontoffset = "0";
+    fontn = "1";
+  }
+  else
+  {
+    fontcol = getStringArrayAt(optionsArray, 0);
+    transp = getStringArrayAt(optionsArray, 1);
+    fontsize = getStringArrayAt(optionsArray, 2);
+    fontoffset = getStringArrayAt(optionsArray, 3);
+    fontn = getStringArrayAt(optionsArray, 4);
+  }
+
+if (fontsize &lt; 22)
+{
+  wh=7;
+  mt=2;
+}
+else
+{
+	if (fontsize &gt;=22 &amp;&amp; fontsize &lt; 26)
+		{
+			wh=8.5;
+			mt=2;
+		}	
+		else
+		{
+			wh=9;
+			mt=2.1;
+		}
+}
+
+if (fontn == "1")
+fontname="/usr/local/etc/www/cgi-bin/scripts/util/arial.ttf";
+else if (fontn == "2")
+fontname="/usr/local/etc/www/cgi-bin/scripts/util/arialrb.ttf";
+else if (fontn == "3")
+fontname="/usr/local/etc/www/cgi-bin/scripts/util/arialnb.ttf";
+else if (fontn == "4")
+fontname="/usr/local/etc/www/cgi-bin/scripts/util/arialrb2.ttf";
+
+if (fontn == "1")
+fontname1="/usr/local/etc/www/cgi-bin/scripts/util/arial.ttf";
+else if (fontn == "2")
+fontname1="/usr/local/etc/www/cgi-bin/scripts/util/arialrb.ttf";
+else if (fontn == "3")
+fontname1="/usr/local/etc/www/cgi-bin/scripts/util/arialnb.ttf";
+else if (fontn == "4")
+fontname1="/usr/local/etc/www/cgi-bin/scripts/util/arialrb2.ttf";
+
+if (fontn == "5")
+  shw=0;
+else
+  shw=1;
+
+if ( getStringArrayAt(readStringFromFile("/usr/local/etc/dvdplayer/interface"),0) == "egreat" ) 
+  transp1 = transp;  
+else  
+   transp1 = "255:0:255"; 
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+
+  arr = readStringFromFile(storagePath_stream);
+  if(arr != null)
+  {
+    request_url     = getStringArrayAt(arr, 0);
+    request_options = getStringArrayAt(arr, 1);
+    stream_url      = getStringArrayAt(arr, 2);
+    url             = getStringArrayAt(arr, 3);
+    stream_type     = getStringArrayAt(arr, 4);
+    stream_title    = getStringArrayAt(arr, 5);
+    no_renderer     = getStringArrayAt(arr, 6);
+
+  }
+  else
+  {
+    postMessage("return");
+  }
+  subs = readStringFromFile("/tmp/test.xml");
+  if(subs != null)
+  {
+	    nTotSubs=5000;
+	    print("success");
+	    ntime_start=0;
+	    nCurSub=0;
+	    delay=0;
+	    nRef=0;
+		  ntime_end = delay + getStringArrayAt(subs,1 + 4*nCurSub);
+		  tline1 = getStringArrayAt(subs,2 + 4*nCurSub);
+		  tline2 = getStringArrayAt(subs,3 + 4*nCurSub);
+	    stream_elapsed1 = "Wait...";
+	}
+  else
+	{
+	  nTotSubs = 0;
+		cancelIdle();
+		tline1="Fara subtitrare !";
+		tline2="";
+		stream_elapsed1 = "Wait... (Fara subtitrare)";
+	}  
+
+  pause = 0;
+  seek = 0;
+  timePoint = 0;
+  last_play_elapsed = 0;
+  t_sec = 0;
+  nn1=0;
+  nn2=0;
+  show_time = 0;
+  first_time=0;
+  sincro1="";
+    playItemURL(url, 0, "mediaDisplay", "previewWindow");
+    
+  setRefreshTime(250);
+  cancelIdle();
+  redrawDisplay();
+</onEnter>
+
+<onExit>
+	playItemURL(-1, 1);
+	setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+
+	stream_progress  = getPlaybackStatus();
+	buffer_progress  = getCachedStreamDataSize(0, 262144);
+	buffer           = getStringArrayAt(buffer_progress, 0);
+	play_elapsed     = getStringArrayAt(stream_progress, 0);
+	play_total       = getStringArrayAt(stream_progress, 1);
+	play_rest        = play_total - play_elapsed;
+	play_status      = getStringArrayAt(stream_progress, 3);
+	
+	if (play_elapsed != 0)
+	{
+    if (first_time == 0)
+     {
+     first_time=1;
+     stream_elapsed1 = "";
+     sincro1 = "";
+     }
+    arg_time = play_elapsed;
+		x = Integer(arg_time / 60);
+		h = Integer(arg_time / 3600);
+		s = arg_time - (x * 60);
+		m = x - (h * 60);
+		if(h &lt; 10) 
+			ret_string = "0" + sprintf("%s:", h);
+		else
+			ret_string = sprintf("%s:", h);
+		if(m &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s:", m);
+		if(s &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s", s);
+    stream_elapsed = ret_string;
+		  arg_time = play_total;
+  		x = Integer(arg_time / 60);
+  		h = Integer(arg_time / 3600);
+  		s = arg_time - (x * 60);
+  		m = x - (h * 60);
+  		if(h &lt; 10) 
+  			ret_string = "0" + sprintf("%s:", h);
+  		else
+  			ret_string = sprintf("%s:", h);
+  		if(m &lt; 10)  ret_string += "0";
+  		ret_string += sprintf("%s:", m);
+  		if(s &lt; 10)  ret_string += "0";
+  		ret_string += sprintf("%s", s);
+		  stream_total = ret_string;
+    if (show_time == 1)
+     {
+        sincro1="Sincro: " + delay + " sec." + sprintf("%s "," ");
+        stream_elapsed1 = stream_elapsed + " / " + stream_total;
+     }
+		if (play_total &gt; 0 &amp;&amp; play_total &lt; 1000000 &amp;&amp; nTotSubs &gt; 2 &amp;&amp; nCurSub &lt; nTotSubs)
+		{
+		  if (play_elapsed == ntime_end)
+		  {
+		    nCurSub = nCurSub + 1;
+		    ntime_end = delay + getStringArrayAt(subs,1 + 4*nCurSub);
+		    ntime_start = delay + getStringArrayAt(subs,4*nCurSub);
+		    tline1 = getStringArrayAt(subs,2 + 4*nCurSub);
+		    tline2 = getStringArrayAt(subs,3 + 4*nCurSub);
+		    if (tline1 == "")
+		      nn1 = 0;
+		    else
+		      nn1 = 1;
+		    if (tline2 == "")
+		      nn2 = 0;
+		    else
+		      nn2 = 1;
+		  }	   
+      else if (play_elapsed &gt; ntime_end)
+      {
+        while(1)
+         {
+           nCurSub = nCurSub + 1 ;
+           if (nCurSub &gt;= nTotSubs) break;
+           tt1 = delay + getStringArrayAt(subs,4*nCurSub);
+           if (tt1 &gt;= play_elapsed) 
+           {
+           ntime_end = delay + getStringArrayAt(subs,1 + 4*nCurSub);
+           ntime_start = delay + getStringArrayAt(subs,4*nCurSub);
+           break;
+           }             
+         } 
+      }
+      else if (play_elapsed &lt; ntime_start)
+      {
+        nCurSub=0;
+        ntime_start = 0;
+        ntime_end = delay + getStringArrayAt(subs,1 + 4*nCurSub);
+      }
+		}
+    else
+    {
+    tline1="";
+    tline2="";
+    }
+		if (seek == 2)
+		 {
+    arg_time = timePoint + s1;
+		x = Integer(arg_time / 60);
+		h = Integer(arg_time / 3600);
+		s = arg_time - (x * 60);
+		m = x - (h * 60);
+		if(h &lt; 10) 
+			ret_string = "0" + sprintf("%s:", h);
+		else
+			ret_string = sprintf("%s:", h);
+		if(m &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s:", m);
+		if(s &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s", s);
+    stream_Point = ret_string;
+		sincro1 = "Salt la: " + stream_Point + " / " + stream_total + sprintf("%s "," ");
+		tline2 = "";
+		tline1 = "";
+		 }
+	}
+	updatePlaybackProgress(buffer_progress, "mediaDisplay", "infoDisplay");
+</onRefresh>
+
+<mediaDisplay name="threePartsView" 
+  showDefaultInfo="no" 
+  showHeader="no" 
+  sideLeftWidthPC="0" 
+  sideRightWidthPC="0" 
+  backgroundColor="0:0:0"
+  idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+  >
+
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+	
+
+
+  <previewWindow windowColor="0:0:0" offsetXPC="0" widthPC="100" offsetYPC="0" heightPC="100">
+
+  </previewWindow>
+<infoDisplay offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+    		<text align="center" redraw="yes" offsetXPC="0" useBackgroundSurface="yes">
+  			<fontFile>
+  			<script>
+  			fontname;
+  			</script>
+  			</fontFile>
+  			<offsetYPC>
+  			<script>
+  			99 + fontoffset - mt*wh;
+  			</script>
+  			</offsetYPC>
+  			<fontSize>
+  			<script>
+  			fontsize;
+  			</script>
+  			</fontSize>
+  			<foregroundColor>
+  			<script>
+           "0:0:0";
+  			</script>
+  			</foregroundColor>
+  			<backgroundColor>
+  			<script>
+  			if (nn1 == 1)
+          transp;
+        else
+          transp1;
+  			</script>
+  			</backgroundColor>
+  			<widthPC>
+  			<script>
+  			if (nTotSubs &gt; 2)
+  			   100 ;
+  			else
+  			   1;
+  			</script> 
+  			</widthPC>
+  			<heightPC>
+  			<script>
+  			if (nTotSubs &gt; 2 )
+  			  {
+            wh;
+          }
+  			else
+  			   1; 
+  			</script>
+  			</heightPC>
+  			<script>tline1;</script>
+  		</text>
+  		
+    		<text align="center" redraw="yes" useBackgroundSurface="no">
+<offsetXPC>
+  <script>
+   0 - 0.3*shw;
+  </script>
+</offsetXPC>
+  			<fontFile>
+  			<script>
+  			fontname1;
+  			</script>
+  			</fontFile>
+  			<offsetYPC>
+  			<script>
+  			99 + fontoffset - mt*wh - 0.3*shw;
+  			</script>
+  			</offsetYPC>
+  			<fontSize>
+  			<script>
+  			fontsize;
+  			</script>
+  			</fontSize>
+  			<foregroundColor>
+  			<script>
+           fontcol;
+  			</script>
+  			</foregroundColor>
+  			<backgroundColor>
+  			<script>
+  			if (nn1 == 1)
+          transp;
+        else
+          transp1;
+  			</script>
+  			</backgroundColor>
+  			<widthPC>
+  			<script>
+  			if (nTotSubs &gt; 2)
+  			   100 ;
+  			else
+  			   1;
+  			</script> 
+  			</widthPC>
+  			<heightPC>
+  			<script>
+  			if (nTotSubs &gt; 2 )
+  			  {
+            wh;
+          }
+  			else
+  			   1; 
+  			</script>
+  			</heightPC>
+  			<script>tline1;</script>
+  		</text>
+    		<text align="center" redraw="yes" offsetXPC="0" useBackgroundSurface="yes">
+  			<fontFile>
+  			<script>
+        fontname;
+  			</script>
+  			</fontFile>
+  			<offsetYPC>
+  			<script>
+  			 98 + fontoffset - wh; 			
+  			</script>
+  			</offsetYPC>
+  			<fontSize>
+  			<script>
+  			fontsize;
+  			</script>
+  			</fontSize>
+  			<foregroundColor>
+  			<script>
+  			"0:0:0";
+  			</script>
+  			</foregroundColor>
+  			<backgroundColor>
+  			<script>
+  			if (nn2 == 1)
+          transp;
+        else
+          transp1;
+  			</script>
+  			</backgroundColor>
+  			<widthPC>
+  			<script>
+  			if (nTotSubs &gt; 2)
+  			   100;
+  			else
+  			   1;
+  			</script> 
+  			</widthPC>
+  			<heightPC>
+  			<script>
+  			if (nTotSubs &gt; 2 )
+           wh;
+  			else
+  			   1; 
+  			</script>
+  			</heightPC>
+  			<script>tline2;</script>
+  		</text>
+
+    		<text align="center" redraw="yes" useBackgroundSurface="no">
+<offsetXPC>
+  <script>
+   0 - 0.3*shw;
+  </script>
+</offsetXPC>
+  			<fontFile>
+  			<script>
+        fontname1;
+  			</script>
+  			</fontFile>
+  			<offsetYPC>
+  			<script>
+  			 98 + fontoffset - wh - 0.3*shw; 			
+  			</script>
+  			</offsetYPC>
+  			<fontSize>
+  			<script>
+  			fontsize;
+  			</script>
+  			</fontSize>
+  			<foregroundColor>
+  			<script>
+  			fontcol;
+  			</script>
+  			</foregroundColor>
+  			<backgroundColor>
+  			<script>
+  			if (nn2 == 1)
+          transp;
+        else
+          transp1;
+  			</script>
+  			</backgroundColor>
+  			<widthPC>
+  			<script>
+  			if (nTotSubs &gt; 2)
+  			   100;
+  			else
+  			   1;
+  			</script> 
+  			</widthPC>
+  			<heightPC>
+  			<script>
+  			if (nTotSubs &gt; 2 )
+           wh;
+  			else
+  			   1; 
+  			</script>
+  			</heightPC>
+  			<script>tline2;</script>
+  		</text>
+
+    		<text fontFile="/usr/local/etc/www/cgi-bin/scripts/util/arial.ttf" lines="1" align="left" redraw="yes" useBackgroundSurface="yes" offsetXPC="2.5" offsetYPC="2.5" widthPC="50" heightPC="6" fontSize="24" foregroundColor="0:0:0">
+  			 <backgroundColor>
+  			<script>
+          transp1;
+  			</script>
+  			</backgroundColor>
+  			<script>stream_elapsed1;</script>
+  		</text>
+    		<text fontFile="/usr/local/etc/www/cgi-bin/scripts/util/arial.ttf" lines="1" align="left" redraw="yes" useBackgroundSurface="no" offsetXPC="2.2" offsetYPC="2.2" widthPC="50" heightPC="6" fontSize="24" foregroundColor="254:254:254">
+  			 <backgroundColor>
+  			<script>
+          transp1;
+  			</script>
+  			</backgroundColor>
+  			<script>stream_elapsed1;</script>
+  		</text>
+    		<text fontFile="/usr/local/etc/www/cgi-bin/scripts/util/arial.ttf" lines="1" align="right" redraw="yes" useBackgroundSurface="yes" offsetXPC="50" offsetYPC="2.5" widthPC="45" heightPC="6" fontSize="24" foregroundColor="0:0:0">
+  			 <backgroundColor>
+  			<script>
+          transp1;
+  			</script>
+  			</backgroundColor>
+  			<script>sincro1;</script>
+  		</text>
+    		<text fontFile="/usr/local/etc/www/cgi-bin/scripts/util/arial.ttf" lines="1" align="right" redraw="yes" useBackgroundSurface="no" offsetXPC="49.7" offsetYPC="2.2" widthPC="45" heightPC="6" fontSize="24" foregroundColor="254:254:254">
+  			 <backgroundColor>
+  			<script>
+          transp1;
+  			</script>
+  			</backgroundColor>
+  			<script>sincro1;</script>
+  		</text>
+
+</infoDisplay>
+<onUserInput>
+	input = currentUserInput();
+	print("**** input=",input);
+	ret = "false";
+if (input == "display" || input == "DISPLAY")
+{
+  show_time = 1 - show_time;
+  stream_elapsed1 = "";
+  sincro1 = "";
+  ret = "true";
+}  
+else if (input == "enter" || input == "ENTR")
+{
+      if (seek == 2) 
+      {
+      seek=0;
+      stream_elapsed1 = "";
+      sincro1 = "";
+      playAtTime(timePoint + s1);
+      }
+      ret = "true";
+}
+else if (input == "right" || input == "left" || input == "R" || input == "L")
+{
+	s1 = play_elapsed;
+	status = getPlaybackStatus();
+	playStatus = getStringArrayAt(status, 3);
+    arg_time = play_total;
+		x = Integer(arg_time / 60);
+		h = Integer(arg_time / 3600);
+		s = arg_time - (x * 60);
+		m = x - (h * 60);
+		if(h &lt; 10) 
+			ret_string = "0" + sprintf("%s:", h);
+		else
+			ret_string = sprintf("%s:", h);
+		if(m &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s:", m);
+		if(s &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s", s);
+    stream_total = ret_string;
+	if (playStatus == "2")
+	{
+    if (seek == 0)
+      {
+		   seek = 2;		   
+		   timePoint = 0;
+		   playItemURL(-1, 2);      
+      }
+     else if (seek == 2)
+      {
+         if (timePoint &lt; play_total &amp;&amp; (input == "right" || input == "R"))
+          {
+            timePoint += 30;
+          }
+         else if (timePoint &gt; 0 &amp;&amp; (input == "left" || input == "L"))
+         {
+           timePoint -= 30;          
+         }
+      }
+		ret = "true";
+	}
+}
+else if (input == "zero" || userInput == "0")
+ {
+   if (pause == 0)
+    {
+     pause = 1;
+     postMessage("video_pause");
+    }
+   else
+    {
+     pause = 0;
+     postMessage("video_play");    
+    } 
+   ret = "true";
+ }
+else if (input == "one" || input == "1")
+{
+delay = delay - 1;
+ret = "true";
+}
+else if (input == "three" || input == "3")
+{
+delay = delay + 1;
+ret = "true";
+}
+else if (input == "two" || input == "2")
+{
+delay = 0;
+ret = "true";
+}
+ else if (input == "video_completed" || input == "video_stop")
+{
+    playItemURL(-1, 1);
+    postMessage("return");
+    ret="true";
+}
+else if (input == "video_play")
+{
+ seek=0;
+ ret=false;
+}
+		ret;
+</onUserInput>
+	
+</mediaDisplay>
+
+
+<channel>
+	<title>video stream player</title>
+</channel>
+
+</rss>

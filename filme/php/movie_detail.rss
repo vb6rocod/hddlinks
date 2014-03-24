@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<onEnter>
+  arr = readStringFromFile("/tmp/movie.dat");
+  if(arr != null)
+  {
+    title = getStringArrayAt(arr, 0);
+    an = getStringArrayAt(arr, 1);
+    image = getStringArrayAt(arr, 2);
+    gen = getStringArrayAt(arr, 3);
+    regie = getStringArrayAt(arr, 4);
+    imdb = getStringArrayAt(arr, 5);
+    actori = getStringArrayAt(arr, 6);
+    descriere = getStringArrayAt(arr, 7);
+ }
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+	
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="45"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="45"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+		
+  	<text align="left" offsetXPC="35" offsetYPC="10" widthPC="60" heightPC="8" fontSize="30" backgroundColor="0:0:0" foregroundColor="100:200:255">
+    <script>title;</script>
+		</text>
+
+		<image offsetXPC=10 offsetYPC=10 widthPC=23 heightPC=48>
+         <script>image;</script>
+		</image>
+  
+  <text offsetXPC=35 offsetYPC=25 widthPC=60 heightPC=5 fontSize=16 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>gen;</script>
+  </text>
+
+  <text offsetXPC=35 offsetYPC=30 widthPC=60 heightPC=5 fontSize=16 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>imdb;</script>
+  </text>
+  <text offsetXPC=35 offsetYPC=35 widthPC=60 heightPC=5 fontSize=16 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>an;</script>
+  </text>
+  <text offsetXPC=35 offsetYPC=40 widthPC=60 heightPC=5 fontSize=16 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>regie;</script>
+  </text>
+  <text offsetXPC=35 offsetYPC=45 widthPC=60 heightPC=5 fontSize=16 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>actori;</script>
+  </text>
+  <text lines="6"  offsetXPC=10 offsetYPC=65 widthPC=80 heightPC=30 fontSize=16 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>descriere;</script>
+  </text>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+
+		
+	</mediaDisplay>
+	<channel>
+	<title>Movie detail</title>
+	<menu>main menu</menu>
+
+</channel>
+</rss>

@@ -1,0 +1,668 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  error_info          = "";
+</script>
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="50"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="50"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(titlu); titlu;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
+  image/tv_radio.png
+		</image>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+titlu="";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>Moldova WEB TV</title>
+	<menu>main menu</menu>
+
+    <item>
+    <title>1music</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/1music";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>2plus</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/2plus";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>7tv</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/7tv";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>accent</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/accent";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>alttv</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/alttv";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>eutv</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/eutv";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>eurosport2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/eurosport2";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>jurnaltv</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/jurnaltv";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>moldova1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/moldova1";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>n4</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/n4";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>nit</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/nit";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>prime</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/prime";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>publika</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/publika";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>rutv</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/rutv";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>set</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/set";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>tnt</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/tnt";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>sts</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/sts";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>protv</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/protv";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>rtr</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/rtr";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>tvc21</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/tvc21";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>paprika</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/paprika";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>alfaomega</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/alfaomega";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>party</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/party";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>mynele</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/mynele";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>taraf</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/taraf";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>muztv</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/muztv";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>soyz</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/soyz";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>france24</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/france24";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>noroc</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/noroc";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>a-one</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/a-one";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>etno</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/etno";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>utv</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/utv";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>mir</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/mir";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>europaplus</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/europaplus";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>arirang</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/arirang";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>rbk</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/rbk";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>vesti</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/vesti";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>amazinglife</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/amazinglife";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>fashiontvhd</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://87.248.187.38/fashiontvhd";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    </channel>
+</rss>

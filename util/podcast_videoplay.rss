@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<script>
+	path = getStoragePath("tmp");
+	path = path + "podcast_video.dat";
+	content = readStringFromFile(path);
+	print("1 play ",content);
+    progressbarStatus = 0;
+    startVideo = 0;
+    bkcurFullness = 0;
+    bkcurFullnessCount = 0;
+    bkReBufferCount = 0;
+    bufFullness = 0;
+    bBufferFull = 0;
+
+    bkcurFullnessCountStopInd = 10;
+    bufStopIndicator = 6;
+    bufPoolUnit = 1048576;
+    bufPoolCount = 2;
+    bufPoolSize = bufPoolUnit * bufPoolCount;
+</script>
+
+<onEnter>
+     startVideo = 1;
+     pauseVideo = -1;
+	 bufProgress = "";
+     curFullness = 0;
+     EOFFlag = 0;
+     progress = "";
+     setRefreshTime(200);
+</onEnter>
+
+<onExit>
+      playItemURL(-1, 1);
+      setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+		if (startVideo == 1)
+		{
+			print("I am moviePlayback onEnter !! startVideo: ", startVideo);
+			playItemURL(-1, 1);
+			
+			if (bufPoolCount &lt; 3)
+			{
+				playItemURL(content, 3, bufPoolUnit, "mediaDisplay", "previewWindow");
+			}
+			else
+			{
+				newURL = content+" fileCache=/tmp/videoCachefile cacheSize="+bufPoolCount;
+				print("newURL:", newURL);
+				playItemURL(newURL, 3, bufPoolUnit, "mediaDisplay", "previewWindow");
+			}
+			
+			setRefreshTime(1000);
+			pauseVideo = 0;
+			startVideo = 2;
+		}
+		else if (startVideo &gt; 1)
+		{
+			videoProgress = getPlaybackStatus();
+			playElapsed = getStringArrayAt(videoProgress, 0);
+			bufMax = getStringArrayAt(videoProgress, 1);
+			bufFullness = getStringArrayAt(videoProgress, 2);
+			playStatus = getStringArrayAt(videoProgress, 3);
+			print("Video status !!!!", videoProgress);
+			if (playStatus == 0)
+			{
+				postMessage("return");
+			}
+			else if (playStatus &gt; 0)
+			{
+				if (progressbarStatus == 0 &amp;&amp; bkReBufferCount &lt; 2)
+				{
+					bkcurFullness = 0;
+					bkcurFullnessCount = 0;
+					bBufferFull = 0;
+					progressbarStatus = 1;
+				}
+				
+				print("progressbarStatus:", progressbarStatus);
+				
+				if (progressbarStatus == 3)
+				{
+					bufOffset = bufMax - playElapsed;
+					print("bufOffset :", bufOffset);
+					print("bufMax :", bufMax);
+					print("playElapsed :", playElapsed);
+					print("bufStopIndicator :", bufStopIndicator);
+					/* mantis: 23703
+					if (bufOffset &gt; 0 &amp;&amp; bufFullness &gt; 0)
+					*/
+					if (bufOffset &gt; 0)
+					{
+						if (bufFullness &lt; bufStopIndicator &amp;&amp; bufOffset &gt; bufStopIndicator)
+						{
+							postMessage("video_pause");
+							bkcurFullness = 0;
+							bkcurFullnessCount = 0;
+							progressbarStatus = 1;
+							bBufferFull = 0;
+						}
+					}
+				}
+			 }
+		}
+		
+		if (progressbarStatus == 1)
+		{
+			bufProgress = getCachedStreamDataSize(0, bufPoolSize);
+			curFullness = getStringArrayAt(bufProgress, 0);
+			EOFFlag = getStringArrayAt(bufProgress,3);
+		
+		    tmpstr = "0&#xA;100&#xA;0";
+		    updatePlaybackProgress(tmpstr, "mediaDisplay", "progressBar"); 
+		
+		    print("curFullness: ", curFullness);
+		    
+		    if (bkcurFullness == curFullness &amp;&amp; bkcurFullness!=0)
+		    	bkcurFullnessCount = bkcurFullnessCount+1;
+		    if (bkcurFullness != curFullness)
+		    {
+		        bkcurFullness = curFullness;
+		        bkcurFullnessCount = 0;
+		    }
+		        
+		    if (curFullness &gt; 90)
+		      progressbarStatus = 2;
+		    if (bkcurFullnessCount &gt; bkcurFullnessCountStopInd)
+		    {
+		      bBufferFull=1;
+		      progressbarStatus = 2;
+		      bkcurFullnessCount = 0;
+		      bkcurFullness = 0;
+		      print("stop buffer !!");
+		    }
+		    if (EOFFlag == 1) {
+		      if (curFullness &gt; 0)
+		          progressbarStatus = 2;
+		 	}
+		 	else if (EOFFlag == 2) {
+		    	print("Network is down!!!!!");
+		    	setRefreshTime(-1);
+		    	postMessage("return");
+		  	}
+		
+			progress = curFullness + "&#xA;100&#xA;0";
+			updatePlaybackProgress(progress, "mediaDisplay", "bufferStatus", "progressBar");
+			redrawDisplay("no");
+		}
+		else if (progressbarStatus == 2)
+		{
+		  bufStopIndicator = bufFullness / 4;
+		  /*
+		  if (bufStopIndicator &lt; 2 &amp;&amp; bufFullness != 0 &amp;&amp; bBufferFull !=1)
+		  {
+		    print("extend buffer size");
+		  	bufPoolSize = bufPoolUnit * 16;
+		  	bkcurFullness = 0;
+		  	bkcurFullnessCount = 0;
+		  	bkReBufferCount = bkReBufferCount + 1;
+		  	progressbarStatus = 0;
+		  }
+		  else
+		  */
+		  {
+			  print("bufStopIndicator: ", bufStopIndicator);
+			  updatePlaybackProgress("delete", "mediaDisplay", "bufferStatus", "progressBar");
+			  setVoutDisplay("true");
+			  postMessage("video_play");
+			  bkReBufferCount = 0;
+			  progressbarStatus = 3;
+			  bBufferFull = 0;
+			  
+		  }
+		}
+</onRefresh>
+
+<mediaDisplay name=threePartsView >
+<previewWindow windowColor=0:0:0 offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+</previewWindow>
+
+<onUserInput>
+input = currentUserInput();
+ret = "true";
+print("1 Got input: ", input);
+
+if (input=="return")
+{
+	if (startVideo==1)
+	{
+		print("Video Stop>>>>>>>>>>>>>");
+		playItemURL(-1,1);
+		
+	}
+	ret = "false";
+}
+else if (input == "setup" || input == "guide")
+{
+	pauseVideo = 1;
+	ret = "false";
+}
+else if (input == "video_stop")
+{
+	print("Video Stop>>>>>>>>>>>>>");
+	playItemURL(-1,1);
+	startVideo = 0;
+	postMessage("return");
+	ret = "true";
+}
+else if(input == "video_completed")
+{
+	print("Video Completed>>>>>>>>>>");
+	playItemURL(-1,1);
+	ret = "true";
+}
+else if((input=="video_play" || input == "one") &amp;&amp;pauseVideo==1)
+	{
+		print("video Resume>>>>>>>>");
+		pauseVideo = 0;
+		postMessage("video_play");
+		ret = "true";
+	}
+else if ((input=="video_play" || input == "one") &amp;&amp;pauseVideo==0)
+	{
+		print("video Start to Pause>>>>>>>>");
+		pauseVideo = 1;
+		postMessage("video_pause");
+		ret = "true";
+	}
+else if (input=="video_pause")
+	{
+		print("video Pause>>>>>>>");
+		
+		pauseVideo = 1;
+		ret = "false";
+	}
+else if (input == "right" || input == "left")
+{
+	status = getPlaybackStatus();
+	playStatus = getStringArrayAt(status, 3);
+	if (playStatus == "2")
+	{
+		setEnv("videoStatus", status);
+		playItemURL(-1, 2);
+		print("LOUIS - link to seekpop");
+		timePoint = doModalRss("/usr/local/etc/www/cgi-bin/scripts/util/podcast_seekpopup.rss");
+		if (timePoint != -1)
+		{
+			playAtTime(timePoint);
+		}
+		postMessage("video_play");
+		ret = "true";
+	}
+}
+else if (input == "video_volume_up" || input == "video_volume_down" || input == "video_ffwd")
+{
+	ret = "false";
+}
+ret;
+</onUserInput>
+
+</mediaDisplay>
+
+<channel>
+	<title>Podcast videoplay</title>
+	<link>podcast_videoplay.rss</link>
+
+</channel>
+
+</rss>
+
+             

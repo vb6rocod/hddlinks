@@ -1,0 +1,367 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  cgiconf = readStringFromFile("/usr/local/etc/translate/etc/cgi.conf");
+  if(cgiconf != null)
+  {
+    value = getStringArrayAt(cgiconf, 0);
+    if(value != null &amp;&amp; value != "")
+    {
+      translate_base_url = value;
+      print("cgi.conf=",value);
+    }
+  }
+
+  renderer_cmd_file   = "/tmp/xspf_renderer.dat";
+  renderer_status_file= "/tmp/xspf_renderer.status";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+   ntest = 0;
+   ref = 1;
+  arr = readStringFromFile(storagePath_stream);
+  if(arr != null)
+  {
+    request_url     = getStringArrayAt(arr, 0);
+    request_options = getStringArrayAt(arr, 1);
+    stream_url      = getStringArrayAt(arr, 2);
+    url             = getStringArrayAt(arr, 3);
+    stream_type     = getStringArrayAt(arr, 4);
+    stream_status_url   = getStringArrayAt(arr, 5);
+    stream_current_song = getStringArrayAt(arr, 6);
+    stream_genre    = getStringArrayAt(arr, 7);
+    stream_bitrate  = getStringArrayAt(arr, 8);
+    stream_title    = getStringArrayAt(arr, 9);
+    request_image   = getStringArrayAt(arr, 10);
+    no_renderer     = getStringArrayAt(arr, 11);
+    
+    track_image = request_image;
+  
+    if(stream_current_song != "" &amp;&amp; stream_current_song != null)
+      url_img="http://127.0.0.1/cgi-bin/scripts/tv/php/nrj1.php?file=" + request_url;
+      track_image = getUrl(url_img);
+      
+    stream_soft     = "";
+  }
+  else
+  {
+    postMessage("return");
+  }
+  
+  check_info_time     = 40;  
+  refresh_time        = 100;
+</script>
+
+<onEnter>
+  renderer_status = "tuneing";
+  if(no_renderer != 1)
+  {
+    arr = null;
+    arr = pushBackStringArray(arr, renderer_status);
+    arr = pushBackStringArray(arr, request_url);
+    writeStringToFile(renderer_status_file, arr);
+  }
+  playItemURL(url, 0, "mediaDisplay", "previewWindow");
+  stream_elapsed = "Wait...";
+  setRefreshTime(100);
+  refresh_time = 100;
+ if(stream_status_url == "")
+    check_info = 5;
+  else
+    check_info = 10;
+  cancelIdle();
+</onEnter>
+
+<onExit>
+	playItemURL(-1, 1);
+	setRefreshTime(-1);
+  renderer_status = "waiting";
+  if(no_renderer != 1)
+  {
+    arr = null;
+    arr = pushBackStringArray(arr, renderer_status);
+    arr = pushBackStringArray(arr, request_url);
+    writeStringToFile(renderer_status_file, arr);
+  }
+</onExit>
+
+
+<onRefresh>
+	stream_progress  = getPlaybackStatus();
+	buffer_progress  = getCachedStreamDataSize(0, 262144);
+	play_elapsed     = getStringArrayAt(stream_progress, 0);
+	play_total       = getStringArrayAt(stream_progress, 1);
+	play_status      = getStringArrayAt(stream_progress, 3);
+
+	print(stream_progress);
+
+	if (play_elapsed != 0)
+	{
+	  if(refresh_time != 1000)
+	  {
+      refresh_time = 1000;
+ 	    setRefreshTime(1000);
+	  }
+    ntest = ntest + 1;
+    if (ntest &gt; 95 &amp;&amp; ntest &lt; 100 &amp;&amp; ref == 1)
+    {
+      ref = 0;
+      postMessage("edit");
+    }
+    else if (ntest &gt; 100)
+    {
+      ntest = 0;
+      ref = 1;
+    }
+    if(renderer_status != "playing")
+	  {
+	    renderer_status = "playing";
+      if(no_renderer != 1)
+      {
+        arr = null;
+        arr = pushBackStringArray(arr, renderer_status);
+        arr = pushBackStringArray(arr, request_url);
+        writeStringToFile(renderer_status_file, arr);
+      }
+  		if (play_total == 0 || play_total &gt; 1000000)
+  		{
+         stream_image = "../etc/translate/rss/image/radio_online.jpg";
+    	   redrawDisplay();
+    	}
+    	else
+    	{
+    	 stream_status_url = "_empty_";
+    	 track_image = request_image;
+    	}
+	  }
+		
+    arg_time = play_elapsed;
+		x = Integer(arg_time / 60);
+		h = Integer(arg_time / 3600);
+		s = arg_time - (x * 60);
+		m = x - (h * 60);
+		if(h &lt; 10) 
+			ret_string = "0" + sprintf("%s:", h);
+		else
+			ret_string = sprintf("%s:", h);
+		if(m &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s:", m);
+		if(s &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s", s);
+    stream_elapsed = ret_string;
+  
+		if (play_total &gt; 0 &amp;&amp; play_total &lt; 1000000)
+		{
+		  arg_time = play_total;
+  		x = Integer(arg_time / 60);
+  		h = Integer(arg_time / 3600);
+  		s = arg_time - (x * 60);
+  		m = x - (h * 60);
+  		if(h &lt; 10) 
+  			ret_string = "0" + sprintf("%s:", h);
+  		else
+  			ret_string = sprintf("%s:", h);
+  		if(m &lt; 10)  ret_string += "0";
+  		ret_string += sprintf("%s:", m);
+  		if(s &lt; 10)  ret_string += "0";
+  		ret_string += sprintf("%s", s);
+		  stream_total = ret_string + " / ";
+		}
+		else
+		{
+		  stream_total = "";
+		}
+		
+		if(play_elapsed &gt; check_info)
+		{
+		  check_info = play_elapsed - (-check_info_time);
+	    url_song="http://127.0.0.1/cgi-bin/scripts/tv/php/nrj2.php?file=" + request_url;
+	    value = getUrl(url_song);
+	    if(value != null)
+	    {
+  		  stream_current_song = value;
+  		  url_img="http://127.0.0.1/cgi-bin/scripts/tv/php/nrj1.php?file=" + request_url;
+    		track_image = getUrl(url_img);
+  		}
+  		else
+  		{
+  		  track_image = request_image;
+  		}
+		}
+		
+		redrawDisplay();
+	}
+	else if (play_status == 0)
+	{
+		print("Media quit!");
+		postMessage("return");
+	}
+	
+	if(no_renderer != 1)
+	{
+    arr = readStringFromFile(renderer_cmd_file);
+    if(arr != null)
+    {
+      print("sub_Check");
+      arr_url     = getStringArrayAt(arr, 0);
+      arr_options = getStringArrayAt(arr, 1);
+      arr_title   = getStringArrayAt(arr, 2);
+      
+      if(arr_url == null)     arr_url = "";
+      if(arr_options == null) arr_options = "";
+      if(arr_title == null)   arr_title = "";
+      
+      if(arr_url == "{renderer-stop}")
+      {
+        writeStringToFile(renderer_cmd_file, "");
+        postMessage("video_stop");
+      }
+      else if(arr_url == "{renderer-pause}")
+      {
+        writeStringToFile(renderer_cmd_file, "");
+        postMessage("video_pause");
+      }
+      else if(arr_url == "{renderer-play}")
+      {
+        writeStringToFile(renderer_cmd_file, "");
+        postMessage("video_play");
+      }
+      else if(request_url != arr_url || request_options != arr_options)
+      {
+  			postMessage("return");
+      }
+    }
+  }
+</onRefresh>
+
+<mediaDisplay name="threePartsView" 
+  showDefaultInfo="no" 
+  showHeader="no" 
+  sideLeftWidthPC="0" 
+  sideRightWidthPC="0" 
+  backgroundColor="0:0:0"
+  >
+
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+<!--
+	<text align="center" redraw="no" offsetXPC="5" offsetYPC="5" widthPC="90" heightPC="15" fontSize="34" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		Audio Stream Renderer
+	</text>
+-->
+
+  <image redraw="yes" offsetXPC="15" offsetYPC="12" widthPC="30" heightPC="41">
+    <script>track_image;</script>
+	</image>
+	
+  <image redraw="yes" offsetXPC="55" offsetYPC="10" widthPC="40" heightPC="45">
+    <script>stream_image;</script>
+	</image>
+
+  <previewWindow windowColor="0:0:0" offsetXPC="99" widthPC="1" offsetYPC="99" heightPC="1"></previewWindow>	
+  
+	<text redraw="no" offsetXPC="5" offsetYPC="65" widthPC="90" heightPC="25" fontSize="20" backgroundColor="10:105:150" foregroundColor="-1:-1:-1"></text>
+
+	<text redraw="yes" offsetXPC="5" offsetYPC="65" widthPC="90" heightPC="8" fontSize="20" backgroundColor="10:55:100" foregroundColor="255:255:255">
+		<script>stream_title;</script>
+	</text>
+
+  <image redraw="yes" offsetXPC="87" offsetYPC="66" widthPC="7" heightPC="6">
+    <script>if(no_renderer != 1) "../etc/translate/rss/image/msr.png";</script>
+	</image>
+
+	<text redraw="yes" offsetXPC="6" offsetYPC="74" widthPC="60" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="255:255:150">
+		<script>stream_current_song;</script>
+	</text>
+	<text redraw="yes" offsetXPC="6" offsetYPC="79" widthPC="60" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+		<script>stream_genre;</script>
+	</text>
+	<text redraw="yes" offsetXPC="6" offsetYPC="84" widthPC="60" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+	<script>
+	 out = "";
+	 if(stream_bitrate != null &amp;&amp; stream_bitrate != "") 
+	   out = stream_bitrate+" kbps";
+	 if(stream_type == "audio/mpeg" || stream_type == "audio/x-mpeg")
+	   out = out + " / MP3";
+	 else
+	 if(stream_type == "audio/aacp")
+	   out = out + " / AAC+";
+	 else
+	 if(stream_type == "audio/aac")
+	   out = out + " / AAC";
+	 else
+	 if(stream_type == "application/ogg")
+	   out = out + " / OGG";
+	 out;
+	</script>
+	</text>
+	
+	<text align="right" redraw="yes" offsetXPC="6" offsetYPC="85" widthPC="86" heightPC="5" fontSize="12" backgroundColor="-1:-1:-1" foregroundColor="0:0:0">
+		<script>stream_url;</script>
+	</text>
+		
+	<text redraw="yes" offsetXPC="66" offsetYPC="75" widthPC="15" heightPC="10" fontSize="22" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+		<script>stream_total;</script>
+	</text>
+	<text redraw="yes" offsetXPC="81" offsetYPC="75" widthPC="13" heightPC="10" fontSize="22" backgroundColor="-1:-1:-1" foregroundColor="255:255:255">
+		<script>stream_elapsed;</script>
+	</text>
+
+	<onUserInput>
+		input = currentUserInput();
+		print("**** input=",input);
+		ret = "false";
+    if (input == "display" || input == "DISPLAY")
+		{
+		  redrawDisplay("yes");
+		  check_info -= check_info_time;
+		  setRefreshTime(10);
+		  refresh_time = 10;
+		}
+		else
+    if (input == "enter")
+		{
+	    postMessage("video_play");
+      ret = "true";
+		}
+		ret;
+	</onUserInput>
+
+	
+</mediaDisplay>
+
+
+<channel>
+	<title>audio stream player</title>
+</channel>
+
+</rss>

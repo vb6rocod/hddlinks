@@ -1,0 +1,117 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<channel>
+	<title>Fun</title>
+	<menu>Video Podcast Fun</menu>
+
+<item>
+<title>Discovery Channel</title>
+<link>http://www.discovery.com/radio/xml/discovery_video.xml</link>
+</item>
+
+<item>
+<title>ZeitGeist from msnbc.com</title>
+<link>http://podcast.msnbc.com/audio/podcast/pdm_zeitgeist.xml</link>
+</item>
+
+<item>
+<title>Attack of the Show's Daily Video Podcast</title>
+<link>http://g4tv.com/attackoftheshow/podcasts/5/G4_TV__Attack_of_the_Show_Video_Podcast.xml</link>
+</item>
+
+
+<item>
+<title>Earth-touch.com : Marine channel</title>
+<link>http://feeds2.feedburner.com/WeeklyMarinePodcast-hd</link>
+</item>
+
+<item>
+<title>Earth-touch.com : Wildlife Highlights</title>
+<link>http://feeds2.feedburner.com/earth-touch_podcast_720p</link>
+</item>
+
+<item>
+<title>X-Play¡¦s Daily Video Podcast</title>
+<link>http://g4tv.com/xplay/podcasts/6/XPlay_Daily_Video_Podcast.xml</link>
+</item>
+
+<item>
+<title>Video Previews - GameTrailers.com</title>
+<link>http://www.gametrailers.com/gtprev_podcast.xml</link>
+</item>
+
+<item>
+<title>iMovies</title>
+<link>http://feeds.feedburner.com/imoviesblogspot?format=xml</link>
+</item>
+
+<item>
+<title>Kopfball - zum Mitnehmen</title>
+<link>http://podcast.wdr.de/kopfball.xml</link>
+</item>
+
+<item>
+<title>MTV BUZZ (VIDEO)</title>
+<link>http://podcast13.streamakaci.com/xml/MTV7.xml</link>
+</item>
+
+<item>
+<title>IVID.IT - Trailer in HD</title>
+<link>http://www.ivid.it/podcast/ivid_hd.php</link>
+</item>
+
+<item>
+<title>Earth Focus</title>
+<link>http://www.linktv.org/rss/hq/earth.xml</link>
+</item>
+
+<item>
+<title>iFanboy (Quicktime Small)</title>
+<link>http://revision3.com/ifanboy/feed/quicktime-small</link>
+</item>
+
+<item>
+<title>Weeds</title>
+<link>http://feeds.feedburner.com/weedspodcast?format=xml</link>
+</item>
+
+<item>
+<title>ARTE - Metropolis le Podcast !</title>
+<link>http://feeds.feedburner.com/arte/fr/Metropolis?format=xml</link>
+</item>
+
+<item>
+<title>RockLabel TV</title>
+<link>http://feeds.feedburner.com/rocklabeltv?format=xml</link>
+</item>
+
+<item>
+<title>London Landscape TV (HD 720p)</title>
+<link>http://lltv.libsyn.com/rss</link>
+</item>
+
+<item>
+<title>Finding America HD 720p Video Podcast</title>
+<link>http://www.mevio.com/feeds/hdv.xml</link>
+</item>
+
+<item>
+<title>Alaska HDTV | Discover the Great Land</title>
+<link>http://feeds.feedburner.com/alaskapodshow?format=xml</link>
+</item>
+
+<item>
+<title>hombreloboTV, viajes por el mundo</title>
+<link>http://feeds.feedburner.com/hombreloboTV?format=xml</link>
+</item>
+
+<item>
+<title>Mayda3000</title>
+<link>http://feeds.feedburner.com/Mayda3000</link>
+</item>
+
+</channel>
+
+</rss>
+             

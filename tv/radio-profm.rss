@@ -1,0 +1,978 @@
+﻿<?xml version='1.0' encoding="UTF8" ?>
+<rss version="2.0">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  cgiconf = readStringFromFile("/usr/local/etc/translate/etc/cgi.conf");
+  if(cgiconf != null)
+  {
+    value = getStringArrayAt(cgiconf, 0);
+    if(value != null &amp;&amp; value != "")
+    {
+      translate_base_url = value;
+      print("cgi.conf=",value);
+    }
+  }
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+  
+  error_info          = "";
+</script>
+
+<onEnter>
+    startitem = "middle";
+		
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+  middleItem = Integer(itemCount / 2);
+  redrawDisplay();
+</onRefresh>
+
+	<mediaDisplay name=photoView 
+	  centerXPC=7 
+		centerYPC=25
+		centerHeightPC=40
+    columnCount=5
+		
+	  rowCount=1
+		menuBorderColor="55:55:55"
+		sideColorBottom="0:0:0"
+		sideColorTop="0:0:0"
+	  backgroundColor="0:0:0"
+		imageBorderColor="0:0:0"
+		itemBackgroundColor="0:0:0"
+		itemGapXPC=0
+		itemGapYPC=1
+		sideTopHeightPC=22
+		bottomYPC=85
+		sliding=yes
+		showHeader=no
+		showDefaultInfo=no
+		idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+		
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+<!--
+		<image offsetXPC=5 offsetYPC=2 widthPC=20 heightPC=16>
+		  <script>channelImage;</script>
+		</image>
+-->
+  	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+		<!--  lines="5" fontSize=15 -->
+		<text align="center" redraw="yes" 
+      lines=3 fontSize=18
+		
+		      offsetXPC=10 offsetYPC=65 widthPC=80 heightPC=20 
+		      backgroundColor=0:0:0 foregroundColor=120:120:120>
+			<script>print(annotation); annotation;</script>
+		</text>
+		
+		<text align="center" redraw="yes" offsetXPC=10 offsetYPC=85 widthPC=80 heightPC=10 fontSize=15 backgroundColor=0:0:0 foregroundColor=75:75:75>
+			<script>print(location); location;</script>
+		</text>
+
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<image>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx) 
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  if(annotation == "" || annotation == null)
+					    annotation = getItemInfo(idx, "stream_genre");
+					}
+					getItemInfo(idx, "image");
+				</script>
+			 <offsetXPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 0; else 12;
+			   </script>
+			 </offsetXPC>
+			 <offsetYPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 0; else 6;
+			   </script>
+			 </offsetYPC>
+			 <widthPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 100; else 75;
+			   </script>
+			 </widthPC>
+			 <heightPC>
+			   <script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+			    if(focus==idx) 50; else 37;
+			   </script>
+			 </heightPC>
+			</image>
+			
+			<text align="center" lines="4" offsetXPC=0 offsetYPC=55 widthPC=100 heightPC=45 backgroundColor=-1:-1:-1>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "75:75:75";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+		
+  <onUserInput>
+    <script>
+      ret = "false";
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      if(userInput == "enter" || userInput == "ENTR")
+      {
+        showIdle();
+        focus = getFocusItemIndex();
+
+        request_title = getItemInfo(focus, "title");
+        request_url = getItemInfo(focus, "location");
+        request_options = getItemInfo(focus, "options");
+        request_image = getItemInfo(focus, "image");
+
+        stream_url = getItemInfo(focus, "stream_url");
+        stream_title = getItemInfo(focus, "stream_title");
+        stream_type = getItemInfo(focus, "stream_type");
+        stream_protocol = getItemInfo(focus, "stream_protocol");
+        stream_soft = getItemInfo(focus, "stream_soft");
+        stream_class = getItemInfo(focus, "stream_class");
+        stream_server = getItemInfo(focus, "stream_server");
+        stream_status_url = "";
+        stream_current_song = "";
+        stream_genre = getItemInfo(focus, "stream_genre");
+        stream_bitrate = getItemInfo(focus, "stream_bitrate");
+        playlist_autoplay = getItemInfo(focus, "autoplay");
+
+        if(playlist_autoplay == "" || playlist_autoplay == null)
+          playlist_autoplay = 1;
+        
+        if(stream_class == "" || stream_class == null)
+          stream_class = "unknown";
+
+        if(stream_url == "" || stream_url == null)
+          stream_url = request_url;
+
+        if(stream_server != "" &amp;&amp; stream_server != null)
+          stream_status_url = translate_base_url + "status," + urlEncode(stream_server) + "," + urlEncode(stream_url);
+
+        if(stream_title == "" || stream_title == null)
+          stream_title = request_title;
+
+        if(stream_url != "" &amp;&amp; stream_url != null)
+        {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+          {
+            url = stream_url;
+          }
+          else
+          {
+            if(stream_type != null &amp;&amp; stream_type != "")
+            {
+              request_options = "Content-type:"+stream_type+";"+request_options;
+            }
+            url = translate_base_url + "stream," + request_options + "," + urlEncode(stream_url);
+          }
+        
+          executeScript(stream_class+"Dispatcher");
+        }
+        
+        cancelIdle();
+        ret = "true";
+      }
+if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
+      ret;
+    </script>
+  </onUserInput>
+		
+	</mediaDisplay>
+	
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+	</item_template>
+
+  <videoDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/videoRenderer.rss");
+  </videoDispatcher>
+  
+  <audioDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, request_url);
+    streamArray = pushBackStringArray(streamArray, request_options);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, stream_type);
+    streamArray = pushBackStringArray(streamArray, stream_status_url);
+    streamArray = pushBackStringArray(streamArray, stream_current_song);
+    streamArray = pushBackStringArray(streamArray, stream_genre);
+    streamArray = pushBackStringArray(streamArray, stream_bitrate);
+    streamArray = pushBackStringArray(streamArray, stream_title);
+    streamArray = pushBackStringArray(streamArray, request_image);
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/audioRenderer.rss");
+  </audioDispatcher>
+  
+  <playlistDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "playlist");
+    streamArray = pushBackStringArray(streamArray, playlist_autoplay);
+    writeStringToFile(storagePath_playlist, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/xspfBrowser.rss");
+  </playlistDispatcher>
+  
+  <rssDispatcher>
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, stream_url);
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file://../etc/translate/rss/xspf/rss_mediaFeed.rss");
+  </rssDispatcher>
+
+  <unknownDispatcher>
+    info_url    = translate_base_url + "info," + request_options + "," + urlEncode(request_url);
+    error_info  = "";
+
+    res = loadXMLFile(info_url);
+    
+    if (res != null)
+    {
+      error = getXMLElementCount("info","error");
+      
+      if(error != 0)
+      {
+  	    value = getXMLText("info","error");
+  	    if(value != null)
+  	    {
+  	     error_info = value;
+  	    }
+      }
+      else
+      {
+  	    value = getXMLAttribute("info","stream","url");
+  	    if(value != null)
+  	     stream_url = value;
+  
+  	    value = getXMLAttribute("info","stream","type");
+  	    if(value != null)
+  	     stream_type = value;
+  	    
+  	    value = getXMLAttribute("info","stream","class");
+  	    if(value != null)
+  	     stream_class = value;
+  
+  	    value = getXMLAttribute("info","stream","protocol");
+  	    if(value != null)
+  	     stream_protocol = value;
+  
+  	    value = getXMLAttribute("info","stream","server");
+  	    if(value != null)
+  	     stream_soft = value;
+  
+        stream_status_url = "";
+        
+  	    value = getXMLAttribute("info","stream","server_url");
+  	    if(value != null)
+  	    {
+  	     stream_server_url = value;
+  	     if((stream_soft == "icecast" || stream_soft == "shoutcast") &amp;&amp; stream_server_url!="")
+  	     {
+    	      stream_status_url = translate_base_url+"status,"+urlEncode(stream_server_url)+","+urlEncode(stream_url);
+    	   }
+  	    }
+  	     
+        value = getXMLText("info","status","stream-title");
+  	    if(value != null)
+  	     stream_title = value;
+  
+        stream_current_song = "";
+  	    value = getXMLText("info","status","current-song");
+  	    if(value != null)
+    		  stream_current_song = value;
+    		  
+  	    value = getXMLText("info","status","stream-genre");
+  	    if(value != null)
+  	      stream_genre = value;
+        
+  	    value = getXMLText("info","status","stream-bitrate");
+  	    if(value != null)
+  	      stream_bitrate = value;
+  
+        options = "";
+        
+        if(stream_type != "")
+          options = "Content-type:"+stream_type;
+        
+        if(options == "")
+          options = stream_options;
+        else
+          options = options + ";" + stream_options;
+  
+  	    stream_translate_url = translate_base_url + "stream," + options + "," + urlEncode(stream_url);
+  	    
+  	    url = null;
+  	    
+  	    if(stream_class == "video" || stream_class == "audio")
+    	  {
+          if(stream_protocol == "file" || (stream_protocol == "http" &amp;&amp; stream_soft != "shoutcast"))
+    	      url = stream_url;
+    	    else
+    	      url = stream_translate_url;
+    	  }
+    	  else
+    	  {
+  	      url = stream_url;
+    	  }
+    	     
+    	  if(url != null)
+    	  {
+          if(stream_class == "audio" || stream_class == "video" || stream_class == "playlist" || stream_class == "rss")
+          {
+            executeScript(stream_class+"Dispatcher");
+          }
+          else
+          {
+            error_info = "Unsupported media type: " + stream_type;
+          }
+  	    }
+  	    else
+  	    {
+          error_info = "Empty stream url!";
+  	    }
+      }
+    }
+    else
+    {
+      error_info = "CGI translate module failed!";
+    }
+    print("error_info=",error_info);
+  </unknownDispatcher>
+
+<script>
+    channelImage = "/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm.jpg";
+  </script>
+<channel>
+  <title>ProFM</title>
+
+<item>
+<location>http://www.profm.ro/radio/profm</location>
+<title>ProFM</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm.png</image>
+<stream_url>http://stream.profm.ro:8012/profm.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8012</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/dancefm</location>
+<title>ProFM Dance</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/dance-fm.png</image>
+<stream_url>http://stream.profm.ro:8032/dancefm.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8032</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Dance</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/music_fm</location>
+<title>Music FM</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/music-fm.png</image>
+<stream_url>http://stream.profm.ro:8410/campus.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8410</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>Music FM</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_bon_jovi</location>
+<title>ProFM Bon Jovi</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-bon-jovi.png</image>
+<stream_url>http://stream.profm.ro:8349/profmdiverse.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8349</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Bon Jovi</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_country</location>
+<title>ProFM Country</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm_country.png</image>
+<stream_url>http://stream.profm.ro:8440/country.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8440</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Country</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_rogen</location>
+<title>ProFM Romania, Gen</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm_gen.png</image>
+<stream_url>http://stream.profm.ro:8332/profmrogen.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8332</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Romania, Gen</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/michael_jackson</location>
+<title>ProFM Michael Jackson</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-mj.png</image>
+<stream_url>http://stream.profm.ro:8360/profmmichaeljackson.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8360</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Michael Jackson</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_alternative</location>
+<title>ProFM Alternative</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-alternative-final.png</image>
+<stream_url>http://stream.profm.ro:8042/alternativ.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8042</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Alternative</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_black</location>
+<title>ProFM Black</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-black-final.png</image>
+<stream_url>http://stream.profm.ro:8052/black.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8052</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Black</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_classic</location>
+<title>ProFM Classic</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-classic.png</image>
+<stream_url>http://stream.profm.ro:8082/clasic.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8082</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Classic</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_gold</location>
+<title>ProFM Gold</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-gold-final.png</image>
+<stream_url>http://stream.profm.ro:8112/gold.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8112</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Gold</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_reggae</location>
+<title>ProFM Reggae</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-reggae.png</image>
+<stream_url>http://stream.profm.ro:8062/reggae.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8062</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Reggae</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_80s</location>
+<title>ProFM `80s</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-80s.png</image>
+<stream_url>http://stream.profm.ro:8122/80s.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8122</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM `80s</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_90s</location>
+<title>ProFM `90s</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-90s.png</image>
+<stream_url>http://stream.profm.ro:8092/90s.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8092</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM `90s</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_love</location>
+<title>ProFM Love</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-love.png</image>
+<stream_url>http://stream.profm.ro:8072/love.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8072</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Love</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_sofa</location>
+<title>ProFM Sofa</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-sofa.png</image>
+<stream_url>http://stream.profm.ro:8132/sofa.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8132</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Sofa</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_rock</location>
+<title>ProFM Rock</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-rock.png</image>
+<stream_url>http://stream.profm.ro:8142/rock.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8142</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Rock</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_rhythm_blues</location>
+<title>ProFM Rhythm&Blues</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-rhythm-blues.png</image>
+<stream_url>http://stream.profm.ro:8152/blues.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8152</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Rhythm&Blues</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_latino</location>
+<title>ProFM Latino</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-latino.png</image>
+<stream_url>http://stream.profm.ro:8162/latino.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8162</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Latino</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_jazz</location>
+<title>ProFM Jazz</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-jazz.png</image>
+<stream_url>http://stream.profm.ro:8212/jazz.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8212</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Jazz</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_oldies</location>
+<title>ProFM Oldies</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-oldies.png</image>
+<stream_url>http://stream.profm.ro:8222/oldies.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8222</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Oldies</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_chillout</location>
+<title>ProFM ChillOut</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-chill.png</image>
+<stream_url>http://stream.profm.ro:8232/chillout.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8232</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM ChillOut</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_ro</location>
+<title>ProFM RO</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-ro.png</image>
+<stream_url>http://stream.profm.ro:8242/profmro.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8242</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM RO</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_hot</location>
+<title>ProFM HOT</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-hot.png</image>
+<stream_url>http://stream.profm.ro:8252/hot.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8252</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM HOT</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_house</location>
+<title>ProFM HOUSE</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-house.png</image>
+<stream_url>http://stream.profm.ro:8312/house.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8312</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM HOUSE</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_classicrock</location>
+<title>ProFM Classic Rock</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-classicrock.png</image>
+<stream_url>http://stream.profm.ro:8322/classicrock.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8322</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Classic Rock</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<!-- item>
+<location>http://www.profm.ro/radio</location>
+<title>ProFM Campus Cluj</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm.jpg</image>
+<stream_url>http://82.77.127.233:80/campus.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Campus Cluj</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio</location>
+<title>ProFM Campus Tg. Mures</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm.jpg</image>
+<stream_url>http://193.226.19.85:80/campus.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Campus Tg. Mures</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item -->
+
+<item>
+<location>http://www.profm.ro/radio/profm_kids</location>
+<title>ProFM Kids</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm-kids.png</image>
+<stream_url>http://stream.profm.ro:8262/kids.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8262</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Kids</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/slagar</location>
+<title>ProFM Slagar</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm_slagar.png</image>
+<stream_url>http://stream.profm.ro:8420/profmslagar.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8420</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Slagar</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_hip_hop_gold</location>
+<title>ProFM HipHop Gold</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profm_hip_hop_gold.png</image>
+<stream_url>http://stream.profm.ro:8430/hiphopgold.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8430</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM HipHop Gold</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_summer</location>
+<title>ProFM Summer</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-summer.png</image>
+<stream_url>http://stream.profm.ro:8470/summer.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8470</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Summer</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_ibiza</location>
+<title>ProFM IBIZA</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/logo-profm-ibiza.png</image>
+<stream_url>http://stream.profm.ro:8480/ibiza.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8480</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM IBIZA</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+<item>
+<location>http://www.profm.ro/radio/profm_noi_fetele</location>
+<title>ProFM Noi Fetele</title>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/profm/profmnoifetele.png</image>
+<stream_url>http://stream.profm.ro:8450/profmnoifetele.mp3</stream_url>
+<stream_class>audio</stream_class>
+<stream_soft>icecast</stream_soft>
+<stream_server>icyx://85.204.233.53:8450</stream_server>
+<stream_type>audio/mpeg</stream_type>
+<stream_protocol>http</stream_protocol>
+<stream_title>ProFM Noi Fetele</stream_title>
+<stream_genre>LIVE</stream_genre>
+<stream_bitrate>128</stream_bitrate>
+</item>
+
+
+</channel>
+</rss>

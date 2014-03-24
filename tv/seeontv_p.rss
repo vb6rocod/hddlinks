@@ -1,0 +1,1240 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="45"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="45"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(annotation); annotation;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=61 offsetYPC=30 widthPC=30 heightPC=32>
+		<script>print(img); img;</script>
+		</image>
+		<idleImage> image/POPUP_LOADING_01.png </idleImage>
+		<idleImage> image/POPUP_LOADING_02.png </idleImage>
+		<idleImage> image/POPUP_LOADING_03.png </idleImage>
+		<idleImage> image/POPUP_LOADING_04.png </idleImage>
+		<idleImage> image/POPUP_LOADING_05.png </idleImage>
+		<idleImage> image/POPUP_LOADING_06.png </idleImage>
+		<idleImage> image/POPUP_LOADING_07.png </idleImage>
+		<idleImage> image/POPUP_LOADING_08.png </idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  img = getItemInfo(idx,"image");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>www.seeon.tv - private channels</title>
+	<menu>main menu</menu>
+
+    <item>
+    <title>Cartoon Network</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/14451");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Cartoon Network</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Disney</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/3815/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Disney</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Disney XD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/13871/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Disney XD</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Nick Jr</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/11884/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Nick Jr</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Nick Toons</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/13868/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Nick Toons</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Nickelodeon</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/10007/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Nickelodeon</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Teen Nick</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/12315/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Teen Nick</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Best Movies</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/10062/Best_Movies");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Best Movies</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>HBO</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/18019/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>HBO</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Lifetime Movies</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/3820");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Lifetime Movies</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Showtime</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/18020/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Showtime</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Starz</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/18017/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Starz</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>The Movie Channel 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/12793/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>The Movie Channel 1</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>The Movie Channel 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/14036/The_HD_movie_channel_2");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>The Movie Channel 2</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>CNN</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17562/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>CNN</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Fox Business</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/4847/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Fox Business</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Fox News</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/15891/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Fox News</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>MSNBC</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17557/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>MSNBC</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>ESPN</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/18188/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>ESPN</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>ESPN 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/18021/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>ESPN 2</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Fox Soccer</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17328/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Fox Soccer</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Golf Channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/16854/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Golf Channel</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>MLB Network</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17605/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>MLB Network</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>NBA TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/11888/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>NBA TV</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>NFL Network</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17548/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>NFL Network</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Speedvision</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17196/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Speedvision</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Versus</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/15890/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Versus</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>A and E</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/1261");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>A and E</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>ABC</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17248/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>ABC</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>ABC Family</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17555/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>ABC Family</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Animal Planet</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/11868");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Animal Planet</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>BET</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/16013/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>BET</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Bravo</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/11078");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Bravo</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>CBS</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/16930/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>CBS</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Comedy Central</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17447/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Comedy Central</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Country Music Television</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/12463");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Country Music Television</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>CW</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17563/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>CW</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Discovery</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/15911/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Discovery</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Family Guy</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/12897/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Family Guy</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Food Network</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/11071/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Food Network</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Fox TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17600/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Fox TV</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Friends</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/3818");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Friends</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>FX</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/12839");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>FX</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Hallmark</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/11861/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Hallmark</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>History Channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17554/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>History Channel</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>King of Queens</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/3813");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>King of Queens</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Mr Bean</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/14174/Mr_Bean");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Mr Bean</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>MTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/18013/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>MTV</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>MTV 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/18325/MTV_2_%28sometimes_offline%29");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>MTV 2</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>NatGeo</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/15912/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>NatGeo</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>NBC</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17247/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>NBC</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Oxygen</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/15696/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Oxygen</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Reality TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17509/Reality_TV");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Reality TV</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Seinfeld</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/9025/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Seinfeld</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Spike</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17604/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Spike</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Syfy</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/158/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Syfy</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>TBS</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17620/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>TBS</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>TLC</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/11079/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>TLC</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>TNT</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/15908/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>TNT</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Travel Channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/13869/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Travel Channel</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>TruTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/157");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>TruTV</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>TV Land</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/13463/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>TV Land</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>Univision</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17060/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>Univision</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    
+    <item>
+    <title>USA</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/seeontv_link.php?file=http://www.seeon.tv/view/17446/");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/seeon.cgi?" + url;
+    cancelIdle();
+    playItemURL(movie, 10);
+    </script>
+    </onClick>
+    <annotation>USA</annotation>
+    <image>image/tv_radio.png</image>
+    <media:thumbnail url="image/tv_radio.png" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    </channel>
+</rss>

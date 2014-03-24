@@ -1,0 +1,289 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+
+<onEnter>
+print("enter seek popup.rss");
+tline1="Press LEFT / RIGHT then OK to seek to desired time.";
+img1="/usr/local/etc/www/cgi-bin/scripts/util/image/podcast_seek_bar_bg.bmp";
+img2="/usr/local/etc/www/cgi-bin/scripts/util/image/podcast_seek_bar_fg.bmp";
+bReturn = 1;
+vidProgress = getEnv("videoStatus");
+elapsed = getStringArrayAt(vidProgress, 0);
+total = getStringArrayAt(vidProgress, 1);
+/* if total time is longer than 30 seconds */
+if (total &lt; 30)
+{
+	step_left = 1;
+	step_right = 1;
+}
+else
+{
+	step_left = 10;
+	step_right = 30;
+}
+if (total &gt; 0 &amp;&amp; total &lt; 1000000)
+{
+  arg_time = total;
+	x = Integer(arg_time / 60);
+	h = Integer(arg_time / 3600);
+	s = arg_time - (x * 60);
+	m = x - (h * 60);
+	if(h &lt; 10) 
+		ret_string = "0" + sprintf("%s:", h);
+	else
+		ret_string = sprintf("%s:", h);
+	if(m &lt; 10)  ret_string += "0";
+	ret_string += sprintf("%s:", m);
+	if(s &lt; 10)  ret_string += "0";
+	ret_string += sprintf("%s", s);
+  stream_total = ret_string;
+}
+else
+{
+  stream_total = "";
+}
+    arg_time = elapsed;
+		x = Integer(arg_time / 60);
+		h = Integer(arg_time / 3600);
+		s = arg_time - (x * 60);
+		m = x - (h * 60);
+		if(h &lt; 10) 
+			ret_string = "0" + sprintf("%s:", h);
+		else
+			ret_string = sprintf("%s:", h);
+		if(m &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s:", m);
+		if(s &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s", s);
+    stream_elapsed = ret_string + " / " + stream_total;
+    tline2=stream_elapsed;
+xx=0;
+setRefreshTime(100);
+redrawDisplay();
+</onEnter>
+<onRefresh>
+print("refresh");
+    arg_time = elapsed;
+		x = Integer(arg_time / 60);
+		h = Integer(arg_time / 3600);
+		s = arg_time - (x * 60);
+		m = x - (h * 60);
+		if(h &lt; 10) 
+			ret_string = "0" + sprintf("%s:", h);
+		else
+			ret_string = sprintf("%s:", h);
+		if(m &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s:", m);
+		if(s &lt; 10)  ret_string += "0";
+		ret_string += sprintf("%s", s);
+    stream_elapsed = ret_string + " / " + stream_total;
+    tline2=stream_elapsed;
+    if (xx == 1) 
+    {
+      tline1=" ";
+      tline2=" ";
+      postMessage("return");
+    }
+    if (xx == 2) 
+    {
+      tline1=" ";
+      tline2=" ";
+    }      
+</onRefresh>	
+<mediaDisplay
+	name=photoView
+	viewAreaXPC=20
+	viewAreaYPC=35
+	viewAreaWidthPC=60
+	viewAreaHeightPC=25
+
+	topArea.heightPC=0
+	topArea.yPC=100
+	bottomYPC=100
+
+	drawItemBorder=no
+
+	showHeader=no
+	showDefaultInfo=no
+
+>
+
+<backgroundColor>
+	<script>
+		if ( getStringArrayAt(readStringFromFile("/usr/local/etc/dvdplayer/interface"),0) == "egreat" ) "-1:-1:-1";  else  "255:0:255"; 
+	</script>
+</backgroundColor>
+
+<itemBackgroundColor>
+	<script>
+		if ( getStringArrayAt(readStringFromFile("/usr/local/etc/dvdplayer/interface"),0) == "egreat" ) "-1:-1:-1";  else  "255:0:255";
+	</script>
+</itemBackgroundColor>
+
+<itemGrid.elementBackground>
+	<script>
+		if ( getStringArrayAt(readStringFromFile("/usr/local/etc/dvdplayer/interface"),0) == "egreat" ) "-1:-1:-1";  else  "255:0:255"; 
+	</script>
+</itemGrid.elementBackground>
+
+
+<text align="center" redraw="yes" offsetXPC=0 offsetYPC=30 heightPC=25  widthPC=100 foregroundColor=232:175:32 useBackgroundSurface=yes fontSize=30>
+<backgroundColor>
+	<script>
+		if ( getStringArrayAt(readStringFromFile("/usr/local/etc/dvdplayer/interface"),0) == "egreat" ) "-1:-1:-1";  else  "255:0:255";
+	</script>
+</backgroundColor>
+<script>
+tline2;
+</script>
+</text>
+
+<onUserInput>
+ret = "false";
+input = currentUserInput();
+print("1user input is : ", input);
+if (input == "right" || input == "R")
+{
+	elapsed = Add(elapsed, step_right);
+	if (elapsed &gt; total)
+	{
+		elapsed = total;
+	}
+
+	ret = "true";
+}
+else if (input == "left" || input == "L")
+{
+	elapsed = Minus(elapsed, step_left);
+	if (elapsed &lt; 0)
+	{
+		elapsed = 0;
+	}
+	ret = "true";
+}
+else if (input == "enter" || input == "down" || input == "ENTR" || input == "D")
+{
+	bReturn = 0;
+	tline1="";
+	tline2="";
+  xx=1;
+  	
+	/* avoid transition effect */
+	ret = "false";
+}
+if (input == "return" || input == "RET")
+{
+	print("LOUIS - bReturn : ",bReturn);
+	tline1="";
+	tline2="";
+	xx=2;
+	if (bReturn == 1)
+	{
+		elapsed = -1;
+	}
+	/* avoid transition effect */
+
+	ret = "false";
+}
+else if (input == "video_completed" || input == "video_stop")
+{
+	bReturn = 0;
+	playItemURL(-1, 1);
+	postMessage("return");
+	postMessage("return");
+}
+ret;
+</onUserInput>
+</mediaDisplay>
+
+
+<channel>
+<itemSize>
+0
+</itemSize>
+</channel>
+
+<onExit>
+	stream_total="";
+setReturnString(elapsed);
+/* enable drawbackbuffer */
+setRefreshTime(-1);
+tline1="";
+tline2="";
+redrawDisplay("yes");
+
+</onExit>
+
+</rss>
+     bReturn = 0;
+	tline1="";
+	tline2="";
+  xx=1;
+  	
+	/* avoid transition effect */
+	ret = "false";
+}
+if (input == "return" || input == "RET")
+{
+	print("LOUIS - bReturn : ",bReturn);
+	tline1="";
+	tline2="";
+	xx=2;
+	if (bReturn == 1)
+	{
+		elapsed = -1;
+	}
+	/* avoid transition effect */
+
+	ret = "false";
+}
+else if (input == "video_completed" || input == "video_stop")
+{
+	bReturn = 0;
+	playItemURL(-1, 1);
+	postMessage("return");
+	postMessage("return");
+}
+ret;
+</onUserInput>
+</mediaDisplay>
+
+
+<channel>
+<itemSize>
+0
+</itemSize>
+</channel>
+
+<onExit>
+	stream_total="";
+setReturnString(elapsed);
+/* enable drawbackbuffer */
+setRefreshTime(-1);
+tline1="";
+tline2="";
+redrawDisplay("yes");
+
+</onExit>
+
+</rss>
+     l>
+<itemSize>
+0
+</itemSize>
+</channel>
+
+<onExit>
+	stream_total="";
+setReturnString(elapsed);
+/* enable drawbackbuffer */
+setRefreshTime(-1);
+tline1="";
+tline2="";
+redrawDisplay("yes");
+
+</onExit>
+
+</rss>
+     

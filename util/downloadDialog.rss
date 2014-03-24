@@ -1,0 +1,73 @@
+<?xml version="1.0"   encoding="utf-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<mediaDisplay name=photoView
+   viewAreaXPC=31
+   viewAreaYPC=36
+   viewAreaWidthPC=37
+   viewAreaHeightPC=27
+   showHeader=no
+   showDefaultInfo=no   
+   drawItemBorder = no	
+   backgroundColor=0:0:0
+   rowCount=1
+   columnCount=1
+   itemOffsetXPC=30
+   itemOffsetYPC=70
+   centerHeightPC=20
+   itemGapXPC=0
+   sideTopHeightPC = 0
+   bottomYPC = 100
+>
+
+<backgroundDisplay>
+        <image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+                /usr/local/etc/www/cgi-bin/scripts/util/DialogBG.jpg
+        </image>
+</backgroundDisplay>
+
+
+<text offsetXPC=5 offsetYPC=5 widthPC=90 align="center" lines="2" heightPC=25 fontSize=15 backgroundColor=-1:-1:-1    foregroundColor=200:200:200>
+Do you want to install/update this pack?
+</text>
+
+<itemDisplay>
+	<text offsetXPC=15 offsetYPC=0 widthPC=100 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1>
+        <script>
+                "Confirm";
+        </script>
+        <foregroundColor>
+        <script>
+              if(getDrawingItemState() == "focus")
+                "242:242:0";
+              else
+                "101:101:101";
+        </script>
+        </foregroundColor>
+	</text>
+</itemDisplay>
+
+<onUserInput>
+    handled = "false";
+    userInput = currentUserInput();
+    print("userInput=",userInput);
+    focusIndex = getFocusItemIndex();
+    if ("enter" == userInput) {
+      setReturnString("Confirm");
+      postMessage("return");
+      handled = "true";
+    }
+    else if ("edit" == userInput)
+      handled = "true";
+    handled;
+</onUserInput>
+</mediaDisplay>
+
+<channel>
+<title>notice Dialog</title>
+<link>noticeDialog.rss</link>
+
+<itemSize>1</itemSize>
+
+</channel>
+</rss>

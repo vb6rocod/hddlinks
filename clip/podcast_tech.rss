@@ -1,0 +1,111 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<channel>
+	<title>Tech</title>
+	<menu>Video Podcast Tech</menu>
+
+<item>
+<title>Mad money w/ Jim Cramer</title>
+<link>http://podcast.cnbc.com/mmpodcast/lightninground.xml</link>
+</item>
+
+<item>
+<title>The Economist</title>
+<link>http://economist.xml.feedroom.com/podcast.xml</link>
+</item>
+
+<item>
+<title>Walt Mossberg's Personal Technology</title>
+<link>http://feeds.wsjonline.com/atd/mossberg/video-feed</link>
+</item>
+
+<item>
+<title>HD Nation</title>
+<link>http://revision3.com/hdnation/feed/Xvid-Large</link>
+</item>
+
+<item>
+<title>TEDTalks</title>
+<link>http://feeds.feedburner.com/tedtalks_video</link>
+</item>
+
+<item>
+<title>CNBC's "The Suze Orman Show"- Full Show</title>
+<link>http://podcast.cnbc.com/mmpodcast/suzeormanshow.xml</link>
+</item>
+
+<item>
+<title>CNBC's The Wall Street Journal Report with Maria Bartiromo</title>
+<link>http://podcast.cnbc.com/mmpodcast/wsjr.xml</link>
+</item>
+
+<item>
+<title>CNBC's Fast Money</title>
+<link>http://podcast.cnbc.com/mmpodcast/fastmoney.xml</link>
+</item>
+
+<item>
+<title>Mac Quick Tips</title>
+<link>http://www.apple.com/podcasts/quicktips/apple-quick-tip-of-the-week.xml</link>
+</item>
+
+<item>
+<title>Inbound Marketing - Hubspot TV</title>
+<link>http://feeds.feedburner.com/HubspotTvitunes?format=xml</link>
+</item>
+
+<item>
+<title>HBR Video IdeaCast</title>
+<link>http://feeds.harvardbusiness.org/harvardbusiness/videoideacast?format=xml</link>
+</item>
+
+<item>
+<title>Autoline Daily - Video</title>
+<link>http://www.autolinedetroit.tv/podcasts/feeds/autoline-daily-video.xml</link>
+</item>
+
+<item>
+<title>explore: Specials</title>
+<link>http://www.linktv.org/rss/itunes/explorespecial1.xml</link>
+</item>
+
+<item>
+<title>Linux Journal</title>
+<link>http://linuxjournal.blip.tv/rss/itunes/</link>
+</item>
+
+<item>
+<title>Hak5 (HD MP4)</title>
+<link>http://revision3.com/hak5/feed/MP4-High-Definition</link>
+</item>
+
+<item>
+<title>Diggnation (Quicktime HD)</title>
+<link>http://revision3.com/diggnation/feed/quicktime-high-definition/</link>
+</item>
+
+<item>
+<title>GeekBeat.TV (HD)</title>
+<link>http://feeds.feedburner.com/caliextralarge?format=xml</link>
+</item>
+
+<item>
+<title>Doctype</title>
+<link>http://feeds.feedburner.com/doctype/episodes?format=xml</link>
+</item>
+
+<item>
+<title>Category5 Technology TV - Episodes (MP4 Portable)</title>
+<link>http://vodcast.category5.tv/main.rss</link>
+</item>
+
+<item>
+<title>TED Theme: What's Next in Tech</title>
+<link>http://www.ted.com/themes/rss/id/6</link>
+</item>
+
+</channel>
+
+</rss>
+      

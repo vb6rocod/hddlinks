@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+
+<mediaDisplay name="onePartView"
+	sideColorLeft="0:0:0"
+	sideLeftWidthPC="0"
+	sideColorRight="0:0:0"
+	headerImageWidthPC="0"
+	headerXPC="16"
+	headerYPC="3"
+	headerWidthPC="0"
+	itemXPC="20"
+	itemYPC="20"
+	itemWidthPC="30"
+	itemHeightPC="10"
+	capXPC="51"
+	capYPC="19"
+	capHeightPC="10"
+	headerCapXPC="90"
+	headerCapYPC="10"
+	headerCapWidthPC="0"
+	backgroundColor="0:0:0"
+	itemBackgroundColor="0:0:0"
+	showHeader=no
+  selectMenuOnRight=no
+  forceFocusOnItem=yes
+  forceFocusOnMenu=no
+	showDefaultInfo=no
+>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+  <text offsetXPC=5 offsetYPC=0 widthPC=100 heightPC=15 fontSize=20 backgroundColor=8:8:16 foregroundColor=200:200:200>
+    <script>pageTitle;</script>
+  </text>
+  <image offsetXPC=0 offsetYPC=12 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+	
+	<text redraw="yes" offsetXPC=50 offsetYPC=20 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  <script>
+	  bufS = getStringArrayAt(bufSArray, bufIndex);
+	  print("buf=",bufS);
+	  bufS;
+	  </script>
+	</text>
+	<text redraw="yes" lines="2" offsetXPC=50 offsetYPC=40 widthPC=50 heightPC=12 fontSize=16 backgroundColor=8:8:8 foregroundColor=150:150:150>
+	  Daca nu aveti probleme lasati valoarea de 60000. Daca filmul se opreste dupa cateva secunde incercati o valoare mai mica.
+	</text>
+	<itemDisplay>
+		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			<script>
+				idx1 = getFocusItemIndex();
+				idx2 = getQueryItemIndex();
+				if (idx1 == idx2)
+				{
+					"../etc/translate/rss/image/IMAGE_NEWRSS_MENU_BTFOC.bmp";
+				}
+				else
+				{
+					"";
+				}
+			</script>
+		</image>
+
+		<text offsetXPC=0 offsetYPC=25 widthPC=100 heightPC=50 fontSize=17 backgroundColor=-1:-1:-1 foregroundColor=200:200:200>
+			<script>
+				getStringArrayAt(itemTitleArray , -1);
+			</script>
+		</text>
+	</itemDisplay>
+
+  <onUserInput>
+    <script>
+      ret = "false";
+      
+      userInput = currentUserInput();
+      majorContext = getPageInfo("majorContext");
+      
+      print("*** majorContext=",majorContext);
+      print("*** userInput=",userInput);
+      
+      idx = Integer(getFocusItemIndex());
+
+      if (majorContext == "items" &amp;&amp; idx &lt; 2)
+      {
+        if( userInput == "right" ||userInput == "R" || userInput == "enter" || userInput == "ENTR" )
+        {
+          if(idx == 0)
+          {
+            bufIndex = bufIndex + 1;
+            if(bufIndex == bufCount)
+            {
+              bufIndex = 0;
+            }
+            
+          }
+          ret = "true";
+          redrawDisplay();
+        }
+        else if( userInput == "left" || userInput == "L")
+        {
+          if(idx == 0)
+          {
+            if(bufIndex == 0)
+              bufIndex = bufCount - 1;
+            else
+              bufIndex = bufIndex - 1;
+          
+          }
+        }
+      }
+      ret;
+    </script>
+  </onUserInput>
+</mediaDisplay>
+
+<onExit>
+  arr = null;
+    
+  buf = getStringArrayAt(bufArray, bufIndex);
+  arr = pushBackStringArray(arr, buf);  
+  print("arr=",arr);
+    
+  writeStringToFile(optionsPath, arr);
+</onExit>
+<onEnter>
+  pageTitle = "Setare buffer iplay";
+  cachePath = getStoragePath("key");
+
+
+  optionsPath = cachePath + "iplay_b.dat";
+  optionsArray = readStringFromFile(optionsPath);
+  if(optionsArray == null)
+  {
+    buf = "60000";
+  }
+  else
+  {
+    buf = getStringArrayAt(optionsArray, 0);
+  }
+  bufArray = null;
+  
+  bufCount = 8;
+  
+  bufArray = pushBackStringArray(bufArray, "60000");
+  bufArray = pushBackStringArray(bufArray, "40000");
+  bufArray = pushBackStringArray(bufArray, "20000");
+  bufArray = pushBackStringArray(bufArray, "10000");
+  bufArray = pushBackStringArray(bufArray, "8000");
+  bufArray = pushBackStringArray(bufArray, "6000");
+  bufArray = pushBackStringArray(bufArray, "4000");
+  bufArray = pushBackStringArray(bufArray, "2000");
+  
+  bufIndex = 0;
+  
+  while(1)
+  {
+    s = getStringArrayAt(bufArray, bufIndex);
+    if(s == buf)
+    {
+      break;
+    }
+    bufIndex = bufIndex + 1;
+    if(bufIndex == bufCount)
+    {
+      bufIndex = 0;
+      break;
+    }
+  }
+	itemTitleArray = null;
+	topUrl="/usr/local/etc/www/cgi-bin/scripts/filme/php/iplay_b.rss";
+	dlok = loadXMLFile(topUrl);
+	if (dlok != null)
+	{
+		itemSize = getXMLElementCount("rss", "channel", "item");
+		print("itemSize = ", itemSize);
+
+		if(itemSize &gt; 0)
+		{
+			itemCount = 0;
+      	
+			while(1)
+			{
+				itemTitle  = getXMLText("rss", "channel", "item", itemCount, "title");
+				print("itemTitle = ", itemTitle);
+				itemTitleArray  = pushBackStringArray(itemTitleArray, itemTitle);
+      	
+				itemCount += 1;
+				if(itemCount == itemSize)
+				{
+					break;
+				}
+			}
+			setFocusItemIndex(0);
+			setItemFocus(0);
+			redrawDisplay();
+		}
+	}
+
+redrawDisplay();
+ </onEnter>
+
+
+
+<channel>
+  <title> iplay.ro: setari buffer </title>
+  
+  <item>
+    <title>Buffer</title>
+  </item>
+
+
+</rss>

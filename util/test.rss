@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<mediaDisplay name="threePartsView"
+	itemBackgroundColor="0:0:0"
+	backgroundColor="0:0:0"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+	sideColorRight="0:0:0"
+	itemImageXPC="5"
+	itemXPC="20"
+	itemYPC="20"
+	itemWidthPC="70"
+	capWidthPC="70"
+	unFocusFontColor="101:101:101"
+	focusFontColor="255:255:255"
+	showHeader="no"
+	showDefaultInfo="yes"
+	bottomYPC="90"
+	infoYPC="100"
+	infoXPC="0"
+	popupXPC = "40"
+  popupYPC = "55"
+  popupWidthPC = "22.3"
+  popupHeightPC = "5.5"
+  popupFontSize = "13"
+	popupBorderColor="28:35:51"
+	popupForegroundColor="255:255:255"
+ 	popupBackgroundColor="28:35:51"
+  idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+</mediaDisplay>
+<channel>
+	<title>Test subtitrare</title>
+	<menu>main menu</menu>
+	
+	<item>
+	<title>Test subtitrare SDK3</title>
+    <onClick>
+    <script>
+    showIdle();
+    dummy=getURL("http://127.0.0.1/cgi-bin/scripts/util/srt_xml.php?file=/tmp/hdd/volumes/HDD1/test.srt");
+    url="/tmp/hdd/volumes/HDD1/test.mkv";
+    cancelIdle();
+    storagePath = getStoragePath("tmp");
+    storagePath_stream = storagePath + "stream.dat";
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Test subtitrare");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer1.rss");
+    </script>
+    </onClick>
+  </item>  
+
+	<item>
+	<title>Test subtitrare SDK4</title>
+    <onClick>
+    <script>
+    showIdle();
+    dummy=getURL("http://127.0.0.1/cgi-bin/scripts/util/srt_xml.php?file=/tmp/hdd/volumes/HDD1/test.srt");
+    url="/tmp/hdd/volumes/HDD1/test.mkv";
+    cancelIdle();
+    storagePath = getStoragePath("tmp");
+    storagePath_stream = storagePath + "stream.dat";
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, url);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Test subtitrare");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer2.rss");
+    </script>
+    </onClick>
+  </item>  
+</channel>
+</rss>
