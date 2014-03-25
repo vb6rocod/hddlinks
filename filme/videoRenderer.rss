@@ -400,6 +400,12 @@ else if (input == "right" || input == "left" || input == "R" || input == "L")
           }          
         ret = "true";
       }
+else if (input == "six" || input == "6" || input == "option_blue")
+{
+	doModalRss("/usr/local/etc/www/cgi-bin/scripts/util/videoSetting.rss");
+	redrawDisplay();
+	ret = "true";
+}
 else if (input == "zoom" || input == "zoom_in" || input == "zoom_out")
 {
   ret="false";

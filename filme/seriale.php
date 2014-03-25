@@ -278,7 +278,7 @@ echo '
 
 <item>
 <title>moviem</title>
-<link><?php echo $host; ?>/scripts/filme/php/moviem_main.php?query=1,http://moviem.ro/page/,moviem</link>
+<link><?php echo $host; ?>/scripts/filme/php/moviem_main.php?query=1,http://www.moviem.us/seriale-online/page/,moviem</link>
 <annotation>http://moviem.ro</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>

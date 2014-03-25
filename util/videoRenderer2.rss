@@ -567,6 +567,12 @@ else if (input == "five" || input == "5" || input == "option_red")
           }          
         ret = "true";
       }
+else if (input == "six" || input == "6" || input == "option_blue")
+{
+	doModalRss("/usr/local/etc/www/cgi-bin/scripts/util/videoSetting.rss");
+	redrawDisplay();
+	ret = "true";
+}
 else if (input == "up" || input == "U")
         { 
                 fontoffset = fontoffset - "0.5" ;

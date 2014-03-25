@@ -22,6 +22,8 @@
 -->
 
 <onEnter>
+  aspect_ratio=getCurrentSetting("$[ASPECT_RATIO]");
+  aspect_ratio1=aspect_ratio;
   eboda = 1;
   translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
   screenXp = 4;
@@ -104,6 +106,8 @@
 <onExit>
 	playItemURL(-1, 1);
 	setRefreshTime(-1);
+	if (aspect_ratio1 != aspect_ratio)
+	   setAspectRatio(aspect_ratio);
   renderer_status = "waiting";
   if(no_renderer != 1)
   {
@@ -370,6 +374,37 @@ else if (input == "right" || input == "left" || input == "R" || input == "L")
 		postMessage("video_play");
 		ret = "true";
 	}
+}
+		else 
+		if (input == "one" || input == "1")
+		  {
+        if (aspect_ratio1 == "$[PAN_SCAN_4_BY_3]")
+          {
+          setAspectRatio("$[LETTER_BOX_4_BY_3]");
+          aspect_ratio1="$[LETTER_BOX_4_BY_3]";
+          }
+       else if (aspect_ratio1 == "$[LETTER_BOX_4_BY_3]")
+          {
+          setAspectRatio("$[WIDE_16_BY_9]");
+          aspect_ratio1="$[WIDE_16_BY_9]";
+          }
+       else if (aspect_ratio1 == "$[WIDE_16_BY_9]")
+          {
+          setAspectRatio("$[WIDE_16_BY_10]");
+          aspect_ratio1="$[WIDE_16_BY_10]";
+          }
+       else if (aspect_ratio1 == "$[WIDE_16_BY_10]")
+          {
+          setAspectRatio("$[PAN_SCAN_4_BY_3]");
+          aspect_ratio1="$[PAN_SCAN_4_BY_3]";
+          }          
+        ret = "true";
+      }
+else if (input == "six" || input == "6" || input == "option_blue")
+{
+	doModalRss("/usr/local/etc/www/cgi-bin/scripts/util/videoSetting.rss");
+	redrawDisplay();
+	ret = "true";
 }
 else if (input == "zoom" || input == "zoom_in" || input == "zoom_out")
 {

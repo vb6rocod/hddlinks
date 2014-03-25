@@ -1,0 +1,254 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<bookmark>videoSetting</bookmark>
+
+<onEnter>
+	m_brightness = getCurrentSetting("$[BRIGHTNESS]");
+	m_contrast = getCurrentSetting("$[CONTRAST]");
+	m_saturation = getCurrentSetting("$[SATURATION]");
+	m_hue = getCurrentSetting("$[HUE]");
+	ori_brightness = m_brightness;
+	ori_contrast = m_contrast;
+	ori_saturation = m_saturation;
+	ori_hue = m_hue;
+	redrawDisplay();
+	setRefreshTime(5000);
+</onEnter>
+
+<onExit>
+	setRefreshTime(-1);
+</onExit>
+
+<onRefresh>
+	setBrightness( ori_brightness );
+	setContrast( ori_contrast );
+	setSaturation( ori_saturation );
+	setHue( ori_hue );
+	postMessage("return");
+</onRefresh>
+
+<mediaDisplay
+	name=onePartView
+	itemPerPage=4
+	viewAreaXPC=24.1
+	viewAreaYPC=27.4
+	viewAreaWidthPC=51.9
+	viewAreaHeightPC=45.1
+
+	itemXPC=0
+	itemYPC=23.4
+	itemWidthPC=100
+	itemHeightPC=15.4
+	itemImageXPC=0
+	itemImageYPC=23.4
+	itemImageWidthPC=100
+	itemImageHeightPC=15.4
+
+	sideColorRight=-1:-1:-1
+	sideColorLeft=-1:-1:-1
+	sideColorTop=-1:-1:-1
+	sideColorBottom=-1:-1:-1
+	backgroundColor=-1:-1:-1
+	focusBorderColor=-1:-1:-1
+	unFocusBorderColor=-1:-1:-1
+	itemBackgroundColor=0:0:0
+
+	showHeader="no"
+	showDefaultInfo="no"
+
+	imageFocus=""
+	imageParentFocus=""
+	imageUnFocus=""
+>
+
+<backgroundDisplay>
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+		./setup_menu/skin4/image/video_setting_frame.fsp
+	</image>
+</backgroundDisplay>
+
+<text offsetXPC=5 offsetYPC=0 widthPC=90 heightPC=23.4 fontSize=18 align=center>
+	$[VIDEO_SETTING]
+</text>
+
+<image offsetXPC=12.2 offsetYPC=90.2 widthPC=3.92 heightPC=8.04>
+	./setup_menu/skin4/image/video_setting_ok_icon.fsp
+</image>
+<text offsetXPC=17.1 offsetYPC=90.2 widthPC=60 heightPC=9.8 fontSize=12 align=left>
+	$[CONFIRM_SETTING]
+</text>
+
+<!-- itemDisplay will draw widget inside the item area, item area is decided by mediaDisplay attributes -->
+<itemDisplay>
+	<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 useBackgroundSurface="yes">
+		<script>
+			queryIndex = getQueryItemIndex();
+			focusIndex = getFocusItemIndex();
+			if (queryIndex == focusIndex) {
+				return "./setup_menu/skin4/image/664_focus.fsp";
+			}
+		</script>
+	</image>
+
+	<text offsetXPC=3 offsetYPC=0 widthPC=26 heightPC=100 fontSize=14 align=left>
+		<foregroundColor>
+			<script>
+				fgcolor = "255:255:255";
+				queryIndex = getQueryItemIndex();
+				focusIndex = getFocusItemIndex();
+				data = getStringArrayAt(popupOptions, queryIndex);
+				if (queryIndex == focusIndex) {
+					fgcolor = "255:255:0";
+				}
+				fgcolor;
+			</script>
+		</foregroundColor>
+		<script>
+			return title = getItemInfo("title");
+		</script>
+	</text>
+
+	<text offsetXPC=29 offsetYPC=0 widthPC=3 heightPC=100 fontSize=14 align=right>
+		<foregroundColor>
+			<script>
+				fgcolor = "255:255:255";
+				queryIndex = getQueryItemIndex();
+				focusIndex = getFocusItemIndex();
+				data = getStringArrayAt(popupOptions, queryIndex);
+				if (queryIndex == focusIndex) {
+					fgcolor = "255:255:0";
+				}
+				fgcolor;
+			</script>
+		</foregroundColor>
+		<script>
+			return 0;
+		</script>
+	</text>
+
+	<text offsetXPC=91.5 offsetYPC=0 widthPC=6.5 heightPC=100 fontSize=14 align=left>
+		<foregroundColor>
+			<script>
+				fgcolor = "255:255:255";
+				queryIndex = getQueryItemIndex();
+				focusIndex = getFocusItemIndex();
+				data = getStringArrayAt(popupOptions, queryIndex);
+				if (queryIndex == focusIndex) {
+					fgcolor = "255:255:0";
+				}
+				fgcolor;
+			</script>
+		</foregroundColor>
+		<script>
+			return videoValue = getCurrentSetting(title) - 7;
+		</script>
+	</text>
+
+	<progressbar
+		offsetXPC=32.5 offsetYPC=41.66 widthPC=58.5 heightPC=16.67
+		backgroundImage="./setup_menu/skin4/image/scroll_bar_03.fsp"
+		foregroundImage="./setup_menu/skin4/image/scroll_bar_04.fsp"
+		direction="horizontal"
+		min=0
+		max=50
+		>
+		<script>
+			videoValue;
+		</script>
+	</progressbar>
+</itemDisplay>
+
+<onUserInput>
+	handle = "false";
+	setRefreshTime(-1);
+	setRefreshTime(5000);
+	userInput = currentUserInput();
+	if( "left" == userInput ) {
+		focusIndex = getFocusItemIndex();
+		if( focusIndex == 0 ) {
+			if( m_brightness &gt; 7 ) {
+				m_brightness -= 1;
+				setBrightness( m_brightness );
+			}
+		} else if( focusIndex == 1 ) {
+			if( m_contrast &gt; 7 ) {
+				m_contrast -= 1;
+				setContrast( m_contrast );
+			}
+		} else if( focusIndex == 2 ) {
+			if( m_saturation &gt; 7 ) {
+				m_saturation -= 1;
+				setSaturation( m_saturation );
+			}
+		} else if( focusIndex == 3 ) {
+			if( m_hue &gt; 7 ) {
+				m_hue -= 1;
+				setHue( m_hue );
+			}
+		}
+		redrawDisplay("item", focusIndex);
+		handle = "true";
+	}
+	else if( "right" == userInput ) {
+		focusIndex = getFocusItemIndex();
+		if( focusIndex == 0 ) {
+			if( m_brightness &lt; 57 ) {
+				m_brightness = 0 + m_brightness + 1;
+				setBrightness( m_brightness );
+			}
+		} else if( focusIndex == 1 ) {
+			if( m_contrast &lt; 57 ) {
+				m_contrast = 0 + m_contrast + 1;
+				setContrast( m_contrast );
+			}
+		} else if( focusIndex == 2 ) {
+			if( m_saturation &lt; 57 ) {
+				m_saturation = 0 + m_saturation + 1;
+				setSaturation( m_saturation );
+			}
+		} else if( focusIndex == 3 ) {
+			if( m_hue &lt; 57 ) {
+				m_hue = 0 + m_hue + 1;
+				setHue( m_hue );
+			}
+		}
+		redrawDisplay("item", focusIndex);
+		handle = "true";
+	}
+	else if ( "enter" == userInput) {
+		postMessage("return");
+		handle = "true";
+    }
+    else if( "return" == userInput) {
+		handle = "false";
+    }
+    handle;
+</onUserInput>
+
+</mediaDisplay>
+
+
+<channel>
+	<title>$[VIDEO_SETTING]</title>
+	<link>rss_file://./setup_menu/skin4/scripts/videoSetting.rss</link>
+
+
+<item>
+<title>$[BRIGHTNESS]</title>
+</item>
+
+<item>
+<title>$[CONTRAST]</title>
+</item>
+
+<item>
+<title>$[SATURATION]</title>
+</item>
+
+<item>
+<title>$[HUE]</title>
+</item>
+
+</channel>
+</rss>

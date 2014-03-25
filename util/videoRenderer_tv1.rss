@@ -309,6 +309,12 @@
           }          
         ret = "true";
       }
+else if (input == "six" || input == "6" || input == "option_blue")
+{
+	doModalRss("/usr/local/etc/www/cgi-bin/scripts/util/videoSetting.rss");
+	redrawDisplay();
+	ret = "true";
+}
  else if (input == "video_completed" || input == "video_stop")
 {
     playItemURL(-1, 1);

@@ -95,7 +95,7 @@ sed -i 's/image\/youtube.gif/\/usr\/local\/etc\/translate\/rss\/image\/YouTubeLo
 fi
 mount -o,remount,r /
 fi
-#CS mod HD4ALL - 01.10.2012
+#CS mod HD4ALL - 01.10.2013
 if [ $PLAYER = "10" ]
 then
     if [ -f /usr/local/bin/Resource/www/cgi-bin/scripts/mini1.php ]
@@ -129,6 +129,7 @@ then
 	#HDD  Links
 	#sed -i 's/image\/mele\/rss_title.jpg/image\/mele\/rss_title.png/g' $i
 	#sed -i 's/-b 60000/-b 1000/g' $i
+	sed -i 's/cgi-bin\/translate/cgi-bin\/scripts\/util\/translate/g' $i
 
 	#HiMedia fix
 	if [ $interface = "HiMedia" ]; then
@@ -158,6 +159,7 @@ then
 	#HDD  Links
 	#sed -i 's/image\/mele\/rss_title.jpg/image\/mele\/rss_title.png/g' $i
 	#sed -i 's/-b 60000/-b 1000/g' $i
+	sed -i 's/cgi-bin\/translate/cgi-bin\/scripts\/util\/translate/g' $i
 
 	#HiMedia fix
 	if [ `cat /usr/local/etc/dvdplayer/interface` = "HiMedia" ]; then

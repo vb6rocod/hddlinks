@@ -195,12 +195,13 @@ if ($page==1)
   $link=$search;
 else
   $link=$search."/page/".$page;
+$link="http://moviem.us".$link;
 $html=file_get_contents($link);
 $videos = explode('class="post', $html);
 
 unset($videos[0]);
-//$videos = array_values($videos);
-$videos = array_reverse($videos);
+$videos = array_values($videos);
+//$videos = array_reverse($videos);
 foreach($videos as $video) {
     $t1 = explode('href="', $video);
     $t2 = explode('"', $t1[1]);
