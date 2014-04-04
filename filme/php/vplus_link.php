@@ -20,6 +20,7 @@ function dec($string) {
     $v=str_replace("\u0219","s",$v);
     $v=str_replace("\u00ee","i",$v);
     $v=str_replace("\u00ce","I",$v);
+    $v=str_replace("\u00e3","a",$v);
     $v=str_replace("&nbsp;","",$v);
     $v=str_replace("\/","/",$v);
     return $v;
@@ -122,7 +123,10 @@ foreach($videos as $video) {
  $line=str_replace("u0102","Ã",$line);
  $line=str_replace("u00C2","Â",$line);
  $line=str_replace("u00CE","Î",$line);
-
+ 
+ $line=str_replace("u00e3","ã",$line);
+ $line=str_replace("u00de","Þ",$line);
+ $line=str_replace("u00c3","Ã",$line);
 
 
  //u00ce

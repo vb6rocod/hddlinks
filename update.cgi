@@ -95,19 +95,26 @@ sed -i 's/image\/youtube.gif/\/usr\/local\/etc\/translate\/rss\/image\/YouTubeLo
 fi
 mount -o,remount,r /
 fi
-#CS mod HD4ALL - 01.10.2013
+
+#CS mod HD4ALL - 01.04.2014
 if [ $PLAYER = "10" ]
 then
-    if [ -f /usr/local/bin/Resource/www/cgi-bin/scripts/mini1.php ]
+	if [ -f /usr/local/bin/Resource/www/cgi-bin/scripts/mini1.php ]
     then
-    if [ -f ls /usr/local/bin/IMS_Modules/Scripts/mini1.php ]
+    if [ -f /usr/local/etc/IMS_Modules/Scripts/mini1.php ]
     then
      storage=/usr/local/etc/IMS_Modules
     else
-     storage=/usr/local/etc/IMS_Modules
+     storage=/usr/local/bin/IMS_Modules
     fi
     #remove scripts
    #rm -rf $storage/scripts
+
+	MNT=`mount | grep '/dev/root' | cut -d' ' -f6 | cut -c 2-3`
+	 if [ "$MNT" != "rw" ] 
+	 then
+		mount -o,remount,rw /
+	fi
 
    interface=`cat /usr/local/etc/dvdplayer/interface`
    
@@ -129,7 +136,6 @@ then
 	#HDD  Links
 	#sed -i 's/image\/mele\/rss_title.jpg/image\/mele\/rss_title.png/g' $i
 	#sed -i 's/-b 60000/-b 1000/g' $i
-	sed -i 's/cgi-bin\/translate/cgi-bin\/scripts\/util\/translate/g' $i
 
 	#HiMedia fix
 	if [ $interface = "HiMedia" ]; then
@@ -159,7 +165,6 @@ then
 	#HDD  Links
 	#sed -i 's/image\/mele\/rss_title.jpg/image\/mele\/rss_title.png/g' $i
 	#sed -i 's/-b 60000/-b 1000/g' $i
-	sed -i 's/cgi-bin\/translate/cgi-bin\/scripts\/util\/translate/g' $i
 
 	#HiMedia fix
 	if [ `cat /usr/local/etc/dvdplayer/interface` = "HiMedia" ]; then
@@ -198,12 +203,13 @@ then
 	#SDK4
 	 if [ -d /usr/local/bin/home_menu ]; then
 		cp  -af /local/usr/etc/translate/rss/xspf/videoRenderer.rss /usr/local/bin/IMS_Modules/Scripts/util/videoRenderer.rss
+		sed -i 's/-b 60000/-b 1000/g' ./util/*.cgi
+		sed -i 's/b 1000\/-b 1000/b 60000\/-b 1000/g' ./util/hdforall.cgi
+		sed -i 's/cgi-bin\/translate/cgi-bin\/scripts\/util\/translate/g' ./tv/digitv.php
 	 fi
 
 	#HDD  Links
      sed -i 's/youtube.gif/YouTubeLogo.jpg/g' ./clip/*.php
-     sed -i 's/-b 60000/-b 1000/g' ./util/*.cgi
-     sed -i 's/b 1000\/-b 1000/b 60000\/-b 1000/g' ./util/hdforall.cgi
 
 	 if [ -e ./news ]
 	 then

@@ -220,10 +220,10 @@ foreach($videos as $video) {
     $t1 = explode('src="', $video);
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
-
+    //"http://www.sport.ro".
     $t1 = explode('href="', $video);
     $t4 = explode('"',$t1[1]);
-    $link="http://www.sport.ro".$t4[0];
+    $link=$t4[0];
     $t2 = explode('html">', $t1[2]);
     $t3 = explode("</a",$t2[1]);
     $title = $t3[0];

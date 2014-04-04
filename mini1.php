@@ -17,9 +17,11 @@ $host = "http://127.0.0.1/cgi-bin";
     auto_update = getStringArrayAt(optionsArray, 1);
   }
 if (auto_update == "0")
-  showIdle();
-  info=getUrl("http://127.0.0.1/cgi-bin/scripts/info.php?mod=info");
-  cancelIdle();
+  {
+	showIdle();
+	info=getUrl("http://127.0.0.1/cgi-bin/scripts/info.php?mod=info");
+    cancelIdle();
+  }
 else
   {
     showIdle();
