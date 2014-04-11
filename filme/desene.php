@@ -150,14 +150,14 @@ ret;
 	</item_template>
 <channel>
 	<title>Pentru copii</title>
-
+<!--
 <item>
 <title>iPlay - desene animate (abonament)</title>
 <link><?php echo $host; ?>/scripts/filme/php/iplay_desene_main.php</link>
 <annotation>http://www.iplay.ro</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>Desene Din Copilarie</title>
 <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,DeseneDinCopilarie1</link>
@@ -169,13 +169,6 @@ ret;
 <title>Desene De Neuitat</title>
 <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,DeseneDeNeuitat</link>
 <annotation>https://www.youtube.com/user/DeseneDeNeuitat/videos</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>JetixWorld</title>
-<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,ionifs</link>
-<annotation>https://www.youtube.com/user/ionifs/videos</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
 

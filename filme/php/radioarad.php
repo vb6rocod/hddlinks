@@ -198,15 +198,16 @@ foreach($videos as $video) {
 	$t2 = explode('"', $t1[1]);
 	$link = $t2[0];
 	
-	$t3=explode(">",$t1[2]);
-	$t4=explode("<",$t3[1]);
-	$title=$t4[0];
+
 	
 	$t1 = explode('src="', $video);
 	$t2 = explode('"', $t1[1]);
 	$image = $t2[0];
 	
-
+	$t3=explode(">",$t1[1]);
+	$t4=explode("<",$t3[1]);
+	$title=trim($t4[0]);
+	
     $link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/filme_link.php?file='.$link.','.urlencode($title);
     echo '
     <item>

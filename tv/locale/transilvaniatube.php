@@ -204,12 +204,22 @@ foreach($videos as $video) {
     $t3 = explode('>', $t1[3]);
     $t4 = explode('<', $t3[1]);
     $title = $t4[0];
+    if (!$title) {
+    $t3 = explode('>', $t1[2]);
+    $t4 = explode('<', $t3[1]);
+    $title = $t4[0];
+    }
     $title=fix_s($title);
     $t1 = explode('src="',$video);
     $t2 = explode('"',$t1[2]);
     $image = $t2[0];
+    if (!$image) {
+    $t1 = explode('src="',$video);
+    $t2 = explode('"',$t1[1]);
+    $image = $t2[0];
+    }
     $image=str_replace(" ","%20",$image);
-    if ($link <> "") {
+    if ($link && $title) {
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
     $descriere=$title;
     echo '

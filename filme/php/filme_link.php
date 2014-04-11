@@ -65,7 +65,7 @@ if (file_exists("/tmp/usbmounts/sda1/download")) {
     storagePath             = getStoragePath("tmp");
     storagePath_stream      = storagePath + "stream.dat";
     storagePath_playlist    = storagePath + "playlist.dat";
-    info_serial="Apasati 1 pentru modificare aspect";
+    info_serial="";
   setRefreshTime(1);
   first_time=1;
 </onEnter>
@@ -121,8 +121,48 @@ if (file_exists("/tmp/usbmounts/sda1/download")) {
         <idleImage>image/POPUP_LOADING_06.png</idleImage>
         <idleImage>image/POPUP_LOADING_07.png</idleImage>
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  img = getItemInfo(idx,"image");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="18" fontSize="24" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
+		</text>
+  	<text redraw="yes" offsetXPC="85" offsetYPC="3" widthPC="10" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
   	<text align="left" offsetXPC="8" offsetYPC="3" widthPC="47" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
     5=Setare subtitrare
@@ -136,7 +176,29 @@ if (file_exists("/tmp/usbmounts/sda1/download")) {
 <onUserInput>
 userInput = currentUserInput();
 ret = "false";
-if(userInput == "two" || userInput == "2")
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+else if(userInput == "two" || userInput == "2")
 {
 tip=getItemInfo(getFocusItemIndex(),"tip");
 showIdle();
@@ -193,7 +255,7 @@ else if (userInput == "five" || userInput == "5")
 }
 else
 {
-info_serial="Apasati 1 pentru modificare aspect";
+info_serial="";
 setRefreshTime(-1);
 do_down=0;
 ret="false";
@@ -456,7 +518,7 @@ for ($i=0;$i<count($links);$i++) {
        $t2=explode("&",$t1[1]);
        $cur_link=trim($t2[0]);
      }
-      if (!preg_match("/facebook|twitter|player\.swf|img\.youtube|youtube\.com\/user|radioarad|\.jpg|\.png|\.gif/i",$cur_link)) {
+      if (!preg_match("/facebook|twitter|player\.swf|img\.youtube|youtube\.com\/user|radioarad|\.jpg|\.png|\.gif|jq\/(js|css)/i",$cur_link)) {
         $t1=explode("proxy.link=",$cur_link); //filmeonline.org
         if ($t1[1] <> "") {
         $cur_link=$t1[1];
@@ -490,7 +552,7 @@ for ($i=0;$i<count($links);$i++) {
           preg_match('/(viki\.com\/player\/medias\/)([\w\-]+)/', $cur_link, $match);
           $viki_id = $match[2];
         }
-        if (strpos($cur_link,"roshare.info") !==false) {
+        if (strpos($cur_link,"roshare.info") !==false || strpos($cur_link,"rosharing.com") !==false) {
           $mysrt_roshare="asasas";
           /*
           $ch = curl_init($cur_link);

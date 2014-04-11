@@ -1,0 +1,64 @@
+﻿<?xml version='1.0' encoding='UTF-8' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<onEnter>
+  descriere = readStringFromFile("/usr/local/etc/www/cgi-bin/scripts/help.rss");
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+	
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="45"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="45"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  Un mic ajutor pentru vizionare...
+		</text>
+  <text lines="15"  offsetXPC=7 offsetYPC=25 widthPC=85 heightPC=70 fontSize=16 backgroundColor=0:0:0 foregroundColor=200:200:200>
+    <script>descriere;</script>
+  </text>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+
+		
+	</mediaDisplay>
+	<channel>
+	<title>Help</title>
+	<menu>main menu</menu>
+
+</channel>
+</rss>

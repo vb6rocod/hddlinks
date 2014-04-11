@@ -57,7 +57,9 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    Apăsaţi 2 pentru download, 3 pentru Download Manager
+		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
@@ -69,7 +71,7 @@ $host = "http://127.0.0.1/cgi-bin";
 			<script>print(annotation); annotation;</script>
 		</text>
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Press 2 for download, 3 for download manager
+    <script>print(location); location;</script>
 		</text>
 		<image  redraw="yes" offsetXPC=60 offsetYPC=22.5 widthPC=30 heightPC=30>
 		<script>print(img); img;</script>
@@ -90,7 +92,7 @@ $host = "http://127.0.0.1/cgi-bin";
 					focus = getFocusItemIndex();
 					if(focus==idx)
 					{
-					  location = getItemInfo(idx, "location");
+					  location = getItemInfo(idx, "title");
 					  annotation = getItemInfo(idx, "annotation");
 					  img = getItemInfo(idx,"image");
 					}
@@ -247,7 +249,7 @@ foreach($videos as $video) {
   $title = str_replace("&nbsp;","",$title);
   $title = str_replace('&quot;',"",$title);
   $title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
-  $data=trim(str_between($video,'<p class="ItemInfo">','</p>'));
+  $data=trim(str_between($video,'p class="ItemDesc">','</p>'));
   $data = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$data);
 
   $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";

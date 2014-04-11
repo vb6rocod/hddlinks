@@ -239,7 +239,7 @@ function getRewriteString($string) {
     return $string;
 }
 //sd_video_wv3item dmpi_video_item
-$videos = explode('dmpi_video_item', $html);
+$videos = explode('div class="sd_video_', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -256,11 +256,11 @@ foreach($videos as $video) {
     $t1 = explode('title="', $video);
     $t2 = explode('"', $t1[1]);
     $title = $t2[0];
-    $t1=explode("dmco_simplelink video_title id",$video);
-    $t2=explode(">",$t1[1]);
-    $t3=explode("<",$t2[1]);
-    $title=trim($t3[0]);
-    if ($title == "") $title="Video...";
+    //$t1=explode("dmco_simplelink video_title id",$video);
+    //$t2=explode(">",$t1[1]);
+    //$t3=explode("<",$t2[1]);
+    //$title=trim($t3[0]);
+    //if ($title == "") $title="Video...";
     //$title = str_replace("&nbsp;","",$title);
     //$title = str_replace("&amp;","&",$title);
     //$title = getRewriteString($title);
@@ -287,7 +287,7 @@ foreach($videos as $video) {
      $title = str_replace("&amp;Icirc;","I",$title);
      $title = str_replace("&amp;acirc;","a",$title);
      **/
-    $t1=explode('class="duration">',$video);
+    $t1=explode('badge badge-duration">',$video);
     $t2=explode('<',$t1[1]);
     $durata = "Durata:".$t2[0];
     
@@ -298,11 +298,12 @@ foreach($videos as $video) {
     $t1=explode('class="dmpi_video_description foreground">',$video);
     $t2=explode('</div>',$t1[1]);
     $descriere=$t2[0];
+    $descriere=$title;
 	$descriere = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$descriere);
 	$descriere = str_replace("&nbsp;","",$descriere);
     $descriere = fix_s($descriere);
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-
+    if ($title) {
     echo '
     <item>
     <title>'.$title.'</title>
@@ -324,6 +325,7 @@ foreach($videos as $video) {
     <media:thumbnail url="'.$image.'" />
     </item>
     ';
+    }
 }
 
 ?>

@@ -357,6 +357,7 @@ columnCount=5
 	<annotation>Români cu simţul umorului, uniţi-vă!</annotation>
 </item>
 -->
+<!--
 <item>
 <title>sanchi</title>
 	<link><?php echo $host; ?>/scripts/clip/php/sanchi_main.php</link>
@@ -365,7 +366,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/sanchi.jpg" />
 	<annotation>Pastila ta de bună dispoziţie</annotation>
 </item>
-
+-->
 <item>
 <title>myvideo</title>
 	<link><?php echo $host; ?>/scripts/clip/php/myvideo.php</link>

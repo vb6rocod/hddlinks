@@ -155,7 +155,7 @@ ret;
 	</item_template>
 <channel>
 <title>dailymotion</title>
-
+<!--
 <item>
 <title>Căutare</title>
 <onClick>
@@ -166,7 +166,7 @@ ret;
   }
 </onClick>
 </item>
-
+-->
 <item>
 <title>Most viewed videos</title>
 <link><?php echo $host; ?>/scripts/clip/php/dm.php?query=,http://www.dailymotion.com/en/visited,Most+viewed+videos</link>
@@ -181,12 +181,12 @@ ret;
 <title>Top rated videos</title>
 <link><?php echo $host; ?>/scripts/clip/php/dm.php?query=,http://www.dailymotion.com/en/rated,Top+rated+videos</link>
 </item>
-
+<!--
 <item>
 <title>Featured users</title>
 <link><?php echo $host; ?>/scripts/clip/php/dm_user_main.php?query=,http://www.dailymotion.com/users/featured</link>
 </item>
-
+-->
 <item>
 <title>Classic black &amp; white movies</title>
 <link><?php echo $host; ?>/scripts/clip/php/dm.php?query=,http://www.dailymotion.com/playlist/x1dqg9_crazedigitalmovies_classic-and-black-white-movies,Classic+black+and+white+movies</link>

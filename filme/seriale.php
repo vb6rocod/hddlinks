@@ -46,7 +46,9 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
+  	<text align="left" offsetXPC="8" offsetYPC="3" widthPC="47" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    Apasati tasta "info" pentru ajutor.
+		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
@@ -129,6 +131,13 @@ if (userInput == "pagedown" || userInput == "pageup")
   redrawDisplay();
   "true";
 }
+else if (userInput == "display" || userInput == "DISPLAY")
+{
+showIdle();
+cancelIdle();
+ret_val=doModalRss("/usr/local/etc/www/cgi-bin/scripts/filme/php/help.rss");
+ret="true";
+}
 ret;
 </script>
 </onUserInput>
@@ -206,14 +215,14 @@ echo '
 <annotation>http://vplus.ro/shows</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>iPlay - seriale HD (abonament)</title>
 <link><?php echo $host; ?>/scripts/filme/php/iplay_seriale.php</link>
 <annotation>http://iplay.ro</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>spicetv - seriale</title>
 <link><?php echo $host; ?>/scripts/filme/php/spice_series_main.php</link>

@@ -208,14 +208,14 @@ foreach($videos as $video) {
 
 //  imagine
   //$v0=explode("images--",$video);
-  $v1 = explode("background-image: url('", $video);
-  $v2 = explode("'", $v1[1]);
+  $v1 = explode('src="', $video);
+  $v2 = explode('"', $v1[1]);
   $image = $v2[0];
 //  descriere  
-  $v1 = explode('p class="cell-news-center">', $video);
+  $v1 = explode('class="cell-news-center">', $video);
   $v2 = explode('</p', $v1[1]);
-  $v3=explode("calitate de exceptie.",$v2[0]);
-  $descriere = $v3[1];
+  //$v3=explode("calitate de exceptie.",$v2[0]);
+  $descriere = $v2[0];
 
 	$descriere = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$descriere);
     $descriere = fix_s($descriere);

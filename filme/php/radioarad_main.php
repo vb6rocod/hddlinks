@@ -170,7 +170,7 @@ $link = "http://www.radioarad.net/filme";
 
 $html = file_get_contents("http://www.radioarad.net/filme");
 
-$html=str_between($html,'id="menu-4"','</ul>');
+$html=str_between($html,'<ul class="sub-menu">','</ul>');
 //echo $html;
 $videos = explode('<li', $html);
 unset($videos[0]);

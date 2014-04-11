@@ -100,7 +100,7 @@ else
    <script>print(info); info;</script>
 		</text>
  		<text align="left" redraw="yes" offsetXPC=5 offsetYPC=10 widthPC=95 heightPC=5 fontSize=15 backgroundColor=0:0:0 foregroundColor=120:120:120>
-   Apasati 1 pentru setari model player, 3 pentru actualizare.
+   Apasati 1 pentru setari actualizare, 3 pentru actualizare.
 		</text>
 <!--
 <backgroundDisplay name=ims_guide_menu>
