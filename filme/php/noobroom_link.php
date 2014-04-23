@@ -140,9 +140,9 @@ if ($subtitle == "on") {
   }
   if (!$h) {
   if ($tv=="0")
-    $file="http://hddlinks.p.ht/srt/".$id.".srt";
+    $file="http://nobsub.googlecode.com/hg/m/".$id.".srt";
   else
-    $file="http://hddlinks.p.ht/srt/tv/".$id.".srt";
+    $file="http://nobsub.googlecode.com/hg/s/".$id.".srt";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $file);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

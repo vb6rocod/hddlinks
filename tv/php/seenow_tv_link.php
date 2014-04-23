@@ -24,13 +24,11 @@ function enc($string) {
 $query = $_GET["file"];
 if($query) {
    $queryArr = explode(',', $query);
-   $link = urldecode($queryArr[0]);
+   $id = urldecode($queryArr[0]);
    $buf = $queryArr[1];
 }
-$id = substr(strrchr($link, "-"), 1);
-//echo $id;
-$link="http://www.dolcetv.ro/service/play/index/id/".$id."/category/0/type/live-tv/editionId/0/module_name/androidtablet";
-$html = file_get_contents($link);
+$l="http://www.seenow.ro/service3/play/index/id/".$id."/platform_id/19";
+$html = file_get_contents($l);
 if (strpos($html,"stream") === false) {
 $new_file="D://dolce.gz";
 $new_file="/tmp/dolce.gz";
@@ -46,16 +44,16 @@ $t1=explode('high quality stream name":"',$html);
 $t2=explode('"',$t1[1]);
 $str=$t2[0];
 
-$t1=explode('application name":"',$html);
-$t2=explode('"',$t1[1]);
-$app=$t2[0];
-if (!$app) $app="live3";
+//$t1=explode('application name":"',$html);
+//$t2=explode('"',$t1[1]);
+//$app=$t2[0];
+$app="live3";
 
-$t1=explode('token-high":"',$html);
-$t2=explode('"',$t1[1]);
+$t1=explode('token=',$html);
+$t2=explode('|',$t1[1]);
 $token=$t2[0];
 
-$s="http://index.mediadirect.ro/getUrl?publisher=2";
+$s="http://index.mediadirect.ro/getUrl?app=live3&file=".$str."&publisher=24";
 $h = file_get_contents($s);
 $t1=explode('server=',$h);
 $t2=explode('&',$t1[1]);
@@ -66,8 +64,8 @@ if ($serv == "") {
 //$buf="60000";
 $rtmp="rtmp://".$serv."/".$app."/_definst_";
 $l="Rtmp-options:-b ".$buf;
-$l=$l." -a ".$app."/_definst_?token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
-$l=$l." -p http://www.dolcetv.ro/ ";
+$l=$l." -a ".$app."/_definst_?&token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
+$l=$l." -p http://www.seenow.ro/ ";
 $l=$l."-y ".$str;
 $l=$l.",".$rtmp;
 $l=str_replace(" ","%20",$l);

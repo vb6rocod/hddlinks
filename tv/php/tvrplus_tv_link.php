@@ -24,12 +24,10 @@ function enc($string) {
 $query = $_GET["file"];
 if($query) {
    $queryArr = explode(',', $query);
-   $link = urldecode($queryArr[0]);
+   $id = urldecode($queryArr[0]);
    $buf = $queryArr[1];
 }
-$id = substr(strrchr($link, "-"), 1);
-//echo $id;
-$link="http://www.dolcetv.ro/service/play/index/id/".$id."/category/0/type/live-tv/editionId/0/module_name/androidtablet";
+$link="http://www.tvrplus.ro/androidphone/show/live/id/".$id;
 $html = file_get_contents($link);
 if (strpos($html,"stream") === false) {
 $new_file="D://dolce.gz";
@@ -49,7 +47,6 @@ $str=$t2[0];
 $t1=explode('application name":"',$html);
 $t2=explode('"',$t1[1]);
 $app=$t2[0];
-if (!$app) $app="live3";
 
 $t1=explode('token-high":"',$html);
 $t2=explode('"',$t1[1]);
@@ -67,7 +64,7 @@ if ($serv == "") {
 $rtmp="rtmp://".$serv."/".$app."/_definst_";
 $l="Rtmp-options:-b ".$buf;
 $l=$l." -a ".$app."/_definst_?token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
-$l=$l." -p http://www.dolcetv.ro/ ";
+$l=$l." -p http://www.tvrplus.ro/ ";
 $l=$l."-y ".$str;
 $l=$l.",".$rtmp;
 $l=str_replace(" ","%20",$l);

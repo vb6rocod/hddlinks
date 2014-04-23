@@ -61,6 +61,9 @@ $host = "http://127.0.0.1/cgi-bin";
 		      backgroundColor=0:0:0 foregroundColor=200:200:200>
 			<script>print(annotation); annotation;</script>
 		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(location); location;</script>
+		</text>
 		<image  redraw="yes" offsetXPC=60 offsetYPC=22.5 widthPC=30 heightPC=25>
 		<script>print(img); img;</script>
 		</image>
@@ -263,6 +266,7 @@ foreach($videos as $video) {
     <name>'.$name.'</name>
   <image>'.$image.'</image>
   <annotation>'.$data.'</annotation>
+  <location>'.$title.'</location>
   <media:thumbnail url="'.$image.'" />
   <mediaDisplay name="threePartsView"/>
   </item>

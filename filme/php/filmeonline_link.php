@@ -194,7 +194,7 @@ foreach($videos as $video) {
        //if (strpos($t2[2],"filmeonlinenoi.org/go/") !== false) $link="";
        //$link=""; //dublura
     } else {
-       $link = "http".$t2[1];
+       $link = "http".$t2[2];
     }
     $link=str_replace("&","&amp;",$link);
     $t1 = explode('title="', $video);

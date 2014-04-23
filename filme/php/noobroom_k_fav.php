@@ -1,31 +1,31 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
+error_reporting(0);
 $host = "http://127.0.0.1/cgi-bin";
-function str_between($string, $start, $end){
-	$string = " ".$string; $ini = strpos($string,$start);
-	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
-	return substr($string,$ini,$len);
-}
-$query = $_GET["query"];
-$queryArr = explode(',', $query);
-$link_s = urldecode($queryArr[0]);
-$tit = urldecode($queryArr[1]);
-$tit=str_replace("\'","'",$tit);
 $noob_serv="/tmp/noob_serv.log";
 $hserv=file_get_contents($noob_serv);
 $serv=explode("\n",$hserv);
 $nn=count($serv);
+$ff="/tmp/n.txt";
+if (!file_exists($ff)) {
+$l="http://noobroom.com/";
+$h=file_get_contents($l);
+$t1=explode('value="',$h);
+$n= count($t1);
+$t2=explode('"',$t1[$n-1]);
+$noob=$t2[0];
+$fh = fopen($ff, 'w');
+fwrite($fh, $noob);
+fclose($fh);
+} else {
+$noob=file_get_contents($ff);
+}
+$h=file_get_contents($noob."/func.js");
+$t1=explode('src="',$h);
+$t2=explode("'",$t1[1]);
+$baseimg=$t2[0];
 ?>
 <rss version="2.0">
-<script>
-  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
-
-  storagePath             = getStoragePath("tmp");
-  storagePath_stream      = storagePath + "stream.dat";
-  storagePath_playlist    = storagePath + "playlist.dat";
-  
-  error_info          = "";
-</script>
 <onEnter>
   cachePath = getStoragePath("key");
   optionsPath = cachePath + "noobroom.dat";
@@ -87,16 +87,16 @@ setRefreshTime(1);
 
   writeStringToFile(optionsPath, arr);
 </onExit>
+
 <onRefresh>
-    itemCount = getPageInfo("itemCount");
-    setRefreshTime(-1);
-    redrawdisplay();
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
 </onRefresh>
 
 <mediaDisplay name="threePartsView"
 	sideLeftWidthPC="0"
 	sideRightWidthPC="0"
-
+	
 	headerImageWidthPC="0"
 	selectMenuOnRight="no"
 	autoSelectMenu="no"
@@ -105,11 +105,11 @@ setRefreshTime(1);
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="80"
+	itemWidthPC="50"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="80"
+	capWidthPC="50"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -129,16 +129,28 @@ setRefreshTime(1);
   	<text align="left" offsetXPC="8" offsetYPC="3" widthPC="47" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
     5=Setare subtitrare, info=server load
 		</text>
-  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="70" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    2= download,0=dl. manager,4/6= jump -+50
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="70" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    1=sterge, 2= download,0=dl. manager,4/6= jump -+100
 		</text>
-  	<text redraw="yes" align="left" offsetXPC="80" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
+	<image  redraw="yes" offsetXPC=60 offsetYPC=25 widthPC=30 heightPC=50>
+         <script>print(image); image;</script>
+		</image>
+	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
     <script>"3= Subtitrare: " + subtitle + " 7=Server: " + sserver + " 9=SD/HD/MP4/HMP4:" + shd;</script>
 		</text>
-        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+   	<text  redraw="yes" align="center" offsetXPC="60" offsetYPC="80"  heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <widthPC>
+			<script>
+				if (an == "" || an == null ) "0";
+				else "30";
+			</script>
+		   </widthPC>
+		  <script>print(an); an;</script>
+		</text>
+       <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
         <idleImage>image/POPUP_LOADING_04.png</idleImage>
@@ -152,9 +164,10 @@ setRefreshTime(1);
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-					if(focus==idx)
+					if(focus==idx) 
 					{
-                      img = getItemInfo(idx,"image");
+					  image = getItemInfo(idx, "image");
+					  an =  getItemInfo(idx, "an");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -223,21 +236,12 @@ ret = "true";
 else if (userInput == "two" || userInput == "2")
 	{
      showIdle();
-     url=getItemInfo(getFocusItemIndex(),"download") + server + "," + hhd + ",1";
+     url=getItemInfo(getFocusItemIndex(),"download") + server + "," + hhd + ",0";
      movie=getUrl(url);
      cancelIdle();
 	 topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + movie + ";name=" + getItemInfo(getFocusItemIndex(),"name");
 	 dlok = loadXMLFile(topUrl);
 	 "true";
-}
-else if (userInput == "display" || userInput == "DISPLAY")
-{
-showIdle();
-movie_info="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_serv_load.php";
-dummy = getURL(movie_info);
-cancelIdle();
-ret_val=doModalRss("/usr/local/etc/www/cgi-bin/scripts/filme/php/noob_serv_load.rss");
-ret="true";
 }
 else if (userInput == "zero" || userInput == "0")
    {
@@ -252,7 +256,7 @@ else if (userInput == "five" || userInput == "5")
 else if(userInput == "six" || userInput == "6")
 {
     idx = Integer(getFocusItemIndex());
-    idx -= -50;
+    idx -= -100;
     if(idx &gt;= itemCount)
     idx = itemCount-1;
 
@@ -264,7 +268,7 @@ else if(userInput == "six" || userInput == "6")
 else if(userInput == "four" || userInput == "4")
 {
     idx = Integer(getFocusItemIndex());
-    idx -= 50;
+    idx -= 100;
     if(idx &lt; 0)
       idx = 0;
 
@@ -330,10 +334,29 @@ else if(hhd == "3")
   shd = "SD";
  }
 }
+else if (userInput == "display" || userInput == "DISPLAY")
+{
+showIdle();
+movie_info="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_serv_load.php";
+dummy = getURL(movie_info);
+cancelIdle();
+ret_val=doModalRss("/usr/local/etc/www/cgi-bin/scripts/filme/php/noob_serv_load.rss");
+ret="true";
+}
+else if (userInput == "one" || userInput == "1")
+{
+ showIdle();
+ url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_k_add.php?mod=delete*" + getItemInfo(getFocusItemIndex(),"link1") + "*" + getItemInfo(getFocusItemIndex(),"title1");
+ dummy=getUrl(url);
+ cancelIdle();
+ redrawDisplay();
+ ret="true";
+}
 redrawdisplay();
 ret;
 </script>
   </onUserInput>
+
 	</mediaDisplay>
 
 	<item_template>
@@ -347,6 +370,7 @@ ret;
         <idleImage>image/POPUP_LOADING_07.png</idleImage>
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 		</mediaDisplay>
+
 	</item_template>
 <destination>
 	<link>http://127.0.0.1/cgi-bin/scripts/util/level.php
@@ -370,99 +394,58 @@ echo '
 ';
 }
 ?>
-<channel>
-	<title><?php echo $tit; ?></title>
-	<menu>main menu</menu>
+  <channel>
+
+    <title>Noobroom - favorite</title>
+
 <?php
-error_reporting(0);
-set_time_limit(60);
-$cookie="/tmp/noobroom.txt";
-$link="http://hdforall.uphero.com/srt/tv/";
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $link);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-  $html = curl_exec($ch);
-  curl_close($ch);
-  if ($html) $videos = explode("<li>", $html);
-if (!$html) {
-$link="http://nobsub.googlecode.com/hg/s/list.txt";
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $link);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-  $html = curl_exec($ch);
-  curl_close($ch);
-  if ($html) {
-   $videos = explode(",", $html);
-   $videos = array_values($videos);
-   foreach($videos as $video) {
-     $srt[$video]="exista";
-   }
+function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
 }
-} else {
+if (file_exists("/data"))
+  $f= "/data/noobroom_k.dat";
+else
+  $f="/usr/local/etc/noobroom_k.dat";
+if (file_exists($f)) {
+$html=file_get_contents($f);
+$videos=explode("<item>",$html);
 unset($videos[0]);
 $videos = array_values($videos);
-
 foreach($videos as $video) {
-  $t1=explode('>',$video);
-  $t2=explode('<',$t1[1]);
-  $t3=explode('.',$t2[0]);
-  $id_srt=trim($t3[0]);
-  if (strpos($video,".srt") !== false) $srt[$id_srt]="exista";
+  $l=str_between($video,"<link>","</link>");
+  //echo $l."<BR>";
+  $title=urldecode(str_between($video,"<title>","</title>"));
+  $arr[]=array($title, $l);
 }
-}
-$l=$link_s;
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $l);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch,CURLOPT_REFERER,$l);
-  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
-  $html = curl_exec($ch);
-  curl_close($ch);
-
-
-//$videos = explode("href='/?", $html);
-$videos = explode("<b>", $html);
-unset($videos[0]);
-$videos = array_values($videos);
-
-foreach($videos as $video) {
-//echo $video."<BR>";
-   $t0=explode("href='/?",$video);
-   $t1=explode("&",$t0[1]);
-   $link=$t1[0];
-
-   $t1=explode("<",$video);
-   $ep_num=$t1[0];
-   $t1=explode('>',$t0[1]);
-   $t2=explode('<',$t1[1]);
-   $ep_tit=$t2[0];
-   $title=$ep_num.$ep_tit;
+asort($arr);
+foreach ($arr as $key => $val) {
+  $l=$arr[$key][1];
+  $title=$arr[$key][0];
    $title=str_replace("&amp;","&",$title);
    $title=str_replace("&","&amp;",$title);
    $title=str_replace("\'","'",$title);
-   $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-   if (!$srt[$link])
-      $title1=$title." (*)";
-   else
-      $title1=$title;
-   //$title1=str_replace("&","&amp;",$title1);
-   $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
-   if ($title) {
-     echo '
+
+    $link=$l;
+    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
+	$year="";
+    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
+    $image="http://174.120.232.227/~usahowie/2img/".$link.".jpg";
+    $image="http://199.192.217.10/~nooboard/2img/".$link.".jpg";
+    $image="http://coral-gate-286.appspot.com/img/".$link.".jpg";
+    $image=$noob."/2img/".$link.".jpg";
+    //http://107.6.170.83/~nooboard/2img/
+    $image="http://199.192.217.10/~nooboard/2img/".$link.".jpg";
+    $image=$baseimg.$link.".jpg";
+    //$title=str_replace("&","&amp;",$title);
+    echo '
      <item>
-     <title>'.$title1.'</title>
+     <title>'.$title.'</title>
      <onClick>
      <script>
      showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$link.'" + "," + subtitle + "," + server + "," + hhd + ",1";
+     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$l.'" + "," + subtitle + "," + server + "," + hhd + ",0";
      movie=geturl(url);
      cancelIdle();
     storagePath = getStoragePath("tmp");
@@ -492,13 +475,17 @@ foreach($videos as $video) {
      </onClick>
     <download>'.$link1.'</download>
     <title1>'.urlencode($title).'</title1>
-    <link1>'.urlencode($link).'</link1>
+    <link1>'.urlencode($l).'</link1>
     <name>'.$name.'</name>
-    <movie>'.$link.'</movie>
+    <movie>'.$l.'</movie>
+    <image>'.$image.'</image>
+	<an>'.$year.'</an>
      </item>
      ';
-   }
+}
 }
 ?>
+
+
 </channel>
-</rss>
+</rss>                                                                                                                             

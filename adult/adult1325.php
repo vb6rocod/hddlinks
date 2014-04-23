@@ -447,5 +447,11 @@ French Maid TV
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/alotporn.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
+  <item>
+<title>xnxx</title>
+<link><?php echo $host; ?>/scripts/adult/php/xnxx_main.php</link>
+<image>/usr/local/etc/www/cgi-bin/scripts/adult/image/xnxx.gif</image>
+<mediaDisplay name="threePartsView"/>
+</item>
 </channel>
 </rss>

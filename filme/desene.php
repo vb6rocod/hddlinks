@@ -159,16 +159,29 @@ ret;
 </item>
 -->
 <item>
-<title>Desene Din Copilarie</title>
-<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,DeseneDinCopilarie1</link>
-<annotation>https://www.youtube.com/user/DeseneDinCopilarie1/videos</annotation>
+<title>Noobroom - filme pentru copii</title>
+<link><?php echo $host; ?>/scripts/filme/php/noobroom_kids.php</link>
+<annotation>http://noobroom.com</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+<item>
+<title>Desene Animate</title>
+<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,UCd7MvHhgIOcsrRwqPlfrdgQ</link>
+<annotation>https://www.youtube.com/user/UCd7MvHhgIOcsrRwqPlfrdgQ/videos</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
 
 <item>
-<title>Desene De Neuitat</title>
-<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,DeseneDeNeuitat</link>
-<annotation>https://www.youtube.com/user/DeseneDeNeuitat/videos</annotation>
+<title>Desene Animate in Limba Romana</title>
+<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,andre3a08</link>
+<annotation>https://www.youtube.com/user/andre3a08/videos</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>Licurici Scaparici</title>
+<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,DeseneAnimate0nline</link>
+<annotation>https://www.youtube.com/user/DeseneAnimate0nline/videos</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
 

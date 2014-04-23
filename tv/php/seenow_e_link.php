@@ -20,16 +20,13 @@ function enc($string) {
   return $local3;
 }
 //http://www.dolcetv.ro/tv-live-Mooz-RO-115?ajaxrequest=1
-//$link = $_GET["file"];
 $query = $_GET["file"];
 if($query) {
    $queryArr = explode(',', $query);
-   $link = urldecode($queryArr[0]);
+   $id = urldecode($queryArr[0]);
    $buf = $queryArr[1];
 }
-$id = substr(strrchr($link, "-"), 1);
-//echo $id;
-$link="http://www.dolcetv.ro/service/play/index/id/".$id."/category/0/type/live-tv/editionId/0/module_name/androidtablet";
+$link="http://www.seenow.ro/service3/play/index/id/".$id."/platform_id/24";
 $html = file_get_contents($link);
 if (strpos($html,"stream") === false) {
 $new_file="D://dolce.gz";
@@ -42,20 +39,19 @@ $html = gzread($zd, filesize($new_file));
 gzclose($zd);
 }
 $html=str_replace("\\","",$html);
+//echo $html;
 $t1=explode('high quality stream name":"',$html);
 $t2=explode('"',$t1[1]);
 $str=$t2[0];
 
 $t1=explode('application name":"',$html);
 $t2=explode('"',$t1[1]);
-$app=$t2[0];
-if (!$app) $app="live3";
-
-$t1=explode('token-high":"',$html);
-$t2=explode('"',$t1[1]);
+//$app=$t2[0];
+$app="seenow";
+$t1=explode('token=',$html);
+$t2=explode('"',$t1[2]);
 $token=$t2[0];
-
-$s="http://index.mediadirect.ro/getUrl?publisher=2";
+$s="http://index.mediadirect.ro/getUrl?app=seenow&file=".$str."&publisher=24";
 $h = file_get_contents($s);
 $t1=explode('server=',$h);
 $t2=explode('&',$t1[1]);
@@ -63,13 +59,13 @@ $serv=$t2[0];
 if ($serv == "") {
   $serv="fms1.mediadirect.ro";
 }
-//$buf="60000";
+$buf="60000";
 $rtmp="rtmp://".$serv."/".$app."/_definst_";
 $l="Rtmp-options:-b ".$buf;
 $l=$l." -a ".$app."/_definst_?token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
-$l=$l." -p http://www.dolcetv.ro/ ";
-$l=$l."-y ".$str;
+$l=$l." -p http://www.seenow.ro ";
+$l=$l."-y mp4:".$str;
 $l=$l.",".$rtmp;
 $l=str_replace(" ","%20",$l);
-if ($token) print $l;
+print $l;
 ?>

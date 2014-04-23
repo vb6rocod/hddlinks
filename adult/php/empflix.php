@@ -61,6 +61,9 @@ $host = "http://127.0.0.1/cgi-bin";
 		      backgroundColor=0:0:0 foregroundColor=200:200:200>
 			<script>print(annotation); annotation;</script>
 		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(location); location;</script>
+		</text>
 		<image  redraw="yes" offsetXPC=60 offsetYPC=22.5 widthPC=30 heightPC=25>
 		<script>print(img); img;</script>
 		</image>
@@ -230,14 +233,14 @@ foreach($videos as $video) {
     $t2 = explode('"', $t1[1]);
     $link = $t2[0];
 
-    $title=str_between($video,'<span class="name">','</span>');
+    $title=str_between($video,'<h2>','</h2>');
     $link = $host."/scripts/adult/php/empflix_link.php?file=".$link;
 
     $t1 = explode('src="', $video);
-    $t2 = explode('"', $t1[2]);
+    $t2 = explode('"', $t1[1]);
     $image = $t2[0];
 
-    $data = trim(str_between($video,'<p class="length">','</p'));
+    $data = trim(str_between($video,'duringTime">','<'));
     $data = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$data);
 
     $data = "Duration: ".$data;
@@ -268,6 +271,7 @@ foreach($videos as $video) {
     <name>'.$name.'</name>
   <image>'.$image.'</image>
   <annotation>'.$data.'</annotation>
+  <location>'.$title.'</location>
   <media:thumbnail url="'.$image.'" />
   <mediaDisplay name="threePartsView"/>
   </item>

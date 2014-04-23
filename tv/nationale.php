@@ -320,6 +320,15 @@ columnCount=5
 </item>
 
 <item>
+<title>Biziday</title>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/biziday-3298-pagina-,Biziday</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/biziday.jpg" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/biziday.jpg</image>
+<location>http://www.biziday.ro/</location>
+<annotation>Blogul lui Moise Guran si al echipei de la Biziday si Ora de Business</annotation>
+</item>
+
+<item>
 <title>National 24 Plus</title>
 <link><?php echo $host; ?>/scripts/tv/php/n24.php?query=1,</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/n24.png" />
@@ -354,6 +363,15 @@ columnCount=5
 <image>/usr/local/etc/www/cgi-bin/scripts/tv/image/realitateatv.gif</image>
 <location>http://www.realitatea.net/tv</location>
 <annotation>Site-ul de stiri nr. 1 in Romania iti ofera informatia proaspata corecta obiectiva si documentata despre stirile de ultima ora.</annotation>
+</item>
+
+<item>
+<title>RealitateaTV - emisiuni</title>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_emisiuni1.php?query=1,http://www.seenow.ro/realitatea-tv-2698-pagina-,RealitateaTV</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/realitateatv.gif" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/realitateatv.gif</image>
+<location>http://www.seenow.ro/</location>
+<annotation>Inregistrari emisiuni</annotation>
 </item>
 
 <item>
@@ -394,12 +412,30 @@ columnCount=5
 </item>
 
 <item>
+<title>B1 TV - emisiuni</title>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_emisiuni1.php?query=1,http://www.seenow.ro/b1-tv-2699-pagina-,B1TV</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/b1.png" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/b1.png</image>
+<location>http://www.seenow.ro/</location>
+<annotation>Inregistrari emisiuni</annotation>
+</item>
+
+<item>
 <title>Agerpres</title>
 <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,UCfnP_igK3BPLst-QTmIh0Wg</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/agerpres.png" />
 <image>/usr/local/etc/www/cgi-bin/scripts/tv/image/agerpres.png</image>
 <location>http://www1.agerpres.ro/agerpres/home</location>
 <annotation>AGERPRES : Actualizeazã lumea.</annotation>
+</item>
+
+<item>
+<title>Seenow</title>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_emisiuni.php</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/seenow.png" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/seenow.png</image>
+<location>http://www.seenow.ro/emisiuni-tv-2697-pagina-1</location>
+<annotation>Emisiuni inregistrate Seenow</annotation>
 </item>
 
 <!--
