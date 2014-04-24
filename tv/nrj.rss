@@ -54,48 +54,48 @@
   redrawDisplay();
 </onRefresh>
 
-	<mediaDisplay name=photoView 
-	  centerXPC=7 
+	<mediaDisplay name=photoView
+	  centerXPC=7
 		centerYPC=25
-		centerHeightPC=40
-    columnCount=5
-		
-	  rowCount=1
+		centerHeightPC=60
+		columnCount=4
+		rowCount=2
 		menuBorderColor="55:55:55"
 		sideColorBottom="0:0:0"
 		sideColorTop="0:0:0"
 	  backgroundColor="0:0:0"
-		imageBorderColor="0:0:0"
 		itemBackgroundColor="0:0:0"
-		itemGapXPC=0
-		itemGapYPC=1
-		sideTopHeightPC=22
-		bottomYPC=85
+		itemGapXPC=1
+		itemGapYPC=0
+		imageBorderColor="10:105:150"
+		imageBorderPC="0"
+		sideTopHeightPC=0
+		bottomYPC=0
 		sliding=yes
 		showHeader=no
 		showDefaultInfo=no
-		idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+		idleImageWidthPC="8" idleImageHeightPC="10" idleImageXPC="80" idleImageYPC="10">
 		
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
+<!--
 		<image offsetXPC=5 offsetYPC=2 widthPC=20 heightPC=16>
 		  <script>channelImage;</script>
 		</image>
-
+-->
   	<text redraw="yes" offsetXPC="82" offsetYPC="12" widthPC="13" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
 
 		<!--  lines="5" fontSize=15 -->
-		<text align="center" redraw="yes" 
+		<!-- text align="center" redraw="yes" 
       lines=3 fontSize=18
 		
-		      offsetXPC=10 offsetYPC=65 widthPC=80 heightPC=20 
+		      offsetXPC=10 offsetYPC=80 widthPC=80 heightPC=20 
 		      backgroundColor=0:0:0 foregroundColor=120:120:120>
 			<script>print(annotation); annotation;</script>
-		</text>
+		</text -->
 		
 		<text align="center" redraw="yes" offsetXPC=10 offsetYPC=85 widthPC=80 heightPC=10 fontSize=15 backgroundColor=0:0:0 foregroundColor=75:75:75>
 			<script>print(location); location;</script>
@@ -128,33 +128,33 @@
 			   <script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-			    if(focus==idx) 0; else 12;
+			    if(focus==idx) 7.5; else 15;
 			   </script>
 			 </offsetXPC>
 			 <offsetYPC>
 			   <script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-			    if(focus==idx) 0; else 6;
+			    if(focus==idx) 0; else 10;
 			   </script>
 			 </offsetYPC>
 			 <widthPC>
 			   <script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-			    if(focus==idx) 100; else 75;
+			    if(focus==idx) 85; else 70;
 			   </script>
 			 </widthPC>
 			 <heightPC>
 			   <script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-			    if(focus==idx) 50; else 37;
+			    if(focus==idx) 80; else 70;
 			   </script>
 			 </heightPC>
 			</image>
 			
-			<text align="center" lines="4" offsetXPC=0 offsetYPC=55 widthPC=100 heightPC=45 backgroundColor=-1:-1:-1>
+			<text align="center" lines="1" offsetXPC=0 offsetYPC=70 widthPC=100 heightPC=45 backgroundColor=-1:-1:-1>
 				<script>
 					idx = getQueryItemIndex();
 					getItemInfo(idx, "title");
@@ -245,7 +245,27 @@
         cancelIdle();
         ret = "true";
       }
-
+if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
+      {
+        itemSize = getPageInfo("itemCount");
+        idx = Integer(getFocusItemIndex());
+        if (userInput == "pagedown")
+        {
+          idx -= -5;
+          if(idx &gt;= itemSize)
+            idx = itemSize-1;
+        }
+        else
+        {
+          idx -= 5;
+          if(idx &lt; 0)
+            idx = 0;
+        }
+        setFocusItemIndex(idx);
+        setItemFocus(idx);
+        redrawDisplay();
+        ret = "true";
+      }
       ret;
     </script>
   </onUserInput>
@@ -293,7 +313,7 @@
     streamArray = pushBackStringArray(streamArray, request_image);
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/tv/audioRenderer.rss");
+    doModalRss("rss_file://../etc/translate/rss/xspf/audioRenderer.rss");
   </audioDispatcher>
   
   <playlistDispatcher>
@@ -437,361 +457,2199 @@
     print("error_info=",error_info);
   </unknownDispatcher>
 
-<script>
-    channelImage = "";
-  </script><channel>
-  <title>Nrj Music</title>
+  <script>
+    channelImage = "http://media.nrj.fr/webradio_logo/100x100/2012/05/nrj-default-800-800_player18211.png";
+  </script>
+
+<channel>  
+  <title>NRj Music</title>
+
     <item>
     <title>NRJ</title>
     <location>http://play.nrj.fr/nrj/nrj.html</location>
-    <annotation>Écoute NRJ en direct. Une radio qui fait vibrer chaque jour avec une programmation qui conforte sa légitimité : Hit Music Only !</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj/all/nrj_113225.mp3</stream_url>
-    <stream_title>NRJ</stream_title>
-    <image>http://media.nrj.fr/80x60/nrj_webradio.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
+    <image>http://media.nrj.fr/webradio_logo/100x100/2012/05/nrj-default-800-800_player18211.png</image>
+    <stream_url>http://mp3lg3.tdf-cdn.com/5008/nrj_121136.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>LIVE</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
     
-    <item>
-    <title>NRJ HITS</title>
+	<item>
+	<title>NRJ HITS</title>
     <location>http://play.nrj.fr/nrj/nrj-hits.html</location>
-    <annotation>Ecoute les plus gros hits du moment. HIT MUSIC ONLY sur la WEB RADIO NRJ HITS.</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_hits/all/nrj_150726.mp3</stream_url>
-    <stream_title>NRJ HITS</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrjhits_webradio22311.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-hits-800-800_player68389.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3772/nrj_3772.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+   
+	<item>
+	<title>NRJ MUSIC AWARDS</title>
+    <location>http:/play.nrj.fr/nrj/nrj-dj-awards.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/10/nrj-nrj-music-awards-2013-800-800_player1129.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7909/nrj_144714.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+	<item>
+	<title>NRJ DJ AWARDS</title>
+    <location>http://play.nrj.fr/nrj/nrj-dj-awards.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/07/nrj-dj-awards-800-800_player92704.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/6824/nrj_101202.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+	<item>
+	<title>NRJ SPRING HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-spring-hits-2014.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/03/nrj-spring-hits-2014-800-800_player96776.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6209/nrj_102648.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
     
-    <item>
-    <title>NRJ DANCE</title>
-    <location>http://play.nrj.fr/nrj/nrj-dance.html</location>
-    <annotation>Ecoute les plus gros Hits Club en Non Stop:Guru Josh Project, David Guetta, Martin Solveig, Desaparecidos, Hakimakli, Axwell, John Dahlback, Arno Cost</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_dance/all/nrj_151505.mp3</stream_url>
-    <stream_title>NRJ DANCE</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrj-dance_webradio.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
+	<!-- item>
+	<title>NRJ RIO 2</title>
+    <location>http://play.nrj.fr/nrj/nrj-rio-2.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/04/nrj-rio-2-800-800_player31513.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9237/nrj_175757.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item -->
     
-    <item>
-    <title>NRJ PARTY</title>
-    <location>http://play.nrj.fr/nrj/nrj-party.html</location>
-    <annotation>Une soirée de folie avec la Web Radio NRJ Party.</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/2051/nrj_party/nrj_190407.mp3</stream_url>
-    <stream_title>NRJ PARTY</stream_title>
-    <image>http://media.nrj.fr/80x60/2011/02/80x60-party_site81066.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
+	<item>
+	<title>NRJ SNOW HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-snow-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/01/nrj-snow-hits-800-800_player60599.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8437/nrj_153142.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
     
-    <item>
-    <title>NRJ RNB</title>
-    <location>http://play.nrj.fr/nrj/nrj-rnb.html</location>
-    <annotation>Ecoute le meilleur du RNB avec une sélection de hits us et français. La Web radio NRJ RNB c’est du pur son en qualité haut débit.</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_rnb/all/nrj_151038.mp3</stream_url>
-    <stream_title>NRJ RNB</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrj-rnb_webradio.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
+	<item>
+	<title>NRJ HIT OF THE DAY</title>
+    <location>http://play.nrj.fr/nrj/nrj-hit-of-the-day.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-hit-of-the-day-800-800_player10801.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5065/nrj_093101.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ HITS OF THE WEEK</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-of-the-week.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-hits-of-week-800-800_player79571.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/5612/nrj_104840.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+   
+	<item>
+	<title>NRJ HITS OF THE MONTH</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-of-the-month.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/01/nrj-hits-of-the-month-800-800_player60908.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5690/nrj_101450.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+	<item>
+	<title>NRJ ALL STARS 2014</title>
+    <location>http://play.nrj.fr/nrj/nrj-all-stars-2014.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/01/nrj-all-stars-2014-800-800_player16703.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/6148/nrj_104210.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+	<item>
+	<title>NRJ BIG HITS  2013</title>
+    <location>http://play.nrj.fr/nrj/nrj-big-hits-2013.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/01/nrj-big-hits-2013-800-800_player80016.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8409/nrj_135256.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
     
-    <item>
-    <title>NRJ AT WORK</title>
-    <location>http://play.nrj.fr/nrj/nrj-at-work.html</location>
-    <annotation>Votre concentration de Hits en travaillant</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_at_work/all/nrj_143400.mp3</stream_url>
-    <stream_title>NRJ AT WORK</stream_title>
-    <image>http://media.nrj.fr/80x60/2011/02/80x60-atwork_site16953.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
+	<item>
+	<title>NRJ Les Anges de la TV</title>
+    <location>http://play.nrj.fr/nrj/nrj-les-anges-de-la-tv.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-les-anges-800-800_player62911.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4422/nrj_112600.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
     
-    <item>
-    <title>NRJ GIRL</title>
-    <location>http://play.nrj.fr/nrj/nrj-girl.html</location>
-    <annotation>Tous les meilleurs artistes plébicités par les filles !  Une programmation musicale diverse et variée. Ex :  Christophe Mae, Coeur de Pirate, Justin Nozuka...</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_girl/all/nrj_153716.mp3</stream_url>
-    <stream_title>NRJ GIRL</stream_title>
-    <image>http://media.nrj.fr/80x60/2011/02/80x60-girl_site56591.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
+	<item>
+	<title>NRJ ALLO NABILLA</title>
+    <location>http://play.nrj.fr/nrj/nrj-allo-nabilla.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/10/nrj-allo-nabilla-800-800_player89680.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7951/nrj_151208.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
     
-    <item>
-    <title>NRJ SHAKIRA</title>
-    <location>http://play.nrj.fr/nrj/nrj-shakira.html</location>
-    <annotation>Tous les hits de la Bomba Latina sont sur la Web Radio 100% Shakira</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_shakira/all/nrj_144619.mp3</stream_url>
-    <stream_title>NRJ SHAKIRA</stream_title>
-    <image>http://media.nrj.fr/80x60/2011/02/80x60-shakira_site28536.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
+	<item>
+	<title>NRJ CHANSONS LAPIN by MANU</title>
+    <location>http://play.nrj.fr/nrj/nrj-chansons-lapin-by-manu.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/03/nrj-chansons-lapin-by-manu-800-800_player18287.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9048/nrj_175103.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
     
-    <item>
-    <title>NRJ RIHANNA</title>
-    <location>http://play.nrj.fr/nrj/nrj-rihanna.html</location>
-    <annotation>RETROUVE LE MEILLEUR DE RIHANNA SUR LA WEB RADIO SPECIALE RIHANNA !</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_rihanna/all/nrj_163955.mp3</stream_url>
-    <stream_title>NRJ RIHANNA</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-rihanna_webiphone84497.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ NEXT</title>
-    <location>http://play.nrj.fr/nrj/nrj-next.html</location>
-    <annotation>Les prochains hits de vos artistes favoris avec la Web Radio NRJ Next</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_next/all/nrj_122336.mp3</stream_url>
-    <stream_title>NRJ NEXT</stream_title>
-    <image>http://media.nrj.fr/80x60/2011/02/80x60-next_site75458.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ IBIZA</title>
-    <location>http://play.nrj.fr/nrj/nrj-ibiza.html</location>
-    <annotation>RETROUVE TOUS LES MEILLEURS HITS DE IBIZA DE CET ETE ET VIENS DANSER DESSUS</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_ibiza/all/nrj_164849.mp3</stream_url>
-    <stream_title>NRJ IBIZA</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-ibiza_webradio24071.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ SHOP</title>
-    <location>http://play.nrj.fr/nrj/nrj-shop.html</location>
-    <annotation>Toutes la journée faites vos courses</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_shop/all/nrj_121822.mp3</stream_url>
-    <stream_title>NRJ SHOP</stream_title>
-    <image>http://media.nrj.fr/80x60/2011/02/80x60-shop_site35040.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ MICHAEL JACKSON</title>
-    <location>http://play.nrj.fr/nrj/nrj-michael-jackson.html</location>
-    <annotation>LE MEILLEUR DU ROI DE LA POP SUR UNE WEB RADIO SPECIALE MICHAEL JACKSON</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_michael_jackson/all/nrj_154634.mp3</stream_url>
-    <stream_title>NRJ MICHAEL JACKSON</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-mj_webiphone82102.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>DISNEY CHANNEL WEB RADIO AVEC NRJ</title>
-    <location>http://play.nrj.fr/nrj/disney-channel-web-radio-avec-nrj.html</location>
-    <annotation>Des Hits, des stars et des news Disney Channel. Hannah Montana, Miley Cyrus, Jonas Brothers...</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_by_disney/all/nrj_152411.mp3</stream_url>
-    <stream_title>DISNEY CHANNEL WEB RADIO AVEC NRJ</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrj-disney_webradio12708.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ POP</title>
-    <location>http://play.nrj.fr/nrj/nrj-pop.html</location>
-    <annotation>NRJ POP la web radio qui diffuse uniquement des titres pop des plus cultes aux dernières news.</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_pop/all/nrj_151240.mp3</stream_url>
-    <stream_title>NRJ POP</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrj-pop_webradio.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ SOLEIL</title>
-    <location>http://play.nrj.fr/nrj/nrj-soleil.html</location>
-    <annotation>RETROUVE TOUS LES MEILLEURS HITS SOLEIL ET SUMMER SUR TA WEB RADIO NRJ</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_soleil/all/nrj_155103.mp3</stream_url>
-    <stream_title>NRJ SOLEIL</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-soleil_webiphone31622.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ IN BED</title>
-    <location>http://play.nrj.fr/nrj/nrj-in-bed.html</location>
-    <annotation>Un ptit calin sous la couette ? Oui mais avec Nrj in Bed… Nrj in Bed…C’est Relax…</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_in_bed/all/nrj_135650.mp3</stream_url>
-    <stream_title>NRJ IN BED</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-in-bed_webiphone37165.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ USHER</title>
-    <location>http://play.nrj.fr/nrj/nrj-usher.html</location>
-    <annotation>La web radio spéciale Usher</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_usher/all/nrj_142337.mp3</stream_url>
-    <stream_title>NRJ USHER</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-usher_webiphone91311.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ NEW YORK</title>
-    <location>http://play.nrj.fr/nrj/nrj-new-york.html</location>
-    <annotation>Les plus gros hits…avant qu’ils arrivent en France…tu les trouves sur Nrj New York. Nrj New York…Hit New York Only.</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_new-york/all/nrj_140527.mp3</stream_url>
-    <stream_title>NRJ NEW YORK</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-new-tork_webiphone67001.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ ROCK</title>
-    <location>http://play.nrj.fr/nrj/nrj-rock.html</location>
-    <annotation>Retrouve le pur son Rock sur NRJ ROCK avec Green Day, Gossip, Muse, Placebo, BB Brunes, Franz Ferdinand</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_rock/all/nrj_161510.mp3</stream_url>
-    <stream_title>NRJ ROCK</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrj-rock_webradio.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ FRIENDLY</title>
-    <location>http://play.nrj.fr/nrj/nrj-friendly.html</location>
-    <annotation>NRJ FRIENDLY TA WEB RADIO 100% GAY FRIENDLY</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_friendly/all/nrj_164207.mp3</stream_url>
-    <stream_title>NRJ FRIENDLY</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-friendly_webradio87048.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ CLUBBIN'</title>
-    <location>http://play.nrj.fr/nrj/nrj-clubbin-.html</location>
-    <annotation>NRJ CLUBBIN c’est le meilleur du son dancefloor et des mixes exlusif de djs. David Guetta- Florida- Pitbull- Balck Eyed Peas…</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_clubbin/all/nrj_153250.mp3</stream_url>
-    <stream_title>NRJ CLUBBIN'</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrj-clubbin_webradio.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ RAP FR</title>
-    <location>http://play.nrj.fr/nrj/nrj-rap-fr.html</location>
-    <annotation>Tous les hits Rap et Hip Hop de la scène française sont sur la Web Radio 100% RAP FR</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_rap_fr/all/nrj_145338.mp3</stream_url>
-    <stream_title>NRJ RAP FR</stream_title>
-    <image>http://media.nrj.fr/80x60/2011/02/80x60-rapfr_site15880.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ RAP US</title>
-    <location>http://play.nrj.fr/nrj/nrj-rap-us.html</location>
-    <annotation>Tous les hits Rap et Hip Hop venus des States</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_rap_us/all/nrj_144854.mp3</stream_url>
-    <stream_title>NRJ RAP US</stream_title>
-    <image>http://media.nrj.fr/80x60/2011/02/80x60-rapus_site11013.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ FRENCH</title>
-    <location>http://play.nrj.fr/nrj/nrj-french.html</location>
-    <annotation>Ecoute les plus gros hits Français du moment sur NRJ FRENCH avec Tom Frager, Calogero, Zaho, Florent Mothe, Gregoire</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_french/all/nrj_155913.mp3</stream_url>
-    <stream_title>NRJ FRENCH</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrj-french_webradio.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ NOUVEAUTÉS</title>
-    <location>http://play.nrj.fr/nrj/nrj-nouveautes.html</location>
-    <annotation>Écoute les nouveaux titres des artistes internationaux et français. David Guetta- Tom Frager- Britney Spears...</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_nouveaute/all/nrj_161209.mp3</stream_url>
-    <stream_title>NRJ NOUVEAUTÉS</stream_title>
-    <image>http://media.nrj.fr/80x60/nrj-nouveautes-_webradio40253.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ AVEC ITUNES</title>
+  	<item>
+	<title>NRJ HITS BY MANU</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-by-manu.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/05/nrj-hits-by-manu-800-800_player30589.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6627/nrj_113236.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+   
+  	<item>
+	<title>NRJ HITS BY CAUET</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-by-cauet.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/05/nrj-hits-by-cauet-800-800_player45372.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6618/nrj_175849.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+   
+  	<item>
+	<title>NRJ HITS BY GUILLAUME</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-by-guillaume.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/05/nrj-hits-by-guillaume-800-800_player44694.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6629/nrj_113526.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+   
+  	<item>
+	<title>NRJ BOYS AND GIRLS BANDS</title>
+    <location>http://play.nrj.fr/nrj/nrj-boys-and-girls-bands.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/04/nrj-boys-girls-bands-800-800_player45343.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9273/nrj_170135.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+   
+  	<item>
+	<title>NRJ WINTER HITS 2014</title>
+    <location>http://play.nrj.fr/nrj/nrj-winter-hits-2014.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/01/nrj-winter-hits-2014-800-800_player8507.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8366/nrj_092533.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+   
+  	<item>
+	<title>NRJ BEST HITS EVER</title>
+    <location>http://play.nrj.fr/nrj/nrj-best-hits-ever.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/03/nrj-best-hits-ever-800-800_player41488.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/6150/nrj_104334.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+   
+  	<item>
+	<title>NRJ MADE IN FRANCE</title>
+    <location>http://play.nrj.fr/nrj/nrj-made-in-france.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/01/nrj-made-in-france-800-800_player95126.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6018/nrj_155307.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ MILLIONS OF HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-million-of-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/06/nrj-millions-of-hits-800-800_player85296.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6788/nrj_101942.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Hits Facebook</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-facebook.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-hits-facebook-ok-800-800_player81308.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3765/nrj_3765.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ TWEET LIST</title>
+    <location>http://play.nrj.fr/nrj/nrj-tweet-list.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-tweet-list-800-800_player80880.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5704/nrj_152144.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ avec iTunes</title>
     <location>http://play.nrj.fr/nrj/nrj-avec-itunes.html</location>
-    <annotation>“NRJ avec iTunes” : écoutez les 50 titres les plus téléchargés en France, Angleterre, Allemagne, Etats-Unis et Australie. Découvrez les plus grands hits internationaux et certains titres encore inconnus en France</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_itunes/all/nrj_153938.mp3</stream_url>
-    <stream_title>NRJ AVEC ITUNES</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrj-itunes_webradio47555.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ MASTER MIX</title>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-itunes-800-800_player11915.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3780/nrj_3780.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ SHAZAM</title>
+    <location>http://play.nrj.fr/nrj/nrj-shazam.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-shazam-800-800_player80378.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3910/nrj_155849.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ YouTube</title>
+    <location>http://play.nrj.fr/nrj/nrj-youtube.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-youtube-800-800_player39964.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4773/nrj_115451.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ DJ BUZZ</title>
+    <location>http://play.nrj.fr/nrj/nrj-dj-buzz.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/01/nrj-dj-buzz-800-800_player63511.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6029/nrj_104302.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ HITS PREVIEW</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-preview.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/05/nrj-hits-preview-800-800_player34679.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6563/nrj_145313.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Nouveautés</title>
+    <location>http://play.nrj.fr/nrj/nrj-nouveautes.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-nouveautes-800-800_player76461.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3795/nrj_3795.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ DISCOVER</title>
+    <location>http://play.nrj.fr/nrj/nrj-discover.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/10/nrj-discover-800-800_player57440.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3758/nrj_3758.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ FIRST LISTEN</title>
+    <location>http://play.nrj.fr/nrj/nrj-first-listen.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-first-listen-800-800_player84853.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5071/nrj_101141.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ WHAT'S HOT</title>
+    <location>http://play.nrj.fr/nrj/nrj-what-s-hot.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/01/nrj-whats-hot-800-800_player87656.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3775/nrj_3775.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ LATEST HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-latest-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/04/nrj-lastes-hits-800-800_player80875.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6264/nrj_143559.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Most Wanted</title>
+    <location>http://play.nrj.fr/nrj/nrj-most-wanted.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-most-wanted-800-800_player29322.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3912/nrj_160024.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ EUROHOT 30</title>
+    <location>http://play.nrj.fr/nrj/nrj-eurohot-30.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/02/nrj-euro-hot30-800-800_player44527.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8978/nrj_161411.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ US TOP 40</title>
+    <location>http://play.nrj.fr/nrj/nrj-us-top-40.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-us-top-40-800-800_player72133.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/5573/nrj_101527.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ UK TOP 40</title>
+    <location>http://play.nrj.fr/nrj/nrj-uk-top-40.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/04/nrj-uk-top-40-800-800_player52926.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5575/nrj_101650.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ HITS OF THE WORLD</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-of-the-world.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/12/nrj-hits-of-the-world-800-800_player12727.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/5743/nrj_145419.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Hits Remix</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-remix.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-hits-remix-800-800_player96285.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3870/nrj_164531.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ French Hits</title>
+    <location>http://play.nrj.fr/nrj/nrj-french-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-french-hits-800-800_player68914.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3767/nrj_3767.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ DANCE HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-dance-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-dance-hits-800-800_player68765.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5164/nrj_110148.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ CLUB HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-club-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-club-hits-800-800_player98695.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4714/nrj_152700.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ RnB HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-rnb-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-rnb-hits-800-800_player4233.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4776/nrj_115913.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ HIP HOP HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-hip-hop-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-hip-hop-hits-800-800_player51569.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5131/nrj_105840.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ URBAN HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-urban-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-urban-hits-800-800_player43853.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3825/nrj_3825.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ POP HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-pop-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-pop-hits-800-800_player27313.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5167/nrj_110325.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ LATINO HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-latino-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/02/nrj-latino-hits-800-800_player86536.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9049/nrj_175459.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ BRAZIL HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-brazil-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/03/nrj-brazil-hits-800-800_player17014.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9126/nrj_164553.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ ACOUSTIC HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-acoustic.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-acoustic-hits-800-800_player12630.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3740/nrj_3740.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ HITS FOR GIRLS</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-for-girls.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/05/nrj-hits-for-girls-800-800_player71770.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/4624/nrj_112312.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ COLLEGE HITS</title>
+    <location>http://play.nrj.fr/nrj/nrj-college-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-college-hits-800-800_player73722.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5093/nrj_150345.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ HITS FOR DRIVING</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-for-driving.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/12/nrj-hits-for-driving-800-800_player15139.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3779/nrj_3779.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ No Repeat</title>
+    <location>http://play.nrj.fr/nrj/nrj-no-repeat-.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-no-repeat-800-800_player22983.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3794/nrj_3794.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ ALL HITS ALL STYLES</title>
+    <location>http://play.nrj.fr/nrj/nrj-all-hits-all-styles.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/02/nrj-radio-all-hits-all-styles-800-800_player88955.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5586/nrj_100302.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Big 5</title>
+    <location>http://play.nrj.fr/nrj/nrj-big-5.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-big5-800-800_player45968.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3747/nrj_3747.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Futurs Hits</title>
+    <location>http://play.nrj.fr/nrj/nrj-futurs-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-futurs-hits-800-800_player75243.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3768/nrj_3768.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Party Hits</title>
+    <location>http://play.nrj.fr/nrj/nrj-party-hits.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-party-hits-800-800_player88246.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3797/nrj_3797.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ HITS FOR RUNNING</title>
+    <location>http://play.nrj.fr/nrj/nrj-hits-for-running.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-hits-for-running-800-800_player91303.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3813/nrj_3813.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Dance</title>
+    <location>http://play.nrj.fr/nrj/nrj-dance.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-dance-800-800_player87805.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3757/nrj_3757.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Pop Dance</title>
+    <location>http://play.nrj.fr/nrj/nrj-pop-dance.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-pop-dance-800-800_player5411.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3799/nrj_3799.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Extravadance</title>
     <location>http://play.nrj.fr/nrj/nrj-extravadance.html</location>
-    <annotation>LES MIX DES MEILLEURS DJ’S SUR TA WEB RADIO NRJ MASTER MIX</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_mastermix/all/nrj_163522.mp3</stream_url>
-    <stream_title>NRJ MASTER MIX</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-mastermix_webiphone42681.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ RUNNING</title>
-    <location>http://play.nrj.fr/nrj/nrj-running.html</location>
-    <annotation>NRJ RUNNING…TA WEB RADIO SPECIAL RUNNING</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_running/all/nrj_162813.mp3</stream_url>
-    <stream_title>NRJ RUNNING</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-running_webradio24553.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ LOUNGE</title>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-extravadance-800-800_player63319.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3764/nrj_3764.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ EDM</title>
+    <location>http://play.nrj.fr/nrj/nrj-edm.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/03/nrj-edm-800-800_player67155.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9090/nrj_095444.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Clubbin'</title>
+    <location>http://play.nrj.fr/nrj/nrj-clubbin-.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-clubbin-800-800_player64101.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3756/nrj_3756.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ DUBSTEP</title>
+    <location>http://play.nrj.fr/nrj/nrj-dubstep.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-dubstep-800-800_player46899.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/5334/nrj_104446.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ GROOVE</title>
+    <location>http://play.nrj.fr/nrj/nrj-groove.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/03/nrj-groove-800-800_player37935.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9091/nrj_095715.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ RnB</title>
+    <location>http://play.nrj.fr/nrj/nrj-rnb.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/07/nrj-rnb-800-800_player85536.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3809/nrj_3809.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ RnB FR</title>
+    <location>http://play.nrj.fr/nrj/nrj-rnb-fr.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-rnb-fr-800-800_player32566.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3810/nrj_3810.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Rap FR</title>
+    <location>http://play.nrj.fr/nrj/nrj-rap-fr.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-rap-fr-800-800_player44617.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3804/nrj_3804.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Rap US</title>
+    <location>http://play.nrj.fr/nrj/nrj-rap-us.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-rap-us-800-800_player83646.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3805/nrj_3805.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ HIP HOP US</title>
+    <location>http://play.nrj.fr/nrj/nrj-hip-hop-us.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/01/nrj-hip-hop-us-800-800_player37380.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6027/nrj_104031.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ GANSTA RAP</title>
+    <location>http://play.nrj.fr/nrj/nrj-gansta-rap.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/07/nrj-gangsta-rap-800-800_player78636.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4703/nrj_110456.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Pop</title>
+    <location>view-source:http://play.nrj.fr/nrj/nrj-pop.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-pop-800-800_player42471.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3798/nrj_3798.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ TEEN POP</title>
+    <location>http://play.nrj.fr/nrj/nrj-teen-pop.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/02/nrj-teen-pop-800-800_player59691.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6125/nrj_151044.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Rock</title>
+    <location>http://play.nrj.fr/nrj/nrj-rock.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-rock-800-800_player40839.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3811/nrj_3811.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Metal</title>
+    <location>http://play.nrj.fr/nrj/nrj-metal.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-metal-800-800_player66068.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3788/nrj_3788.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ FIESTA</title>
+    <location>http://play.nrj.fr/nrj/nrj-fiesta.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/03/nrj-fiesta-800-800_player91899.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6152/nrj_104445.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ TROPICAL</title>
+    <location>http://play.nrj.fr/nrj/nrj-tropical.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/05/nrj-tropical-800-800_player88037.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6567/nrj_150010.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Latino</title>
+    <location>http://play.nrj.fr/nrj/nrj-latino.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-latino-800-800_player78773.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3784/nrj_3784.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Reggae</title>
+    <location>http://play.nrj.fr/nrj/nrj-reggae.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-reggae-800-800_player4875.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3807/nrj_3807.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Reggaeton</title>
+    <location>http://play.nrj.fr/nrj/nrj-reggaeton.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-reggaeton-800-800_player20617.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3909/nrj_155805.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Ragga</title>
+    <location>http://play.nrj.fr/nrj/nrj-ragga.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-ragga-800-800_player39760.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3802/nrj_3802.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ K-Pop</title>
+    <location>http://play.nrj.fr/nrj/nrj-k-pop.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-k-pop-800-800_player12609.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3744/nrj_3744.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Funky</title>
+    <location>http://play.nrj.fr/nrj/nrj-funky.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-funky-800-800_player91622.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3918/nrj_111818.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Zouk</title>
+    <location>http://play.nrj.fr/nrj/nrj-zouk.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-zouk-800-800_player41096.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3829/nrj_3829.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Africa</title>
+    <location>http://play.nrj.fr/nrj/nrj-africa.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-africa-800-800_player26173.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3741/nrj_3741.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Raï</title>
+    <location>http://play.nrj.fr/nrj/nrj-rai.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-rai-800-800_player25144.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3803/nrj_3803.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Portugal</title>
+    <location>http://play.nrj.fr/nrj/nrj-portugal.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-portugal2-800-800_player4279.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3801/nrj_3801.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ ORIENTAL</title>
+    <location>http://play.nrj.fr/nrj/nrj-oriental.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-oriental-800-800_player32730.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/4699/nrj_105924.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Romantic</title>
+    <location>http://play.nrj.fr/nrj/nrj-romantic-.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-romantic-800-800_player40142.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3812/nrj_3812.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ CLASSIC DANCE</title>
+    <location>http://play.nrj.fr/nrj/nrj-classic-dance.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-classic-dance-800-800_player15373.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/4974/nrj_144050.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ CLASSIC RAP</title>
+    <location>http://play.nrj.fr/nrj/nrj-classic-rap.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-classic-rap-800-800_player29757.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4965/nrj_135515.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ CLASSIC RnB</title>
+    <location>http://play.nrj.fr/nrj/nrj-classic-rnb.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-classic-rnb-800-800_player3126.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4968/nrj_142841.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ CLASSIC ROCK</title>
+    <location>http://play.nrj.fr/nrj/nrj-classic-rock.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-classic-rock-800-800_player63827.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4971/nrj_143732.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Love</title>
+    <location>http://play.nrj.fr/nrj/nrj-love.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-love-800-800_player4750.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3787/nrj_3787.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ SENTIMENTAL</title>
+    <location>http://play.nrj.fr/nrj/nrj-sentimental.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/04/nrj-sentimental-800-800_player48807.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/6390/nrj_170734.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ IN BED</title>
+    <location>http://play.nrj.fr/nrj/nrj-in-bed.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/03/nrj-in-bed-800-800_player13557.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3778/nrj_3778.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Sexy</title>
+    <location>http://play.nrj.fr/nrj/nrj-sexy.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-sexy-800-800_player35470.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3816/nrj_3816.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ FITNESS</title>
+    <location>http://play.nrj.fr/nrj/nrj-fitness.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/01/nrj-fitness-800-800_player52652.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3766/nrj_3766.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ BROKEN HEART</title>
+    <location>http://play.nrj.fr/nrj/nrj-broken-heart.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-broken-heart-800-800_player86382.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/4693/nrj_105216.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Lounge</title>
     <location>http://play.nrj.fr/nrj/nrj-lounge.html</location>
-    <annotation>Ecoute la Web radio dédiée au bien  être. Une programmation douce et relaxante.</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_lounge/all/nrj_151750.mp3</stream_url>
-    <stream_title>NRJ LOUNGE</stream_title>
-    <image>http://media.nrj.fr/80x60/logonrj-lounge_webradio.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ THE BLACK EYED PEAS</title>
-    <location>http://play.nrj.fr/nrj/nrj-the-black-eyed-peas.html</location>
-    <annotation>La Web Radio spéciale The Black Eyed Peas, c'est sur NRJ !</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_black_eyed_peas/all/nrj_161845.mp3</stream_url>
-    <stream_title>NRJ THE BLACK EYED PEAS</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-black-eyes-peas_webradio62431.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
-    
-    <item>
-    <title>NRJ LADY GAGA</title>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-lounge-800-800_player79514.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3786/nrj_3786.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ RELAX</title>
+    <location>http://play.nrj.fr/nrj/nrj-relax.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-relax-800-800_player45834.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/5620/nrj_110007.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Wake Up</title>
+    <location>http://play.nrj.fr/nrj/nrj-wake-up.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-wake-up-800-800_player93636.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3827/nrj_3827.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ GOOD NIGHT</title>
+    <location>http://play.nrj.fr/nrj/nrj-good-night.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-good-night-800-800_player28719.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4520/nrj_160816.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ AT WORK</title>
+    <location>http://play.nrj.fr/nrj/nrj-at-work.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/12/nrj-at-work-800-800_player27196.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3745/nrj_3745.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ At Home</title>
+    <location>http://play.nrj.fr/nrj/nrj-at-home.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-at-home-800-800_player50883.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3777/nrj_3777.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Gay</title>
+    <location>http://play.nrj.fr/nrj/nrj-gay.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-gay-800-800_player89034.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3769/nrj_3769.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ New York</title>
+    <location>http://play.nrj.fr/nrj/nrj-new-york.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-new-york-800-800_player91381.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3793/nrj_3793.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Ibiza</title>
+    <location>http://play.nrj.fr/nrj/nrj-ibiza.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-ibiza-800-800_player97725.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3776/nrj_3776.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>Disney Channel Web Radio avec NRJ</title>
+    <location>http://play.nrj.fr/nrj/disney-channel-web-radio-avec-nrj.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/07/nrj-disney-800-800_player62950.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3759/nrj_3759.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Kids</title>
+    <location>http://play.nrj.fr/nrj/nrj-kids.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-kids-800-800_player48604.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3782/nrj_3782.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Afterschool</title>
+    <location>http://play.nrj.fr/nrj/nrj-afterschool.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/06/nrj-afterschool-800-800_player82624.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3742/nrj_3742.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ 6/9 MANU</title>
+    <location>http://play.nrj.fr/nrj/nrj-6-9-manu.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-69manu-800-800_player38394.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3739/nrj_3739.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ C'Cauet</title>
+    <location>http://play.nrj.fr/nrj/nrj-c-cauet.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-ccauet-800-800_player24731.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3752/nrj_3752.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Guillaume Radio 2.0</title>
+    <location>http://play.nrj.fr/nrj/nrj-guillaume-radio-2-0.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-guillaumeradio-2-0-800-800_player33861.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3771/nrj_3771.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ AVICII</title>
+    <location>http://play.nrj.fr/nrj/nrj-avicii.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/11/nrj-special-avicii-800-800_player22995.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8045/nrj_112250.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ BEYONCE</title>
+    <location>http://play.nrj.fr/nrj/nrj-beyonce.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/12/nrj-special-beyonce-800-800_player24178.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5758/nrj_114809.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ BLACK M</title>
+    <location>http://play.nrj.fr/nrj/nrj-black-m.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/03/nrj-special-black-m-800-800_player13156.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9228/nrj_160632.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Britney Spears</title>
+    <location>http://play.nrj.fr/nrj/nrj-britney-spears.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-special-britney-spears-800-800_player66218.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3751/nrj_3751.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ BRUNO MARS</title>
+    <location>http://play.nrj.fr/nrj/nrj-bruno-mars.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/12/nrj-special-bruno-mars-800-800_player54442.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5760/nrj_114950.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ CHRIS BROWN</title>
+    <location>http://play.nrj.fr/nrj/nrj-chris-brown.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-special-chrisbrown-800-800_player18135.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5616/nrj_105746.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ CHRISTOPHE MAE</title>
+    <location>http://play.nrj.fr/nrj/nrj-christophe-mae.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/10/nrj-special-christophe-mae-800-800_player95863.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7882/nrj_152552.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ COLDPLAY</title>
+    <location>http://play.nrj.fr/nrj/nrj-coldplay.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/03/nrj-special-coldplay-800-800_player73899.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9089/nrj_095059.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ DAFT PUNK</title>
+    <location>http://play.nrj.fr/nrj/nrj-daft-punk.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/01/nrj-special-daft-punk-800-800_player60386.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8461/nrj_114319.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ David Guetta</title>
+    <location>http://play.nrj.fr/nrj/nrj-david-guetta.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-special-david-guetta-800-800_player59164.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4456/nrj_123046.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ DEMI LOVATO</title>
+    <location>http://play.nrj.fr/nrj/nrj-demi-lovato.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/08/nrj-special-demi-lovato-800-800_player49015.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7626/nrj_103310.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ EMINE</title>
+    <location>http://play.nrj.fr/nrj/nrj-eminem.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/11/nrj-special-eminem-800-800_player72599.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8043/nrj_112121.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ GLE</title>
+    <location>http://play.nrj.fr/nrj/nrj-glee.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-special-glee-800-800_player37945.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4690/nrj_104855.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ JASON DERULO</title>
+    <location>http://play.nrj.fr/nrj/nrj-jason-derulo.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/10/nrj-special-jason-derulo-800-800_player87359.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7894/nrj_130931.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Justin Bieber</title>
+    <location>http://play.nrj.fr/nrj/nrj-justin-bieber.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-special-justinbieber-800-800_player22046.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3781/nrj_3781.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ KATY PERRY</title>
+    <location>http://play.nrj.fr/nrj/nrj-katy-perry.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/08/nrj-special-katy-perry-800-800_player8242.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7591/nrj_173708.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ KEEN V</title>
+    <location>http://play.nrj.fr/nrj/nrj-keen-v.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/10/nrj-special-keen-v-800-800_player15110.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7886/nrj_152941.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ KYO</title>
+    <location>http://play.nrj.fr/nrj/nrj-kyo.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/04/nrj-special-kyo-800-800_player62107.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9239/nrj_180229.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ LA FOUINE</title>
+    <location>http://play.nrj.fr/nrj/nrj-la-fouine.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/03/nrj-special-la-fouine-800-800_player61476.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9196/nrj_173510.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ LADY GAGA</title>
     <location>http://play.nrj.fr/nrj/nrj-lady-gaga.html</location>
-    <annotation>LE MEILLEUR DES HITS DE LADY GAGA SUR TA WEB RADIO NRJ. NRJ LADY GAGA…HIT MUSIC ONLY</annotation>
-    <stream_url>http://mp3.live.tv-radio.com/nrj_lady_gaga/all/nrj_152704.mp3</stream_url>
-    <stream_title>NRJ LADY GAGA</stream_title>
-    <image>http://media.nrj.fr/80x60/80x60-lady-gaga_webradio22877.jpg</image>
-    <stream_class>audio</stream_class>
-    <stream_type>audio/wma</stream_type>
-    </item>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/01/nrj-special-lady-gaga-800-800_player97663.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8446/nrj_143305.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ LITTLE MIX</title>
+    <location>http://play.nrj.fr/nrj/nrj-little-mix.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/04/nrj-special-little-mix-800-800_player92545.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6527/nrj_120317.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ M POKORA</title>
+    <location>http://play.nrj.fr/nrj/nrj-m-pokora.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/01/nrj-special-m-pokora-800-800_player69088.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5950/nrj_121201.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ MAITRE GIMS</title>
+    <location>http://play.nrj.fr/nrj/nrj-maitre-gims.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/05/nrj-special-maitre-gims-800-800_player50414.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/6608/nrj_114213.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Michael Jackson</title>
+    <location>http://play.nrj.fr/nrj/nrj-michael-jackson.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-special-michael-jackson-800-800_player59723.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/3790/nrj_3790.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ MILEY CYRUS</title>
+    <location>http://play.nrj.fr/nrj/nrj-miley-cyrus.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/08/nrj-special-miley-cyrus-800-800_player98578.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7593/nrj_174056.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ ONE DIRECTION</title>
+    <location>http://play.nrj.fr/nrj/nrj-one-direction.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-one-direction-800-800_player99405.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4632/nrj_113354.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ PHARRELL WILLIAMS</title>
+    <location>http://play.nrj.fr/nrj/nrj-pharrell-williams.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/01/nrj-special-pharrell-williams-800-800_player18997.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8465/nrj_152929.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Pitbull</title>
+    <location>http://play.nrj.fr/nrj/nrj-pitbull.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-special-pitbull-800-800_player87374.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4426/nrj_101556.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Rihanna</title>
+    <location>http://play.nrj.fr/nrj/nrj-rihanna.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/02/nrj-special-rihanna-800-800_player44894.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/3808/nrj_3808.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ SELENA GOMEZ</title>
+    <location>http://play.nrj.fr/nrj/nrj-selena-gomez.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/08/nrj-special-selena-gomez-800-800_player41449.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7595/nrj_174257.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ Sexion d'Assaut</title>
+    <location>http://play.nrj.fr/nrj/nrj-sexion-d-assaut.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/11/nrj-special-sexion-assault-800-800_player69028.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/4473/nrj_095908.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ SHAKIRA</title>
+    <location>http://play.nrj.fr/nrj/nrj-shakira.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/01/nrj-special-shakira-800-800_player18508.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/8444/nrj_142933.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ SHY'M</title>
+    <location>http://play.nrj.fr/nrj/nrj-shy-m.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/01/nrj-special-shym-800-800_player47106.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5954/nrj_121332.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ STROMAE</title>
+    <location>http://play.nrj.fr/nrj/nrj-stromae.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/08/nrj-special-stromae-120-120-tr_player15347.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7582/nrj_181006.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ TAL</title>
+    <location>http://play.nrj.fr/nrj/nrj-tal.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/10/nrj-special-tal-800-800_player8947.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7884/nrj_152757.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ TAYLOR SWIFT</title>
+    <location>http://play.nrj.fr/nrj/nrj-taylor-swift.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2012/12/nrj-special-taylor-swift-800-800_player18505.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/5756/nrj_113514.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ THE VAMPS</title>
+    <location>http://play.nrj.fr/nrj/nrj-the-vamps.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/02/nrj-special-the-vamps-800-800_player9539.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9053/nrj_105946.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ WAITI B</title>
+    <location>http://play.nrj.fr/nrj/nrj-waiti-b.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/10/nrj-special-wati-b-800-800_player3844.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/7888/nrj_153156.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ PARIS vs MARSEILLE</title>
+    <location>http://play.nrj.fr/nrj/nrj-paris-vs-marseille.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2013/03/nrj-special-paris-vs-marseille-800-800_player39259.png</image>
+	<stream_url>http://adwzg.tdf-cdn.com/6160/nrj_105051.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+  	<item>
+	<title>NRJ SHAKIRA VS RIHANNA</title>
+    <location>http://play.nrj.fr/nrj/nrj-shakira-vs-rihanna.html</location>
+	<image>http://media.nrj.fr/webradio_logo/100x100/2014/02/nrj-special-shakira-vs-rihanna-800-800_player71452.png</image>
+	<stream_url>http://adwzg2.tdf-cdn.com/9050/nrj_180344.mp3</stream_url>
+	<stream_class>audio</stream_class>
+	<stream_soft>icecast</stream_soft>
+	<stream_server>icyx://adwzg2.tdf-cdn.com</stream_server>
+    <stream_type>audio/flv</stream_type>
+	<stream_protocol>http</stream_protocol>
+	<stream_genre>on-demand</stream_genre>
+	<stream_bitrate>64</stream_bitrate>
+	</item>
+
+
+	
     
 </channel>
 

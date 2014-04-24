@@ -9,6 +9,8 @@ if($query) {
 ?>
 <rss version="2.0">
 <onEnter>
+  storagePath = getStoragePath("tmp");
+  storagePath_stream = storagePath + "stream.dat";
   cachePath = getStoragePath("key");
   optionsPath = cachePath + "rec.dat";
   optionsArray = readStringFromFile(optionsPath);
@@ -254,6 +256,10 @@ $videos = array_values($videos);
 foreach($videos as $video) {
   $t1=explode('"',$video);
   $title=$t1[0];
+  $title=urlencode($title);
+  $title=str_replace("%22","",$title);
+  $title=str_replace("%E2%80%9D","",$title);
+  $title=urldecode($title);
 
   
   //$data=$title;
@@ -263,26 +269,35 @@ foreach($videos as $video) {
   $image=str_between($video,'image":"','"');
   $data = str_between($video,'description":"','"');
 
-    echo '
-    <item>
-    <title>'.$title.'</title>
-    <onClick>
-    <script>
-    showIdle();
-    url="'.$host.'/scripts/tv/php/tvrplus_link.php?file='.urlencode($link).'," + buf;
-    url1=getUrl(url);
-    movie="http://127.0.0.1/cgi-bin/scripts/util/translate2.cgi?stream," + url1;
-    cancelIdle();
-    playItemUrl(movie,10);
-    </script>
-    </onClick>
+     echo '
+     <item>
+     <title>'.$data.'</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="'.$host.'/scripts/tv/php/tvrplus_e_link.php?file='.urlencode($link).'," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate2.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "'.$data.'");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+     </script>
+     </onClick>
     <download>'.$link.'</download>
     <name>'.$name.'</name>
     <annotation>'.$data.'</annotation>
     <image>'.$image.'</image>
     <media:thumbnail url="'.$image.'" />
-    </item>
-    ';
+     </item>
+     ';
 }
 ?>
 </channel>

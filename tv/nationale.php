@@ -329,6 +329,15 @@ columnCount=5
 </item>
 
 <item>
+<title>TVR Plus</title>
+<link><?php echo $host; ?>/scripts/tv/php/tvrplus_main.php</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/tvrplus.jpg" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/tvrplus.jpg</image>
+<location>http://tvrplus.ro</location>
+<annotation>Inregistrari emisiuni TVR</annotation>
+</item>
+
+<item>
 <title>National 24 Plus</title>
 <link><?php echo $host; ?>/scripts/tv/php/n24.php?query=1,</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/n24.png" />

@@ -63,8 +63,8 @@
 		  <script>getPageInfo("pageTitle") + " (" + sprintf("%s / ", focus-(-1))+itemCount + ")";</script>
 		</text>
 
-  	<text align="left" redraw="yes" offsetXPC="25" offsetYPC="15" widthPC="60" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    <script>"Apăsaţi 2 pentru modificare buffer. Buffer curent: " + buf;</script>
+  	<text align="left" redraw="yes" offsetXPC="8" offsetYPC="15" widthPC="92" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    <script>"Apăsaţi > pentru program, 2 pentru modificare buffer. Buffer curent: " + buf;</script>
 		</text>
 
 		<text align="left" redraw="yes"
@@ -218,7 +218,7 @@ ret;
 	</item_template>
 
 <channel>
-	<title>TVRPlus TV</title>
+	<title>TVR Plus TV</title>
 	<menu>main menu</menu>
 
 

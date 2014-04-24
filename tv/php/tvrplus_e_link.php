@@ -24,11 +24,13 @@ function enc($string) {
 $query = $_GET["file"];
 if($query) {
    $queryArr = explode(',', $query);
-   $id = urldecode($queryArr[0]);
+   $link = urldecode($queryArr[0]);
    $buf = $queryArr[1];
 }
-$l="http://www.seenow.ro/service3/play/index/id/".$id."/platform_id/19";
-$html = file_get_contents($l);
+$id = substr(strrchr($link, "-"), 1);
+//echo $id;
+$link="http://www.tvrplus.ro/androidphone/show/editie/id/".$id;
+$html = file_get_contents($link);
 if (strpos($html,"stream") === false) {
 $new_file="D://dolce.gz";
 $new_file="/tmp/dolce.gz";
@@ -44,31 +46,31 @@ $t1=explode('high quality stream name":"',$html);
 $t2=explode('"',$t1[1]);
 $str=$t2[0];
 
-//$t1=explode('application name":"',$html);
-//$t2=explode('"',$t1[1]);
-//$app=$t2[0];
-$app="live3";
+$t1=explode('application name":"',$html);
+$t2=explode('"',$t1[1]);
+$app=$t2[0];
+if (!$app) $app="live3";
 
-$t1=explode('token=',$html);
-$t2=explode('|',$t1[1]);
+$t1=explode('token-high":"',$html);
+$t2=explode('"',$t1[1]);
 $token=$t2[0];
 
-$s=str_between($html,'indexUrl":"','"');
-//http:\/\/index.mediadirect.ro\/getUrl?app=live3&file=explorer&publisher=24
-//$s="http://index.mediadirect.ro/getUrl?app=live3&file=".$str."&publisher=24";
+$s="http://index.mediadirect.ro/getUrl?publisher=68";
+$s="http://index.mediadirect.ro/getUrl?file=".$str."&app=seenow&inst=_definst_&publisher=68";
 $h = file_get_contents($s);
 $t1=explode('server=',$h);
 $t2=explode('&',$t1[1]);
 $serv=$t2[0];
 if ($serv == "") {
-  $serv="fms1.mediadirect.ro";
+  $serv="fms61.mediadirect.ro";
 }
+
 //$buf="60000";
 $rtmp="rtmp://".$serv."/".$app."/_definst_";
 $l="Rtmp-options:-b ".$buf;
-$l=$l." -a ".$app."/_definst_?&token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
-$l=$l." -p http://www.seenow.ro/ ";
-$l=$l."-y ".$str;
+$l=$l." -a ".$app."/_definst_?token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
+$l=$l." -p http://www.tvrplus.ro/ ";
+$l=$l."-y mp4:".$str;
 $l=$l.",".$rtmp;
 $l=str_replace(" ","%20",$l);
 if ($token) print $l;

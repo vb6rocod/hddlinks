@@ -201,6 +201,10 @@ foreach($videos as $video) {
   $t2 = explode('<', $t1[1]);
   $title = trim($t2[0]);
   $title=c($title);
+  $title=urlencode($title);
+  $title=str_replace("%22","",$title);
+  $title=str_replace("%E2%80%9D","",$title);
+  $title=urldecode($title);
   
   $t1=explode('original="',$video);
   $t2=explode('"',$t1[1]);
