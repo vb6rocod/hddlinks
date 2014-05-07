@@ -251,6 +251,35 @@ if (preg_match("/awesomedl/i",$filelink)) {
   $t1=explode("Watch Online:",$html);
   $html=$t1[1];
 }
+if (preg_match("/filmbazis\.org/",$filelink)) {
+  $id=substr(strrchr($filelink, "/"), 1);
+  /*
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $filelink);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  $h1 = curl_exec($ch);
+  curl_close($ch);
+  $id=str_between($h1,"movie_id:","|");
+  */
+  //$id="19476";
+  $l="http://www.filmbazis.org/movies.php";
+  $post="type=get_movie_links&query=movie_id:229511|season:0";
+  $post="type=get_movie_links&query=movie_id:".$id."|season:0";
+  //$post="type=get_movie_links&query=movie_id:19476|season:0"
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, $l);
+     curl_setopt ($ch, CURLOPT_POST, 1);
+     curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+     curl_setopt ($ch, CURL_REFERER,$filelink);
+     curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+     $html = curl_exec($ch);
+     curl_close($ch);
+     //echo $html;
+}
 /**################ All links ################**/
 $s="/adf\.ly|vidxden\.c|divxden\.c|vidbux\.c|movreel\.c|videoweed\.(c|e)|novamov\.(c|e)|vk\.com";
 $s=$s."|movshare\.net|youtube\.c|flvz\.com|rapidmov\.net|putlocker\.com|played\.to|primeshare\.tv|";

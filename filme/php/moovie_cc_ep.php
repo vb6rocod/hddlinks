@@ -16,7 +16,9 @@ if($query) {
    $pg_tit = str_replace("\'","'",$pg_tit);
 }
 $post="type=get_movie_links&query=movie_id:".$id."|season:".$link;
+//$post="type=get_movie_links&query=movie_id:".$filelink."|season:0";
 $l="http://www.moovie.cc/core/ajax/movies.php";
+$l="http://www.filmbazis.org/movies.php";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -28,10 +30,13 @@ $l="http://www.moovie.cc/core/ajax/movies.php";
   curl_close($ch);
 
 $img="http://www.moovie.cc/images/movies/".$id."/poster.jpg";
-
+//echo $html;
 ?>
 <rss version="2.0">
 <onEnter>
+    storagePath             = getStoragePath("tmp");
+    storagePath_stream      = storagePath + "stream.dat";
+    storagePath_playlist    = storagePath + "playlist.dat";
   startitem = "middle";
   setRefreshTime(1);
 </onEnter>
@@ -182,35 +187,58 @@ ret;
 
 <?php
 
-$videos = explode('<tr class="movie-link', $html);
+$videos = explode('tr class="movie-episode-link', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
-   $t1=explode('span class="site bubble_title_l"',$video);
+//echo $video;
+   $t1=explode('span class="quality bubble_title_l"',$video);
+   $t2=explode('<td>',$t1[1]);
+   //echo $t2[1];
+   $t3=explode('<',$t2[1]);
+   $title=$t3[0];
+   
+   $t1=explode('span class="site bubble_title_l',$video);
    $t2=explode('>',$t1[1]);
    $t3=explode('<',$t2[1]);
+   
    $server=" (".$t3[0].")";
    
    //$t1=explode("rdu=",$video);
-   $t1=explode("/http",$video);
-   $t2=explode('"',$t1[1]);
-   $link="http".$t2[0];
+   $t1=explode("javascript:Embed(",$video);
+   $t2=explode(')',$t1[1]);
+   $link="http://www.filmbazis.org/".$t2[0];
 
-   $t1=explode("<td>",$video);
-   $t2=explode("</td",$t1[5]);
-   $ep=str_replace(",","-",$t2[0]);
-   $title=$ep.$server;
+   //$t1=explode("<td>",$video);
+   //$t2=explode("</td",$t1[5]);
+   //$ep=str_replace(",","-",$t2[0]);
+   $title=$title.$server;
 
-	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/filme1_link.php?file='.$link.','.urlencode($ep);
-	echo '
-  <item>
-    <link>'.$link.'</link>
-    <title>'.$title.'</title>
-    <image>'.$img.'</image>
-    <media:thumbnail url="'.$img.'" />
-    <mediaDisplay name="threePartsView"/>
-  </item>';
+	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/link1.php?file='.$link;
+	    echo'
+	    <item>
+	    <title>'.$title.'</title>
+        <onClick>
+        <script>
+        showIdle();
+        movie="'.$link.'";
+        url=getUrl(movie);
+        cancelIdle();
+        streamArray = null;
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, url);
+        streamArray = pushBackStringArray(streamArray, url);
+        streamArray = pushBackStringArray(streamArray, video/x-flv);
+        streamArray = pushBackStringArray(streamArray, "'.$title.'");
+        streamArray = pushBackStringArray(streamArray, "1");
+        writeStringToFile(storagePath_stream, streamArray);
+        doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+        </script>
+        </onClick>
+        </item>
+        ';
 }
 
 ?>

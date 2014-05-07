@@ -264,14 +264,14 @@ ret;
 <annotation>http://hdfilm.ro/</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>filmhd</title>
 <link><?php echo $host; ?>/scripts/filme/php/filmhd_main.php</link>
 <annotation>http://www.filmhd.ro</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>filmehd-online</title>
 <link><?php echo $host; ?>/scripts/filme/php/filmehd-online_main.php</link>

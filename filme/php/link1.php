@@ -1,6 +1,11 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php
 error_reporting(0);
+function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
+}
 $filelink = $_GET["file"];
 $filelink=urldecode($filelink);
 //echo $filelink;
@@ -28,11 +33,49 @@ if (strpos($filelink,"moovie.cc") !== false) {
 $filelink=trim($a1[1])."&player=flowplayer";
 $h=file_get_contents($filelink);
 }
-function str_between($string, $start, $end){
-	$string = " ".$string; $ini = strpos($string,$start);
-	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
-	return substr($string,$ini,$len);
+if (strpos($filelink,"filmbazis.org") !==false) {
+  //http://www.filmbazis.org/229512
+  $id=substr(strrchr($filelink, "/"), 1);
+  $l="http://www.filmbazis.org/embed.php";
+  $post="id=".$id;
+  //echo $post;
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, $l);
+     curl_setopt ($ch, CURLOPT_POST, 1);
+     curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+     curl_setopt ($ch, CURL_REFERER,$filelink);
+     curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+     $html = curl_exec($ch);
+     //echo $html;
+     curl_close($ch);
+     if (preg_match("/frame/i",$html)) {
+     $t1=explode("href='",$html);
+     $t2=explode("'",$t1[1]);
+     $l1=$t2[0];
+     if ($l1) {
+      if (strpos($l1,"url") !== false) {
+        $t1=explode("url/",$l1);
+        $filelink=$t1[1];
+      } else {
+        $filelink=$l1;
+      }
+     }
+     } else {
+       $t1=explode('href="',$html);
+       $t2=explode('"',$t1[1]);
+       $l1=$t2[0];
+      if (strpos($l1,"url") !== false) {
+        $t1=explode("url/",$l1);
+        $filelink=$t1[1];
+      } else {
+        $filelink=$l1;
+      }
+   }
+   //echo $filelink;
 }
+
 function unpack_DivXBrowserPlugin($n_func,$html_cod,$sub=false) {
   $f=explode("return p}",$html_cod);
   $e=explode("'.split",$f[$n_func]);
@@ -1405,6 +1448,11 @@ $post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=C
    $h = curl_exec($ch);
    $link=unpack_DivXBrowserPlugin(1,$h);
 } elseif (strpos($filelink, 'youwatch.org') !== false) {
+//echo $filelink;
+   if (!preg_match("/embed/",$filelink)) {
+     $id=substr(strrchr($filelink, "/"), 1);
+     $filelink="http://youwatch.org/embed-".$id."-620x350.html";
+   }
    //http://youwatch.org/embed-t9d055slghmu-620x350.html
    $h=file_get_contents($filelink);
    //$link=str_between($h,'file: "','"');

@@ -8,6 +8,9 @@ $tit = urldecode($queryArr[1]);
 ?>
 <rss version="2.0">
 <onEnter>
+    storagePath             = getStoragePath("tmp");
+    storagePath_stream      = storagePath + "stream.dat";
+    storagePath_playlist    = storagePath + "playlist.dat";
   startitem = "middle";
   setRefreshTime(1);
 </onEnter>
@@ -187,6 +190,8 @@ function str_between($string, $start, $end){
 }
 $host = "http://127.0.0.1/cgi-bin";
 $l="http://www.moovie.cc/core/ajax/movies.php";
+$l="http://www.filmbazis.org/movies.php";
+$post="type=get_movie_links&query=movie_id:".$filelink."|season:0";
 $post="type=get_movie_links&query=movie_id:".$filelink."|season:0";
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, $l);
@@ -206,21 +211,42 @@ foreach($videos as $video) {
     $t3=explode(">",$video);
     $t4=explode("<",$t3[1]);
     $title=trim($t4[0]);
-    
+    $t1=explode('bubble="',$video);
+    $t2=explode(">",$t1[1]);
+    $t3=explode("<",$t2[1]);
+    $title=$t3[0];
     //$t2=explode("rdu=",$video);
     $t2=explode("/http",$video);
     $t3=explode('"',$t2[1]);
     $link="http".$t3[0];
+    $t2=explode("javascript:Embed(",$video);
+    $t3=explode(")",$t2[1]);
+    $link="http://www.filmbazis.org/".$t3[0];
     
-	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/filme1_link.php?file='.$link.','.urlencode($tit);
-	echo '
-  <item>
-    <link>'.$link.'</link>
-    <title>'.$title.'</title>
-    <image>'.$image.'</image>
-    <media:thumbnail url="'.$image.'" />
-    <mediaDisplay name="threePartsView"/>
-  </item>';
+	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/link1.php?file='.$link;
+	    echo'
+	    <item>
+	    <title>'.$title.'</title>
+        <onClick>
+        <script>
+        showIdle();
+        movie="'.$link.'";
+        url=getUrl(movie);
+        cancelIdle();
+        streamArray = null;
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, url);
+        streamArray = pushBackStringArray(streamArray, url);
+        streamArray = pushBackStringArray(streamArray, video/x-flv);
+        streamArray = pushBackStringArray(streamArray, "'.$tit.'");
+        streamArray = pushBackStringArray(streamArray, "1");
+        writeStringToFile(storagePath_stream, streamArray);
+        doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+        </script>
+        </onClick>
+        </item>
+        ';
 }
 ?>
 

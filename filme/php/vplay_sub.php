@@ -140,6 +140,10 @@ foreach($videos as $video) {
  $line=str_replace("u0102","Ã",$line);
  $line=str_replace("u00C2","Â",$line);
  $line=str_replace("u00CE","Î",$line);
+
+ $line=str_replace("u00e3","ã",$line);
+ $line=str_replace("u00de","Þ",$line);
+ $line=str_replace("u00c3","Ã",$line);
  $line=str_replace("<br>","\r\n",$line);
  $line = trim(preg_replace("/<(.*)>|(\{(.*)\})/e","",$line));
  $t1=explode('"f":',$video);

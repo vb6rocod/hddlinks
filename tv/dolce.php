@@ -254,8 +254,14 @@ if ($serv == "") {
   $serv="fms1.mediadirect.ro";
 }
 */
-$link="http://www.dolcetv.ro/tv-live?ajaxrequest=1";
-$html = file_get_contents($link);
+$link="http://www.dolcetv.ro/tv-live";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $link);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch,CURLOPT_REFERER,"http://www.dolcetv.ro");
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20100101 Firefox/14.0.1');
+  $html=curl_exec($ch);
+  curl_close($ch);
 if (strpos($html,"class") === false) {
 $new_file="D://dolce.gz";
 $new_file="/tmp/dolce.gz";
