@@ -8,7 +8,7 @@ if($query) {
    $page=$queryArr[2];
 }
 if ($page == "") $page=1;
-$page=1+ 100*($page-1);
+//$page=1+ 100*($page-1);
 ?>
 <rss version="2.0">
 <onEnter>
@@ -233,10 +233,15 @@ $search = str_replace(" ","+",$tit);
 if ($tip == "genre") {
   $link="http://www.shoutcast.com/genre-ajax/".$search;
   $post="strIndex=".$page."&count=100&ajax=true&mode=listeners&order=desc";
+  $link="http://www.shoutcast.com/radiolist.cfm?start=".(($page-1)*18 + 1)."&action=sub&string=&cat=".$search."&amount=18&order=listeners&_cf_containerId=radiolist&_cf_nodebug=true&_cf_nocache=true&_cf_rc=1";
 } elseif ($tip == "search") {
   $link="http://www.shoutcast.com/search-ajax/".$search;
   $post="strIndex=".$page."&count=100&ajax=true";
+  $link="http://www.shoutcast.com/radiolist.cfm?start=".(($page-1)*18 + 1)."&action=search&string=".$search."&cat=&amount=18&order=listeners&_cf_containerId=radiolist&_cf_nodebug=true&_cf_nocache=true&_cf_rc=1";
 }
+//http://www.shoutcast.com/radiolist.cfm?start=19&action=search&string=romania&cat=&amount=18&order=listeners&_cf_containerId=radiolist&_cf_nodebug=true&_cf_nocache=true&_cf_rc=1
+//http://www.shoutcast.com/radiolist.cfm?action=search&string=romania&cat=&_cf_containerId=radiolist&_cf_nodebug=true&_cf_nocache=true&_cf_rc=0
+
 for ($i=0;$i<2;$i++) {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
@@ -244,7 +249,7 @@ for ($i=0;$i<2;$i++) {
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   curl_setopt($ch,CURLOPT_REFERER,$link);
-  curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+  //curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
 //  curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
 //  curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
   $html = curl_exec($ch);
@@ -252,25 +257,37 @@ for ($i=0;$i<2;$i++) {
   if (strlen($html) > 5) break;
   sleep(1);
 }
-$videos = explode('class="stationcol"', $html);
+//echo $html;
+$videos = explode('class="transition"', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
-  $t1=explode('title="',$video);
-  $t2=explode('"',$t1[1]);
+  $t1=explode('>',$video);
+  $t2=explode('<',$t1[1]);
   $name=$t2[0];
   $name=str_replace("&","&amp;",$name);
-  $t1=explode('id="',$video);
+  $t1=explode('id=',$video);
   $t2=explode('"',$t1[1]);
   $id=$t2[0];
+  $t1=explode('width="10%">',$video);
+  $t2=explode('<',$t1[1]);
+  $gen=$t2[0];
+  $t2=explode("<",$t1[2]);
+  $lc=$t2[0];
+  $t2=explode("<",$t1[3]);
+  $br=$t2[0];
+  $t2=explode("<",$t1[4]);
+  $ct=$t2[0];
+  /*
   $br=str_between($video,'class="dirbitrate">','<');
   $g=str_between($video,'Tags:','</div>');
   $gen=trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$g));
   $mt=str_between($video,'class="dirtype">','<');
   $lc=str_between($video,'class="dirlistners">','<');
-  $t1=explode('title="',$video);
-  $t2=explode('"',$t1[2]);
+  $t1=explode('<br>',$video);
+  $t2=explode('</td',$t1[1]);
   $ct=$t2[0];
+  */
   $ct=str_replace("&","&amp;",$ct);
   if (!preg_match("/manele/i",$gen) && !preg_match("/manele/i",$name)) {
   echo '

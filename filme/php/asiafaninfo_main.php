@@ -162,8 +162,9 @@ function str_between($string, $start, $end){
 }
 //$html = file_get_contents("http://www.asiafaninfo.ro/drame-seriale-coreene/");
 //$html=file_get_contents("http://asiafaninfo.net/drame-seriale-coreene/");
+//http://asiafaninfo.net/drame-seriale-coreene-subitrate-romana-online-asiafaninfo/
 $html=file_get_contents("http://asiafaninfo.net/drame-seriale-coreene-subitrate-romana-online-asiafaninfo/");
-$html = str_between($html,'LISTA DRAME COREENE<','<div');
+$html = str_between($html,'strong>LISTA DRAME COREENE','<div');
 
 $videos = explode('href="', $html);
 unset($videos[0]);

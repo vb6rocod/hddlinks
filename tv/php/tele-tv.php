@@ -267,16 +267,17 @@ unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $t1 = explode('href="', $video);
+    $t0=explode('class="caseta_video_titlu">',$video);
+    $t1 = explode('href="', $t0[1]);
     $t2 = explode('"',$t1[1]);
     $link = $t2[0];
     
-    $t3 = explode(">",$t1[2]);
+    $t3 = explode(">",$t0[1]);
     $t4 = explode("<",$t3[1]);
     $title=$t4[0];
 
     $t1 = explode('src="', $video);
-    $t2 = explode('"', $t1[1]);
+    $t2 = explode('"', $t1[2]);
     $image = $t2[0];
 
     $descriere=$title;

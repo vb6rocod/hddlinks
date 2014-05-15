@@ -178,29 +178,38 @@ fclose($fh);
 }
 ?>
 <rss version="2.0">
+<script>
+  cachePath = getStoragePath("key");
+  optionsPath = cachePath + "noobroom_extra.dat";
+  optionsArray = readStringFromFile(optionsPath);
+  if(optionsArray == null)
+  {
+    numai_sub = "DA";
+    alfabetic = "NU";
+  arr = null;
+  arr = pushBackStringArray(arr, numai_sub);
+  arr = pushBackStringArray(arr, alfabetic);
+
+  writeStringToFile(optionsPath, arr);
+  }
+  else
+  {
+    numai_sub = getStringArrayAt(optionsArray, 0);
+    alfabetic = getStringArrayAt(optionsArray, 1);
+  }
+</script>
 <onEnter>
   startitem = "middle";
   setRefreshTime(1);
-  info="Contribuiti cu subtitrari! Upload: http://hdforall.uphero.com/srt/noobroom.php";
+  info="Contribuiti cu subtitrari! http://hdforall.uphero.com/srt/noobroom.php";
   start="0";
 </onEnter>
 <onExit>
 setRefreshTime(-1);
 </onExit>
 <onRefresh>
-  if (start == "0")
-  {
-  setRefreshTime(1500);
+  setRefreshTime(-1);
   itemCount = getPageInfo("itemCount");
-  start="1";
-  }
-  else
-  {
-  if (info == " ")
-     info="Contribuiti cu subtitrari! Upload: http://hdforall.uphero.com/srt/noobroom.php";
-  else
-     info=" ";
-  }
 </onRefresh>
 
 <mediaDisplay name="threePartsView"
@@ -242,8 +251,8 @@ setRefreshTime(-1);
   	<text align="right" offsetXPC="55" offsetYPC="3" widthPC="40" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
     <script>"<?php echo $premium; ?>" + sprintf("%s "," ");</script>
 		</text>
-  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Contribuiti cu subtitrari! Upload: http://hdforall.uphero.com/srt/noobroom.php
+  	<text redraw="yes" align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    <script>"1=Doar subtitrate:" + numai_sub + ". 3=Sortate alfabetic: " + alfabetic;</script>
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -332,6 +341,32 @@ else if (userInput == "two" || userInput == "2")
  url=geturl("http://127.0.0.1/cgi-bin/scripts/filme/php/noob_del.php");
  jumptolink("logon");
  "true";
+}
+else if (userInput == "one" || userInput == "1")
+{
+if (numai_sub == "DA")
+ numai_sub="NU";
+else if (numai_sub == "NU")
+ numai_sub="DA";
+ arr = null;
+ arr = pushBackStringArray(arr, numai_sub);
+ arr = pushBackStringArray(arr, alfabetic);
+ writeStringToFile(optionsPath, arr);
+ redrawDisplay();
+ "false";
+}
+else if (userInput == "three" || userInput == "3")
+{
+if (alfabetic == "DA")
+ alfabetic="NU";
+else if (alfabetic == "NU")
+ alfabetic="DA";
+ arr = null;
+ arr = pushBackStringArray(arr, numai_sub);
+ arr = pushBackStringArray(arr, alfabetic);
+ writeStringToFile(optionsPath, arr);
+ redrawDisplay();
+ "false";
 }
 ret;
 </script>

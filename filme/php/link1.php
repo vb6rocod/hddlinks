@@ -1513,6 +1513,12 @@ $post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=C
   $movie=str_between($t1[1],"url: '","'");
   $link=urldecode($movie);
 } elseif (strpos($filelink,"mooshare.biz") !==false || strpos($filelink,"streamin.to") !==false) {
+  //http://streamin.to/embed-giepc5gb5yvp-640x360.html
+  if (strpos($filelink,"embed") !== false) {
+   $id=str_between($filelink,"embed-","-");
+   if (preg_match("/stramin/",$filelink))
+    $filelink="http://streamin.to/".$id;
+  }
   $ch = curl_init($filelink);
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   curl_setopt($ch, CURLOPT_REFERER, $filelink);

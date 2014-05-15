@@ -1419,6 +1419,35 @@ $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
    }
 } elseif (strpos($filelink,"redfly.us") !==false) {
   $link=$filelink;
+} elseif (strpos($filelink,"mooshare.biz") !==false || strpos($filelink,"streamin.to") !==false) {
+  //http://streamin.to/embed-giepc5gb5yvp-640x360.html
+  if (strpos($filelink,"embed") !== false) {
+   $id=str_between($filelink,"embed-","-");
+   if (preg_match("/stramin/",$filelink))
+    $filelink="http://streamin.to/".$id;
+  }
+  $ch = curl_init($filelink);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, $filelink);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 2.1-update1; ru-ru; GT-I9000 Build/ECLAIR) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17');
+  $h = curl_exec($ch);
+  $id=str_between($h,'id" value="','"');
+  $fname=str_between($h,'fname" value="','"');
+  $hash=str_between($h,'hash" value="','"');
+  $post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=&hash=".$hash."&imhuman=Proceed+to+video";
+  //echo $post;
+  sleep(10);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, $string);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+  curl_setopt ($ch, CURLOPT_POST, 1);
+  curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 2.1-update1; ru-ru; GT-I9000 Build/ECLAIR) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17');
+  $h = curl_exec($ch);
+  curl_close($ch);
+  //echo $h;
+  $link=str_between($h,'file: "','"');
 }
 
 //////////////////////////////////////////////////////////////////

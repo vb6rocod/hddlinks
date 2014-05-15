@@ -466,6 +466,12 @@ foreach($videos as $video) {
   if (strpos($video,".srt") !== false) $srt[$id_srt]="exista";
 }
 }
+$extra="/usr/local/etc/dvdplayer/noobroom_extra.dat";
+$h_extra=file_get_contents($extra);
+$e1=explode("\n",$h_extra);
+$numai_sub=trim($e1[0]);
+$alfabetic=trim($e1[1]);
+//echo $numai_sub.$alfabetic;
 //echo $l;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
@@ -508,6 +514,7 @@ if (strpos($l,"azlist") !== false) {
    $image=$noob."/2img/".$link.".jpg";
    $image="http://199.192.217.10/~nooboard/2img/".$link.".jpg";
    $image=$baseimg.$link.".jpg";
+   if ($numai_sub=="DA" && !$srt[$link]) $title="";
    if ($title) {
      echo '
      <item>
@@ -597,6 +604,7 @@ foreach($videos as $video) {
    $image=$noob."/2img/".$link.".jpg";
    $image="http://199.192.217.10/~nooboard/2img/".$link.".jpg";
    $image=$baseimg.$link.".jpg";
+   if ($numai_sub=="DA" && !$srt[$link]) $title="";
    if ($title) {
      echo '
      <item>
@@ -668,7 +676,7 @@ foreach($videos as $video) {
    //echo $link."-".$title."-".$year."<BR>";
 }
 if ($arr) {
-asort($arr);
+if ($alfabetic=="DA") asort($arr);
 foreach ($arr as $key => $val) {
  $title=$arr[$key][0];
    $title=str_replace("&amp;","&",$title);
@@ -688,6 +696,7 @@ foreach ($arr as $key => $val) {
    $image=$noob."/2img/".$link.".jpg";
    $image="http://199.192.217.10/~nooboard/2img/".$link.".jpg";
    $image=$baseimg.$link.".jpg";
+   if ($numai_sub=="DA" && !$srt[$link]) $title="";
    if ($title) {
      echo '
      <item>
