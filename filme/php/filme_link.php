@@ -395,13 +395,13 @@ if (strpos($filelink,"filmeonlinesubtitrate") !== false) {
   $i1=str_between($html,"js_content.php","'");
   $filelink="http://filmehd.net/js_content.php".$i1;
   $html=file_get_contents($filelink);
-} elseif (strpos($filelink,"seriale.filmesubtitrate.info") !== false) {
+} elseif (strpos($filelink,"fsplay.net") !== false) {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $filelink);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch,CURLOPT_REFERER,"http://www.seriale.filmesubtitrate.info");
+  curl_setopt($ch,CURLOPT_REFERER,"http://www.fsplay.net");
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20100101 Firefox/14.0.1');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  //curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   $html=curl_exec($ch);
   curl_close($ch);
   $html= decode_entities($html);
@@ -518,7 +518,7 @@ for ($i=0;$i<count($links);$i++) {
        $t2=explode("&",$t1[1]);
        $cur_link=trim($t2[0]);
      }
-      if (!preg_match("/facebook|twitter|player\.swf|img\.youtube|youtube\.com\/user|radioarad|\.jpg|\.png|\.gif|jq\/(js|css)/i",$cur_link)) {
+      if (!preg_match("/facebook|twitter|player\.swf|img\.youtube|youtube\.com\/user|radioarad|\.jpg|\.png|\.gif|jq\/(js|css)|fsplay\.net\?s/i",$cur_link)) {
         $t1=explode("proxy.link=",$cur_link); //filmeonline.org
         if ($t1[1] <> "") {
         $cur_link=$t1[1];
@@ -1023,7 +1023,7 @@ for ($i=0;$i<count($links);$i++) {
 //http://www.filmesubtitrate.info/2010/06/10-things-i-hate-about-you-sez1-ep1.html
 //http://www.seriale.filmesubtitrate.info/2010/06/10-things-i-hate-about-you-sez1-ep1.html
 //www.seriale.filmesubtitrate.info
-if (strpos($filelink,"filmesubtitrate.info") !== false) {
+if (strpos($filelink,"fsplay.net") !== false) {
 ///playerfs/plmfilmesub.php?lk=a8u25iq4cach
 ///playerfs/plmnowvideo.php?lk=2rzm75lkxawps
 //peteava - http://www.seriale.filmesubtitrate.info/playerfs/peteava.php?lk=503993
@@ -1034,12 +1034,12 @@ if (strpos($filelink,"filmesubtitrate.info") !== false) {
 ///playerfs/plmvk.php?lk=106177506&id=163445800&hash=7fa53905d105372e&hd=1
 $title = "";
 $f = "/usr/local/bin/home_menu";
-$videos = explode('playerfs', $html);
+$videos = explode('player5', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
  $t1=explode('"',$video);
- $link="http://www.seriale.filmesubtitrate.info/playerfs".$t1[0];
+ $link="http://www.fsplay.net/player5".$t1[0];
 
  if (strpos($link,"plmfilmesub") !== false) $title="roshare";
  if (strpos($link,"peteava") !== false) $title="peteava";

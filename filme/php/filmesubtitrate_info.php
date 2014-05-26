@@ -121,7 +121,7 @@ $pagelink=$link;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch,CURLOPT_REFERER,"http://www.seriale.filmesubtitrate.info");
+  curl_setopt($ch,CURLOPT_REFERER,"http://www.fsplay.net");
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20100101 Firefox/14.0.1');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   $html=curl_exec($ch);
@@ -198,7 +198,8 @@ foreach($videos as $video) {
 	//if (preg_match($s,$link)) {
  if ($title) {
 	$m++;
-	$link=str_replace("www.filmesubtitrate.info","www.seriale.filmesubtitrate.info",$link);
+    $link=str_replace("www.seriale.filmesubtitrate.info","www.fsplay.net",$link);
+    $link=str_replace("www.filmesubtitrate.info","www.fsplay.net",$link);
 		$link="http://127.0.0.1/cgi-bin/scripts/filme/php/filme_link.php?file=".$link.",".urlencode($title);
     echo '
     <item>
@@ -251,7 +252,8 @@ foreach($videos as $video) {
 	//if (preg_match($s,$link)) {
 	if ($title && preg_match("/ep|part/i",$link)) {
 	$m++;
-	$link=str_replace("www.filmesubtitrate.info","www.seriale.filmesubtitrate.info",$link);
+    $link=str_replace("www.seriale.filmesubtitrate.info","www.fsplay.net",$link);
+    $link=str_replace("www.filmesubtitrate.info","www.fsplay.net",$link);
 		$link="http://127.0.0.1/cgi-bin/scripts/filme/php/filme_link.php?file=".$link.",".urlencode($title);
     echo '
     <item>

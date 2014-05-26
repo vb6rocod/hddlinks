@@ -146,6 +146,7 @@ echo '
 //http://www.seriale.filmesubtitrate.info/p/seriale-online-subtitrate-in-romana.html
 //
 $l="http://www.seriale.filmesubtitrate.info/p/seriale-online-subtitrate-in-romana.html";
+$l="http://www.fsplay.net/p/seriale-online-subtitrate-in-romana.html";
 //$new_file = "D://seriale.txt";
 //$fh = fopen($new_file, 'w');
 //fwrite($fh, $html);
@@ -153,7 +154,7 @@ $l="http://www.seriale.filmesubtitrate.info/p/seriale-online-subtitrate-in-roman
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch,CURLOPT_REFERER,"http://www.seriale.filmesubtitrate.info");
+  curl_setopt($ch,CURLOPT_REFERER,"http://www.fsplay.net");
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20100101 Firefox/14.0.1');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   $html=curl_exec($ch);

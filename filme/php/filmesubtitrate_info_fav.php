@@ -182,6 +182,8 @@ asort($arr);
 foreach ($arr as $key => $val) {
   $l=$arr[$key][1];
   $title=$arr[$key][0];
+  $l=str_replace("www.seriale.filmesubtitrate.info","www.fsplay.net",$l);
+  $l=str_replace("www.filmesubtitrate.info","www.fsplay.net",$l);
   $link = $host."/scripts/filme/php/filmesubtitrate_info.php?query=".$l.",".urlencode($title);
     echo '
     <item>
