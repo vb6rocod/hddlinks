@@ -518,7 +518,7 @@ for ($i=0;$i<count($links);$i++) {
        $t2=explode("&",$t1[1]);
        $cur_link=trim($t2[0]);
      }
-      if (!preg_match("/facebook|twitter|player\.swf|img\.youtube|youtube\.com\/user|radioarad|\.jpg|\.png|\.gif|jq\/(js|css)|fsplay\.net\?s/i",$cur_link)) {
+      if (!preg_match("/facebook|twitter|player\.swf|img\.youtube|youtube\.com\/user|radioarad|\.jpg|\.png|\.gif|jq\/(js|css)|fsplay\.net\?s|top\.mail\.ru/i",$cur_link)) {
         $t1=explode("proxy.link=",$cur_link); //filmeonline.org
         if ($t1[1] <> "") {
         $cur_link=$t1[1];

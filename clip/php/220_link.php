@@ -5,8 +5,9 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$cookie="D://iplay.txt";
-$cookie="/tmp/iplay.txt";
+$cookie="D://220.txt";
+$cookie="/tmp/220.txt";
+//echo file_get_contents($cookie);
 $link = $_GET["file"];
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
@@ -15,11 +16,11 @@ $link = $_GET["file"];
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   curl_setopt($ch,CURLOPT_REFERER,"http://www.220.ro/video/");
   //curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
-  //curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
 //http://194.88.148.105/1f/66/f4/51/b95a6.bute_a_facut_show.mp4?c=a0eed61bd645e1793daec475a649e866
-
+//echo $html;
 $t1 = explode('firstVideoURL=videoURL&videoURL=', $html);
 
 $t2 = explode('&preview', $t1[3]);
@@ -53,5 +54,12 @@ $l=$h[3];
 $t1=explode("Location:",$l);
 $link1=trim($t1[1]);
 */
+$t0=explode("var Player",$html);
+
+$t1=explode("url",$t0[1]);
+
+$t2=explode("'",$t1[1]);
+//print_r($t2);
+$link1=urldecode($t2[1]);
 print $link1;
 ?>

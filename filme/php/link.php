@@ -1269,7 +1269,7 @@ $post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=C
    //$filelink="http://api.video.mail.ru/videos/mail/alex.costantin/_myvideo/162.json";
    //http://api.video.mail.ru/videos/embed/mail/alex.costantin/_myvideo/1029.html
    //http://my.mail.ru/video/mail/best_movies/_myvideo/4412.html
-   
+   // echo $filelink;
    if (strpos($filelink,"json") === false) {
      $filelink=str_replace("/embed","",$filelink);
      $filelink=str_replace("html","json",$filelink);
@@ -1308,6 +1308,7 @@ fclose($fp);
 exec("chmod +x /usr/local/etc/www/cgi-bin/scripts/util/m.cgi");
 sleep (2);
 $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
+//$link="http://api.video.mail.ru/file/video/hv/mail/vladimir_aleksei/_myvideo/275";
 } elseif (strpos($filelink,"upafile.com") !==false) {
   $h=file_get_contents($filelink);
   $link=unpack_DivXBrowserPlugin(1,$h,false);

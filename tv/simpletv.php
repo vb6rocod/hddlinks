@@ -234,7 +234,7 @@ $c=count($video);
 //echo $c."<BR>";
 //3873
 for ($i=0;$i<$c;$i++) {
-//for ($i=1800;$i<1851;$i++) {
+//for ($i=1500;$i<2001;$i++) {
 
   $rtmp="";
   if(strtoupper(substr($video[$i], 0, 7)) === "#EXTINF") {
@@ -278,9 +278,15 @@ for ($i=0;$i<$c;$i++) {
     $title=str_replace("%29",")",$title);
     $title=str_replace("%3A",":",$title);
     $title=str_replace("+"," ",$title);
+
     $title=urldecode($title);
+    $title=str_replace(">>BAN THIS<<","",$title);
     //$title=str_replace("+","_",$title);
    if (strpos($title,"/") !== false) $rtmp="";
+   if (strpos($title,">") !== false) $rtmp="";
+   if (strpos($title,"<") !== false) $rtmp="";
+   if (strpos($link,">") !== false) $rtmp="";
+   if (strpos($link,"<") !== false) $rtmp="";
    if ($rtmp) {
     echo '
     <item>

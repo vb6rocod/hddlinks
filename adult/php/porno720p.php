@@ -193,7 +193,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Pagina anterioară</annotation>
+<annotation>Pagina anterioara</annotation>
 <image>image/left.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -218,12 +218,16 @@ foreach($videos as $video) {
     $t2 = explode('"', $t1[1]);
     $link = $t2[0];
     
-    $t3=explode('alt="',$video);
-    $t4=explode('"',$t3[1]);
+    $t3=explode('"date_cat ">',$video);
+    $t4=explode('>',$t3[1]);
+    $t5=explode("<",$t4[1]);
     //$t5=explode("&#8211;",$t4[0]);
-    $title=trim($t4[0]);
-    $title=str_between($title,'[',']');
-
+    $title=trim($t5[0]);
+    //$title=str_between($title,'[',']');
+    $title=urlencode($title);
+    $title=str_replace("%20"," ",$title);
+    if (preg_match("/%E/",$title)) $title="Clip";
+    $title=urldecode($title);
     $t1 = explode('src="', $video);
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
@@ -256,7 +260,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Pagina următoare</annotation>
+<annotation>Pagina urmatoare</annotation>
 <image>image/right.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
