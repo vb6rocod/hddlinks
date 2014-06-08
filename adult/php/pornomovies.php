@@ -189,7 +189,10 @@ if($query) {
    $search = $queryArr[1];
 }
 
-$html = file_get_contents($search.$page);
+if ($search=="http://pornomovies.com/video/list/feature")
+$html = file_get_contents($search."/".$page);
+else
+$html = file_get_contents($search."/".$page.".html");
 
 if($page > 1) { ?>
 

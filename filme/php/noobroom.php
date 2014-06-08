@@ -13,6 +13,8 @@ $query = $_GET["query"];
 $queryArr = explode(',', $query);
 $tit = urldecode($queryArr[0]);
 $l = urldecode($queryArr[1]);
+$limit=urldecode($queryArr[2]);
+//echo $limit;
 $noob_serv="/tmp/noob_serv.log";
 $hserv=file_get_contents($noob_serv);
 $serv=explode("\n",$hserv);
@@ -21,6 +23,7 @@ $h=file_get_contents($noob."/func.js");
 $t1=explode('src="',$h);
 $t2=explode("'",$t1[1]);
 $baseimg=$t2[0];
+$p=0;
 ?>
 <rss version="2.0">
 <script>
@@ -649,7 +652,9 @@ foreach($videos as $video) {
 	<an>'.$year.'</an>
      </item>
      ';
+   if ($limit) $p++;
    }
+if ($limit && ($p==$limit)) break;
 }
 } else {
 //$videos = explode("href='/?", $html);

@@ -162,44 +162,40 @@ ret;
 	<title>Most Recent</title>
 <link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/page/</link>
 </item>
-<item><title>Amateur</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/1/</link></item>
-<item><title>Anal</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/8/</link></item>
-<item><title>Asian</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/11/</link></item>
-<item><title>Ass</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/12/</link></item>
-<item><title>Babe</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/13/</link></item>
-<item><title>Big Dick</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/14/</link></item>
-<item><title>Big Tits</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/15/</link></item>
-<item><title>BiSexual</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/40/</link></item>
-<item><title>Blacks</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/54/</link></item>
-<item><title>Blonde</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/16/</link></item>
-<item><title>Blowjobs</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/5/</link></item>
-<item><title>Brunette</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/18/</link></item>
-<item><title>Cartoons</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/41/</link></item>
-<item><title>Celebrity</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/20/</link></item>
-<item><title>Cumshots</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/6/</link></item>
-<item><title>Fat</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/42/</link></item>
-<item><title>Funny</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/26/</link></item>
-<item><title>GangBang</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/43/</link></item>
-<item><title>Gay</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/55/</link></item>
-<item><title>Handjob</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/27/</link></item>
-<item><title>Hardcore</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/2/</link></item>
-<item><title>Interracial</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/29/</link></item>
-<item><title>Latina</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/31/</link></item>
-<item><title>Lesbian</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/3/</link></item>
-<item><title>Masturbation</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/32/</link></item>
-<item><title>Mature</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/33/</link></item>
-<item><title>MILF</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/34/</link></item>
-<item><title>Party</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/49/</link></item>
-<item><title>Pornstar</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/35/</link></item>
-<item><title>Public</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/36/</link></item>
-<item><title>Reality</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/37/</link></item>
-<item><title>RedHeads</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/51/</link></item>
-<item><title>Shemales</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/58/</link></item>
-<item><title>Squirting</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/52/</link></item>
-<item><title>Striptease</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/38/</link></item>
-<item><title>Teen</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/10/</link></item>
-<item><title>Toys</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/39/</link></item>
-<item><title>Unknown category</title><link><?php echo $host; ?>/scripts/adult/php/moviesand.php?query=1,http://www.moviesand.com/channels/0/</link></item>
-
+<?php
+ function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
+}
+$l="http://www.moviesand.com/categories/";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, "http://www.moviesand.com/");
+  $html = curl_exec($ch);
+  curl_close($ch);
+//$html=str_between($html,'<option value="top">','</table');
+$videos = explode('href="/channel', $html);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+    //$t=explode('href="',$video);
+    $t1=explode('"',$video);
+    $link="http://www.moviesand.com/channel".$t1[0];
+    $link=str_replace("1.html","",$link);
+  	$title=str_between($video,'>','<');
+  	$title=str_replace("More ","",$title);
+  	$link=$host."/scripts/adult/php/moviesand.php?query=1,".$link;
+    echo '
+    <item>
+    <title>'.$title.'</title>
+    <link>'.$link.'</link>
+    </item>
+    ';
+}
+?>
 </channel>
 </rss>

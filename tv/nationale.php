@@ -515,6 +515,15 @@ columnCount=5
 </item>
 -->
 <item>
+<title>Mondenii</title>
+<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,mondeniionline</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/mondenii.png" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/mondenii.png</image>
+<location>http://mondenii.primatv.ro/</location>
+<annotation>Site-ul Oficial Mondenii.ro - Arhiva video completa Mondenii de la PrimaTV. Episoade, foto, stiri, interviuri, blog, ringtone mondenii info despre Mirela Zeta, Andreea Gramosteanu si Angel Popescu.</annotation>
+</item>
+
+<item>
 <title>SensoTV</title>
 <link><?php echo $host; ?>/scripts/tv/php/sensotv.php?query=,http://www.sensotv.ro/arte/arte-vizuale/clipa-de-arta</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/sensotv.png" />

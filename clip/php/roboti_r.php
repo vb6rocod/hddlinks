@@ -226,7 +226,7 @@ foreach($videos as $video) {
     $link = $t2[0];
 
     $image = "/usr/local/etc/www/cgi-bin/scripts/clip/image/roboti.jpg";
-
+    $image=str_between($video,'name="image" value="','"');
     $t2=explode(">",$t1[3]);
     $t3=explode("<",$t2[1]);
     $title = $t3[0];

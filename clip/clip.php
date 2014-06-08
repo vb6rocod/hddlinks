@@ -438,6 +438,15 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/roboti.jpg" />
 	<annotation>Website dedicat artei!</annotation>
 </item>
+
+<item>
+<title>DoZa De Has</title>
+<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,DoZaDeHas</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/dozadehas.jpg" />
+<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/dozadehas.jpg</image>
+<location>http://dozadehas.com/</location>
+<annotation></annotation>
+</item>
 <!--
 <item>
 <title>top1</title>

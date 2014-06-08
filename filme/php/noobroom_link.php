@@ -40,7 +40,10 @@ if (!$tv) {
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
-  //http://noobroom7.com/fork.php?type=flv&auth=0&loc=15&hd=0&tv=0&file=1633&start=0
+  if ($hd==3) {
+  if (!preg_match("/Watch in 1080p/i",$html))
+    $hd=2;
+  }
   $auth=str_between($html,"auth=","&");
   if (!$auth) $auth="0";
 // 11 == Montreal
@@ -91,7 +94,7 @@ else
    if ($tv=="0")
      $movie= $noob."/".$serv."/".$auth."/".$id."_hd.mp4";
    else
-     $movie= $noob."/".$serv."/".$auth."/episode_".$id.".mp4";
+     $movie= $noob."/".$serv."/".$auth."/episode_".$id."_hd.mp4";
 
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $movie);

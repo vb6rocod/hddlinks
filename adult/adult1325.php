@@ -426,14 +426,14 @@ French Maid TV
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
-<!--
+
   <item>
 <title>Spankwire</title>
 <link><?php echo $host; ?>/scripts/adult/php/spankwire_main.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/spankwire.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
   <item>
 <title>empflix</title>
 <link><?php echo $host; ?>/scripts/adult/php/empflix_main.php</link>

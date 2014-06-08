@@ -216,6 +216,7 @@ foreach($videos as $video) {
      $title = str_replace("&ordf;","S",$title);
      $title = str_replace("&acirc;","a",$title);
      $title = str_replace("&Acirc;","A",$title);
+     $title=str_replace("&quot;",'"',$title);
     $t1 = explode('src="',$video);
     $t2 = explode('"',$t1[1]);
     $image = $t2[0];
@@ -245,7 +246,7 @@ foreach($videos as $video) {
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, video/x-flv);
-    streamArray = pushBackStringArray(streamArray, "'.$title.'");
+    streamArray = pushBackStringArray(streamArray, "'.str_replace('"',"'",$title).'");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");

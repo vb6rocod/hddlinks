@@ -163,7 +163,7 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-  	$link=$host."/scripts/adult/php/spankwire.php?query=1,http://www.spankwire.com/home2/Straight/Upcoming/VotesLeft/Rating";
+  	$link=$host."/scripts/adult/php/spankwire.php?query=1,http://www.spankwire.com/home2/Straight/Featured/All_Time/Submitted";
   	echo '
   	<item>
   		<title>New</title>

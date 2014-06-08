@@ -68,7 +68,8 @@ if (!$link) {
     $l1="http://vk.com".$l1;
     $link=vk($l1);
   } else {
-    $link=str_between($html,"iframe src='","'");
+    $link=str_between($html,'iframe id="myFrame" src="','"');
+    if (!$link) $link=str_between($html,"iframe src='","'");
     //echo $link;
     if (preg_match("/api\.video/",$link)) {
     $link=file_get_contents("http://127.0.0.1/cgi-bin/scripts/filme/php/link.php?file=".urlencode($link));

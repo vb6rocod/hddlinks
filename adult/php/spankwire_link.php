@@ -13,6 +13,7 @@ $html = file_get_contents($link);
 $link1 = str_between($html, "<url>", "</url>");
 $link1=str_replace("&amp;","&",$link1);
 */
-$link1=urldecode(str_between($html,'flashvars.video_url = "','"'));
+//$link1=urldecode(str_between($html,'flashvars.video_url = "','"'));
+$link1=urldecode(str_between($html,'vidSource = unescape("','"'));
 print $link1;
 ?>

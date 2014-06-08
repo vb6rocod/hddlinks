@@ -159,47 +159,42 @@ ret;
 
 <item>
 	<title>Most Recent</title>
-<link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/video/list/feature/</link>
+<link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/video/list/feature</link>
 </item>
-<item><title>amateur</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/amateur/</link></item>
-<item><title>anal</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/anal/</link></item>
-<item><title>anime</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/anime/</link></item>
-<item><title>asian</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/asian/</link></item>
-<item><title>babes</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/babes/</link></item>
-<item><title>BBW</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/BBW/</link></item>
-<item><title>Big Tits</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Big Tits/</link></item>
-<item><title>bisexual</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/bisexual/</link></item>
-<item><title>black ebony</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/black ebony/</link></item>
-<item><title>blonde</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/blonde/</link></item>
-<item><title>bondage</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/bondage/</link></item>
-<item><title>brunette</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/brunette/</link></item>
-<item><title>busty</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/busty/</link></item>
-<item><title>celebrity</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/celebrity/</link></item>
-<item><title>creampie</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/creampie/</link></item>
-<item><title>cum shots</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/cum shots/</link></item>
-<item><title>female-masturbation</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/female-masturbation/</link></item>
-<item><title>fetish</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/fetish/</link></item>
-<item><title>gay</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/gay/</link></item>
-<item><title>group orgy</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/group orgy/</link></item>
-<item><title>hardcore</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/hardcore/</link></item>
-<item><title>housewives</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/housewives/</link></item>
-<item><title>interracial</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/interracial/</link></item>
-<item><title>Latina</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Latina/</link></item>
-<item><title>lesbians</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/lesbians/</link></item>
-<item><title>male-masturbation</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/male-masturbation/</link></item>
-<item><title>mature</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/mature/</link></item>
-<item><title>Oral</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Oral/</link></item>
-<item><title>Pornstar</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Pornstar/</link></item>
-<item><title>Public</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Public/</link></item>
-<item><title>Red Heads</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Red Heads/</link></item>
-<item><title>She Males</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/She Males/</link></item>
-<item><title>Small Tits</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Small Tits/</link></item>
-<item><title>Softcore</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Softcore/</link></item>
-<item><title>Teen</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Teen/</link></item>
-<item><title>Toys</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Toys/</link></item>
-<item><title>Upskirt</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Upskirt/</link></item>
-<item><title>Voyeur</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Voyeur/</link></item>
-<item><title>Webcams</title><link><?php echo $host; ?>/scripts/adult/php/pornomovies.php?query=1,http://pornomovies.com/channel/Webcams/</link></item>
-
+<?php
+function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
+}
+$l="http://www.pornomovies.com/categories/";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, "http://www.pornomovies.com/");
+  $html = curl_exec($ch);
+  curl_close($ch);
+$html=str_between($html,'ul class="taglist">','</div');
+$videos = explode('<li', $html);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+    $t=explode('href="',$video);
+    $t1=explode('"',$t[1]);
+    $link="http://www.pornomovies.com".$t1[0];
+    $t2=explode(">",$t1[1]);
+    $t3=explode("<",$t2[1]);
+    $title=$t3[0];
+    $link=$host."/scripts/adult/php/pornomovies.php?query=1,".$link;
+    echo '
+    <item>
+    <title>'.$title.'</title>
+    <link>'.$link.'</link>
+    </item>
+    ';
+}
+?>
 </channel>
 </rss>

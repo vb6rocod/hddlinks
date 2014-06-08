@@ -479,6 +479,17 @@ $link = "/usr/local/etc/www/cgi-bin/scripts/filme/php/noobroom.rss";
 	<mediaDisplay name="threePartsView"/>
 	</item>
 	';
+    $title="Latest (500)";
+    $link=$noob."/latest.php";
+    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link).",500";
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link1.'</link>
+	<annotation>'.$title.'</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
     $title="Latest (1080p)";
     $link=$noob."/latest.php?hd=1";
     $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
