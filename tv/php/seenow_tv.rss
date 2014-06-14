@@ -222,6 +222,126 @@ ret;
 
 
      <item>
+     <title>AGRO TV</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=128," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "AGRO TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10304</id>
+     </item>
+
+     <item>
+     <title>AXN</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=11144," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "AXN");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10033</id>
+     </item>
+
+     <item>
+     <title>AXN Black</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=11148," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "AXN Black");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10072</id>
+     </item>
+
+     <item>
+     <title>AXN Spin</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=11147," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "AXN Spin");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10298</id>
+     </item>
+
+     <item>
+     <title>AXN White</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=11145," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "AXN White");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10073</id>
+     </item>
+
+     <item>
      <title>Alfa Omega TV</title>
      <onClick>
      <script>
@@ -244,33 +364,9 @@ ret;
      </onClick>
     <id>10137</id>
      </item>
-<!--     
+
      <item>
-     <title>Antena 3</title>
-     <onClick>
-     <script>
-     showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=103," + buf;
-     url1=getUrl(url);
-     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
-     cancelIdle();
-    streamArray = null;
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "Antena 3");
-    streamArray = pushBackStringArray(streamArray, "1");
-    writeStringToFile(storagePath_stream, streamArray);
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
-     </script>
-     </onClick>
-    <id>10055</id>
-     </item>
--->     
-     <item>
-     <title>B1</title>
+     <title>B1 TV</title>
      <onClick>
      <script>
      showIdle();
@@ -284,7 +380,7 @@ ret;
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "B1");
+    streamArray = pushBackStringArray(streamArray, "B1 TV");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
@@ -292,9 +388,9 @@ ret;
      </onClick>
     <id>10022</id>
      </item>
-     
+
      <item>
-     <title>Bloomberg TV</title>
+     <title>Boomerang</title>
      <onClick>
      <script>
      showIdle();
@@ -308,15 +404,15 @@ ret;
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "Bloomberg TV");
+    streamArray = pushBackStringArray(streamArray, "Boomerang");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
      </script>
      </onClick>
-    <id>10195</id>
+    <id>10081</id>
      </item>
-     
+
      <item>
      <title>CNN</title>
      <onClick>
@@ -340,7 +436,7 @@ ret;
      </onClick>
     <id>10115</id>
      </item>
-     
+
      <item>
      <title>Cartoon Network</title>
      <onClick>
@@ -364,7 +460,7 @@ ret;
      </onClick>
     <id>10053</id>
      </item>
-     
+
      <item>
      <title>Comedy Central</title>
      <onClick>
@@ -388,9 +484,33 @@ ret;
      </onClick>
     <id>10270</id>
      </item>
-     
+
      <item>
-     <title>DW</title>
+     <title>Credo TV</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=85219," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Credo TV");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10223</id>
+     </item>
+
+     <item>
+     <title>Deutsche Welle</title>
      <onClick>
      <script>
      showIdle();
@@ -404,15 +524,39 @@ ret;
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "DW");
+    streamArray = pushBackStringArray(streamArray, "Deutsche Welle");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
      </script>
      </onClick>
-    <id></id>
+    <id>10131</id>
      </item>
-     
+
+     <item>
+     <title>Digi 24</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=82730," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Digi 24");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10282</id>
+     </item>
+
      <item>
      <title>Disney Channel</title>
      <onClick>
@@ -436,7 +580,7 @@ ret;
      </onClick>
     <id>10018</id>
      </item>
-     
+
      <item>
      <title>Disney Junior</title>
      <onClick>
@@ -460,7 +604,7 @@ ret;
      </onClick>
     <id>10263</id>
      </item>
-     
+
      <item>
      <title>Docu Box</title>
      <onClick>
@@ -484,7 +628,7 @@ ret;
      </onClick>
     <id></id>
      </item>
-     
+
      <item>
      <title>Dolce Sport HD</title>
      <onClick>
@@ -508,7 +652,7 @@ ret;
      </onClick>
     <id>10281</id>
      </item>
-     
+
      <item>
      <title>Etno TV</title>
      <onClick>
@@ -532,7 +676,7 @@ ret;
      </onClick>
     <id>10037</id>
      </item>
-     
+
      <item>
      <title>Fashion Box</title>
      <onClick>
@@ -556,7 +700,7 @@ ret;
      </onClick>
     <id></id>
      </item>
-     
+
      <item>
      <title>Fashion TV</title>
      <onClick>
@@ -580,7 +724,7 @@ ret;
      </onClick>
     <id>10078</id>
      </item>
-     
+
      <item>
      <title>Favorit TV</title>
      <onClick>
@@ -604,7 +748,7 @@ ret;
      </onClick>
     <id>10071</id>
      </item>
-     
+
      <item>
      <title>FightBox</title>
      <onClick>
@@ -628,7 +772,7 @@ ret;
      </onClick>
     <id></id>
      </item>
-     
+
      <item>
      <title>FilmBox</title>
      <onClick>
@@ -652,7 +796,7 @@ ret;
      </onClick>
     <id>10236</id>
      </item>
-     
+
      <item>
      <title>FilmBox Family</title>
      <onClick>
@@ -676,7 +820,7 @@ ret;
      </onClick>
     <id>10238</id>
      </item>
-     
+
      <item>
      <title>FilmBox HD</title>
      <onClick>
@@ -700,7 +844,7 @@ ret;
      </onClick>
     <id>10239</id>
      </item>
-     
+
      <item>
      <title>FilmBox Plus</title>
      <onClick>
@@ -724,7 +868,7 @@ ret;
      </onClick>
     <id>10237</id>
      </item>
-     
+
      <item>
      <title>France 24</title>
      <onClick>
@@ -748,7 +892,7 @@ ret;
      </onClick>
     <id>10128</id>
      </item>
-     
+
      <item>
      <title>GIGA TV</title>
      <onClick>
@@ -772,7 +916,7 @@ ret;
      </onClick>
     <id>10249</id>
      </item>
-     
+
      <item>
      <title>H!T Music Channel</title>
      <onClick>
@@ -796,7 +940,7 @@ ret;
      </onClick>
     <id>10299</id>
      </item>
-     
+
      <item>
      <title>Inedit TV</title>
      <onClick>
@@ -820,7 +964,7 @@ ret;
      </onClick>
     <id>10300</id>
      </item>
-     
+
      <item>
      <title>Kanal D</title>
      <onClick>
@@ -844,7 +988,7 @@ ret;
      </onClick>
     <id>10097</id>
      </item>
-     
+
      <item>
      <title>Kiss TV</title>
      <onClick>
@@ -868,13 +1012,13 @@ ret;
      </onClick>
     <id>10008</id>
      </item>
-     
+
      <item>
      <title>Money</title>
      <onClick>
      <script>
      showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=106," + buf;
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=60793," + buf;
      url1=getUrl(url);
      movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
      cancelIdle();
@@ -892,7 +1036,7 @@ ret;
      </onClick>
     <id></id>
      </item>
-     
+
      <item>
      <title>Music Channel</title>
      <onClick>
@@ -916,7 +1060,7 @@ ret;
      </onClick>
     <id>10158</id>
      </item>
-     
+
      <item>
      <title>Mynele TV</title>
      <onClick>
@@ -940,7 +1084,7 @@ ret;
      </onClick>
     <id>10206</id>
      </item>
-     
+
      <item>
      <title>Nasul TV</title>
      <onClick>
@@ -964,7 +1108,7 @@ ret;
      </onClick>
     <id>10256</id>
      </item>
-     
+
      <item>
      <title>National 24 Plus</title>
      <onClick>
@@ -988,7 +1132,7 @@ ret;
      </onClick>
     <id>10048</id>
      </item>
-     
+
      <item>
      <title>National TV</title>
      <onClick>
@@ -1012,7 +1156,7 @@ ret;
      </onClick>
     <id>10031</id>
      </item>
-     
+
      <item>
      <title>Neptun TV</title>
      <onClick>
@@ -1036,7 +1180,7 @@ ret;
      </onClick>
     <id>10151</id>
      </item>
-     
+
      <item>
      <title>Nick Jr</title>
      <onClick>
@@ -1060,7 +1204,7 @@ ret;
      </onClick>
     <id></id>
      </item>
-     
+
      <item>
      <title>Nickelodeon</title>
      <onClick>
@@ -1084,13 +1228,13 @@ ret;
      </onClick>
     <id>10110</id>
      </item>
-     
+
      <item>
      <title>OTV</title>
      <onClick>
      <script>
      showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=118," + buf;
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=6830," + buf;
      url1=getUrl(url);
      movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
      cancelIdle();
@@ -1108,55 +1252,7 @@ ret;
      </onClick>
     <id></id>
      </item>
-     
-     <item>
-     <title>Party</title>
-     <onClick>
-     <script>
-     showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=134," + buf;
-     url1=getUrl(url);
-     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
-     cancelIdle();
-    streamArray = null;
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "Party");
-    streamArray = pushBackStringArray(streamArray, "1");
-    writeStringToFile(storagePath_stream, streamArray);
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
-     </script>
-     </onClick>
-    <id></id>
-     </item>
-     
-     <item>
-     <title>RTV</title>
-     <onClick>
-     <script>
-     showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=105," + buf;
-     url1=getUrl(url);
-     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
-     cancelIdle();
-    streamArray = null;
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "RTV");
-    streamArray = pushBackStringArray(streamArray, "1");
-    writeStringToFile(storagePath_stream, streamArray);
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
-     </script>
-     </onClick>
-    <id></id>
-     </item>
-     
+
      <item>
      <title>Realitatea TV</title>
      <onClick>
@@ -1180,13 +1276,13 @@ ret;
      </onClick>
     <id>10019</id>
      </item>
-     
+
      <item>
-     <title>Somes</title>
+     <title>România TV</title>
      <onClick>
      <script>
      showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=128," + buf;
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=105," + buf;
      url1=getUrl(url);
      movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
      cancelIdle();
@@ -1196,15 +1292,15 @@ ret;
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "Somes");
+    streamArray = pushBackStringArray(streamArray, "România TV");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
      </script>
      </onClick>
-    <id></id>
+    <id>10245</id>
      </item>
-     
+
      <item>
      <title>Speranta TV</title>
      <onClick>
@@ -1228,7 +1324,7 @@ ret;
      </onClick>
     <id>10134</id>
      </item>
-     
+
      <item>
      <title>TCM</title>
      <onClick>
@@ -1252,7 +1348,31 @@ ret;
      </onClick>
     <id>10054</id>
      </item>
-     
+
+     <item>
+     <title>TV 1000</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=10665," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TV 1000");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10060</id>
+     </item>
+
      <item>
      <title>TV City</title>
      <onClick>
@@ -1276,7 +1396,7 @@ ret;
      </onClick>
     <id>10258</id>
      </item>
-     
+
      <item>
      <title>TV5</title>
      <onClick>
@@ -1298,9 +1418,9 @@ ret;
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
      </script>
      </onClick>
-    <id></id>
+    <id>10041</id>
      </item>
-     
+
      <item>
      <title>TVR 1</title>
      <onClick>
@@ -1324,7 +1444,7 @@ ret;
      </onClick>
     <id>10001</id>
      </item>
-     
+
      <item>
      <title>TVR 2</title>
      <onClick>
@@ -1348,7 +1468,7 @@ ret;
      </onClick>
     <id>10002</id>
      </item>
-     
+
      <item>
      <title>TVR 3</title>
      <onClick>
@@ -1372,7 +1492,7 @@ ret;
      </onClick>
     <id>10167</id>
      </item>
-     
+
      <item>
      <title>TVR Cluj</title>
      <onClick>
@@ -1396,7 +1516,7 @@ ret;
      </onClick>
     <id>10153</id>
      </item>
-     
+
      <item>
      <title>TVR Craiova</title>
      <onClick>
@@ -1420,9 +1540,9 @@ ret;
      </onClick>
     <id>10219</id>
      </item>
-     
+
      <item>
-     <title>TVR Iasi</title>
+     <title>TVR Iaşi</title>
      <onClick>
      <script>
      showIdle();
@@ -1436,7 +1556,7 @@ ret;
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "TVR Iasi");
+    streamArray = pushBackStringArray(streamArray, "TVR Iaşi");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
@@ -1444,7 +1564,7 @@ ret;
      </onClick>
     <id>10154</id>
      </item>
-     
+
      <item>
      <title>TVR International</title>
      <onClick>
@@ -1468,7 +1588,7 @@ ret;
      </onClick>
     <id>10015</id>
      </item>
-     
+
      <item>
      <title>TVR News</title>
      <onClick>
@@ -1492,33 +1612,9 @@ ret;
      </onClick>
     <id>10174</id>
      </item>
-     
+
      <item>
-     <title>TVR Targu-Mures</title>
-     <onClick>
-     <script>
-     showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=6859," + buf;
-     url1=getUrl(url);
-     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
-     cancelIdle();
-    streamArray = null;
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "TVR Targu-Mures");
-    streamArray = pushBackStringArray(streamArray, "1");
-    writeStringToFile(storagePath_stream, streamArray);
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
-     </script>
-     </onClick>
-    <id>10221</id>
-     </item>
-     
-     <item>
-     <title>TVR Timisoara</title>
+     <title>TVR Timişoara</title>
      <onClick>
      <script>
      showIdle();
@@ -1532,7 +1628,7 @@ ret;
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "TVR Timisoara");
+    streamArray = pushBackStringArray(streamArray, "TVR Timişoara");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
@@ -1540,7 +1636,31 @@ ret;
      </onClick>
     <id>10220</id>
      </item>
-     
+
+     <item>
+     <title>TVR Tîrgu-Mureş</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=6859," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR Tîrgu-Mureş");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10221</id>
+     </item>
+
      <item>
      <title>Taraf TV</title>
      <onClick>
@@ -1564,9 +1684,9 @@ ret;
      </onClick>
     <id>10101</id>
      </item>
-     
+
      <item>
-     <title>Transilvania Live</title>
+     <title>Transilvania L!VE</title>
      <onClick>
      <script>
      showIdle();
@@ -1580,7 +1700,7 @@ ret;
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "Transilvania Live");
+    streamArray = pushBackStringArray(streamArray, "Transilvania L!VE");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
@@ -1588,31 +1708,7 @@ ret;
      </onClick>
     <id></id>
      </item>
-     
-     <item>
-     <title>Transilvania Look</title>
-     <onClick>
-     <script>
-     showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=126," + buf;
-     url1=getUrl(url);
-     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
-     cancelIdle();
-    streamArray = null;
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "Transilvania Look");
-    streamArray = pushBackStringArray(streamArray, "1");
-    writeStringToFile(storagePath_stream, streamArray);
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
-     </script>
-     </onClick>
-    <id></id>
-     </item>
-     
+
      <item>
      <title>Travel Channel</title>
      <onClick>
@@ -1636,7 +1732,7 @@ ret;
      </onClick>
     <id>10086</id>
      </item>
-     
+
      <item>
      <title>Travel Mix</title>
      <onClick>
@@ -1660,7 +1756,7 @@ ret;
      </onClick>
     <id>10231</id>
      </item>
-     
+
      <item>
      <title>Trinitas TV</title>
      <onClick>
@@ -1684,7 +1780,31 @@ ret;
      </onClick>
     <id>10145</id>
      </item>
-     
+
+     <item>
+     <title>Tvh</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_tv_link.php?file=85225," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "Tvh");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id>10029</id>
+     </item>
+
      <item>
      <title>U TV</title>
      <onClick>
@@ -1708,7 +1828,7 @@ ret;
      </onClick>
     <id>10096</id>
      </item>
-     
+
      <item>
      <title>Valea Prahovei TV</title>
      <onClick>
@@ -1732,7 +1852,7 @@ ret;
      </onClick>
     <id>10214</id>
      </item>
-     
+
      <item>
      <title>Viasat Explorer</title>
      <onClick>
@@ -1756,7 +1876,7 @@ ret;
      </onClick>
     <id>10039</id>
      </item>
-     
+
      <item>
      <title>Viasat History</title>
      <onClick>
@@ -1780,7 +1900,7 @@ ret;
      </onClick>
     <id>10040</id>
      </item>
-     
+
      <item>
      <title>Viasat Nature</title>
      <onClick>
@@ -1804,5 +1924,6 @@ ret;
      </onClick>
     <id>10207</id>
      </item>
+
      </channel>
 </rss>

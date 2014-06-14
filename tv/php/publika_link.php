@@ -9,6 +9,8 @@ $link = $_GET["file"];
 $link=urldecode($link);
 $html = file_get_contents($link);
 preg_match("/(http)(.*)(mp4)/i",$html,$m);
-$link=$m[0];
+$t=$m[0];
+$a=explode('"',$t);
+$link=$a[0];
 print $link;
 ?>

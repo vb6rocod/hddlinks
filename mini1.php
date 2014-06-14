@@ -285,11 +285,7 @@ else
       }
       if(userInput == "zero" || userInput == "0")
       {
-        if(itemCount &gt;= 10)
-        {
-          setFocusItemIndex(9);
-          redrawDisplay();
-        }
+       jumptolink("setup_see");
       }
       else if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
       {
@@ -343,6 +339,12 @@ else
 <link>http://127.0.0.1/cgi-bin/scripts/mini1.php</link>
 <mediaDisplay name="photoView"/>
 </destination>
+<setup_see>
+<mediaDisplay name="onePartView" />
+<link>
+/usr/local/etc/www/cgi-bin/scripts/filme/php/seenow.rss
+</link>
+</setup_see>
 <channel>
     <title>HDD Links</title>
 

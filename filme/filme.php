@@ -222,6 +222,20 @@ ret;
 <annotation>http://vplus.ro/movies/</annotation>
 <media:thumbnail url="image/movies.png" />
 </item>
+<?php
+error_reporting(0);
+$f="/usr/local/etc/dvdplayer/seenow_p.txt";
+if (file_exists($f)) {
+echo '
+<item>
+<title>Seenow</title>
+<link>'.$host.'/scripts/filme/php/seenow_p.php</link>
+<annotation>seenow</annotation>
+<media:thumbnail url="image/movies.png" />
+</item>
+';
+}
+?>
 <!--
 <item>
 <title>inviatapenet</title>

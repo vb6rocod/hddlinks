@@ -425,7 +425,7 @@ else if (input == "right" || input == "left" || input == "R" || input == "L")
           {
             timePoint += 30;
           }
-         else if (timePoint &gt; 0 &amp;&amp; (input == "left" || input == "L"))
+         else if (input == "left" || input == "L")
          {
            timePoint -= 30;          
          }

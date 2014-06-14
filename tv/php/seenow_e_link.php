@@ -20,6 +20,7 @@ function enc($string) {
   return $local3;
 }
 //http://www.dolcetv.ro/tv-live-Mooz-RO-115?ajaxrequest=1
+exec ("rm -f /tmp/test.xml");
 $query = $_GET["file"];
 if($query) {
    $queryArr = explode(',', $query);
@@ -38,6 +39,8 @@ $zd = gzopen($new_file, "r");
 $html = gzread($zd, filesize($new_file));
 gzclose($zd);
 }
+$p=json_decode($html,1);
+$sub=$p["subtitles"];
 $html=str_replace("\\","",$html);
 //echo $html;
 $t1=explode('high quality stream name":"',$html);
@@ -59,7 +62,7 @@ $serv=$t2[0];
 if ($serv == "") {
   $serv="fms1.mediadirect.ro";
 }
-$buf="60000";
+//$buf="60000";
 $rtmp="rtmp://".$serv."/".$app."/_definst_";
 $l="Rtmp-options:-b ".$buf;
 $l=$l." -a ".$app."/_definst_?token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
@@ -67,5 +70,8 @@ $l=$l." -p http://www.seenow.ro ";
 $l=$l."-y mp4:".$str;
 $l=$l.",".$rtmp;
 $l=str_replace(" ","%20",$l);
+if ($sub) {
+   $x=file_get_contents("http://127.0.0.1/cgi-bin/scripts/util/xml_xml.php?file=".urlencode($sub));
+}
 print $l;
 ?>

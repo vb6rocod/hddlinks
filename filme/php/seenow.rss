@@ -66,9 +66,6 @@
 	<text redraw="yes" offsetXPC=50 offsetYPC=20 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
 <script>username;</script>
 	</text>
-	<text redraw="yes" offsetXPC=50 offsetYPC=30 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
-<script>pass;</script>
-	</text>
 	<text redraw="yes" offsetXPC=50 offsetYPC=40 widthPC=50 heightPC=8 fontSize=16 backgroundColor=8:8:8 foregroundColor=150:150:150>
 	  <script>setari;</script>
 	</text>
@@ -117,16 +114,12 @@
     				keyword = getInput();
     				if (keyword != null)
     				{
-    				  username = keyword;
-    				}
-          }
-          else if(idx == 1)
-          {
-            print("pass!!!!");
-    				keyword = getInput();
-    				if (keyword != null)
-    				{
-    				  pass = keyword;
+    				  url="http://127.0.0.1/cgi-bin/scripts/util/see.php?pass=" + keyword;
+    				  ras=getUrl(url);
+    				  if (ras == "OK")
+    				    username = keyword;
+    				  else
+    				    username = "";
     				}
           }
           ret = "true";
@@ -140,21 +133,20 @@
 
 <onExit>
   
-  if(username == "" || username == null || pass == "" || pass == null)
+  if(username == "" || username == null)
   {
     username = " ";
-    pass = " ";
   }
   else
   {
-  serialepe=username + "|" + pass;
+  serialepe=username;
   writeStringToFile(optionsPath, serialepe);
   }
 </onExit>
 
 <script>
-	optionsPath = "/usr/local/etc/dvdplayer/seenow.txt";
-  pageTitle = "Setari user si parola pentru seenow.ro";
+	optionsPath = "/usr/local/etc/dvdplayer/seenow_p.txt";
+  pageTitle = "Setare parola pentru seenow.ro";
   setari = readStringFromFile(optionsPath);
 	itemTitleArray = null;
 	topUrl="/usr/local/etc/www/cgi-bin/scripts/filme/php/seenow.rss";
@@ -192,13 +184,11 @@
   <title> seenow.ro: setari </title>
   
   <item>
-    <title>User:</title>
-  </item>
-
-  <item>
     <title>Parola:</title>
   </item>
-
+<item>
+<title></title>
+</item>
   <item>
     <title>Setãri actuale:</title>
   </item>

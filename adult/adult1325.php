@@ -453,5 +453,23 @@ French Maid TV
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/xnxx.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
+<item>
+<title>Hardcore</title>
+  <link><?php echo $host; ?>/scripts/adult/php/seenow_satin.php?query=Private+Hardcore</link>
+<image>image/adult.png</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+<item>
+<title>Softcore</title>
+  <link><?php echo $host; ?>/scripts/adult/php/seenow_satin.php?query=Private+Softcore</link>
+<image>image/adult.png</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+<item>
+<title>Mix</title>
+  <link><?php echo $host; ?>/scripts/adult/php/seenow_satin.php?query=Private+Mix</link>
+<image>image/adult.png</image>
+<mediaDisplay name="threePartsView"/>
+</item>
 </channel>
 </rss>

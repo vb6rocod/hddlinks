@@ -375,6 +375,20 @@ echo '
 </item>
 
 <item>
+<title>serialesubtitrateonline - Drame coreene</title>
+<link><?php echo $host; ?>/scripts/filme/php/serialesubtitrateonline_main.php?tip=1</link>
+<annotation>http://serialesubtitrateonline.info/serialecoreene.php</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>serialesubtitrateonline - Seriale Istorice</title>
+<link><?php echo $host; ?>/scripts/filme/php/serialesubtitrateonline_main.php?tip=2</link>
+<annotation>http://serialesubtitrateonline.info/serialecoreene.php</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
 <title>online-filmek.org (in lb. maghiara)</title>
 <link><?php echo $host; ?>/scripts/filme/php/online-filmek_org_main.php</link>
 <annotation>http://www.online-filmek.org/sorozatok-abc-sorrendben/</annotation>
