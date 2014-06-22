@@ -251,7 +251,7 @@ if (preg_match("/awesomedl/i",$filelink)) {
   $t1=explode("Watch Online:",$html);
   $html=$t1[1];
 }
-if (preg_match("/filmbazis\.org/",$filelink)) {
+if (preg_match("/filmbazis1\.org/",$filelink)) {
   $id=substr(strrchr($filelink, "/"), 1);
   /*
   $ch = curl_init();
@@ -280,8 +280,13 @@ if (preg_match("/filmbazis\.org/",$filelink)) {
      curl_close($ch);
      //echo $html;
 }
+if (strpos($filelink,"http://filmvilag.com/go/") !==false) {
+ //http://filmvilag.com/go/sorozat/18522
+ $html=file_get_contents($filelink);
+}
+//echo $html;
 /**################ All links ################**/
-$s="/adf\.ly|vidxden\.c|divxden\.c|vidbux\.c|movreel\.c|videoweed\.(c|e)|novamov\.(c|e)|vk\.com";
+$s="/adf\.ly|vidxden\.c|divxden\.c|vidbux\.c|movreel\.c|videoweed\.(c|e)|novamov\.(c|e)|vk\.com|fcore\.eu";
 $s=$s."|movshare\.net|youtube\.c|flvz\.com|rapidmov\.net|putlocker\.com|played\.to|primeshare\.tv|";
 $s=$s."peteava\.ro\/embed|peteava\.ro\/id|content\.peteava\.ro|180upload\.com|vidto\.me|putme\.org";
 $s=$s."|vimeo\.com|googleplayer\.swf|filebox\.ro\/get_video|vkontakte\.ru|megavideo\.c|videobam\.com";
@@ -291,7 +296,7 @@ $s=$s."|dimshare\.com|movdivx\.com|sharevideo22\.com|dr9000\.com|altervideo\.net
 $s=$s."|skyload\.net|rapidvideo\.com|uploadc\.com|uploadville\.com|zurvid\.com|flashx\.tv|ufliq\.com|ovfile\.com";
 $s=$s."|sharefiles4u\.com|filebox\.com|glumbouploads\.com|ginbig\.com|divxbase\.com|allmyvideos\.net";
 $s=$s."|gorillavid\.in|streamcloud\.eu|zalaa\.com|vreer\.com|zixshare\.com|veervid\.com|uploadboost\.com";
-$s=$s."|ufliq\.com|muchshare\.net|nowvideo\.eu|vidbull\.com|nosvideo\.com|dailymotion\.com|purevid\.com|modovideo\.com|mooshare\.biz|streamin\.to/i";
+$s=$s."|ufliq\.com|muchshare\.net|nowvideo\.eu|vidbull\.com|nosvideo\.com|dailymotion\.com|purevid\.com|modovideo\.com|mooshare\.biz|streamin\.to|divxstream\.net/i";
 if(preg_match_all("/(http\b.*?)(\"|\')+/i",$html,$matches)) {
 $links=$matches[1];
 }
@@ -309,6 +314,10 @@ for ($i=0;$i<count($links);$i++) {
            if (!$cur_link) $cur_link=str_between($h1,"var zzz = '","'");
           }
           if (!preg_match($s,$cur_link)) $cur_link="twitter";
+        }
+        if (strpos($cur_link,"linkbucks") !== false) {
+          $t1=explode("/url/",$cur_link);
+          $cur_link=$t1[1];
         }
       if (!preg_match("/facebook|twitter|img\.youtube/",$cur_link)) {
         $link="http://127.0.0.1/cgi-bin/scripts/filme/php/link1.php?file=".urlencode($cur_link);

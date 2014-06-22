@@ -204,8 +204,11 @@ ret;
 	<menu>main menu</menu>
 
 <?php
-$html=str_between($html,'table id="linkek"','</table');
-$videos = explode('div class="', $html);
+//echo $html;
+$id=str_between($html,'http://filmvilag.com/','"');
+$l="http://filmvilag.com/".$id;
+$html=file_get_contents($l);
+$videos = explode('<td><b>', $html);
 //http://onlinefilmletoltes.eu/files/?u=aiud7n1i
 unset($videos[0]);
 $videos = array_values($videos);
@@ -215,7 +218,9 @@ foreach($videos as $video) {
     $t2 = explode('"', $t1[1]);
     $link=$t2[0];
 
-    $title=str_between($video,"<b>","</b>");
+    $t1=explode("</b",$video);
+    $title=$t1[0];
+    //$title=str_between($video,"<b>","</b>");
     $title = trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e"," ",$title));
     $title=urlencode($title);
     $title=str_replace("%E9","e",$title);

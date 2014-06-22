@@ -8,6 +8,21 @@ function str_between($string, $start, $end){
 }
 //error_reporting(0);
 $ff="/tmp/n.txt";
+$cookie="/tmp/noobroom.txt";
+$cookie_s="/usr/local/etc/dvdplayer/noob_save.txt";
+if (file_exists($cookie_s) && !file_exists($cookie)) {
+  $handle = fopen($cookie_s, "r");
+  $c = fread($handle, filesize($cookie_s));
+  fclose($handle);
+  preg_match("/noobroom\d{1}/",$c,$m);
+  $noob="http://".$m[0].".com";
+  $fh = fopen($ff, 'w');
+  fwrite($fh, $noob);
+  fclose($fh);
+  $fh = fopen($cookie, 'w');
+  fwrite($fh, $c);
+  fclose($fh);
+}
 if (!file_exists($ff)) {
 $l="http://noobroom.com/";
 $h=file_get_contents($l);
@@ -295,7 +310,7 @@ setRefreshTime(1);
     <script>getPageInfo("pageTitle") + " (" + itemCount + ")";</script>
 		</text>
   	<text align="left" offsetXPC="8" offsetYPC="3" widthPC="40" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    2=Re-Logon, info=server load
+    info=server load
 		</text>
   	<text align="right" offsetXPC="55" offsetYPC="3" widthPC="40" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
     <script>"<?php echo $premium; ?>" + sprintf("%s "," ");</script>

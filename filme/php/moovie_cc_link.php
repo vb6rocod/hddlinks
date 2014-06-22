@@ -222,29 +222,17 @@ foreach($videos as $video) {
     $t2=explode("javascript:Embed(",$video);
     $t3=explode(")",$t2[1]);
     $link="http://www.filmbazis.org/".$t3[0];
+   $t1=explode("/url/",$video);
+   $t2=explode('"',$t1[1]);
+   $link=$t2[0];
     
-	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/link1.php?file='.$link;
+	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/filme1_link.php?file='.$link.",".urlencode($title);
 	    echo'
 	    <item>
 	    <title>'.$title.'</title>
-        <onClick>
-        <script>
-        showIdle();
-        movie="'.$link.'";
-        url=getUrl(movie);
-        cancelIdle();
-        streamArray = null;
-        streamArray = pushBackStringArray(streamArray, "");
-        streamArray = pushBackStringArray(streamArray, "");
-        streamArray = pushBackStringArray(streamArray, url);
-        streamArray = pushBackStringArray(streamArray, url);
-        streamArray = pushBackStringArray(streamArray, video/x-flv);
-        streamArray = pushBackStringArray(streamArray, "'.$tit.'");
-        streamArray = pushBackStringArray(streamArray, "1");
-        writeStringToFile(storagePath_stream, streamArray);
-        doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
-        </script>
-        </onClick>
+        <link>'.$link.'</link>
+        <mediaDisplay name="threePartsView"/>
+        <media:thumbnail url="'.$image.'" />
         </item>
         ';
 }

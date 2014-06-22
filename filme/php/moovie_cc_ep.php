@@ -28,7 +28,7 @@ $l="http://www.filmbazis.org/movies.php";
   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
   $html = curl_exec($ch);
   curl_close($ch);
-
+//echo $h;
 $img="http://www.moovie.cc/images/movies/".$id."/poster.jpg";
 //echo $html;
 ?>
@@ -209,34 +209,21 @@ foreach($videos as $video) {
    $t1=explode("javascript:Embed(",$video);
    $t2=explode(')',$t1[1]);
    $link="http://www.filmbazis.org/".$t2[0];
-
+   $t1=explode("/url/",$video);
+   $t2=explode('"',$t1[1]);
+   $link=$t2[0];
    //$t1=explode("<td>",$video);
    //$t2=explode("</td",$t1[5]);
    //$ep=str_replace(",","-",$t2[0]);
    $title=$title.$server;
 
-	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/link1.php?file='.$link;
+	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/filme1_link.php?file='.$link.",".urlencode($title);
 	    echo'
 	    <item>
 	    <title>'.$title.'</title>
-        <onClick>
-        <script>
-        showIdle();
-        movie="'.$link.'";
-        url=getUrl(movie);
-        cancelIdle();
-        streamArray = null;
-        streamArray = pushBackStringArray(streamArray, "");
-        streamArray = pushBackStringArray(streamArray, "");
-        streamArray = pushBackStringArray(streamArray, url);
-        streamArray = pushBackStringArray(streamArray, url);
-        streamArray = pushBackStringArray(streamArray, video/x-flv);
-        streamArray = pushBackStringArray(streamArray, "'.$title.'");
-        streamArray = pushBackStringArray(streamArray, "1");
-        writeStringToFile(storagePath_stream, streamArray);
-        doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
-        </script>
-        </onClick>
+        <link>'.$link.'</link>
+        <mediaDisplay name="threePartsView"/>
+        <media:thumbnail url="'.$img.'" />
         </item>
         ';
 }

@@ -9,6 +9,21 @@ $host = "http://127.0.0.1/cgi-bin";
 error_reporting(0);
 
 $ff="/tmp/n.txt";
+$cookie="/tmp/noobroom.txt";
+$cookie_s="/usr/local/etc/dvdplayer/noob_save.txt";
+if (file_exists($cookie_s) && !file_exists($cookie)) {
+  $handle = fopen($cookie_s, "r");
+  $c = fread($handle, filesize($cookie_s));
+  fclose($handle);
+  preg_match("/noobroom\d{1}/",$c,$m);
+  $noob="http://".$m[0].".com";
+  $fh = fopen($ff, 'w');
+  fwrite($fh, $noob);
+  fclose($fh);
+  $fh = fopen($cookie, 'w');
+  fwrite($fh, $c);
+  fclose($fh);
+}
 if (!file_exists($ff)) {
 $l="http://noobroom.com/";
 $h=file_get_contents($l);
@@ -52,7 +67,7 @@ fclose($fh);
 $noob=file_get_contents($ff);
 }
 include ("../../common.php");
-$cookie="/tmp/noobroom.txt";
+
 $filename="/usr/local/etc/dvdplayer/amigo.dat";
 $noob_log="/usr/local/etc/dvdplayer/noob_log.dat";
 if (file_exists($noob_log) && !file_exists($cookie)) {
@@ -190,7 +205,6 @@ fclose($fh);
   arr = null;
   arr = pushBackStringArray(arr, numai_sub);
   arr = pushBackStringArray(arr, alfabetic);
-
   writeStringToFile(optionsPath, arr);
   }
   else
@@ -247,7 +261,7 @@ setRefreshTime(-1);
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="8" offsetYPC="3" widthPC="47" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    2=Re-Logon
+    2=Re-Logon, 5=Pastreaza-ma logat, 6=Logout
 		</text>
   	<text align="right" offsetXPC="55" offsetYPC="3" widthPC="40" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
     <script>"<?php echo $premium; ?>" + sprintf("%s "," ");</script>
@@ -341,6 +355,22 @@ else if (userInput == "two" || userInput == "2")
 {
  url=geturl("http://127.0.0.1/cgi-bin/scripts/filme/php/noob_del.php");
  jumptolink("logon");
+ "true";
+}
+else if (userInput == "six" || userInput == "6")
+{
+ showIdle();
+ url=geturl("http://127.0.0.1/cgi-bin/scripts/filme/php/noob_del1.php");
+ cancelIdle();
+ redrawDisplay();
+ "true";
+}
+else if (userInput == "five" || userInput == "5")
+{
+ showIdle();
+ url=geturl("http://127.0.0.1/cgi-bin/scripts/filme/php/noob_save_cookie.php");
+ cancelIdle();
+ redrawDisplay();
  "true";
 }
 else if (userInput == "one" || userInput == "1")

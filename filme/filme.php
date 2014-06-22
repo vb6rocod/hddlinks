@@ -554,7 +554,7 @@ echo '
 
 <item>
 <title>online-filmek (in lb. maghiara)</title>
-<link><?php echo $host; ?>/scripts/filme/php/online-filmek.php?query=1,http://online-filmek.cc/filmek/osszes/legfrissebb/,filmek</link>
+<link><?php echo $host; ?>/scripts/filme/php/online-filmek.php?query=1,http://online-filmek.bz/filmek/osszes/legfrissebb/,filmek</link>
 <annotation>http://online-filmek.cc</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>

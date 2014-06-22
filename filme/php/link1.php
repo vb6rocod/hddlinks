@@ -1349,6 +1349,8 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    }
 } elseif (strpos($filelink,"played.to") !==false) {
   //http://played.to/hfsjjt5gbmm4
+  //http://played.to/embed-34iotmbzg1xq-544x395.html
+  if (strpos($filelink,"embed") === false) {
   $h=file_get_contents($filelink);
    $id=str_between($h,'id" value="','"');
    $referer=str_between($h,'referer" value="','"');
@@ -1364,6 +1366,9 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    curl_setopt($ch, CURLOPT_REFERER, $filelink);
    $h = curl_exec($ch);
    curl_close($ch);
+  } else {
+   $h=file_get_contents($filelink);
+   }
    $link=str_between($h,'file: "','"');
 } elseif (strpos($filelink,"primeshare.tv") !==false) {
   //http://primeshare.tv/download/7679248EB7
@@ -1541,7 +1546,36 @@ $post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=C
   curl_close($ch);
   //echo $h;
   $link=str_between($h,'file: "','"');
+} elseif (strpos($filelink, 'divxstream.net') !== false) {
+  $h=file_get_contents($filelink);
+  //echo $h;
+  $link=unpack_DivXBrowserPlugin(1,$h);
+} elseif (strpos($filelink,"fcore.eu") !==false) {
+   //http://fcore.eu/rqm8iq34iqek
+   $cookie="D://zzzzz.tct";
+   $cookie="/tmp/cookie.txt";
+   $string = $filelink;
+   $ch = curl_init($string);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+   $h = curl_exec($ch);
+   $id=str_between($h,'id" value="','"');
+   $fname=str_between($h,'"fname" value="','"');
+   $rand=str_between($h,'rand" value="','"');
+   //$post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=".urlencode($reff)."&method_free=Free+Download";
+   $post="op=download2&id=".$id."&rand=".$rand."&referer=&method_free=&method_premium=&down_script=1&down_direct=1";
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt ($ch, CURLOPT_POST, 1);
+   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+   $h = curl_exec($ch);
+   curl_close($ch);
+   //echo $h;
+   $link=unpack_DivXBrowserPlugin(2,$h);
 }
-
 print $link;
 ?>

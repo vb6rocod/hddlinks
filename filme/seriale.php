@@ -387,17 +387,17 @@ echo '
 <annotation>http://serialesubtitrateonline.info/serialecoreene.php</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>online-filmek.org (in lb. maghiara)</title>
 <link><?php echo $host; ?>/scripts/filme/php/online-filmek_org_main.php</link>
 <annotation>http://www.online-filmek.org/sorozatok-abc-sorrendben/</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>online-filmek (in lb. maghiara)</title>
-<link><?php echo $host; ?>/scripts/filme/php/online-filmek_s.php?query=1,http://online-filmek.cc/sorozatok/legfrissebb/,sorozatok</link>
+<link><?php echo $host; ?>/scripts/filme/php/online-filmek_s.php?query=1,http://online-filmek.bz/sorozatok/legfrissebb/,sorozatok</link>
 <annotation>http://online-filmek.cc</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>

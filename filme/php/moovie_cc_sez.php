@@ -191,7 +191,11 @@ ret;
 	<menu>main menu</menu>
 
 <?php
-
+$t1=explode('<table class="links"',$html);
+$t2=explode('href="',$t1[1]);
+$t3=explode('"',$t2[1]);
+$l=$t3[0];
+$html=file_get_contents($l);
 $videos = explode('id="season_', $html);
 
 unset($videos[0]);

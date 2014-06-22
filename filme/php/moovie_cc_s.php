@@ -237,7 +237,7 @@ foreach($videos as $video) {
     $t3=explode('bubble="',$t2[1]);
     $t4=explode('"',$t3[1]);
     $title=trim($t4[0]);
-
+    //$title=urlencode($title);
     $t1 = explode('src="', $video);
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
@@ -252,7 +252,7 @@ foreach($videos as $video) {
     $t4=explode("<",$t3[1]);
     $year=trim($t4[0]);
     $adn=$title1." (".$year.")";
-    
+    $adn=$title;
 		$link = $host.'/scripts/filme/php/moovie_cc_sez.php?file='.$id.','.$link1.','.urlencode($title);
 
     echo '
