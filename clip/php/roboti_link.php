@@ -32,13 +32,13 @@ for ($i=0;$i<count($links);$i++) {
 }
 if (strpos($cur_link,"player.vimeo.com") !== false) {
 //$link= "http://127.0.0.1/cgi-bin/scripts/util/vimeo.cgi?stream,,".urlencode($cur_link);
-  if (strpos($cur_link,"player.vimeo.com") !==false) {
-     $t1=explode("?",$cur_link);
+  if (strpos($filelink,"player.vimeo.com") !==false) {
+     $t1=explode("?",$filelink);
      $filelink=$t1[0];
-     $t1=explode("/",$cur_link);
+     $t1=explode("/",$filelink);
      $id=$t1[4];
   } else {
-     $t1=explode("/",$cur_link);
+     $t1=explode("/",$filelink);
      $id=$t1[3];
   }
   $cookie="/tmp/cookie.txt";
@@ -52,7 +52,8 @@ if (strpos($cur_link,"player.vimeo.com") !== false) {
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
-  $l1="http://player.vimeo.com/config/".$id."?type=moogaloop&referrer=vimeo.com&cdn_server=a.vimeocdn.com&player_server=player.vimeo.com&clip_id=".$id;
+  $l1=str_between($html,'data-config-url="','"');
+  $l1=str_replace("&amp;","&",$l1);
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l1);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -61,30 +62,14 @@ if (strpos($cur_link,"player.vimeo.com") !== false) {
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $h1 = curl_exec($ch);
   curl_close($ch);
-
-  $sig_param=str_between($h1,'signature":"','"');
-  $player_url=str_between($h1,'player_url":"','"');
-  $time_param=str_between($h1,'"timestamp":',',');
-  if (strpos($h1,'hd":0') !== false)
-    $hd="sd";
-  else
-    $hd="hd";
-  $stream_url="http://".$player_url."/play_redirect?clip_id=".$id."&sig=".$sig_param."&time=".$time_param."&quality=".$hd."&codecs=H264,VP8,VP6&type=moogaloop&embed_location=&seek=0";
-
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $stream_url);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch,CURLOPT_REFERER,"http://a.vimeocdn.com/p/flash/moogaloop/5.2.49/moogaloop.swf?v=1.0.0");
-  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
-  curl_setopt($ch, CURLOPT_NOBODY, true);
-  curl_setopt($ch, CURLOPT_HEADER  ,1);
-  $html = curl_exec($ch);
-  curl_close($ch);
-  $t1=explode("Location:",$html);
-  $t2=explode("\n",$t1[1]);
-  $link1=trim($t2[0]);
+  //echo $h1;
+  if (strpos($h1,'hd":') !== false) {
+    $t1=explode('hd":',$h1);
+    $link1=str_between($t1[1],'url":"','"');
+  } else {
+    $t1=explode('sd":',$h1);
+    $link1=str_between($t1[1],'url":"','"');
+  }
 print $link1;
 }
 ?> 

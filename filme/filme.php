@@ -194,14 +194,14 @@ ret;
 <annotation>http://www.filmeonline.org</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-<!--
+
 <item>
-<title>iPlay - filme HD (abonament)</title>
-<link><?php echo $host; ?>/scripts/filme/php/iplay_filme.php</link>
-<annotation>http://www.iplay.ro</annotation>
+<title>movie-inn</title>
+<link><?php echo $host; ?>/scripts/filme/php/movie-inn_m.php?page=1</link>
+<annotation>http://www.movie-inn.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
 <item>
 <title>spicetv - filme HD</title>
 <link><?php echo $host; ?>/scripts/filme/php/spice_movie.php</link>

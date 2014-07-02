@@ -215,6 +215,13 @@ echo '
 <annotation>http://vplus.ro/shows</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+
+<item>
+<title>movie-inn</title>
+<link><?php echo $host; ?>/scripts/filme/php/movie-inn_s.php</link>
+<annotation>http://www.movie-inn.com</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
 <!--
 <item>
 <title>iPlay - seriale HD (abonament)</title>
