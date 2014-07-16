@@ -212,7 +212,7 @@ $host = "http://127.0.0.1/cgi-bin";
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   $html = curl_exec($ch);
   curl_close($ch);
-$videos = explode('class="post"', $html);
+$videos = explode('article class="format-articol clearfix">', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 

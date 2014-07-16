@@ -48,6 +48,50 @@ function decode_entities($text) {
     $text= preg_replace('/&#x([a-f0-9]+);/mei',"chr(0x\\1)",$text);  #hex notation
     return $text;
 }
+function kodik($html_source) {
+$t1=explode("return p}(",$html_source);
+$e=explode(".split",$t1[1]);
+  $ls=$e[0];
+  //echo $ls;
+  $a=explode(",",$ls);
+  //print_r($a); //for debug only
+  $a1=explode("'",$a[count($a)-1]); //char list for replace
+  $b1=explode("'",$a1[1]);
+  $base_enc=$b1[1];
+  //echo $base_enc;
+  $w=explode("|",$b1[0]);
+  //print_r ($w);
+  $ch="0123456789abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
+  $ch="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  $ch="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  $fl="";
+  for ($i=0;$i<count($a)-1;$i++) {
+    $fl=$fl.$a[$i];
+  }
+  $r="";
+  $x=strlen($fl);
+  for ($i=0;$i<strlen($fl);$i++) {
+    if (!preg_match('/[A-Za-z0-9]/',$fl[$i])) { //nu e alfanumeric
+       $r=$r.$fl[$i];
+    } elseif (($i<$x) && (preg_match('/[A-Za-z0-9]/',$fl[$i])) && (preg_match('/[A-Za-z0-9]/',$fl[$i+1]))) {
+       $pos=strpos($ch,$fl[$i+1]);
+       $pos=$base_enc*$fl[$i] + $pos;
+       if ($w[$pos] <> "")
+         $r=$r.$w[$pos];
+       else
+         $r=$r.$fl[$i].$fl[$i+1];
+     } elseif (($i>0) && (preg_match('/[A-Za-z0-9]/',$fl[$i])) && (preg_match('/[A-Za-z0-9]/',$fl[$i-1]))) {
+       // nothing
+     } else {
+       $pos=strpos($ch,$fl[$i]);
+        if ($w[$pos] <> "")
+          $r=$r.$w[$pos];
+        else
+          $r=$r.$fl[$i];
+     }
+  }
+return $r;
+}
 function unpack_DivXBrowserPlugin($n_func,$html_cod,$sub=false) {
   $f=explode("return p}",$html_cod);
   $e=explode("'.split",$f[$n_func]);
@@ -1469,6 +1513,25 @@ $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
   curl_close($ch);
   //echo $h;
   $link=str_between($h,'file: "','"');
+} elseif (strpos($filelink,"kodik.biz") !==false) {
+  $h=file_get_contents($filelink);
+  //echo $h;
+  $p=kodik($h);
+  //echo $p;
+  $oid=str_between($p,'s1="','"');
+  $video_id=str_between($p,'s2="','"');
+  $embed_hash=str_between($p,'s3="','"');
+  $l="http://api.vk.com/method/video.getEmbed?oid=".$oid."&video_id=".$video_id."&embed_hash=".$embed_hash."&callback=responseWork";
+  //echo $l;
+  $h1=file_get_contents($l);
+  //echo strlen("13daa5fe5a3fe820");
+  $t1=explode('url480":"',$h1);
+  $t2=explode('"',$t1[1]);
+  if (!$t2[0]) {
+  $t1=explode('url360":"',$h1);
+  $t2=explode('"',$t1[1]);
+  }
+  $link=str_replace("\/","/",$t2[0]);
 }
 
 //////////////////////////////////////////////////////////////////

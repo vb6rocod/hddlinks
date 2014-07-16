@@ -7,6 +7,9 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
 $html = file_get_contents($link);
-$link = str_between($html, "source src='", "'");
-print $link;
+$t1=explode("vpVideoSource",$html);
+$t2=explode('"',$t1[1]);
+$t3=explode('"',$t2[1]);
+$out=str_replace("\/","/",$t3[0]);
+print $out;
 ?>

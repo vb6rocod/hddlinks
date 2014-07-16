@@ -494,7 +494,7 @@ $s=$s."|fastupload|video\.rol\.ro|zetshare\.net\/embed|ufliq\.com|stagero\.eu|ov
 $s=$s."|trilulilu|proplayer\/playlist-controller.php|viki\.com|modovideo\.com|roshare\.info|rosharing\.com|ishared\.eu|";
 $s=$s."filebox\.com|glumbouploads\.com|uploadc\.com|sharefiles4u\.com|zixshare\.com|uploadboost\.com";
 $s=$s."|nowvideo\.eu|nowvideo\.co|vreer\.com|180upload\.com|dailymotion\.com|nosvideo\.com|vidbull\.com|purevid\.com|videobam\.com|streamcloud\.eu|donevideo\.com|upafile\.com|docs\.google|mail\.ru|superweb\.rol|moviki\.ru|entervideos\.com";
-$s=$s."|indavideo\.hu|redfly\.us|videa\.hu|videakid\.hu|mooshare\.biz|streamin\.to/i";
+$s=$s."|indavideo\.hu|redfly\.us|videa\.hu|videakid\.hu|mooshare\.biz|streamin\.to|kodik\.biz/i";
 for ($i=0;$i<count($links);$i++) {
   if (strpos($links[$i],"http") !== false) {
     $t1=explode("http:",$links[$i]);
@@ -518,7 +518,7 @@ for ($i=0;$i<count($links);$i++) {
        $t2=explode("&",$t1[1]);
        $cur_link=trim($t2[0]);
      }
-      if (!preg_match("/facebook|twitter|player\.swf|img\.youtube|youtube\.com\/user|radioarad|\.jpg|\.png|\.gif|jq\/(js|css)|fsplay\.net\?s|top\.mail\.ru/i",$cur_link)) {
+      if (!preg_match("/facebook|twitter|player\.swf|img\.youtube|youtube\.com\/user|radioarad|\.jpg|\.png|\.gif|jq\/(js|css)|fsplay\.net\?s|top\.mail\.ru|changejplayer\.js/i",$cur_link)) {
         $t1=explode("proxy.link=",$cur_link); //filmeonline.org
         if ($t1[1] <> "") {
         $cur_link=$t1[1];

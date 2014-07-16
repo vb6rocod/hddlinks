@@ -195,9 +195,9 @@ if ($page==1)
   $link=$search;
 else
   $link=$search."/page/".$page;
-$link="http://moviem.us".$link;
+//$link="http://moviem.us".$link;
 $html=file_get_contents($link);
-$videos = explode('class="post', $html);
+$videos = explode('<article class="format-articol clearfix">', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);

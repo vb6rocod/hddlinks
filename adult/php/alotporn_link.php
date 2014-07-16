@@ -7,9 +7,10 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
 $html = file_get_contents($link);
-$link = str_between($html, "config=", '"');
+$link = str_between($html, "var cnf='", "'");
 $html = file_get_contents($link);
 $link1 = str_between($html, "<file>", "</file>");
 $link1=str_replace("&amp;","&",$link1);
-print $link1;
+$out=$link1;
+print $out;
 ?>

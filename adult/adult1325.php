@@ -255,11 +255,19 @@ $host = "http://127.0.0.1/cgi-bin";
 </item>
 
 <item>
+<title>freepornvs</title>
+  <link><?php echo $host; ?>/scripts/adult/php/freepornvs_main.php</link>
+<image>image/adult.png</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+<!--
+<item>
 <title>pornrabbit</title>
   <link><?php echo $host; ?>/scripts/adult/pornrabbit.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/pornrabbit.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>pornvisit</title>

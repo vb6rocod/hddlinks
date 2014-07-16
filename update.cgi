@@ -96,7 +96,7 @@ fi
 mount -o,remount,r /
 fi
 
-#CS mod HD4ALL - 20.04.2014
+#CS mod HD4ALL - 07.07.2014
 if [ $PLAYER = "10" ]
 then
 	if [ -f /usr/local/bin/Resource/www/cgi-bin/scripts/mini1.php ]
@@ -135,7 +135,7 @@ then
 
 	#HDD  Links
 	#sed -i 's/image\/mele\/rss_title.jpg/image\/mele\/rss_title.png/g' $i
-	#sed -i 's/-b 60000/-b 1000/g' $i
+	#sed -i 's/-b 60000/-b 10000/g' $i
 	sed -i 's/cgi-bin\/translate/cgi-bin\/scripts\/util\/translate.cgi/g' $i
 
 	#HiMedia fix
@@ -165,7 +165,7 @@ then
 
 	#HDD  Links
 	#sed -i 's/image\/mele\/rss_title.jpg/image\/mele\/rss_title.png/g' $i
-	#sed -i 's/-b 60000/-b 1000/g' $i
+	#sed -i 's/-b 60000/-b 10000/g' $i
 	
 	#HiMedia fix
 	if [ `cat /usr/local/etc/dvdplayer/interface` = "HiMedia" ]; then
@@ -204,8 +204,8 @@ then
 	#SDK4
 	 if [ -d /usr/local/bin/home_menu ]; then
 		cp  -af /local/usr/etc/translate/rss/xspf/videoRenderer.rss /usr/local/bin/IMS_Modules/Scripts/util/videoRenderer.rss
-		sed -i 's/-b 60000/-b 1000/g' ./util/*.cgi
-		sed -i 's/b 1000\/-b 1000/b 60000\/-b 1000/g' ./util/hdforall.cgi
+		sed -i 's/-b 60000/-b 10000/g' ./util/*.cgi
+		sed -i 's/b 10000\/-b 10000/b 60000\/-b 10000/g' ./util/hdforall.cgi
 	 fi
 
 	#HDD  Links

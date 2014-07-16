@@ -21,11 +21,11 @@ if($query) {
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   $html = curl_exec($ch);
   curl_close($ch);
-$t1=explode('class="poster',$html);
+$t1=explode('div id="imagine-serial-post"',$html);
 $t2=explode('src=',$t1[1]);
 $t3=explode('&',$t2[1]);
 $img=$t3[0];
-$description=str_between($t1[1],"<p>","<ul>");
+$description=str_between($t1[1],"</h2><p>","</p>");
 $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
 $description = fix_s($description);
 ?>
@@ -185,24 +185,28 @@ ret;
 	<menu>main menu</menu>
 
 <?php
-$t1=explode('class="serialinfo',$html);
-$html=$t1[1];
-$html=str_between($html,'<ul','</ul');
-$videos = explode('href="', $html);
+//$t1=explode('class="serialinfo',$html);
+//$html=$t1[1];
+//$html=str_between($html,'<ul','</ul');
+$videos = explode('<li', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
-   $t2=explode('"',$video);
-   $link=$t2[0];
-   
-   $t1=explode("Sezonul",$video);
+   $t1=explode('href="',$video);
+   $t2=explode('"',$t1[1]);
+   if (!preg_match("/http/",$t2[0]))
+    $link="http://www.moviem.us".$t2[0];
+   else
+    $link=$t2[0];
+   $t1=explode(">",$t1[1]);
    $t2=explode("<",$t1[1]);
 
-   $title="Sezonul".$t2[0];
+   $title=$t2[0];
 
 
    $s=$pg_tit."-".$title;
+   if (preg_match("/sezonul/i",$title)) {
    $link = $host."/scripts/filme/php/moviem.php?file=1,".urlencode($link).",".urlencode($s);
     echo '
     <item>
@@ -211,6 +215,7 @@ foreach($videos as $video) {
     <mediaDisplay name="threePartsView"/>
     </item>
     ';
+   }
 }
 ?>
 </channel>

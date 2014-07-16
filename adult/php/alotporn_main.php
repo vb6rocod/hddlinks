@@ -173,9 +173,9 @@ foreach($videos as $video) {
     $link="http://alotporn.com".$t1[0];
     $link=str_replace("recent/","",$link);
 
-    $t2=explode(">",$t[2]);
-    $t3=explode("<",$t2[1]);
-  	$title=$t3[0];
+    $t2=explode(">",$t[1]);
+    $t3=explode("<",$t2[2]);
+  	$title=trim($t3[0]);
 
   	$link=$host."/scripts/adult/php/alotporn.php?query=1,".$link;
   	echo '
