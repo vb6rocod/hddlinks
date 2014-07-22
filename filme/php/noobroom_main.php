@@ -15,8 +15,9 @@ if (file_exists($cookie_s) && !file_exists($cookie)) {
   $handle = fopen($cookie_s, "r");
   $c = fread($handle, filesize($cookie_s));
   fclose($handle);
-  preg_match("/noobroom\d{1}/",$c,$m);
-  $noob="http://".$m[0].".com";
+  //preg_match("/noobroom\d{1}/",$c,$m);
+  //$noob="http://".$m[0].".com";
+  $noob="http://superchillin.com";
   $fh = fopen($ff, 'w');
   fwrite($fh, $noob);
   fclose($fh);
@@ -24,6 +25,7 @@ if (file_exists($cookie_s) && !file_exists($cookie)) {
   fwrite($fh, $c);
   fclose($fh);
 }
+/*
 if (!file_exists($ff)) {
 $l="http://noobroom.com/";
 $h=file_get_contents($l);
@@ -66,6 +68,11 @@ fclose($fh);
 } else {
 $noob=file_get_contents($ff);
 }
+*/
+$noob="http://superchillin.com";
+$fh = fopen($ff, 'w');
+fwrite($fh, $noob);
+fclose($fh);
 include ("../../common.php");
 
 $filename="/usr/local/etc/dvdplayer/amigo.dat";
