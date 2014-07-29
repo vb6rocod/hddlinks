@@ -9,21 +9,7 @@ function str_between($string, $start, $end){
 //error_reporting(0);
 $ff="/tmp/n.txt";
 $cookie="/tmp/noobroom.txt";
-$cookie_s="/usr/local/etc/dvdplayer/noob_save.txt";
-if (file_exists($cookie_s) && !file_exists($cookie)) {
-  $handle = fopen($cookie_s, "r");
-  $c = fread($handle, filesize($cookie_s));
-  fclose($handle);
-  //preg_match("/noobroom\d{1}/",$c,$m);
-  //$noob="http://".$m[0].".com";
-  $noob="http://superchillin.com";
-  $fh = fopen($ff, 'w');
-  fwrite($fh, $noob);
-  fclose($fh);
-  $fh = fopen($cookie, 'w');
-  fwrite($fh, $c);
-  fclose($fh);
-}
+
 /*
 if (!file_exists($ff)) {
 $l="http://noobroom.com/";

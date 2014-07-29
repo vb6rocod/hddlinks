@@ -273,7 +273,12 @@ $html=str_replace("trailerItem","itemsThumb",$html);
 $html=str_replace('title="','><>',$html);
 $html=str_replace('" data-trailer-Id="','<',$html);
 $html=str_replace('class="trailerDiv','a class="floatL',$html);
-$html=str_replace('ccsSprites sliderTrailerRightArrow','class="floatL ccsSprites RightArrow',$html);
+
+$html=str_replace('class="tvSpan','class="itemBackground',$html);
+$html=str_replace("canaletvThumb","itemsThumb",$html);
+$html=str_replace('floatL ccsSprites canaletvRightArrow','class="floatL ccsSprites RightArrow',$html);
+
+
 $html= str_between($html,'class="floatL itemsThumb">','class="floatL ccsSprites RightArrow');
 $videos = explode('a class="floatL', $html);
 unset($videos[0]);
@@ -297,6 +302,8 @@ foreach($videos as $video) {
   $t2=explode(">",$t1[1]);
   $t3=explode("<",$t2[2]);
   $title=$t3[0];
+  if ( strpos($title,'LOOK TV') !== false ) $id=126;
+  if ( strpos($title,'LOOK PLUS') !== false ) $id=127;
   if (! is_numeric($id) ) {
     $t0 = explode('href="',$video);
     $t1 = explode('"', $t0[1]);
@@ -315,6 +322,7 @@ foreach($videos as $video) {
 	</item>
 	';
   } else {
+  if (!preg_match("/LOOK TV|LOOK PLUS/",$title)) {
   $f = "/usr/local/bin/home_menu";
   if (file_exists($f)) {
      echo '
@@ -372,6 +380,7 @@ foreach($videos as $video) {
     <media:thumbnail url="'.$image.'" />
      </item>
      ';
+ }
  }
  }
 }

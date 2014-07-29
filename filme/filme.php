@@ -203,12 +203,20 @@ ret;
 </item>
 
 <item>
+<title>popcornered</title>
+<link><?php echo $host; ?>/scripts/filme/php/popcornered_main.php</link>
+<annotation>http://popcornered.com/</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<!--
+<item>
 <title>spicetv - filme HD</title>
 <link><?php echo $host; ?>/scripts/filme/php/spice_movie.php</link>
 <annotation>http://www.ustv.ro/</annotation>
 <media:thumbnail url="image/movies.png" />
 </item>
-
+-->
 <item>
 <title>Noobroom</title>
 <link><?php echo $host; ?>/scripts/filme/php/noobroom_main.php</link>

@@ -3,4 +3,4 @@ cat <<EOF
 Content-type: video/mp4
 
 EOF
-exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -b 60000 -q -v -p http://justin.tv -r "rtmp://199.9.254.243/app/jtv_26b2IFVd91S3ep5m" --jtv "d28e0bc5500c41d78a49e6aafc6bb31104011125:{\"swfDomains\": [\"justin.tv\", \"jtvx.com\", \"xarth.com\", \"twitchtv.com\", \"twitch.tv\", \"newjtv.com\", \"wdtinc.com\", \"imapweather.com\", \"facebook.com\", \"starcrafting.com\"], \"streamName\": \"jtv_26b2IFVd91S3ep5m\", \"expiration\": 1326118548.547224, \"geo_ip\": \"78.96.189.71\", \"server\": \"fra01-video15-2\"}" --swfUrl "http://www-cdn.justin.tv/widgets/live_site_player.r810da0619bb02a0918e62891c49ea927f19a4a36.swf"
+exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump  -q -v -r "rtmp://stream.voyo.ro/rolinear_61241319" -W "http://voyo.ro/static/shared/app/flowplayer/13-flowplayer.cluster-3.2.1-01-004.swf"  -C O:1 -C NN:0:60564222.000000 -C NS:1:9a29fa785106a407304692a59529eb45 -C NN:2:6335.000000 -C NS:3:150ba64900e5c1ce12b8b4f2c9d3ae14 -C O:0 -y "linear3?eyJtZWQiOjYxMjQxMzE4LCJsaWMiOiI5YTI5ZmE3ODUxMDZhNDA3MzA0NjkyYTU5NTI5ZWI0NSIsInByb2QiOjYzMzUsImRldiI6IjE1MGJhNjQ5MDBlNWMxY2UxMmI4YjRmMmM5ZDNhZTE0IiwiYWlkIjoiIn0="

@@ -263,7 +263,7 @@ $a["RTL Plus"]="";
 $a["LOOK TV"]="10252";
 $a["FilmBox"]="10236";
 $a["FilmBox HD"]="10239";
-
+/*
 $l="http://tastez.ro/tv.php?query=norma-telecom";
    $ch = curl_init();
    curl_setopt($ch, CURLOPT_URL, $l);
@@ -290,6 +290,7 @@ foreach($videos as $video) {
   if (strpos($link,"m3u8") === false && $link)
   print_ch($title,$link,$a[$title]);
 }
+*/
 /*
 $l="http://tastez.ro/tv.php?query=altele";
 

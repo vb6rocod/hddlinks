@@ -31,6 +31,7 @@ $nn=count($serv);
 $t1=explode('src="',$h);
 $t2=explode("'",$t1[1]);
 $baseimg=$t2[0];
+$baseimg=$noob."/2img/";
 $p=0;
 ?>
 <rss version="2.0">

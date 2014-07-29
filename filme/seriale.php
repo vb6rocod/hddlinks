@@ -230,13 +230,14 @@ echo '
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+<!--
 <item>
 <title>spicetv - seriale</title>
 <link><?php echo $host; ?>/scripts/filme/php/spice_series_main.php</link>
 <annotation>http://www.ustv.ro/</annotation>
 <media:thumbnail url="image/movies.png" />
 </item>
-
+-->
 <item>
 <title>noobroom - seriale</title>
 <link><?php echo $host; ?>/scripts/filme/php/noobroom_series_main.php?query=a</link>
