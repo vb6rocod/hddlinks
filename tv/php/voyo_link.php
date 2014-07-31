@@ -49,11 +49,14 @@ $c6=" -C O:0 ";
 $rtmp=str_between($html,"host&quot;:&quot;","&quot;");
 $w="http://voyo.ro/static/shared/app/flowplayer/13-flowplayer.cluster-3.2.1-01-004.swf";
 $y="linear3?".str_between($html,"{0}?","&quot;");
-$exec=' -q -v -r "'.$rtmp.'" ';
-$exec=$exec.'-W "'.$w.'" ';
+$l="Rtmp-options:-b ".$buf;
+$exec=$l.' -q -v -x 15348 -w 2324d94075f150cad1ea0e09b5513924e7cc8b382656a1e38109e41237eb4373 ';
+$exec=$exec.'-W '.$w.' ';
 $exec=$exec.$c1.$c2.$c3.$c4.$c5.$c6;
-$exec=$exec.'-y "'.$y.'"';
-//echo $exec;
+$exec=$exec.'-y '.$y.','.$rtmp;
+$exec=str_replace(" ","%20",$exec);
+echo $exec;
+/*
 $out="#!/bin/sh
 cat <<EOF
 Content-type: video/mp4
@@ -74,4 +77,5 @@ $l=$l."-y ".$y;
 $l=$l.",".$rtmp;
 //$l=str_replace(" ","%20",$l);
 //print $l;
+*/
 ?>

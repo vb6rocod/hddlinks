@@ -6,6 +6,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $id = $_GET["file"];
+exec ("rm -f /tmp/test.xml");
 $link="http://popcornered.com/films?films=".$id;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
@@ -27,6 +28,16 @@ $file="http://hddlinks.netai.net/srt/".$id.".srt";
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   $h = curl_exec($ch);
   curl_close($ch);
+if(!preg_match('/(\d\d):(\d\d):(\d\d),(\d\d\d) --> (\d\d):(\d\d):(\d\d),(\d\d\d)/', $h)) {
+$file="http://popsubs.googlecode.com/hg/".$id.".srt";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $file);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  $h = curl_exec($ch);
+  curl_close($ch);
+}
 if(preg_match('/(\d\d):(\d\d):(\d\d),(\d\d\d) --> (\d\d):(\d\d):(\d\d),(\d\d\d)/', $h))
 {
 $ttxml     = '';

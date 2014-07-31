@@ -180,14 +180,14 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-<!--
+
 <item>
 <title>Voyo TV</title>
 <link><?php echo $host; ?>/scripts/tv/voyo.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
 <item>
 <title>Seenow TV</title>
 <link>/usr/local/etc/www/cgi-bin/scripts/tv/php/seenow_tv.rss</link>

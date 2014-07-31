@@ -333,7 +333,7 @@ foreach($videos as $video) {
      showIdle();
      url="'.$host.'/scripts/tv/php/dolce_tv_link.php?file='.$link.'," + buf;
      url1=getUrl(url);
-     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate2.cgi?stream," + url1;
      cancelIdle();
     streamArray = null;
     streamArray = pushBackStringArray(streamArray, "");

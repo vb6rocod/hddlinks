@@ -57,11 +57,11 @@ if($query) {
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="45"
+	itemWidthPC="80"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="45"
+	capWidthPC="80"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -230,12 +230,28 @@ $l="http://hddlinks.netai.net/srt/glob.php";
   $hsrt = curl_exec($ch);
   curl_close($ch);
 $t1=explode(",",$hsrt);
-//echo count($t1);
-//print_r ($t1);
+if ($t1) {
 for ($n=0;$n<count($t1);$n++) {
 $id=$t1[$n];
 //echo $id;
 $srt[$id]="OK";
+}
+} else {
+$link="http://popsubs.googlecode.com/hg/list.txt";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $link);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+  $hsrt = curl_exec($ch);
+  curl_close($ch);
+$t1=explode(",",$hsrt);
+for ($n=0;$n<count($t1);$n++) {
+$id=$t1[$n];
+//echo $id;
+$srt[$id]="OK";
+}
 }
 $cookie="/tmp/cookie.txt";
 $l="http://popcornered.com/search_results?a-z";
