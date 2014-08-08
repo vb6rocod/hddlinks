@@ -202,6 +202,15 @@ $title="Highest Rated";
 	<mediaDisplay name="threePartsView"/>
 	</item>
 	';
+$title="By Year";
+    $link1 = $host."/scripts/filme/php/popcornered.php?page=1,year,By+Year";
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link1.'</link>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
 ?>
 
 </channel>

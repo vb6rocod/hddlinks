@@ -75,7 +75,7 @@ setRefreshTime(-1);
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="25" offsetYPC="3" widthPC="47" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    <script>"2=Server Dinamic: " + server;</script>
+    <script>"2=Server Dinamic: " + server + ", 3=Re-Logon";</script>
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -198,6 +198,11 @@ else if (userInput == "two" || userInput == "2")
    server = "Nu";
   ret = "true";
 }
+else if (userInput == "three" || userInput == "3")
+{
+ jumptolink("logon");
+ "true";
+}
 else
 {
 annotation = " ";
@@ -221,6 +226,14 @@ redrawdisplay();
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 		</mediaDisplay>
 	</item_template>
+	<logon>
+	<link>
+	<script>
+	url="/usr/local/etc/www/cgi-bin/scripts/tv/spice.rss";
+	url;
+	</script>
+	</link>
+	</logon>
 <channel>
 	<title>spicetv.ro TV</title>
 	<menu>main menu</menu>
@@ -229,6 +242,9 @@ redrawdisplay();
 $filename = "/usr/local/etc/dvdplayer/spice.txt";
 $cookie="D://spice.txt";
 $cookie="/tmp/spice1.txt";
+if (file_exists($cookie)) {
+exec("rm -f /tmp/spice1.txt");
+}
 if (file_exists($filename)) {
   $handle = fopen($filename, "r");
   $c = fread($handle, filesize($filename));

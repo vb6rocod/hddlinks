@@ -261,7 +261,7 @@ foreach($videos as $video) {
      showIdle();
      url="'.$host.'/scripts/tv/php/voyo_link.php?file='.$link.'," + buf;
      url1=getUrl(url);
-     movie="http://127.0.0.1/cgi-bin/scripts/util/translate2.cgi?stream," + url1;
+     movie="http://127.0.0.1/cgi-bin/scripts/tv/php/justin.cgi?" + "'.$link.'";
      cancelIdle();
     streamArray = null;
     streamArray = pushBackStringArray(streamArray, "");

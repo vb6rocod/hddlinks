@@ -172,13 +172,14 @@ if($page > 1) {
 //http://frapex.ro/category/filme-artistice/page/2
 //$html = file_get_contents($search."/page/".$page);
 //http://porno720p.com/page/2/
-$l = $search."/page/".$page;
+$l = $search."/page/".$page."/";
 //$l="http://frapex.ro/category/filme-artistice/page/3";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURL_REFERER,"http://porno720p.com");
   $html = curl_exec($ch);
   curl_close($ch);
 if($page > 1) { ?>
@@ -208,7 +209,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 
-$videos = explode('div class="news_ss"', $html);
+$videos = explode('div class="news_short"', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -217,12 +218,12 @@ foreach($videos as $video) {
     $t1 = explode('href="', $video);
     $t2 = explode('"', $t1[1]);
     $link = $t2[0];
-    
-    $t3=explode('"date_cat ">',$video);
-    $t4=explode('>',$t3[1]);
-    $t5=explode("<",$t4[1]);
+
+    $t3=explode('alt="',$video);
+    $t4=explode('"',$t3[1]);
+    //$t5=explode("<",$t4[1]);
     //$t5=explode("&#8211;",$t4[0]);
-    $title=trim($t5[0]);
+    $title=trim($t4[0]);
     //$title=str_between($title,'[',']');
     $title=urlencode($title);
     $title=str_replace("%20"," ",$title);

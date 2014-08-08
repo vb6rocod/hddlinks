@@ -313,7 +313,12 @@ else
 <mediaDisplay name="threePartsView"/>
 </item>
 
-
+<item>
+<title>Dreambox TV</title>
+<link><?php echo $host; ?>/scripts/tv/php/dream_main.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
 <item>
 <title>TV Live - Muzică</title>
 <link><?php echo $host; ?>/scripts/tv/music_tv.php</link>
