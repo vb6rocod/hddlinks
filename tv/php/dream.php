@@ -161,8 +161,9 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len);
 }
 $host = "http://127.0.0.1/cgi-bin";
+//$link=urldecode("1%253A7%253A0%253A0%253A0%253A0%253A0%253A0%253A0%253A0%253A%2528provider%2520%253D%253D%2520%2522Com%2520Hem%2522%2529%2520%2526%2526%2520%2528type%2520%253D%253D%25201%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252017%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252022%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252025%2529%2520%257C%257C%2520%2528type%2520%253D%253D%2520134%2529%2520%257C%257C%2520%2528type%2520%253D%253D%2520195%2529%2520ORDER%2520BY%2520name%253ACom%2520Hem%26stype%3Dtv");
 $link=str_replace('\"','"',$link);
-$link="http://89.149.12.25:1888/web/getservices?sRef=".urlencode($link);
+$link="http://fms3.dns04.com/ajax/channels?id=".$link;
 //echo $link;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
@@ -173,17 +174,21 @@ $link="http://89.149.12.25:1888/web/getservices?sRef=".urlencode($link);
   curl_close($ch);
 //echo $html;
 $n=0;
-$videos = explode('<e2service>', $html);
+$videos = explode('<div class="channel_left">', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $link=trim(str_between($video,'<e2servicereference>','</e2servicereference>'));
-    $title=trim(str_between($video,'<e2servicename>','</e2servicename>'));
+    $link=trim(str_between($video,"zapChannel('","'"));
+    $title=trim(str_between($video,'name=',"'"));
+    //$t1=explode("title=",$video);
+    //$t2=explode(">",$t1[1]);
+    //$t3=explode("<",$t2[1]);
+    //$title=trim($t3[0]);
     //$link="dream.php?link=".urlencode($link)."&title=".urlencode($title);
     $link=$host."/scripts/tv/php/dream_link.php?link=".urlencode($link);
-
+    if ($title) {
     echo '
     <item>
     <title>'.$title.'</title>
@@ -213,6 +218,7 @@ foreach($videos as $video) {
     <media:thumbnail url="'.$image.'" />
     </item>
     ';
+    }
 
 }
 ?>

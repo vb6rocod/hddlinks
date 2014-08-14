@@ -156,7 +156,8 @@ function str_between($string, $start, $end){
 }
 $host = "http://127.0.0.1/cgi-bin";
 
-$link='http://89.149.12.25:1888/web/getservices?sRef=1:7:1:0:0:0:0:0:0:0:%28type%20==%201%29%20||%20%28type%20==%2017%29%20||%20%28type%20==%20195%29%20||%20%28type%20==%2025%29%20FROM%20BOUQUET%20%22bouquets.tv%22%20ORDER%20BY%20bouquet';
+$link='http://fms3.dns04.com/ajax/providers';
+//$link='http://89.149.12.25:1888/web/getservices?sRef=1:7:1:0:0:0:0:0:0:0:%28type%20==%201%29%20||%20%28type%20==%2017%29%20||%20%28type%20==%20195%29%20||%20%28type%20==%2025%29%20FROM%20BOUQUET%20%22bouquets.tv%22%20ORDER%20BY%20bouquet';
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -166,14 +167,14 @@ $link='http://89.149.12.25:1888/web/getservices?sRef=1:7:1:0:0:0:0:0:0:0:%28type
   curl_close($ch);
 //echo $html;
 $n=0;
-$videos = explode('<e2service>', $html);
+$videos = explode('<h1>', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $link=trim(str_between($video,'<e2servicereference>','</e2servicereference>'));
-    $title=trim(str_between($video,'<e2servicename>','</e2servicename>'));
+    $link=trim(str_between($video,'id="ajax/channels?id=','"'));
+    $title=trim(str_between($video,'">','</a></h1>'));
     //$link="dream.php?link=".urlencode($link)."&title=".urlencode($title);
 
 	echo '

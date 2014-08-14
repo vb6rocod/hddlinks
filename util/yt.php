@@ -31,16 +31,18 @@ if(preg_match('/youtube\.com\/(v\/|watch\?v=|embed\/)([\w\-]+)/', $file, $match)
   $id = $match[2];
   $l = 'http://www.youtube.com/get_video_info?&video_id=' . $id . '&el=leanback&ps=xl&eurl=https://s.ytimg.com/yts/swfbin/apiplayer-vflhRmAoN.swf&hl=en_US&sts=1588';
   //$html   = file_get_contents($link);
+  $html="";
+  $p=0;
+  while($html == "" && $p<10) {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  //curl_setopt($ch, CURL_REFERER,"http://www.youtube.com");
-  //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
   $html = curl_exec($ch);
   curl_close($ch);
+  $p++;
+  }
   //echo $html;
   parse_str($html,$parts);
   $videos = explode(',',$parts['url_encoded_fmt_stream_map']); 
@@ -59,6 +61,8 @@ foreach ($videos as $video) {
 	if (isset($output['codecs']))        unset($output['codecs']);
 	if (isset($output['fallback_host'])) unset($output['fallback_host']);
 	if (isset($output['requiressl']))    unset($output['requiressl']);
+	if (isset($output['sparamsl']))    unset($output['sparams']);
+	//sparams
 
     $out=str_replace("sig=","signature=",$output['url']);
     if (!preg_match("/signature/",$out)) {
@@ -67,23 +71,44 @@ foreach ($videos as $video) {
 	} else {
 	$link=$out;
     }
- $link=str_replace("https","http",$link);
- $link=str_replace("&requiressl=yes","",$link);
+ //$link=str_replace("https","http",$link);
+ //$link=str_replace("&requiressl=yes","",$link);
 //echo $link."<BR>";
-
+//if (isset($link['sparams']))    unset($link['sparams']);
+//echo $link."<BR>";
+/*
+parse_str($link,$output);
+$output['sparams']="";
+$link = http_build_query($output);
+$link=str_replace("sparams=","",$link);
+$link=urldecode($link);
+$link=str_replace(",","%2C",$link);
+//print $link;
+//print_r($parts);
+*/
+if ($html) {
+$l="/usr/local/etc/dvdplayer/update.txt";
+$h=file_get_contents($l);
+$t=explode("\n",$h);
+$player_tip=trim($t[0]);
+if ($player_tip==0) {
 $out='#!/bin/sh
 cat <<EOF
 Content-type: video/mp4
 
 EOF
-exec /opt/bin/curl "'.$link.'"';
+exec /opt/bin/curl -s "'.$link.'"';
 $fp = fopen('/usr/local/etc/www/cgi-bin/scripts/util/m.cgi', 'w');
 fwrite($fp, $out);
 fclose($fp);
 exec("chmod +x /usr/local/etc/www/cgi-bin/scripts/util/m.cgi");
 sleep (1);
 $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
+//$link="http://127.0.0.1/cgi-bin/scripts/util/curl.cgi?".$link;
+//$link="http://127.0.0.1/cgi-bin/translate?stream,,".$link;
+}
 print $link;
+}
 /*
 $link=str_replace("https","http",$link);
 $link="http://127.0.0.1/cgi-bin/scripts/util/w.cgi?".$link;
