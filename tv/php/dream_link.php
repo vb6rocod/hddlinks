@@ -9,10 +9,11 @@ $id=$_GET["link"];
 //$id="1:0:1:2AA8:1838:FBFF:820000:0:0:0:";
 //$h=file_get_contents("http://fms3.dns04.com:1888/web/zap?sRef=http://fms3.dns04.com:8001/1:0:1:3644:C8:13E:820000:0:0:0:".$id."");
 //1:0:1:2AA8:1838:FBFF:820000:0:0:0:
-$h=file_get_contents("http://fms3.dns04.com/api/zap?sRef=".$id."");
+$h=file_get_contents("http://217.162.34.65/api/zap?sRef=".$id."");
 
 //echo $h;
 $a=trim(str_between($h,"Active service is now '","'"));
-$out=$out="http://fms3.dns04.com:8001/".$a;
+//$out=$out="http://109.228.140.220:8001/".$a;
+$out="http://hdforall4.strangled.net:8001/".$a;
 print $out;
 ?>

@@ -156,8 +156,9 @@ function str_between($string, $start, $end){
 }
 $host = "http://127.0.0.1/cgi-bin";
 
-$link='http://fms3.dns04.com/ajax/providers';
-//$link='http://89.149.12.25:1888/web/getservices?sRef=1:7:1:0:0:0:0:0:0:0:%28type%20==%201%29%20||%20%28type%20==%2017%29%20||%20%28type%20==%20195%29%20||%20%28type%20==%2025%29%20FROM%20BOUQUET%20%22bouquets.tv%22%20ORDER%20BY%20bouquet';
+$link='http://hdforall3.strangled.net/ajax/bouquets';
+//$link='http://217.162.34.65/ajax/channels?id=1%253A7%253A0%253A0%253A0%253A0%253A0%253A0%253A0%253A0%253A%2528provider%2520%253D%253D%2520%2522upc%2522%2529%2520%2526%2526%2520%2528type%2520%253D%253D%25201%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252017%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252022%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252025%2529%2520%257C%257C%2520%2528type%2520%253D%253D%2520134%2529%2520%257C%257C%2520%2528type%2520%253D%253D%2520195%2529%2520ORDER%2520BY%2520name%2';
+//$link = file_get_contents($link);
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -167,15 +168,17 @@ $link='http://fms3.dns04.com/ajax/providers';
   curl_close($ch);
 //echo $html;
 $n=0;
-$videos = explode('<h1>', $html);
+//$videos = explode('<div class="channel_right">', $html);
+$videos = explode('<a style="display: inline-block;"', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $link=trim(str_between($video,'id="ajax/channels?id=','"'));
-    $title=trim(str_between($video,'">','</a></h1>'));
-    //$link="dream.php?link=".urlencode($link)."&title=".urlencode($title);
+    //$link=trim(str_between($video,"open_epg_pop('","'"));
+	$link=trim(str_between($video,'id="ajax/channels?id=','"'));
+    //$title=trim(str_between($video,'name=',"'"));
+	$title=trim(str_between($video,'">','</a>'));
 
 	echo '
 	<item>

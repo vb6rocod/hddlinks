@@ -4,7 +4,7 @@ $host = "http://127.0.0.1/cgi-bin";
 $query = $_GET["query"];
 if($query) {
    $queryArr = explode(',', $query);
-   $link = $queryArr[0];
+   $link = urldecode($queryArr[0]);
    $tit = urldecode($queryArr[1]);
 }
 ?>
@@ -163,7 +163,7 @@ function str_between($string, $start, $end){
 $host = "http://127.0.0.1/cgi-bin";
 //$link=urldecode("1%253A7%253A0%253A0%253A0%253A0%253A0%253A0%253A0%253A0%253A%2528provider%2520%253D%253D%2520%2522Com%2520Hem%2522%2529%2520%2526%2526%2520%2528type%2520%253D%253D%25201%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252017%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252022%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252025%2529%2520%257C%257C%2520%2528type%2520%253D%253D%2520134%2529%2520%257C%257C%2520%2528type%2520%253D%253D%2520195%2529%2520ORDER%2520BY%2520name%253ACom%2520Hem%26stype%3Dtv");
 $link=str_replace('\"','"',$link);
-$link="http://fms3.dns04.com/ajax/channels?id=".$link;
+$link="http://hdforall3.strangled.net/ajax/channels?id=".urlencode($link);
 //echo $link;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
@@ -174,13 +174,13 @@ $link="http://fms3.dns04.com/ajax/channels?id=".$link;
   curl_close($ch);
 //echo $html;
 $n=0;
-$videos = explode('<div class="channel_left">', $html);
+$videos = explode('<div class="channel_right">', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $link=trim(str_between($video,"zapChannel('","'"));
+    $link=trim(str_between($video,"open_epg_pop('","'"));
     $title=trim(str_between($video,'name=',"'"));
     //$t1=explode("title=",$video);
     //$t2=explode(">",$t1[1]);
