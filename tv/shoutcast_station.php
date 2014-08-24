@@ -222,8 +222,10 @@ url;
 </link>
 </destination>
 <channel>
-  <title><?php echo $tit." - display from:".$page; ?></title>
+  <title><?php echo $tit;?></title>
 <?php
+//Sky
+//http://listen.sky.fm/webplayer/00srnb.jsonp?callback=_API_Playlists_getChannel
 function str_between($string, $start, $end){
 	$string = " ".$string; $ini = strpos($string,$start);
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
@@ -234,10 +236,18 @@ if ($tip == "genre") {
   $link="http://www.shoutcast.com/genre-ajax/".$search;
   $post="strIndex=".$page."&count=100&ajax=true&mode=listeners&order=desc";
   $link="http://www.shoutcast.com/radiolist.cfm?start=".(($page-1)*18 + 1)."&action=sub&string=&cat=".$search."&amount=18&order=listeners&_cf_containerId=radiolist&_cf_nodebug=true&_cf_nocache=true&_cf_rc=1";
+  
+  $link="http://www.shoutcast.com/Home/BrowseByGenre";
+  $post="genrename=".$search;
 } elseif ($tip == "search") {
+
   $link="http://www.shoutcast.com/search-ajax/".$search;
   $post="strIndex=".$page."&count=100&ajax=true";
   $link="http://www.shoutcast.com/radiolist.cfm?start=".(($page-1)*18 + 1)."&action=search&string=".$search."&cat=&amount=18&order=listeners&_cf_containerId=radiolist&_cf_nodebug=true&_cf_nocache=true&_cf_rc=1";
+  
+  $link="http://www.shoutcast.com/Search";
+  $link="http://www.shoutcast.com/Search/UpdateSearch";
+  $post="query=".$search;
 }
 //http://www.shoutcast.com/radiolist.cfm?start=19&action=search&string=romania&cat=&amount=18&order=listeners&_cf_containerId=radiolist&_cf_nodebug=true&_cf_nocache=true&_cf_rc=1
 //http://www.shoutcast.com/radiolist.cfm?action=search&string=romania&cat=&_cf_containerId=radiolist&_cf_nodebug=true&_cf_nocache=true&_cf_rc=0
@@ -248,8 +258,9 @@ for ($i=0;$i<2;$i++) {
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch,CURLOPT_REFERER,$link);
-  //curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+  curl_setopt($ch,CURLOPT_REFERER,"http://www.shoutcast.com/Search");
+  curl_setopt ($ch, CURLOPT_POST, 1);
+  curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
 //  curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
 //  curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
   $html = curl_exec($ch);
@@ -257,11 +268,13 @@ for ($i=0;$i<2;$i++) {
   if (strlen($html) > 5) break;
   sleep(1);
 }
+//$t1=explode("<body",$html);
 //echo $html;
-$videos = explode('class="transition"', $html);
+$videos = explode('ID":', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
+/*
   $t1=explode('>',$video);
   $t2=explode('<',$t1[1]);
   $name=$t2[0];
@@ -278,6 +291,7 @@ foreach($videos as $video) {
   $br=$t2[0];
   $t2=explode("<",$t1[4]);
   $ct=$t2[0];
+*/
   /*
   $br=str_between($video,'class="dirbitrate">','<');
   $g=str_between($video,'Tags:','</div>');
@@ -288,6 +302,14 @@ foreach($videos as $video) {
   $t2=explode('</td',$t1[1]);
   $ct=$t2[0];
   */
+  $t1=explode(",",$video);
+  $id=$t1[0];
+  $name=str_between($video,'Name":"','"');
+  $gen=str_between($video,'Genre":"','"');
+  $lc=str_between($video,'Listeners":',",");
+  $br=str_between($video,'Bitrate":',",");
+  $ct=str_between($video,'CurrentTrack":"','"');
+  $mt=str_between($video,'audio/','"');
   $ct=str_replace("&","&amp;",$ct);
   if (!preg_match("/manele/i",$gen) && !preg_match("/manele/i",$name)) {
   echo '

@@ -750,6 +750,12 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
 } elseif ((strpos($filelink, 'fastupload.rol.ro') !== false)  || (strpos($filelink, 'fastupload.ro') !== false) || (strpos($filelink, 'superweb.rol.ro') !== false)) {
    $h = file_get_contents($filelink);
    $link=str_between($h,"file': '","'");
+   $t1=explode("tracks':",$h);
+   $t2=explode("'file': ",$t1[1]);
+   $t3=explode('"',$t2[1]);
+   $mysrt=$t3[1];
+   $l_srt="http://127.0.0.1/cgi-bin/scripts/util/srt_xml.php?file=".urlencode($mysrt);
+   $h=file_get_contents($l_srt);
 } elseif (strpos($filelink, 'zetshare.net') !== false) {
    $h = file_get_contents($filelink);
    $link=str_between($h,"'file', '","'");
@@ -891,8 +897,8 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    //$link=$ret1[0];
    //$link="http://127.0.0.1/cgi-bin/scripts/util/wget.cgi?link=".$link.";referer=".$referer.";";
    //$mysrt=$ret1[1];
-   $link=str_between($h,'downlpl" href="','"');
-   $mysrt=str_between($h,'downlsub1" href="','"');
+   $link=trim(str_between($h,'downlpl" href="','"'));
+   $mysrt=trim(str_between($h,'downlsub1" href="','"'));
    } else {
    if (!file_exists($cookie)) {
     $handle = fopen($dat, "r");
@@ -934,8 +940,8 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
    $h = curl_exec($ch);
    curl_close ($ch);
-   $link=str_between($h,'downlpl" href="','"');
-   $mysrt=str_between($h,'downlsub1" href="','"');
+   $link=trim(str_between($h,'downlpl" href="','"'));
+   $mysrt=trim(str_between($h,'downlsub1" href="','"'));
    }
    $l_srt="http://127.0.0.1/cgi-bin/scripts/util/srt_xml.php?file=".urlencode($mysrt);
    $h=file_get_contents($l_srt);

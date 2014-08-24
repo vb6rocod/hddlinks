@@ -312,19 +312,7 @@ else
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-<?php
-$f="/usr/local/etc/dvdplayer/seenow_p.txt";
-if (file_exists($f)) {
-echo '
-<item>
-<title>Dreambox TV</title>
-<link>'.$host.'/scripts/tv/php/dream_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-';
-}
-?>
+
 <!--
 <item>
 <title>Dreambox TV (old)</title>

@@ -293,6 +293,15 @@ columnCount=5
     <mediaDisplay name="photoView"/>
   </item>
 --->
+
+  <item>
+<link>http://127.0.0.1/cgi-bin/scripts/tv/php/sky.php</link>
+    <title>Sky FM</title>
+    <annotation>SKY.FM Radio | Enjoy amazing Free Internet Radio stations</annotation>
+    <image>/usr/local/etc/www/cgi-bin/scripts/tv/image/sky.png</image>
+    <mediaDisplay name="threePartsView"/>
+  </item>
+
   <item>
 		<link>rss_file:///usr/local/etc/www/cgi-bin/scripts/tv/nrj.rss</link>
     <title>Nrj Music</title>

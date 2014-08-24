@@ -373,7 +373,14 @@ ret;
 	<annotation>Magic FM</annotation>
 	<stream_class>audio</stream_class>
 	</item>
-
+<!--
+	<item>
+	<title>Sky FM</title>
+	<stream_url>http://pub4.sky.fm/sky_00srnb_aacplus.flv</stream_url>
+	<annotation>Sky FM</annotation>
+	<stream_class>audio</stream_class>
+	</item>
+	-->
 	<item>
 	<title>Romantic FM</title>
 	<stream_url>http://93.114.44.203:8002</stream_url>

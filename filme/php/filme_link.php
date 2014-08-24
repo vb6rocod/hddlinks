@@ -554,6 +554,9 @@ for ($i=0;$i<count($links);$i++) {
         }
         if (strpos($cur_link,"roshare.info") !==false || strpos($cur_link,"rosharing.com") !==false) {
           $mysrt_roshare="asasas";
+        }
+        if ((strpos($cur_link, 'fastupload.rol.ro') !== false)  || (strpos($cur_link, 'fastupload.ro') !== false) || (strpos($cur_link, 'superweb.rol.ro') !==false)) {
+          $mysrt_roshare="asasas";
           /*
           $ch = curl_init($cur_link);
           curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);

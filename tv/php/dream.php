@@ -188,6 +188,7 @@ foreach($videos as $video) {
     //$title=trim($t3[0]);
     //$link="dream.php?link=".urlencode($link)."&title=".urlencode($title);
     $link=$host."/scripts/tv/php/dream_link.php?link=".urlencode($link);
+    //doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
     if ($title) {
     echo '
     <item>
@@ -209,7 +210,7 @@ foreach($videos as $video) {
     streamArray = pushBackStringArray(streamArray, "'.$title.'");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+    playItemUrl(movie,10);
     </script>
     </onClick>
     <annotation>'.$s_desc.'</annotation>
