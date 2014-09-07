@@ -1,5 +1,5 @@
-24.08.2014
-http://hddlinks.googlecode.com/hg/scripts.zip
+07.09.2014
+http://hddlinks.esy.es/scripts.zip
 direct
 http://hddlinks.netai.net/scripts.zip
 http://hddlinks.esy.es/scripts.zip

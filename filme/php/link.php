@@ -943,6 +943,25 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $link=trim(str_between($h,'downlpl" href="','"'));
    $mysrt=trim(str_between($h,'downlsub1" href="','"'));
    }
+   $link=str_replace(" ","%20",$link);
+$l="/usr/local/etc/dvdplayer/update.txt";
+$h=file_get_contents($l);
+$t=explode("\n",$h);
+$player_tip=trim($t[0]);
+$f = "/usr/local/bin/home_menu";
+if (file_exists($f) && $player_tip==0) {
+  $out='#!/bin/sh
+cat <<EOF
+Content-type: video/mp4
+
+EOF
+exec /opt/bin/curl  -s "'.$link.'"';
+$fp = fopen('/usr/local/etc/www/cgi-bin/scripts/util/m.cgi', 'w');
+fwrite($fp, $out);
+fclose($fp);
+exec("chmod +x /usr/local/etc/www/cgi-bin/scripts/util/m.cgi");
+$link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
+}
    $l_srt="http://127.0.0.1/cgi-bin/scripts/util/srt_xml.php?file=".urlencode($mysrt);
    $h=file_get_contents($l_srt);
 } elseif (strpos($filelink, 'filebox.com') !==false) {
@@ -1344,6 +1363,7 @@ $post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=C
      $filelink=str_replace("/embed","",$filelink);
      $filelink=str_replace("html","json",$filelink);
    }
+   if (strpos($filelink,"videoapi.my.mail.ru") === false)
    $filelink=str_replace("my.mail.ru/video","api.video.mail.ru/videos/",$filelink);
    $ch = curl_init($filelink);
    curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
@@ -1357,6 +1377,11 @@ $post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=C
   $t1=explode('hd":"',$h);
   $t2=explode('"',$t1[1]);
   $link=$t2[0];
+  if (!$link) {
+  $t1=explode('md":"',$h);
+  $t2=explode('"',$t1[1]);
+  $link=$t2[0];
+  }
   if (!$link) {
   $t1=explode('sd":"',$h);
   $t2=explode('"',$t1[1]);
@@ -1379,6 +1404,16 @@ exec("chmod +x /usr/local/etc/www/cgi-bin/scripts/util/m.cgi");
 sleep (2);
 $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
 //$link="http://api.video.mail.ru/file/video/hv/mail/vladimir_aleksei/_myvideo/275";
+} elseif (strpos($filelink,"videomega.tv") !==false) {
+  //http://videomega.tv/iframe.php?ref=IHcNODXJUC&width=660&height=360
+   $ch = curl_init($filelink);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   $h = curl_exec($ch);
+   curl_close($ch);
+   $h1=urldecode(str_between($h,'document.write(unescape("','"'));
+   $link=str_between($h1,'file: "','"');
 } elseif (strpos($filelink,"upafile.com") !==false) {
   $h=file_get_contents($filelink);
   $link=unpack_DivXBrowserPlugin(1,$h,false);
