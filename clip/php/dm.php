@@ -248,6 +248,8 @@ foreach($videos as $video) {
     $t1 = explode('href="', $video);
     $t2 = explode('"', $t1[1]);
     $link = 'http://www.dailymotion.com'.$t2[0];
+    $t1=explode("_",$link);
+    $link=$t1[0];
 
     $t1 = explode('data-src="', $video);
     $t2 = explode('"', $t1[1]);

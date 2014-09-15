@@ -1,12 +1,6 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 $host = "http://127.0.0.1/cgi-bin";
-$query = $_GET["query"];
-if($query) {
-   $queryArr = explode(',', $query);
-   $link = urldecode($queryArr[0]);
-   $tit = urldecode($queryArr[1]);
-}
 ?>
 <rss version="2.0">
 <onEnter>
@@ -152,7 +146,7 @@ ret;
 
 	</item_template>
 <channel>
-	<title><?php echo $tit; ?></title>
+	<title>HTS Tvheadend</title>
 	<menu>main menu</menu>
 <?php
 function str_between($string, $start, $end){
@@ -162,8 +156,8 @@ function str_between($string, $start, $end){
 }
 $host = "http://127.0.0.1/cgi-bin";
 //$link=urldecode("1%253A7%253A0%253A0%253A0%253A0%253A0%253A0%253A0%253A0%253A%2528provider%2520%253D%253D%2520%2522Com%2520Hem%2522%2529%2520%2526%2526%2520%2528type%2520%253D%253D%25201%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252017%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252022%2529%2520%257C%257C%2520%2528type%2520%253D%253D%252025%2529%2520%257C%257C%2520%2528type%2520%253D%253D%2520134%2529%2520%257C%257C%2520%2528type%2520%253D%253D%2520195%2529%2520ORDER%2520BY%2520name%253ACom%2520Hem%26stype%3Dtv");
-$link=str_replace('\"','"',$link);
-$link="http://hdforall3.strangled.net/ajax/channels?id=".urlencode($link);
+$link="http://www.ahy.96.lt/htstvh.txt";
+//$link=file_get_contents($link);
 //echo $link;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
@@ -174,21 +168,20 @@ $link="http://hdforall3.strangled.net/ajax/channels?id=".urlencode($link);
   curl_close($ch);
 //echo $html;
 $n=0;
-$videos = explode('<div class="channel_right">', $html);
+$videos = explode('<e2service>', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $link=trim(str_between($video,"open_epg_pop('","'"));
-    $title=trim(str_between($video,'name=',"'"));
-    //$t1=explode("title=",$video);
-    //$t2=explode(">",$t1[1]);
-    //$t3=explode("<",$t2[1]);
-    //$title=trim($t3[0]);
-    //$link="dream.php?link=".urlencode($link)."&title=".urlencode($title);
-    $link=$host."/scripts/tv/php/dream_link.php?link=".urlencode($link);
+    $link=trim(str_between($video,'href="','"'));
+	//$title=trim(str_between($video,'<div class="x-grid3-cell-inner x-grid3-col-1" unselectable="name">','</div>'));
+	//$link=trim(str_between($video,"open_epg_pop('","'"));
+    //$link=trim(str_between($video,'<a href="','">Play'));
+	$title=trim(str_between($video,'unselectable="name">',"</div>"));
+    //$link=$host."/scripts/tv/php/dream_link.php?link=".urlencode($link);
     //doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+    $link="http://heand.dns04.com:9981/".$link."";
     if ($title) {
     echo '
     <item>
@@ -196,8 +189,7 @@ foreach($videos as $video) {
     <onClick>
     <script>
     showIdle();
-    url="'.$link.'";
-    movie=getUrl(url);
+    movie="'.$link.'";
     cancelIdle();
     storagePath = getStoragePath("tmp");
     storagePath_stream = storagePath + "stream.dat";
@@ -210,7 +202,7 @@ foreach($videos as $video) {
     streamArray = pushBackStringArray(streamArray, "'.$title.'");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
-    playItemUrl(movie,10);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
     </script>
     </onClick>
     <annotation>'.$s_desc.'</annotation>

@@ -157,23 +157,36 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$html = file_get_contents("http://www.protv.ro/video/");
-$image = "/usr/local/etc/www/cgi-bin/scripts/tv/image/protv.jpg";
-$html = str_between($html,'div class="videos"','</div');
-$videos = explode('href="', $html);
+$l="http://protvplus.ro/emisiuni";
+$title="=== Emisiuni ===";
+  echo '
+  <item>
+  <title>'.$title.'</title>
+  <annotation>'.$title.'</annotation>
+  </item>
+  ';
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, "http://protvplus.ro");
+  $html = curl_exec($ch);
+  curl_close($ch);
+$html=str_between($html,'<ul class="show-list"','</ul');
+$videos = explode('<li', $html);
 unset($videos[0]);
 $videos = array_values($videos);
-//http://assets.sport.ro/assets/protv/2010/10/29/videos/22/teaser_happy_hour_1080p-transfer_ro-29oct-1050cd.mov.flv
-//http://web3.protv.ro/assets/protv/hh/episodes/muzica-happy-29-octombrie-2/muzica-happy-29-octombrie-2/c1.flv
-//http://web3.protv.ro/assets/protv/hh/episodes/muzica-happy-29-octombrie-2/muzica-happy-29-octombrie-2/thumbs/c1.jpg
 foreach($videos as $video) {
-  $t1 = explode('"', $video);
-  $link = $t1[0];
-
-  $t1 = explode('>', $video);
-  $t2 = explode('<', $t1[1]);
-  $title = trim($t2[0]);
+    $t=explode('href="/produs/',$video);
+    $t1=explode('/',$t[1]);
+    $link=$t1[0];
+    $image="http://d1.a4w.ro/avod/".$link.".jpg";
+  	$title=str_between($video,'class="title_new">','<');
+	$title=ucfirst(strtolower($title));
+	if ( strpos($title,'maruta') !== false ) $title=ucwords(strtolower($title));
   $link = $host."/scripts/tv/php/protv.php?query=1,".$link.",".urlencode($title);
+  if ($title) {
   echo '
   <item>
   <title>'.$title.'</title>
@@ -181,6 +194,85 @@ foreach($videos as $video) {
   <annotation>'.$title.'</annotation>
   </item>
   ';
+ }
+}
+$l="http://protvplus.ro/seriale";
+$title="=== Seriale ===";
+  echo '
+  <item>
+  <title>'.$title.'</title>
+  <annotation>'.$title.'</annotation>
+  </item>
+  ';
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, "http://protvplus.ro");
+  $html = curl_exec($ch);
+  curl_close($ch);
+$html=str_between($html,'<ul class="show-list"','</ul');
+$videos = explode('<li', $html);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+    $t=explode('href="/produs/',$video);
+    $t1=explode('/',$t[1]);
+    $link=$t1[0];
+    $image="http://d1.a4w.ro/avod/".$link.".jpg";
+  	$title=str_between($video,'class="title_new">','<');
+	$title=ucfirst(strtolower($title));
+	if ( strpos($title,'maruta') !== false ) $title=ucwords(strtolower($title));
+  $link = $host."/scripts/tv/php/protv.php?query=1,".$link.",".urlencode($title);
+  if ($title) {
+  echo '
+  <item>
+  <title>'.$title.'</title>
+  <link>'.$link.'</link>
+  <annotation>'.$title.'</annotation>
+  </item>
+  ';
+ }
+}
+$l="http://protvplus.ro/stiri";
+$title="=== Stiri ===";
+  echo '
+  <item>
+  <title>'.$title.'</title>
+  <annotation>'.$title.'</annotation>
+  </item>
+  ';
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, "http://protvplus.ro");
+  $html = curl_exec($ch);
+  curl_close($ch);
+$html=str_between($html,'<ul class="show-list"','</ul');
+$videos = explode('<li', $html);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+    $t=explode('href="/produs/',$video);
+    $t1=explode('/',$t[1]);
+    $link=$t1[0];
+    $image="http://d1.a4w.ro/avod/".$link.".jpg";
+  	$title=str_between($video,'class="title_new">','<');
+	$title=ucfirst(strtolower($title));
+	if ( strpos($title,'maruta') !== false ) $title=ucwords(strtolower($title));
+  $link = $host."/scripts/tv/php/protv.php?query=1,".$link.",".urlencode($title);
+  if ($title) {
+  echo '
+  <item>
+  <title>'.$title.'</title>
+  <link>'.$link.'</link>
+  <annotation>'.$title.'</annotation>
+  </item>
+  ';
+ }
 }
 ?>
 </channel>

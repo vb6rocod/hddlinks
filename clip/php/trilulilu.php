@@ -248,12 +248,34 @@ $page1=25*($page-1);
 } else {
 $page1=12*($page-1);
 }
+//http://localhost/mobile/scripts/filme/trilulilu.php?page=1,http%3A%2F%2Fwww.trilulilu.ro%2FMuzica%3Fheader%3D1%23ref%3Dheader,Muzic%C4%83
 //http://www.trilulilu.ro/muzica?ref=header&mimetype=&offset=25
+//http://www.trilulilu.ro/Muzica?mimetype=video&offset=11&noredir=1&header=1
+//http://www.trilulilu.ro/Muzica?mimetype=video&header=1#ref=mimetype_filter_video
+//http://www.trilulilu.ro/Muzica?header=1#ref=header
 $search=urldecode($search);
 if (strpos($search,"cele-mai-tari") === false)
-  $html=file_get_contents($search."&offset=".$page1);
+  $l=$search."&offset=".$page1."&noredir=1";
 else
-  $html=file_get_contents($search."&offset=".$page1);
+  $l=$search."&offset=".$page1."&noredir=1";
+//http://www.trilulilu.ro/Muzica?mimetype=video&header=1#ref=mimetype_filter_video
+//$l="http://www.trilulilu.ro/Muzica?mimetype=video&header=1#ref=mimetype_filter_video";
+//http://www.trilulilu.ro/Muzica?header=1#ref=mimetype_filter_video&mimetype=video
+if ($page==1)
+  $l=$search."?mimetype=video&header=1#ref=mimetype_filter_video";
+else
+  $l=$search."?mimetype=video&offset=".$page1."&noredir=1&header=1";
+//echo $l;
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch,CURLOPT_REFERER,$search);
+  //curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+  //curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
 if($page > 1) { ?>
 
 <item>
@@ -272,31 +294,32 @@ if($search) {
 </item>
 <?php } ?>
 <?php
-$videos = explode('div class=" mlxl plxl', $html);
+$videos = explode('<div class="relative has-ql-btn',$html);
+//$videos = explode('<div class="relative has-ql-btn',$html);
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
     $t1 = explode('href="', $video);
+ //if (sizeof ($t1) > 2 ) {
     $t2 = explode('"', $t1[2]);
     $link = $t2[0];
 
     $t3 = explode('title="', $video);
     $t2 = explode('"', $t3[1]);
     $title = trim($t2[0]);
-    $title=fix_s($title);
+    //$title=fix_s($title);
     $t1 = explode('src="', $video);
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
-    if (strpos($image,"pixel.gif") !== false) {
-      $image="/usr/local/etc/www/cgi-bin/scripts/clip/image/trilulilu.png";
-    }
     $descriere=$title;
-    
+
     $t0=explode('class="duration',$video);
+ if (sizeof ($t0) > 1 ) {
     $t1=explode('>',$t0[1]);
     $t2=explode('<',$t1[1]);
     $durata="Durata:".trim($t2[0]);
+ }
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
     if ((strpos($title,"Vizion") === false) && ($title <> "")) {
     echo '

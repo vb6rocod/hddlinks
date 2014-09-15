@@ -200,12 +200,7 @@ if($query) {
 }
 //http://www.protv.ro/multimedia/happy-hour
 //http://www.protv.ro/multimedia/happy-hour/pagina-1#paginare
-if($page) {
-	$html = file_get_contents($search."/pagina-".$page."#paginare");
-} else {
-  $page = 1;
-	$html = file_get_contents($search);
-}
+$html = file_get_contents("http://protvplus.ro/produs/".$search."?page=".$page);
 
 if($page > 1) { ?>
 
@@ -232,29 +227,27 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$videos = explode('a class="videoItem"', $html);
+$videos = explode('<div class="item"', $html);
 
 unset($videos[0]);
+unset($videos[1]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-	$t1 = explode('href="', $video);
-	$t2 = explode('"', $t1[1]);
-	$link = $t2[0];
-	$link = str_replace(' ','%20',$link);
-	$link = str_replace('[','%5B',$link);
-	$link = str_replace(']','%5D',$link); 
-	 
-	$t1 = explode('src="', $video);
-	$t2 = explode('"', $t1[1]);
-	$image = $t2[0];
-	
-	$t1 = explode('src="', $video);
-	$t2 = explode('>', $t1[2]);
-	$t3 = explode('<',$t2[1]);
-	$title = trim($t3[0]);
-	$data = str_between($video,'<div class="overData">','</div>');
-	$link = $link.",".$image;
+    $t1=explode('href="',$video);
+    $t2 = explode('"', $t1[1]);
+    $link = $t2[0];
+
+    $t3=explode(">",$t1[2]);
+    $t4=explode("<",$t3[1]);
+    $title=$t4[0];
+	$title=ucfirst(strtolower($title));
+	if ( strpos($title,'maruta') !== false ) $title=ucwords(strtolower($title));
+	if ( strpos($title,'protv') !== false ) $title=str_replace("Protv","PROTV",ucwords(strtolower($title)));
+
+    $t1 = explode("src='", $video);
+    $t2 = explode("'", $t1[1]);
+    $image = $t2[0];
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
     $descriere=$title;
     if ($title <> "") {
@@ -267,7 +260,18 @@ foreach($videos as $video) {
     url="'.$host.'/scripts/tv/php/protv_link.php?file='.$link.'";
     movie=getUrl(url);
     cancelIdle();
-    playItemUrl(movie,10);
+    storagePath = getStoragePath("tmp");
+    storagePath_stream = storagePath + "stream.dat";
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/x-flv);
+    streamArray = pushBackStringArray(streamArray, "'.str_replace('"',"'",$title).'");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
     </script>
     </onClick>
     <download>'.$link.'</download>

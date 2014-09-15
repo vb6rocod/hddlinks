@@ -27,13 +27,14 @@ function s_dec($s) {
 $a_itags=array(37,22,18);
 
 $file=$_GET["file"];
+for ($k=0;$k<2;$k++) {
 if(preg_match('/youtube\.com\/(v\/|watch\?v=|embed\/)([\w\-]+)/', $file, $match)) {
   $id = $match[2];
   $l = 'http://www.youtube.com/get_video_info?&video_id=' . $id . '&el=leanback&ps=xl&eurl=https://s.ytimg.com/yts/swfbin/apiplayer-vflhRmAoN.swf&hl=en_US&sts=1588';
   //$html   = file_get_contents($link);
   $html="";
   $p=0;
-  while($html == "" && $p<10) {
+  while($html == "" && $p<100) {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -71,27 +72,29 @@ foreach ($videos as $video) {
 	} else {
 	$link=$out;
     }
- //$link=str_replace("https","http",$link);
- //$link=str_replace("&requiressl=yes","",$link);
-//echo $link."<BR>";
-//if (isset($link['sparams']))    unset($link['sparams']);
-//echo $link."<BR>";
-/*
-parse_str($link,$output);
-$output['sparams']="";
-$link = http_build_query($output);
-$link=str_replace("sparams=","",$link);
-$link=urldecode($link);
-$link=str_replace(",","%2C",$link);
-//print $link;
-//print_r($parts);
-*/
+//test
+
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $link);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+      curl_setopt($ch, CURLOPT_HEADER, 1);
+      curl_setopt($ch, CURLOPT_NOBODY, 1);
+      $h1 = curl_exec($ch);
+      curl_close($ch);
+      //echo $h1;
+
+///
+sleep(1);
+}
 if ($html) {
 $l="/usr/local/etc/dvdplayer/update.txt";
 $h=file_get_contents($l);
 $t=explode("\n",$h);
 $player_tip=trim($t[0]);
-if ($player_tip==0) {
+$f = "/usr/local/bin/home_menu";
+
+if (file_exists($f)) {
 $out='#!/bin/sh
 cat <<EOF
 Content-type: video/mp4

@@ -68,8 +68,14 @@ function get_movie($noob1,$s,$id1,$auth1,$hd1,$tv1,$id1) {
   $html = curl_exec($ch);
   curl_close($ch);
 
+  if (strpos($html,"index.php") === false) {
+  $link=trim(str_between($html,"http://","/"));
+  $link="http://".$link;
+  $movie_link=$link."/".$id1.".php?file=".$id1."&start=0&type=flv&hd=".$hd1."&auth=".$auth1."&tv=".$tv1;
+  } else {
   $link=trim(str_between($html,"Location:","/index.php"));
   $movie_link=$link."/index.php?file=".$id1."&start=0&type=flv&hd=".$hd1."&auth=".$auth1."&tv=".$tv1;
+  }
   return $movie_link;
 }
 //

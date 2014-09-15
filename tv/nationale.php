@@ -356,6 +356,14 @@ columnCount=5
 </item>
 -->
 <item>
+<title>ProTV</title>
+<link><?php echo $host; ?>/scripts/tv/php/protv_main.php</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/protv.jpg" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/protv.jpg</image>
+<location>http://www.protv.ro/</location>
+<annotation>Vezi aici emisiuni inregistrate ale postului TV ProTV</annotation>
+</item>
+<item>
 <title>Naţional TV</title>
 <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,nationaltvro</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/national.jpg" />

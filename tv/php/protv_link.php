@@ -31,34 +31,29 @@ if($query) {
    $link = $queryArr[0];
    $image = $queryArr[1];
 }
-if (strpos($image,"web3.protv.ro") !== false) {
-       $video=mylink($link);
-print $video;
-} elseif (strpos($image,"assets.sport.ro") !== false) {
-   $h=file_get_contents($link);
-   $link1=urldecode(str_between($h,'config=','"'));
-   //echo $link1;
-   $h1=file_get_contents($link1);
-   if (strpos($h1,"rtmp") === false) {
-     $video=str_between($h1,'url": "','"');
-     if (!$video) {
-       $video=str_between($h1,'var image_file = "','"');
-       $video=str_replace("jpg","mp4",$video);
-     }
-   } else {
-     //$y=str_between($h1,'url": "','"');
-     $y="mp4:".str_between($h1,"vod#|#","#");
-     //$rtmp=str_between($h1,'netConnectionUrl": "','"');
-     $rtmp="rtmp://vod.protv.ro/vod_ro/";
+$h = file_get_contents("http://protvplus.ro".urldecode($link));
+$serv = str_between($h,"rtmp:","'");
+//$t1 = str_between($h,'$.ajax(','$f(');
+$t1=explode("$.ajax({",$h);
+$linkajax=str_between($t1[1],'url: "','"');
+//$linkajax="/lbin/ajax/config1.php?site=94000&realSite=94000&subsite=753&section=20720&media=61288956&jsVar=fltfm&mute=0&size=&pWidth=700&pHeight=435";
+$h = file_get_contents("http://protvplus.ro/".$linkajax);
+$h = str_replace("\\","",$h);
+//echo $h;
+$id = str_between($h,'url":"','"');
+//$id=str_replace("x","_HD",$id);
+$title =  str_between($h,'title":"','"');
+$y = $id."-HD-1.mp4";
+$rtmp = "rtmp:".$serv."/";
      $w="http://d1.a4w.ro/tfm/flowplayer.commercial-3.2.15.swf";
-     $p="http://www.protv.ro";
+     $p="http://protvplus.ro";
      //rtmp://vod.protv.ro/vod_all/
      $t1=explode("/",$rtmp);
      $a=$t1[3]."/";
-     $l="http://127.0.0.1/cgi-bin/scripts/util/translate1.cgi?stream,Rtmp-options:-W http://d1.a4w.ro/player/flowplayer.cluster-3.2.1.swf -p http://www.protv.ro -a ".$a;
+     $l="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W http://d1.a4w.ro/flowplayer/flowplayer.commercial-3.2.18.swf -p http://protvplus.ro -a ".$a;
      $l=$l." -y ".$y.",".$rtmp;
      $video=str_replace(" ","%20",$l);
-   }
+
 print $video;
-}
+
 ?>

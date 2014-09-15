@@ -313,14 +313,20 @@ else
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<!--
+<?php
+error_reporting(0);
+$f="/usr/local/etc/dvdplayer/seenow_p.txt";
+if (file_exists($f)) {
+echo '
 <item>
-<title>Dreambox TV (old)</title>
-<link><?php echo $host; ?>/scripts/tv/php/dream_main1.php</link>
+<title>HTS Tvheadend</title>
+<link>'.$host.'/scripts/tv/php/dream.php</link>
+<annotation>HTS Tvheadend</annotation>
 <media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
 </item>
--->
+';
+}
+?>
 <item>
 <title>TV Live - Muzică</title>
 <link><?php echo $host; ?>/scripts/tv/music_tv.php</link>

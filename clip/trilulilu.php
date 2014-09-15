@@ -156,8 +156,9 @@ ret;
 <channel>
 
 <title>trilulilu.ro</title>
-
+<!--
 <item>
+
   <title>Căutare</title>
   <onClick>
 		keyword = getInput();
@@ -167,7 +168,7 @@ ret;
 		  }
    </onClick>
 </item>
-
+-->
 <?php
 function str_between($string, $start, $end){
 	$string = " ".$string; $ini = strpos($string,$start);
@@ -216,8 +217,11 @@ foreach($videos as $video) {
   $t3=explode(">",$t1[1]);
   $t4=explode("<",$t3[1]);
   $title=trim($t4[0]);
-  $link1=$host."/scripts/clip/php/trilulilu.php?query=1,".urlencode($link).",".urlencode($title);
+
   if (preg_match("/header/",$link)) {
+    $t1=explode("?",$link);
+    $link=$t1[0];
+    $link1=$host."/scripts/clip/php/trilulilu.php?query=1,".urlencode($link).",".urlencode($title);
   echo '
   <item>
   <title>'.$title.'</title>
