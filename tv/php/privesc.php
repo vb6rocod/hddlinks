@@ -190,7 +190,20 @@ ret;
 
 <?php
 $page1 = $page-1;
-$html=file_get_contents($search."/".$page1);
+$search1=str_replace("*",",",$search);
+if ($page > 1)
+$l=$search1."/".$page1;
+else
+$l=$search1;
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+  $html = curl_exec($ch);
+  curl_close($ch);
 if($page > 1) { ?>
 
 <item>
@@ -218,27 +231,28 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 include ("../../common.php");
+//https://www.privesc.eu/arhiva/categorii/Romania,/1
 $host = "http://127.0.0.1/cgi-bin";
-$videos = explode('id="video-', $html);
+$videos = explode("<div class='col-xs-12", $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-  $t1 = explode('href="', $video);
-  $t2 = explode('"',$t1[1]);
-  $link="http://www.privesc.eu".$t2[0];
+  $t1 = explode("href='", $video);
+  $t2 = explode("'",$t1[1]);
+  $link="https://www.privesc.eu".$t2[0];
   
-  $t1=explode('title="',$video);
-  $t2=explode('"',$t1[1]);
+  $t1=explode("alt='",$video);
+  $t2=explode("'",$t1[1]);
   $title=trim($t2[0]);
   $title=fix_s($title);
-  
+//http://storage.privesc.eu/thumnails/49569.jpg
   $t1=explode("src='",$video);
   $t2=explode("'",$t1[1]);
-  $image=$t2[0];
+  $image="http:".$t2[0];
   
-  $data=str_between($video,'class="video-time">','</div>');
+  $data=str_between($video,"<p class='text-muted'>",'</p>');
   $descriere = $title;
   $descriere = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$descriere);
   $descriere = str_replace("&nbsp;","/",$descriere);
@@ -253,9 +267,9 @@ foreach($videos as $video) {
     showIdle();
     url="'.$host.'/scripts/tv/php/privesc_link.php?file='.$link.'";
     url1=getUrl(url);
-    movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+    movie1="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
     cancelIdle();
-    playItemUrl(movie,10);
+    playItemUrl(url1,10);
     </script>
     </onClick>
     <download>'.$link.'</download>

@@ -14,6 +14,7 @@ $link1 = str_between($html, "<url>", "</url>");
 $link1=str_replace("&amp;","&",$link1);
 */
 //$link1=urldecode(str_between($html,'flashvars.video_url = "','"'));
-$link1=urldecode(str_between($html,'vidSource = unescape("','"'));
+//$link1=urldecode(str_between($html,'vidSource = unescape("','"'));
+$link1=urldecode(str_between($html,'playerData.cdnPath480 = "','"'));
 print $link1;
 ?>

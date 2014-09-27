@@ -219,8 +219,8 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$videos = explode('<div class="video">', $html);
-
+//$videos = explode('<div class="video">', $html);
+$videos=explode('<span class="video-title">',$html);
 unset($videos[0]);
 $videos = array_values($videos);
 

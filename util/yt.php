@@ -94,7 +94,7 @@ $t=explode("\n",$h);
 $player_tip=trim($t[0]);
 $f = "/usr/local/bin/home_menu";
 
-if (file_exists($f)) {
+if (file_exists($f) || $player_tip==0) {
 $out='#!/bin/sh
 cat <<EOF
 Content-type: video/mp4

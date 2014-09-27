@@ -176,7 +176,8 @@ $videos = array_values($videos);
 foreach($videos as $video) {
 	$t1 = explode('href="',$video);
 	$t2 = explode('"',$t1[1]);
-	$link=substr($t2[0], 0, -6);
+	$link=substr($t2[0], 0, -1);
+	$link=str_replace("&","%26",$link);
 	$link="http://www.990.ro/".$link;
 	$link = $host."/scripts/filme/php/990_filme.php?query=1,".$link;
 	

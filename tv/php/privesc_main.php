@@ -165,24 +165,39 @@ function str_between($string, $start, $end){
 }
 include ("../../common.php");
       $title="Toate";
-      $link="http://www.privesc.eu/Arhiva/Pagina";
+      $link="https://www.privesc.eu/arhiva/categorii/Toate";
       $link=$host."/scripts/tv/php/privesc.php?query=1,".urlencode($link).",".urlencode($title);
-  	echo '
+      /*
+      echo '
   	<item>
   		<title>'.$title.'</title>
   		<link>'.$link.'</link>
   	</item>';
-$html = file_get_contents("http://www.privesc.eu/Arhiva/Pagina");
-$html=str_between($html,'<ul id="categories">','</ul>');
-$videos = explode('<li>', $html);
+   */
+//$html = file_get_contents("http://www.privesc.eu/Arhiva/Pagina");
+$l="http://www.privesc.eu/Arhiva/Pagina";
+$l="https://www.privesc.eu/Arhiva/";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+  $html = curl_exec($ch);
+  curl_close($ch);
+  //echo $html;
+$html=str_between($html,'<div class="list-group">','<div class="panel panel-default">');
+$videos = explode('<a class', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
-    $title = str_between($video,'title="','"');
+    $title = str_between($video,"title='","'");
     $title=fix_s($title);
-    $t1 = explode('href="',$video);
-    $t2 = explode('"',$t1[1]);
-    $link ="http://www.privesc.eu".$t2[0];
+    $t1 = explode("href='",$video);
+    $t2 = explode("'",$t1[1]);
+    $link ="https://www.privesc.eu".$t2[0];
+    $link=str_replace(",","*",$link);
   	$link=$host."/scripts/tv/php/privesc.php?query=1,".urlencode($link).",".urlencode($title);
   	echo '
   	<item>
