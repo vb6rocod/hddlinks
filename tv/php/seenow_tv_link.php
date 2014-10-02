@@ -5,6 +5,22 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
+function search_arr($array, $key, $value)
+{
+    $results = array();
+
+    if (is_array($array)) {
+        if (isset($array[$key]) && $array[$key] == $value) {
+            $results[] = $array;
+        }
+
+        foreach ($array as $subarray) {
+            $results = array_merge($results, search_arr($subarray, $key, $value));
+        }
+    }
+
+    return $results;
+}
 function enc($string) {
   $local3="";
   $arg1=strlen($string);
@@ -25,44 +41,35 @@ $query = $_GET["file"];
 if($query) {
    $queryArr = explode(',', $query);
    $id = urldecode($queryArr[0]);
+   $pg_id = urldecode($queryArr[1]);
    $buf = $queryArr[1];
 }
-$l="http://www.seenow.ro/service3/play/index/id/".$id."/platform_id/19";
-$html = file_get_contents($l);
-if (strpos($html,"stream") === false) {
-$new_file="D://dolce.gz";
-$new_file="/tmp/dolce.gz";
-$fh = fopen($new_file, 'w');
-fwrite($fh, $html);
-fclose($fh);
-$zd = gzopen($new_file, "r");
-$html = gzread($zd, filesize($new_file));
-gzclose($zd);
-}
-$html=str_replace("\\","",$html);
-$t1=explode('high quality stream name":"',$html);
+$l="http://www.seenow.ro/smarttv/placeholder/list/id/".$pg_id."/start/0/limit/999";
+$h=file_get_contents($l);
+$p=json_decode($h,1);
+$items=$p['items'];
+$items = array_values($items);
+$willStartPlayingUrl = "http://www.seenow.ro/smarttv/historylist/add/id/".$id;
+$h=json_encode(search_arr($items, 'willStartPlayingUrl', $willStartPlayingUrl));
+
+$h=str_replace("\\","",$h);
+$t1=explode('high quality stream name":"',$h);
 $t2=explode('"',$t1[1]);
 $str=$t2[0];
-
-//$t1=explode('application name":"',$html);
-//$t2=explode('"',$t1[1]);
-//$app=$t2[0];
-$app="live3";
-
-$t1=explode('token=',$html);
+$t1=explode('token=',$h);
 $t2=explode('|',$t1[1]);
 $token=$t2[0];
-
-$s=str_between($html,'indexUrl":"','"');
-//http:\/\/index.mediadirect.ro\/getUrl?app=live3&file=explorer&publisher=24
-//$s="http://index.mediadirect.ro/getUrl?app=live3&file=".$str."&publisher=24";
+$l1=str_between($h,'streamUrl":"','|');
+$s=str_between($h,'indexUrl":"','"');
 $h = file_get_contents($s);
 $t1=explode('server=',$h);
 $t2=explode('&',$t1[1]);
 $serv=$t2[0];
 if ($serv == "") {
-  $serv="fms1.mediadirect.ro";
+  $serv="fms111.mediadirect.ro";
 }
+//$serv="fms11".mt_rand(2,3).".mediadirect.ro";
+$app="live3";
 //$buf="60000";
 $rtmp="rtmp://".$serv."/".$app."/_definst_";
 $l="Rtmp-options:-b ".$buf;

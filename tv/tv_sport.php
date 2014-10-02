@@ -271,6 +271,7 @@ columnCount=5
 <annotation>Stiri si informatii de ultima ora din sport, interviuri si comentarii la cald din fotbalul de pretutindeni. Meciurile live din Europa League si Cupa Romaniei se vad doar pe www.sport.ro</annotation>
 </item>
 <?php
+/*
 $link="http://www.seenow.ro/koolnet-5514-pagina-";
 $title="Koolnet TV";
 	echo '
@@ -282,6 +283,7 @@ $title="Koolnet TV";
 	<mediaDisplay name="threePartsView"/>
 	</item>
 	';
+*/
 ?>
 <!--
 <item>

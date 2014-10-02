@@ -5,6 +5,32 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
+function rand_string( $length ) {
+	$str = "";
+	$characters = array_merge(range('a','f'), range('0','9'));
+	$max = count($characters) - 1;
+	for ($i = 0; $i < $length; $i++) {
+		$rand = mt_rand(0, $max);
+		$str .= $characters[$rand];
+	}
+ return $str;
+}
+function search_arr($array, $key, $value)
+{
+    $results = array();
+
+    if (is_array($array)) {
+        if (isset($array[$key]) && $array[$key] == $value) {
+            $results[] = $array;
+        }
+
+        foreach ($array as $subarray) {
+            $results = array_merge($results, search_arr($subarray, $key, $value));
+        }
+    }
+
+    return $results;
+}
 function enc($string) {
   $local3="";
   $arg1=strlen($string);
@@ -62,10 +88,14 @@ $serv=$t2[0];
 if ($serv == "") {
   $serv="fms1.mediadirect.ro";
 }
+if (!$token)
+$token=rand_string(48);
+//$token=file_get_contents("http://index.mediadirect.ro/auth?deviceSign=random-device-signature-htx593");
 //$buf="60000";
-$rtmp="rtmp://".$serv."/".$app."/_definst_";
+$u="user_id=0&transaction_id=0&p_item_id=".$id."&device_id=0&publisher=24";
+$rtmp="rtmpe://".$serv."/".$app."/_definst_";
 $l="Rtmp-options:-b ".$buf;
-$l=$l." -a ".$app."/_definst_?token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
+$l=$l." -a ".$app."/_definst_?".$u."&token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
 $l=$l." -p http://www.seenow.ro ";
 $l=$l."-y mp4:".$str;
 $l=$l.",".$rtmp;

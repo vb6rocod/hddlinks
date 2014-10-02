@@ -158,6 +158,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len);
 }
 $host = "http://127.0.0.1/cgi-bin";
+/*
 $link="http://www.seenow.ro/trailere";
 $title="Toate filmele";
 	echo '
@@ -268,6 +269,7 @@ $title="Bollywood";
 	<mediaDisplay name="threePartsView"/>
 	</item>
 	';
+*/
 $link="http://www.seenow.ro/documentare-2701-pagina-";
 $title="Documentare (FreeZone)";
 	echo '
@@ -278,6 +280,7 @@ $title="Documentare (FreeZone)";
 	<mediaDisplay name="threePartsView"/>
 	</item>
 	';
+/*
 $link="http://www.seenow.ro/documentare-17-pagina-";
 $title="Documentare";
 	echo '
@@ -298,6 +301,7 @@ $title="Emisiuni TV";
 	<mediaDisplay name="threePartsView"/>
 	</item>
 	';
+*/
 $link="http://www.seenow.ro/emisiuni-tv-2697-pagina-";
 $title="Emisiuni TV (FreeZone)";
 	echo '

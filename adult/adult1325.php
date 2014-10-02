@@ -461,6 +461,7 @@ French Maid TV
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/xnxx.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
+<!--
 <item>
 <title>Hardcore</title>
   <link><?php echo $host; ?>/scripts/adult/php/seenow_satin.php?query=Private+Hardcore</link>
@@ -479,5 +480,6 @@ French Maid TV
 <image>image/adult.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 </channel>
 </rss>

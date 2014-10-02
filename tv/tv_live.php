@@ -190,7 +190,7 @@ ret;
 
 <item>
 <title>Seenow TV</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/php/seenow_tv.rss</link>
+<link><?php echo $host; ?>/scripts/tv/seenow_tv.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
