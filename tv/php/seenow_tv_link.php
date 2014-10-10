@@ -21,6 +21,19 @@ function search_arr($array, $key, $value)
 
     return $results;
 }
+function objectToArray($d) {
+
+	if (is_object($d)) {
+		$d = get_object_vars($d);
+	}
+
+	if (is_array($d)) {
+		return array_map(__FUNCTION__, $d);
+	}
+	else {
+		return $d;
+	}
+}
 function enc($string) {
   $local3="";
   $arg1=strlen($string);
@@ -42,11 +55,12 @@ if($query) {
    $queryArr = explode(',', $query);
    $id = urldecode($queryArr[0]);
    $pg_id = urldecode($queryArr[1]);
-   $buf = $queryArr[1];
+   $buf = $queryArr[2];
 }
 $l="http://www.seenow.ro/smarttv/placeholder/list/id/".$pg_id."/start/0/limit/999";
 $h=file_get_contents($l);
 $p=json_decode($h,1);
+//print_r ($p);
 $items=$p['items'];
 $items = array_values($items);
 $willStartPlayingUrl = "http://www.seenow.ro/smarttv/historylist/add/id/".$id;

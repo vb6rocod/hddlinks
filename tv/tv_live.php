@@ -189,8 +189,22 @@ ret;
 </item>
 
 <item>
-<title>Seenow TV</title>
-<link><?php echo $host; ?>/scripts/tv/seenow_tv.php</link>
+<title>Seenow TV (Freezone)</title>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/freezone-9-pagina-,Seenow+TV+(freezone)</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>Seenow TV (Abonament)</title>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/tv-60-pagina-,Seenow+TV+(abonament)</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>Filmbox TV (Abonament)</title>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/ro/filmbox-live-62-pagina-,Filmbox+TV+(abonament)</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>

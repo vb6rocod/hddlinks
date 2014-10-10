@@ -230,20 +230,13 @@ ret;
 <annotation>http://vplus.ro/movies/</annotation>
 <media:thumbnail url="image/movies.png" />
 </item>
-<?php
-error_reporting(0);
-$f="/usr/local/etc/dvdplayer/seenow_p.txt";
-if (file_exists($f)) {
-echo '
 <item>
-<title>Seenow</title>
-<link>'.$host.'/scripts/filme/php/seenow_p.php</link>
-<annotation>seenow</annotation>
+<title>Seenow avantaj (abonament)</title>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/ro/avantaj-61-pagina-,Seenow+Avantaj</link>
+<annotation>http://vplus.ro/movies/</annotation>
 <media:thumbnail url="image/movies.png" />
 </item>
-';
-}
-?>
+
 <!--
 <item>
 <title>inviatapenet</title>

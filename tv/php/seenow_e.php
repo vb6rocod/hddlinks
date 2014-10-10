@@ -7,6 +7,64 @@ if($query) {
    $search = urldecode($queryArr[1]);
    $tit = urldecode($queryArr[2]);
 }
+$cookie="/tmp/seenow.dat";
+$filename="/usr/local/etc/dvdplayer/seenow_cont.dat";
+if (file_exists($filename)) {
+  $handle = fopen($filename, "r");
+  $c = fread($handle, filesize($filename));
+  fclose($handle);
+  $a2=explode("|",$c);
+  $a1=str_replace("?","@",$a2[0]);
+  $user=urlencode($a1);
+  $user=str_replace("@","%40",$user);
+  $pass=trim($a2[1]);
+if (!file_exists($cookie)) {
+  $l="http://www.seenow.ro/login";
+  $post="email=".$user."&password=".$pass."&submit=Login";
+  //echo $post;
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER,$l);
+  curl_setopt ($ch, CURLOPT_POST, 1);
+  curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
+}
+}
+$host = "http://127.0.0.1/cgi-bin";
+$search1=str_replace("&","|",$search);
+$link=$search.$page;
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $link);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER,"http://www.seenow.ro/");
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
+$t1=explode('"',$html);
+if ( count($t1) < 2 )
+	$html = base64_decode($html);
+
+  $t1=explode('textNav floatR',$html);
+  if (sizeof($t1)<2) $t1=explode('class="floatR font20 grey',$html);
+if (sizeof($t1)>1){
+  $t2=explode(">",$t1[1]);
+  $pg='Pagina curenta: '.$t2[1];
+}
+  $t1=explode('floatR textNav',$html);
+  if (sizeof($t1)<2) $t1=explode('class="floatR font20 grey',$html);
+if (sizeof($t1)>1){
+  $t2=explode(">",$t1[1]);
+  if ($t2[1]) $available=ucfirst(str_replace("-",".",strtolower($t2[1])));
+  $available=str_replace("</p","",$available);
+}
 ?>
 <rss version="2.0">
 <onEnter>
@@ -71,6 +129,12 @@ if($query) {
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
+  	<text align="left" offsetXPC="8" offsetYPC="3" widthPC="47" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    3=Re-Logon
+		</text>
+  	<text align="right" offsetXPC="55" offsetYPC="3" widthPC="40" heightPC="4" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    <script>"<?php echo $available; ?>" + sprintf("%s "," ");</script>
+		</text>
   	<text align="left" redraw="yes" offsetXPC="6" offsetYPC="15" widthPC="60" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
     <script>"Apăsaţi 2 pentru modificare buffer. Buffer curent: " + buf;</script>
 		</text>
@@ -81,6 +145,9 @@ if($query) {
 		<image  redraw="yes" offsetXPC=60 offsetYPC=22.5 widthPC=30 heightPC=30>
 		<script>print(img); img;</script>
 		</image>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="254:254:254">
+    <script>annotation;</script>
+		</text>
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -98,7 +165,7 @@ if($query) {
 					if(focus==idx)
 					{
 					  location = getItemInfo(idx, "location");
-					  annotation = getItemInfo(idx, "annotation");
+					  annotation = getItemInfo(idx, "title");
 					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
@@ -192,6 +259,12 @@ else if (userInput == "two" || userInput == "2")
   redrawDisplay();
   ret = "true";
 }
+else if (userInput == "three" || userInput == "3")
+{
+ url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/php/seenow_del.php");
+ jumptolink("logon");
+ "true";
+}
 ret;
 </script>
 </onUserInput>
@@ -211,6 +284,14 @@ ret;
 		</mediaDisplay>
 
 	</item_template>
+	<logon>
+	<link>
+	<script>
+	url="/usr/local/etc/www/cgi-bin/scripts/tv/seenow.rss";
+	url;
+	</script>
+	</link>
+	</logon>
   <channel>
 
     <title><?echo $tit; ?></title>
@@ -239,6 +320,22 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
 	return substr($string,$ini,$len);
 }
+function search_arr($array, $key, $value)
+{
+    $results = array();
+
+    if (is_array($array)) {
+        if (isset($array[$key]) && $array[$key] == $value) {
+            $results[] = $array;
+        }
+
+        foreach ($array as $subarray) {
+            $results = array_merge($results, search_arr($subarray, $key, $value));
+        }
+    }
+
+    return $results;
+}
 function xml_fix($string) {
     $v=str_replace("\u015e","S",$string);
     $v=str_replace("\u015f","s",$v);
@@ -258,13 +355,31 @@ function xml_fix($string) {
     $v=str_replace("\/","/",$v);
     return $v;
 }
-$host = "http://127.0.0.1/cgi-bin";
-$link=$search.$page;
-//echo $link;
-$html = file_get_contents($link);
-//$html = file_get_contents($link);
+
+
+
+$html=str_replace("premiumBackground","itemBackground",$html);
+$html=str_replace("premiumThumb","itemsThumb",$html);
+
+$html=str_replace("floatL trailerHref","itemBackground",$html);
+$html=str_replace("trailerItem","itemsThumb",$html);
+$html=str_replace('title="','><>',$html);
+$html=str_replace('" data-trailer-Id="','<',$html);
+$html=str_replace('class="trailerDiv','a class="floatL',$html);
+
+$html=str_replace('class="tvSpan','class="itemBackground',$html);
+$html=str_replace("canaletvThumb","itemsThumb",$html);
+$html=str_replace('floatL ccsSprites canaletvRightArrow','class="floatL ccsSprites RightArrow',$html);
+
+$html=str_replace('radioA','class="itemBackground',$html);
+$html=str_replace("radioThumb","itemsThumb",$html);
+$html=str_replace('" rel="','<',$html);
+$html=str_replace('floatL ccsSprites radioRight','class="floatL ccsSprites RightArrow',$html);
+
+
 $html= str_between($html,'class="floatL itemsThumb">','class="floatL ccsSprites RightArrow');
 $videos = explode('a class="floatL', $html);
+
 unset($videos[0]);
 $videos = array_values($videos);
 
@@ -274,25 +389,73 @@ foreach($videos as $video) {
   $l=$t2[0];
   $rest = substr($l, 0, -2);
   $id = substr(strrchr($rest, "-"), 1);
+  if (strpos($video,'idpl') !== false)
+	$id = str_between($video,'id="idpl','"');
+//  if (strpos($video,' data-id') !== false)
+//	$id = str_between($video,' data-id="','"');
 
   $t1=explode('src="',$video);
   $t2=explode('"',$t1[1]);
   $image=$t2[0];
-  
+
   $t1=explode('class="itemBackground',$video);
   $t2=explode(">",$t1[1]);
   $t3=explode("<",$t2[2]);
   $title=$t3[0];
 
+  $rest = substr($search1, 0, -8);
+  $pg_id = substr(strrchr($rest, "-"), 1);
+  if (! is_numeric($id) ) {
+  $l="http://www.seenow.ro/smarttv/placeholder/list/id/".$pg_id."/start/0/limit/999";
+  $h=file_get_contents($l);
+  $p=json_decode($h,1);
+
+  $items=$p['items'];
+  $items = array_values($items);
+  $h=search_arr($items, 'thumbnail', $image);
+  if ($h) {
+		$id="";
+		$arr=$h[0];
+		if (array_key_exists("willStartPlayingUrl",$arr)) {
+			$t1=$arr['willStartPlayingUrl'];
+			$t2=explode('/',$t1);
+			$id=$t2[sizeof($t2)-1];
+		} else
+		if (array_key_exists("streamUrl",$arr)) {
+			$t1=$arr['streamUrl'];
+			$t2=explode('=',$t1);
+			$id=$t2[sizeof($t2)-1];
+		}
+  }
+}
+  if (! is_numeric($id) ) {
+    $t0 = explode('href="',$video);
+    $t1 = explode('"', $t0[1]);
+    $l = "http://www.seenow.ro".$t1[0];
+    $link = substr($l, 0, -1);
+	$rest = substr($l, 0, -2);
+	$id = substr(strrchr($rest, "-"), 1);
+	$link=$host."/scripts/tv/php/seenow_e.php?query=1,".urlencode($link).",".urlencode($title);
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link.'</link>
+    <image>'.$image.'</image>
+    <media:thumbnail url="'.$image.'" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    ';
+  } else {
+	//$link="tvrplus_e_link.php?file=".urlencode($id)."&pg_id=".urlencode($pg_id)."&title=".urlencode($title);
+    $f = "/usr/local/bin/home_menu";
      echo '
      <item>
      <title>'.$title.'</title>
      <onClick>
      <script>
      showIdle();
-     url="'.$host.'/scripts/tv/php/seenow_e_link.php?file='.$id.'," + buf;
-     url1=getUrl(url);
-     movie="http://127.0.0.1/cgi-bin/scripts/util/translate2.cgi?stream," + url1;
+     url="'.$host.'/scripts/tv/php/seenow_e_link.php?file='.$id.','.$pg_id.','.urlencode($title).'," + buf;
+     movie=getUrl(url);
      cancelIdle();
     streamArray = null;
     streamArray = pushBackStringArray(streamArray, "");
@@ -303,13 +466,24 @@ foreach($videos as $video) {
     streamArray = pushBackStringArray(streamArray, "'.$title.'");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+        ';
+        if (file_exists($f)) {
+        echo '
+        doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer2.rss");
+        ';
+        } else {
+        echo '
+        doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer1.rss");
+        ';
+        }
+        echo '
      </script>
      </onClick>
     <image>'.$image.'</image>
     <media:thumbnail url="'.$image.'" />
      </item>
      ';
+     }
 
 }
 ?>
