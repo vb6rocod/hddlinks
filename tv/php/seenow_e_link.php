@@ -135,7 +135,7 @@ if (sizeof($h)>0 && $pg_id!=22) {
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch, CURLOPT_REFERER,"http://www.seenow.ro/");
+  //curl_setopt($ch, CURLOPT_REFERER,"http://www.seenow.ro/");
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $t2 = curl_exec($ch);
   curl_close($ch);
@@ -167,7 +167,7 @@ $l="http://www.seenow.ro/smarttv/placeholder/view/id/".$id;
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch, CURLOPT_REFERER,"http://www.seenow.ro/");
+  //curl_setopt($ch, CURLOPT_REFERER,"http://www.seenow.ro/");
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $h = curl_exec($ch);
   curl_close($ch);
@@ -187,7 +187,7 @@ if (array_key_exists("playURL",$p)) {
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch, CURLOPT_REFERER,"http://www.seenow.ro/");
+  //curl_setopt($ch, CURLOPT_REFERER,"http://www.seenow.ro/");
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $t2 = curl_exec($ch);
   curl_close($ch);

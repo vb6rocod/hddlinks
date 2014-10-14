@@ -88,13 +88,6 @@ foreach ($videos as $video) {
 sleep(1);
 }
 if ($html) {
-$l="/usr/local/etc/dvdplayer/update.txt";
-$h=file_get_contents($l);
-$t=explode("\n",$h);
-$player_tip=trim($t[0]);
-$f = "/usr/local/bin/home_menu";
-
-//if (file_exists($f) || $player_tip==0) {
 $out='#!/bin/sh
 cat <<EOF
 Content-type: video/mp4
