@@ -397,11 +397,14 @@ print $ora.' '.$title."\n\r";
 $videos = explode('<li class="show', $html);
 unset($videos[0]);
 $videos = array_values($videos);
+$n=0;
 foreach($videos as $video) {
  $ora=str_between($video,'<span class="hour">','</span>');
  $title=str_between($video,'<b>','</b>');
  $title = trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$title));
  print $ora." ".$title."\n\r";
+ $n++;
+ if ($n > 10) exit;
 }
 } else {
 echo "FARA PROGRAM";

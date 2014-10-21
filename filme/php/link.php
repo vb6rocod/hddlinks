@@ -944,10 +944,15 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $mysrt=trim(str_between($h,'downlsub1" href="','"'));
    }
    $link=str_replace(" ","%20",$link);
+
 $l="/usr/local/etc/dvdplayer/update.txt";
+if (file_exists($l)) {
 $h=file_get_contents($l);
 $t=explode("\n",$h);
 $player_tip=trim($t[0]);
+} else {
+$player_tip=0;
+}
 $f = "/usr/local/bin/home_menu";
 if (file_exists($f) && $player_tip==0) {
   $out='#!/bin/sh
@@ -1049,9 +1054,13 @@ $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
    }
    $link=str_replace(" ","%20",$link);
 $l="/usr/local/etc/dvdplayer/update.txt";
+if (file_exists($l)) {
 $h=file_get_contents($l);
 $t=explode("\n",$h);
 $player_tip=trim($t[0]);
+} else {
+$player_tip=0;
+}
 $f = "/usr/local/bin/home_menu";
 if (file_exists($f) && $player_tip==0) {
   $out='#!/bin/sh

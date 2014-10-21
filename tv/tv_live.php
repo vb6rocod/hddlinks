@@ -173,21 +173,22 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>Dolce TV</title>
 <link><?php echo $host; ?>/scripts/tv/dolce.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+ -->
+<!--
 <item>
 <title>Voyo TV</title>
 <link><?php echo $host; ?>/scripts/tv/voyo.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>Seenow TV (Freezone)</title>
 <link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/freezone-9-pagina-,Seenow+TV+(freezone)</link>

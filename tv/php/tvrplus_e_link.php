@@ -27,20 +27,31 @@ if($query) {
    $link = urldecode($queryArr[0]);
    $buf = $queryArr[1];
 }
+$cookie="/tmp/tvrplus_show.dat";
+if (!file_exists($cookie)) {
+$l="http://www.tvrplus.ro/androidphone/show/";
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $h = curl_exec($ch);
+  curl_close($ch);
+}
 $id = substr(strrchr($link, "-"), 1);
 //echo $id;
 $link="http://www.tvrplus.ro/androidphone/show/editie/id/".$id;
-$html = file_get_contents($link);
-if (strpos($html,"stream") === false) {
-$new_file="D://dolce.gz";
-$new_file="/tmp/dolce.gz";
-$fh = fopen($new_file, 'w');
-fwrite($fh, $html);
-fclose($fh);
-$zd = gzopen($new_file, "r");
-$html = gzread($zd, filesize($new_file));
-gzclose($zd);
-}
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $link);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
 $html=str_replace("\\","",$html);
 $t1=explode('high quality stream name":"',$html);
 $t2=explode('"',$t1[1]);
@@ -55,6 +66,10 @@ $t1=explode('token-high":"',$html);
 $t2=explode('"',$t1[1]);
 $token=$t2[0];
 
+$t1=explode('server port":',$html);
+$t2=explode(',',$t1[1]);
+$port=$t2[0];
+
 $s="http://index.mediadirect.ro/getUrl?publisher=68";
 $s="http://index.mediadirect.ro/getUrl?file=".$str."&app=seenow&inst=_definst_&publisher=68";
 $h = file_get_contents($s);
@@ -64,14 +79,6 @@ $serv=$t2[0];
 if ($serv == "") {
   $serv="fms61.mediadirect.ro";
 }
-
-//$buf="60000";
-$rtmp="rtmp://".$serv."/".$app."/_definst_";
-$l="Rtmp-options:-b ".$buf;
-$l=$l." -a ".$app."/_definst_?token=".$token." -W http://static1.mediadirect.ro/mediaplayer/players/0027/player.swf";
-$l=$l." -p http://www.tvrplus.ro/ ";
-$l=$l."-y mp4:".$str;
-$l=$l.",".$rtmp;
-$l=str_replace(" ","%20",$l);
+$l = "http://".$serv.":".$port."/".$app."/".$str."?user_id=0&transaction_id=0&device_id=0&publisher=68&p_item_id=".$id."&token=".$token;
 if ($token) print $l;
 ?>

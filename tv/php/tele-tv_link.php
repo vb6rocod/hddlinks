@@ -7,6 +7,7 @@ function str_between($string, $start, $end){
 }
 function vk($string) {
   if (strpos($string,"video_ext.php") === false) {
+  //echo $string;
 	$h = file_get_contents($string);
 	$t1=explode("nvar vars",$h);
 	$l=$t1[1];
@@ -35,10 +36,32 @@ function vk($string) {
       $r = $host."u".$uid."/videos/".$vtag.".720.mp4";
     } elseif ($hd=="2") {
       $r = $host."u".$uid."/videos/".$vtag.".480.mp4";
+      $test = $host."u".$uid."/videos/".$vtag.".480.mp4";
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $test);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+      curl_setopt($ch, CURLOPT_HEADER, 1);
+      curl_setopt($ch, CURLOPT_NOBODY, 1);
+      $h1 = curl_exec($ch);
+      curl_close($ch);
+      if (strpos($h1,"200 OK") === false)
+       $r= $host."u".$uid."/videos/".$vtag.".360.mp4";
     } elseif ($hd=="1") {
       $r = $host."u".$uid."/videos/".$vtag.".360.mp4";
     } else {
       $r = $host."u".$uid."/videos/".$vtag.".360.mp4";
+      $test = $host."u".$uid."/videos/".$vtag.".480.mp4";
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $test);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+      curl_setopt($ch, CURLOPT_HEADER, 1);
+      curl_setopt($ch, CURLOPT_NOBODY, 1);
+      $h1 = curl_exec($ch);
+      curl_close($ch);
+      if (strpos($h1,"200 OK") !== false)
+       $r=$test;
     }
  }
   return $r;
@@ -71,9 +94,52 @@ if (!$link) {
     $link=str_between($html,'iframe id="myFrame" src="','"');
     if (!$link) $link=str_between($html,"iframe src='","'");
     //echo $link;
-    if (preg_match("/api\.video/",$link)) {
-    $link=file_get_contents("http://127.0.0.1/cgi-bin/scripts/filme/php/link.php?file=".urlencode($link));
-    }
+    if (strpos($link,"http") === false) $link="http:".$link;
+if (strpos($link,"mail.ru") !==false) {
+    $filelink=$link;
+   //$filelink="http://api.video.mail.ru/videos/mail/alex.costantin/_myvideo/162.json";
+   //http://api.video.mail.ru/videos/embed/mail/alex.costantin/_myvideo/1029.html
+   //http://my.mail.ru/video/mail/best_movies/_myvideo/4412.html
+   //http://api.video.mail.ru/videos/embed/inbox/virusandrei/_myvideo/38.html
+   //http://api.video.mail.ru/videos/mail/best_movies/_myvideo/6501.json
+   if (strpos($filelink,"json") === false) {
+     //$filelink=str_replace("/embed","",$filelink);
+     //$filelink=str_replace("html","json",$filelink);
+   }
+   if (strpos($filelink,"videoapi.my.mail.ru") === false)
+   $filelink=str_replace("my.mail.ru/video","api.video.mail.ru/videos/",$filelink);
+   //echo $filelink;
+   $ch = curl_init($filelink);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt($ch, CURLOPT_REFERER, "http://my9.imgsmail.ru/r/video2/uvpv3.swf?3");
+   //curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
+   //curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+   $h = curl_exec($ch);
+   curl_close($ch);
+   //echo $h;
+   //die();
+  $t1=explode('hd":"',$h);
+  $t2=explode('"',$t1[1]);
+  $link=$t2[0];
+  if (!$link) {
+  $t1=explode('md":"',$h);
+  $t2=explode('"',$t1[1]);
+  $link=$t2[0];
+  }
+  if (!$link) {
+  $t1=explode('sd":"',$h);
+  $t2=explode('"',$t1[1]);
+  $link=$t2[0];
+  }
+   $link=urldecode($link);
+   $link=str_replace("[","\[",$link);
+   $link=str_replace("]","\]",$link);
+}
+if (strpos($link,"dailymotion") !== false) {
+$link=file_get_contents("http://127.0.0.1/cgi-bin/scripts/filme/php/link.php?file=".urlencode($link));
+}
   }
 }
 } else {

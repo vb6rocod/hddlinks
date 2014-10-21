@@ -27,8 +27,28 @@ if($query) {
    $id = urldecode($queryArr[0]);
    $buf = $queryArr[1];
 }
+$cookie="/tmp/tvrplus_tv.dat";
+if (!file_exists($cookie)) {
+  $l="http://www.tvrplus.ro/androidphone/live";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $h = curl_exec($ch);
+  curl_close($ch);
+}
 $link="http://www.tvrplus.ro/androidphone/show/live/id/".$id;
-$html = file_get_contents($link);
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $link);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
 if (strpos($html,"stream") === false) {
 $new_file="D://dolce.gz";
 $new_file="/tmp/dolce.gz";
