@@ -530,16 +530,16 @@ columnCount=5
 <location>http://mondenii.primatv.ro/</location>
 <annotation>Site-ul Oficial Mondenii.ro - Arhiva video completa Mondenii de la PrimaTV. Episoade, foto, stiri, interviuri, blog, ringtone mondenii info despre Mirela Zeta, Andreea Gramosteanu si Angel Popescu.</annotation>
 </item>
-
+<!--
 <item>
 <title>SensoTV</title>
-<link><?php echo $host; ?>/scripts/tv/php/sensotv.php?query=,http://www.sensotv.ro/arte/arte-vizuale/clipa-de-arta</link>
+<link><?php echo $host; ?>/scripts/tv/php/sensotv.php?query=,https://www.sensotv.ro/arte/arte-vizuale/clipa-de-arta</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/sensotv.png" />
 <image>/usr/local/etc/www/cgi-bin/scripts/tv/image/sensotv.png</image>
 <location>http://www.sensotv.ro/</location>
 <annotation>Senso TV este o televiziune online ce face parte dintr-un trust media, compus din 6 canale TV online: Arts Channel, Health Channel, Music Channel, Politic Channel, Extrem Sports Channel si Lifestyle Channel.</annotation>
 </item>
-
+-->
 <item>
 <title>Publika.Md</title>
 <link><?php echo $host; ?>/scripts/tv/php/publika.php</link>

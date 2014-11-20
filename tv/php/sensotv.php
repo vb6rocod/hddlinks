@@ -196,18 +196,27 @@ include ("../../common.php");
 if($page) {
 	$page1 = 5*($page-1);
     if($search) {
-        $html = file_get_contents($search."-".$page1);
+        $l = $search."-".$page1;
     } else {
-        $html = file_get_contents($search."-".$page1);
+        $l = $search."-".$page1;
     }
 } else {
     $page = 1;
     if($search) {
-        $html = file_get_contents($search);
+        $l = $search;
     } else {
-        $html = file_get_contents($search);
+        $l = $search;
     }
 }
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+  $html = curl_exec($ch);
+  curl_close($ch);
 function str_between($string, $start, $end){ 
 	$string = " ".$string; $ini = strpos($string,$start); 
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 

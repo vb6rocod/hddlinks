@@ -280,7 +280,7 @@ columnCount=5
 <location>http://www.1tvbacau.ro/</location>
 <annotation>1 TV Bacau, post local de televiziune, prezintă evenimentele locale din ziua respectivă</annotation>
 </item>
-
+<!--
 <item>
 <title>Transilvania Tube</title>
 <link><?php echo $host; ?>/scripts/tv/locale/transilvaniatube.php</link>
@@ -289,7 +289,7 @@ columnCount=5
 <location>http://transilvaniatube.ro/</location>
 <annotation>Look TV, Transilvania Live</annotation>
 </item>
-
+-->
 <item>
 <title>TVSat</title>
 <link><?php echo $host; ?>/scripts/tv/locale/tvsatrm.php</link>
@@ -326,6 +326,7 @@ columnCount=5
 <annotation>Televiziunea Tele'M Iaşi - informaţia deşteaptă</annotation>
 </item>
 -->
+<!--
 <item>
 <title>BaricadaTV</title>
 <link><?php echo $host; ?>/scripts/clip/php/vimeo2.php?query=,4936621,BaricadaTV</link>
@@ -334,7 +335,8 @@ columnCount=5
 <location>http://vimeo.com/user4936621/videos</location>
 <annotation>BaricadaTV.  revolutie in televiziune!</annotation>
 </item>
-
+-->
+<!--
 <item>
 <title>eMaramures</title>
 <link><?php echo $host; ?>/scripts/tv/locale/emaramures.php</link>
@@ -343,7 +345,7 @@ columnCount=5
 <location>http://www.emaramures.ro</location>
 <annotation>STIRI MARAMURES  ziar electronic actualizat non-stop cu stiri din Baia Mare, Sighet, Borsa, Targu Lapus...</annotation>
 </item>
-
+-->
 <item>
 <title>CNS Roman</title>
 <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,tvcns</link>

@@ -233,6 +233,7 @@ foreach($videos as $video) {
   $server=$t2[0];
   $title=str_replace("<br />","",$v[$i])." - Server - ".$server;
   if ($link) {
+  $link=str_replace("/go/?","",$link);
   $link = $host."/scripts/filme/php/filme_link.php?file=http".$link.",".urlencode($tit." ".$title);
     	echo '
     	<item>
@@ -263,6 +264,8 @@ foreach($videos as $video) {
   $server=$t2[0];
   $title=str_replace("<br />","",$v[$i])." - Server - ".$server;
   if ($link) {
+  //http://www.filmeonlinenoi.org/go/?/watch/l1Yf7GMq6v9FY64/?gacibhgripyn1
+  $link=str_replace("/go/?","",$link);
   $link = $host."/scripts/filme/php/filme_link.php?file=http".$link.",".urlencode($tit." ".$title);
     	echo '
     	<item>

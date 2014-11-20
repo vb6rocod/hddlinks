@@ -320,6 +320,7 @@ foreach($videos as $video) {
   print_ch($title,$link,$a[$title]);
 }
 */
+/*
 $l="http://tastez.ro/tv.php?query=regional";
    $ch = curl_init();
    curl_setopt($ch, CURLOPT_URL, $l);
@@ -346,6 +347,7 @@ foreach($videos as $video) {
   if (strpos($link,"m3u8") === false && $link)
   print_ch($title,$link,$a[$title]);
 }
+*/
 $l="http://tastez.ro/tv.php?query=moldova";
    $ch = curl_init();
    curl_setopt($ch, CURLOPT_URL, $l);
@@ -380,7 +382,7 @@ print_ch("PVTV", "http://92.61.114.188:8080/pvtv-ro.flv",$a["PVTV"]);
 //print_ch("Antena 2", "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-a%20live%20-W%20http://ivm.inin.ro/swf/player_live4.swf%20-p%20http://www.antena2.ro/live%20-y%20a2%20-x%20122410%20-w%2099fa9798751989f276ed92c5b269b7db02fd48d614e993d2f659da1a0d537dbb,rtmp://live1.gsp.ro/live",$a["Antena 2"]);
 print_ch("Antena 3", "http://127.0.0.1/cgi-bin/translate?stream,,rtmp://93.115.84.226:1935/live/a3",$a["Antena 3"]);
 //print_ch("Banat TV", "http://127.0.0.1/cgi-bin/translate?stream,,rtmp://81.18.66.155/live/banat-tv",$a["Banat TV"]);
-print_ch("LOOK TV", "http://127.0.0.1/cgi-bin/translate?stream,,rtmp://193.239.252.30/LookTV/ll3",$a["LOOK TV"]);
+//print_ch("LOOK TV", "http://127.0.0.1/cgi-bin/translate?stream,,rtmp://193.239.252.30/LookTV/ll3",$a["LOOK TV"]);
 print_ch("EST TV", "http://127.0.0.1/cgi-bin/translate?stream,,rtmp://81.12.152.250/live/esttv",$a["EST TV"]);
 print_ch("WEST TV", "http://127.0.0.1/cgi-bin/translate?stream,,rtmp://86.106.82.47/westtv_live/livestream.flv",$a["WESt TV"]);
 print_ch("Informatia TV", "http://94.60.44.130:8014/stream.flv",$a["Informatia TV"]);

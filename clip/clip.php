@@ -544,6 +544,7 @@ columnCount=5
 	<annotation>Our mission is to make independent Web shows sustainable. We provide services to more than 50,000 independently produced Web shows. More than 44,000 show creators use blip.tv every day to manage their online and offline presence.</annotation>
 </item>
 -->
+<!--
 <item>
 <title>funnyordie</title>
 	<link><?php echo $host; ?>/scripts/clip/php/funnyordie_main.php</link>
@@ -552,6 +553,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/funnyordie.png" />
 	<annotation>funny or die - Funny videos, funny pictures, funny jokes, top ten lists, funny blogs, caption contests, and funny articles featuring celebrities, comedians, and you.</annotation>
 </item>
+-->
 <!--
 <item>
 <title>youclubvideo</title>

@@ -209,6 +209,12 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
+<item>
+<title>movietv</title>
+<link><?php echo $host; ?>/scripts/filme/php/movietv_main.php</link>
+<annotation>http://movietv.to</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
 <!--
 <item>
 <title>spicetv - filme HD</title>
@@ -567,14 +573,14 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<!--
+
 <item>
-<title>movie2k - movies</title>
-<link><?php echo $host; ?>/scripts/filme/php/movie2k_main.php</link>
-<annotation>http://www.movie2k.to</annotation>
+<title>cartelmovies</title>
+<link><?php echo $host; ?>/scripts/filme/php/cartel_main.php</link>
+<annotation>http://www.cartelmovies.net</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
 
 
 </channel>

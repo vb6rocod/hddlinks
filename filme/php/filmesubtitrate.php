@@ -204,7 +204,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 
-$videos = explode('div class="post', $html);
+$videos = explode('<article class="item-list item', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -213,9 +213,9 @@ foreach($videos as $video) {
     $t1 = explode('href="', $video);
     $t2 = explode('"', $t1[1]);
     $link = $t2[0];
-    
-    $t3=explode(">",$t1[2]);
-    $t4=explode("<",$t3[1]);
+    //echo $video;
+    $t3=explode('rel="bookmark">',$video);
+    $t4=explode("<",$t3[2]);
     $title=trim($t4[0]);
 
     $t1 = explode('src=http', $video);

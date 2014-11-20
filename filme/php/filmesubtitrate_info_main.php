@@ -161,7 +161,9 @@ $l="http://www.fsplay.net/p/seriale-online-subtitrate-in-romana.html";
   curl_close($ch);
   $html= decode_entities($html);
   
-$html = str_between($html,'<tr class="trxnoi">','<div class="footer1-wrapper">');
+//$html = str_between($html,'<tr class="trxnoi">','<div class="footer1-wrapper">');
+$a=explode('<tr class="trxnoi">',$html);
+$html=$a[1];
 	$videos=explode('href="',$html);
 	unset($videos[0]);
 	$videos=array_values($videos);

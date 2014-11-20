@@ -193,16 +193,16 @@ if($query) {
 
 if($page) {
     if($search) {
-        $html = file_get_contents($search."/".$page);
+        $html = file_get_contents("http://www.jurnal.tvsatrm.ro/?cat=193&paged=".$page);
     } else {
-        $html = file_get_contents("http://www.jurnal.tvsatrm.ro/cat/video/page/".$page."/");
+        $html = file_get_contents("http://www.jurnal.tvsatrm.ro/?cat=193&paged=".$page);
     }
 } else {
     $page = 1;
     if($search) {
-        $html = file_get_contents($search);
+        $html = file_get_contents("http://www.jurnal.tvsatrm.ro/?cat=193");
     } else {
-        $html = file_get_contents("http://www.jurnal.tvsatrm.ro/cat/video/");
+        $html = file_get_contents("http://www.jurnal.tvsatrm.ro/?cat=193");
     }
 }
 

@@ -197,6 +197,7 @@ foreach($videos as $video) {
        $link = "http".$t2[2];
     }
     $link=str_replace("&","&amp;",$link);
+    $link=str_replace("/go/?","",$link);
     $t1 = explode('title="', $video);
     $t2 = explode('"',$t1[1]);
     $title = $t2[0];

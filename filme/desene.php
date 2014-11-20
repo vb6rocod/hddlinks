@@ -164,13 +164,15 @@ ret;
 <annotation>http://noobroom.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+<!--
 <item>
 <title>Desene Animate</title>
 <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,UCd7MvHhgIOcsrRwqPlfrdgQ</link>
 <annotation>https://www.youtube.com/user/UCd7MvHhgIOcsrRwqPlfrdgQ/videos</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
+<!--
 <item>
 <title>Desene Animate in Limba Romana</title>
 <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,andre3a08</link>
@@ -184,13 +186,15 @@ ret;
 <annotation>https://www.youtube.com/user/DeseneAnimate0nline/videos</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
+<!--
 <item>
 <title>desenele-copilăriei</title>
 <link><?php echo $host; ?>/scripts/filme/php/desenele-copilariei_main_o.php</link>
 <annotation>http://desenele-copilariei.net</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>990</title>

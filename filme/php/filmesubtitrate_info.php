@@ -116,73 +116,54 @@ function decode_entities($text) {
     $text= preg_replace('/&#x([a-f0-9]+);/mei',"chr(0x\\1)",$text);  #hex notation
     return $text;
 }
+//echo $link;
+$pageimage="image/movies.png";
+$link=str_replace("www.filmesubtitrate.info","www.seriale.filmesubtitrate.info",$link);
+$link=str_replace("www.filmesubtitrate.info","www.fsplay.net",$link);
+$link=str_replace("www.seriale.filmesubtitrate.info","www.fsplay.net",$link);
 $pagelink=$link;
-//$html = file_get_contents($link);
+$n=0;
+$m=0;
+$title = "";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch,CURLOPT_REFERER,"http://www.fsplay.net");
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20100101 Firefox/14.0.1');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  //curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   $html=curl_exec($ch);
   curl_close($ch);
   $html= decode_entities($html);
-  //echo $html;
-$pageimage=str_between($html,'<link rel="image_src" href="','"');
-if ($pageimage=="") {
-	$pageimage=str_between($html,'border="0" height="240" src="','?');
-}
-if ($pageimage=="") {
-	$pageimage="image/movies.png";
-}
-$pageimage = str_replace("https","http",$pageimage);
-$serial_file=substr(strrchr($link,"/"),1);
-$serial_file=ltrim($serial_file,"seriale-online-");
-$pos=strlen(stristr($serial_file, '-'));
-if ($pos >= 1) {
-	$serial=substr($serial_file,0,-$pos);
-} else {
-	$serial=substr($serial_file,0,-1*(strlen($serial_file)-5));
-}
-$t=explode(" ",$pagetitle);
-$s="/";
-for ($i=0;$i<count($t);$i++) {
- if (($t[$i] <> "") && (strlen($t[$i])>1) &&(!preg_match("/the|2010|2011|2012/i",$t[$i])))
-    $s=$s."".$t[$i]."|";
-}
-$s=substr($s,0,-1);
-$s=$s."/i";
-//echo $s;
-//10-things
-if ($serial=="10") $serial="10-things";
-if ($serial=="greys") $serial="grey";
-//if (!$serial) $serial="-";
-$find="/".$serial."|nobels"."/";
-//echo $find;
-$a1=explode("<tbody>",$html);
-$c=count($a1);
-//echo $c;
-//if ($c==1) $c=2;
+//echo $html;
+preg_match("/(http:\/\/www.fsplay.net\/\d{4}\/\d{2}\/)([A-Za-z0-9_]+)/",$link,$match);
+//$match_link="/".str_replace("/","\/",$match[0])."/";
+//echo $match_link;
+$match_link=$match[2];
+if (preg_match("/serial|online/",$match_link)) $match_link="";
+$mm="/http:\/\/www.fsplay.net\/\d{4}\/\d{2}\/".$match_link."/";
+
 $m=0;
-for ($k=1;$k<$c;$k++) {
-$a2=explode("</tbody>",$a1[$k]);
-$html=$a2[0];
+//$html=str_between($html,'div class="contnew','<div class');
 $videos=explode('<li',$html);
 unset($videos[0]);
 $videos=array_values($videos);
+//print_r ($videos);
 foreach($videos as $video) {
+$title = "";
     $video=str_replace('<span class="Apple-style-span" style="font-size: large;">','',$video);
 	$t1=explode('href="',$video);
+if (sizeof($t1)>1) {
 	$t2=explode('"',$t1[1]);
 	$link=trim($t2[0]);
-
+$link=str_replace("www.filmesubtitrate.info","www.seriale.filmesubtitrate.info",$link);
+$link=str_replace("www.filmesubtitrate.info","www.fsplay.net",$link);
+$link=str_replace("www.seriale.filmesubtitrate.info","www.fsplay.net",$link);
 	$t3=explode(">",$t1[1]);
 	$t4=explode("<",$t3[1]);
 	$title=$t4[0];
-	//echo $link."<BR>".$title."<BR>";
-	//$title=preg_replace("/onlin(.*)|sub(.*)|seri(.*)|film(.*)/si","",$title);
+
 	$title=trim(str_replace("&nbsp;","",$title));
-	//case 24 s6 ep 2
+}
 	if ($title == "") {
 		$t1=explode('href="',$video);
 		$t2=explode('"',$t1[2]);
@@ -192,69 +173,11 @@ foreach($videos as $video) {
 		$title=trim($t4[0]);
 		$title=str_replace("&nbsp;","",$title);
 	}
-	//$title=preg_replace("/onlin(.*)|sub(.*)|seri(.*)|film(.*)/si","",$title);
 	$title=trim(str_replace("&nbsp;","",$title));
-	//if ((preg_match($find, $link) !== false) && ($link <> $queryArr[0]) && ($title <> "")  && (preg_match($s,$link))){
-	//if (preg_match($s,$link)) {
- if ($title) {
-	$m++;
-    $link=str_replace("www.seriale.filmesubtitrate.info","www.fsplay.net",$link);
-    $link=str_replace("www.filmesubtitrate.info","www.fsplay.net",$link);
-		$link="http://127.0.0.1/cgi-bin/scripts/filme/php/filme_link.php?file=".$link.",".urlencode($title);
-    echo '
-    <item>
-    <title>'.$title.'</title>
-    <link>'.$link.'</link>
- 		<media:thumbnail url="'.$pageimage.'" />
- 		<mediaDisplay name="threePartsView"/>
-    </item>
-    ';
-	}
-}
-}
-if ($c==1) {
-$m=0;
-$html=str_between($html,'div class="contnew','<div class');
-$videos=explode('<li',$html);
-unset($videos[0]);
-$videos=array_values($videos);
-foreach($videos as $video) {
-    $video=str_replace('<span class="Apple-style-span" style="font-size: large;">','',$video);
-	$t1=explode('href="',$video);
-	$t2=explode('"',$t1[1]);
-	$link=trim($t2[0]);
 
-    /*
-    $t1=explode("<span",$video);
-	$t2=explode(">",$t1[1]);
-	$t4=explode("<",$t2[1]);
-	$title=$t4[0];
-	*/
-	$t3=explode(">",$t1[1]);
-	$t4=explode("<",$t3[1]);
-	$title=$t4[0];
-	//echo $link."<BR>".$title."<BR>";
-	//$title=preg_replace("/onlin(.*)|sub(.*)|seri(.*)|film(.*)/si","",$title);
-	$title=trim(str_replace("&nbsp;","",$title));
-	//case 24 s6 ep 2
-	if ($title == "") {
-		$t1=explode('href="',$video);
-		$t2=explode('"',$t1[2]);
-		$link=trim($t2[0]);
-		$t3=explode(">",$t1[2]);
-		$t4=explode("<",$t3[1]);
-		$title=trim($t4[0]);
-		$title=str_replace("&nbsp;","",$title);
-	}
-	//$title=preg_replace("/onlin(.*)|sub(.*)|seri(.*)|film(.*)/si","",$title);
-	$title=trim(str_replace("&nbsp;","",$title));
-	//if ((preg_match($find, $link) !== false) && ($link <> $queryArr[0]) && ($title <> "")  && (preg_match($s,$link))){
-	//if (preg_match($s,$link)) {
-	if ($title && preg_match("/ep|part/i",$link)) {
-	$m++;
-    $link=str_replace("www.seriale.filmesubtitrate.info","www.fsplay.net",$link);
-    $link=str_replace("www.filmesubtitrate.info","www.fsplay.net",$link);
-		$link="http://127.0.0.1/cgi-bin/scripts/filme/php/filme_link.php?file=".$link.",".urlencode($title);
+	if ($title && preg_match("/ep|part/i",$link) && preg_match($mm,$link) && !preg_match("/#com/",$link)) {
+        $m++;
+	$link="http://127.0.0.1/cgi-bin/scripts/filme/php/filme_link.php?file=".$link.",".urlencode($title);
     echo '
     <item>
     <title>'.$title.'</title>
@@ -264,7 +187,6 @@ foreach($videos as $video) {
     </item>
     ';
 	}
-}
 }
 if ($m < 1) {
    $link="http://127.0.0.1/cgi-bin/scripts/filme/php/filme_link.php?file=".$pagelink.",".urlencode($pagetitle);

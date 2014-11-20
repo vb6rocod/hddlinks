@@ -1472,7 +1472,7 @@ $post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=C
    //http://api.video.mail.ru/videos/embed/mail/alex.costantin/_myvideo/1029.html
    //http://my.mail.ru/video/mail/best_movies/_myvideo/4412.html
    // echo $filelink;
-   if (strpos($filelink,"json") === false) {
+   if (strpos($filelink,"json") === false && strpos($filelink,"embed") !== false) {
      $filelink=str_replace("/embed","",$filelink);
      $filelink=str_replace("html","json",$filelink);
    }
@@ -1487,16 +1487,16 @@ $post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=C
    curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
    $h = curl_exec($ch);
    curl_close($ch);
-  $t1=explode('hd":"',$h);
+  $t1=explode('720p","url":"',$h);
   $t2=explode('"',$t1[1]);
   $link=$t2[0];
   if (!$link) {
-  $t1=explode('md":"',$h);
+  $t1=explode('480p","url":"',$h);
   $t2=explode('"',$t1[1]);
   $link=$t2[0];
   }
   if (!$link) {
-  $t1=explode('sd":"',$h);
+  $t1=explode('360p","url":"',$h);
   $t2=explode('"',$t1[1]);
   $link=$t2[0];
   }
@@ -1519,6 +1519,13 @@ $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
 //$link="http://api.video.mail.ru/file/video/hv/mail/vladimir_aleksei/_myvideo/275";
 } elseif (strpos($filelink,"videomega.tv") !==false) {
   //http://videomega.tv/iframe.php?ref=IHcNODXJUC&width=660&height=360
+  //echo $filelink;
+  //http://videomega.tv/validatehash.php?hashkey=072077082085098097079074089065065089074079097098085082077072
+  if (strpos($filelink,"validatehash") !== false) {
+    $h1=file_get_contents($filelink);
+    $hash=str_between($h1,'var ref="','"');
+    $filelink="http://videomega.tv/cdn.php?ref=".$hash;
+  }
    $ch = curl_init($filelink);
    curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
