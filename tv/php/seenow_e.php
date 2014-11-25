@@ -377,13 +377,22 @@ $html=str_replace('" rel="','<',$html);
 $html=str_replace('floatL ccsSprites radioRight','class="floatL ccsSprites RightArrow',$html);
 
 
-$html= str_between($html,'class="floatL itemsThumb">','class="floatL ccsSprites RightArrow');
-$videos = explode('a class="floatL', $html);
-
+$h_var1= str_between($html,'class="floatL itemsThumb">','class="floatL ccsSprites RightArrow');
+if ($h_var1)
+  $html=$h_var1;
+else {
+  $html=str_between($html,'list: [',']');
+  $html=xml_fix($html);
+}
+if ($h_var1)
+ $videos = explode('a class="floatL', $html);
+else
+ $videos=explode('item_id":',$html);
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
+ if ($h_var1) {
   $t1=explode('href="',$video);
   $t2=explode('"',$t1[1]);
   $l=$t2[0];
@@ -402,7 +411,29 @@ foreach($videos as $video) {
   $t2=explode(">",$t1[1]);
   $t3=explode("<",$t2[2]);
   $title=$t3[0];
+} else {
+  $t1=explode('url":"',$video);
+  $t2=explode('"',$t1[1]);
+  $t3=$t2[0];
+  $t4=explode("#",$t3);
+  $l=$t4[0];
+  $rest = substr($l, 0, -2);
+  $id = substr(strrchr($rest, "-"), 1);
+  if (strpos($video,'idpl') !== false)
+	$id = str_between($video,'id="idpl','"');
+//  if (strpos($video,' data-id') !== false)
+//	$id = str_between($video,' data-id="','"');
 
+  $t1=explode('thumbnail_path":"',$video);
+  $t2=explode('"',$t1[1]);
+  $image=$t2[0];
+
+  $t1=explode('item_title":"',$video);
+  //$t2=explode(">",$t1[1]);
+  $t3=explode('"',$t1[1]);
+  $title=$t3[0];
+  $title=str_replace('"','',$title);
+}
   $rest = substr($search1, 0, -8);
   $pg_id = substr(strrchr($rest, "-"), 1);
   if (! is_numeric($id) ) {
@@ -429,7 +460,10 @@ foreach($videos as $video) {
   }
 }
   if (! is_numeric($id) ) {
+    if ($h_var1)
     $t0 = explode('href="',$video);
+    else
+    $t0 = explode('url":"',$video);
     $t1 = explode('"', $t0[1]);
     $l = "http://www.seenow.ro".$t1[0];
     $link = substr($l, 0, -1);

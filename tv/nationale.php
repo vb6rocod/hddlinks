@@ -384,7 +384,7 @@ columnCount=5
 
 <item>
 <title>RealitateaTV - emisiuni</title>
-<link><?php echo $host; ?>/scripts/tv/php/seenow_emisiuni1.php?query=1,http://www.seenow.ro/realitatea-tv-2698-pagina-,RealitateaTV</link>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/realitatea-tv-2698-pagina-,RealitateaTV</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/realitateatv.gif" />
 <image>/usr/local/etc/www/cgi-bin/scripts/tv/image/realitateatv.gif</image>
 <location>http://www.seenow.ro/</location>
@@ -430,7 +430,7 @@ columnCount=5
 
 <item>
 <title>B1 TV - emisiuni</title>
-<link><?php echo $host; ?>/scripts/tv/php/seenow_emisiuni1.php?query=1,http://www.seenow.ro/b1-tv-2699-pagina-,B1TV</link>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/b1-tv-2699-pagina-,B1TV</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/b1.png" />
 <image>/usr/local/etc/www/cgi-bin/scripts/tv/image/b1.png</image>
 <location>http://www.seenow.ro/</location>
@@ -448,7 +448,7 @@ columnCount=5
 
 <item>
 <title>Seenow</title>
-<link><?php echo $host; ?>/scripts/tv/php/seenow_emisiuni.php</link>
+<link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/emisiuni-tv-2697-pagina-,Emisiuni+TV</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/seenow.png" />
 <image>/usr/local/etc/www/cgi-bin/scripts/tv/image/seenow.png</image>
 <location>http://www.seenow.ro/emisiuni-tv-2697-pagina-1</location>

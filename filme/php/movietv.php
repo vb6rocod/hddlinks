@@ -11,6 +11,7 @@ if($query) {
    if ($tip=="search" || $tip=="actor") $page_title="Cauta:".$link;
    $link=str_replace(" ","+",$link);
 }
+
 ?>
 <rss version="2.0">
 <onEnter>
@@ -79,9 +80,6 @@ if($query) {
 
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
-		</text>
-  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Apăsaţi 2 pentru download, 3 pentru Download Manager
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -179,30 +177,6 @@ if (userInput == "pagedown" || userInput == "pageup")
   redrawDisplay();
   ret="true";
 }
-else if (userInput == "two" || userInput == "2")
-	{
-     showIdle();
-     url= getItemInfo(getFocusItemIndex(),"download");
-     movie=getUrl(url);
-	 topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + movie + ";name=" + getItemInfo(getFocusItemIndex(),"name");
-	 dlok = loadXMLFile(topUrl);
-     cancelIdle();
-     do_down=1;
-     log_file="<?php echo $dir; ?>" + getItemInfo(getFocusItemIndex(),"name") + ".log";
-     setRefreshTime(2000);
-	 ret="true";
-}
-else if (userInput == "three" || userInput == "3")
-   {
-    jumpToLink("destination");
-    ret="true";
-}
-else
-{
-setRefreshTime(-1);
-do_down=0;
-ret="false";
-}
 ret;
 </script>
 </onUserInput>
@@ -221,10 +195,6 @@ ret;
 		</mediaDisplay>
 
 	</item_template>
-<destination>
-	<link>http://127.0.0.1/cgi-bin/scripts/util/level.php
-	</link>
-</destination>
 <channel>
 	<title><?php echo $page_title; ?></title>
 	<menu>main menu</menu>
@@ -241,10 +211,8 @@ if($page > 1) { ?>
 <item>
 <?php
 $sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
-$url = $sThisFile."?page=".($page-1).",";
-if($search) { 
-  $url = $url.$search.",".urlencode($page_title);
-}
+$url = $sThisFile."?page=".($page-1).",".$tip.",".urlencode($link).",".urlencode($page_title);
+
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
@@ -369,10 +337,6 @@ for ($i=0;$i<$k;$i++) {
     echo '
      </script>
      </onClick>
-    <download>'.$link1.'</download>
-    <title1>'.urlencode($title).'</title1>
-    <link1>'.urlencode($link).'</link1>
-    <name>'.$name.'</name>
     <image>'.$image.'</image>
     <an>'.$year.'</an>
     <movie>'.$link.'</movie>
@@ -384,10 +348,7 @@ for ($i=0;$i<$k;$i++) {
 <item>
 <?php
 $sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
-$url = $sThisFile."?page=".($page+1).",";
-if($search) {
-  $url = $url.$search.",".urlencode($page_title);
-}
+$url = $sThisFile."?page=".($page+1).",".$tip.",".urlencode($link).",".urlencode($page_title);
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>

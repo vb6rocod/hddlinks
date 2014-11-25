@@ -208,11 +208,18 @@ ret;
 <annotation>http://popcornered.com/</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>movietv</title>
 <link><?php echo $host; ?>/scripts/filme/php/movietv_main.php</link>
 <annotation>http://movietv.to</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+-->
+<item>
+<title>filmbox</title>
+<link><?php echo $host; ?>/scripts/filme/php/filmbox_main.php</link>
+<annotation>filmbox</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
 <!--
@@ -239,7 +246,7 @@ ret;
 <item>
 <title>Seenow avantaj (abonament)</title>
 <link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/ro/avantaj-61-pagina-,Seenow+Avantaj</link>
-<annotation>http://vplus.ro/movies/</annotation>
+<annotation>http://seenow.ro</annotation>
 <media:thumbnail url="image/movies.png" />
 </item>
 
