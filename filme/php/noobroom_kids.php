@@ -10,50 +10,7 @@ function str_between($string, $start, $end){
 $ff="/tmp/n.txt";
 $cookie="/tmp/noobroom.txt";
 
-/*
-if (!file_exists($ff)) {
-$l="http://noobroom.com/";
-$h=file_get_contents($l);
-$t1=explode('value="',$h);
-$n= count($t1);
-$t2=explode('"',$t1[1]); // $t1[$n-1]
-$noob=$t2[0];
-if (!$noob) $noob="http://noobroom9.com";
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $noob."/login.php");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch, CURLOPT_HEADER, true);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-  $h = curl_exec($ch);
-  curl_close($ch);
-  if (strpos($h,"200 OK") !== false) $out=$noob;
-if ($n > 2 && !$out) {
-  $t2=explode('"',$t1[2]);
-  $noob=$t2[0];
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $noob."/login.php");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch, CURLOPT_HEADER, true);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-  $h = curl_exec($ch);
-  curl_close($ch);
-  if (strpos($h,"200 OK") !== false) $out=$noob;
-}
-if ($out) {
-$fh = fopen($ff, 'w');
-fwrite($fh, $noob);
-fclose($fh);
-} else {
- die();
-}
-} else {
-$noob=file_get_contents($ff);
-}
-*/
+
 $noob="http://superchillin.com";
 $fh = fopen($ff, 'w');
 fwrite($fh, $noob);
@@ -86,6 +43,7 @@ if (file_exists($filename) && !file_exists($cookie) && !file_exists($noob_log)) 
   $post1 = curl_exec($ch);
   curl_close($ch);
   if ($post1) $post=$post1;
+  $amigo="DA";
 }
 //die();
 if ($post) {
@@ -108,7 +66,14 @@ if ($post) {
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
-  
+if ($amigo=="DA") {
+$add="superchillin.com	FALSE	/	FALSE	0	place	1
+superchillin.com	FALSE	/	FALSE	0	noob	MjY2MjI%3D
+superchillin.com	FALSE	/	FALSE	0	auth	ZDFhOGU1ODRiYjlhYjVhOTU1OTUxNWE4MzQyNmRiODUzZWU0NjRkMA%3D%3D";
+$h=@file_get_contents($cookie);
+@file_put_contents($cookie, $add, FILE_APPEND | LOCK_EX);
+}
+/*
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $noob."/login.php");
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -134,6 +99,7 @@ $post=$post."&recaptcha_challenge_field=03AHJ_VuuzO2g9g6IILiu2pyaterQVaBodP0EWtw
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
+*/
 }
 $l=$noob."/kids.php";
   $ch = curl_init();

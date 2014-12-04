@@ -285,13 +285,14 @@ ret;
 <annotation>http://filmehd.net/</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>hdfilm</title>
 <link><?php echo $host; ?>/scripts/filme/php/hdfilm.php?query=1,http://www.hdfilm.ro/index.php?p=filme</link>
 <annotation>http://hdfilm.ro/</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>filmhd</title>
