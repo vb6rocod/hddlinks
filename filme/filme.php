@@ -201,13 +201,14 @@ ret;
 <annotation>http://www.movie-inn.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>popcornered</title>
 <link><?php echo $host; ?>/scripts/filme/php/popcornered_main.php</link>
 <annotation>http://popcornered.com/</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>movietv</title>

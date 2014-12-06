@@ -65,6 +65,7 @@ if ($post) {
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
+/*
 if ($amigo=="DA") {
 $add="superchillin.com	FALSE	/	FALSE	0	place	1
 superchillin.com	FALSE	/	FALSE	0	noob	MjY2MjI%3D
@@ -72,7 +73,7 @@ superchillin.com	FALSE	/	FALSE	0	auth	ZDFhOGU1ODRiYjlhYjVhOTU1OTUxNWE4MzQyNmRiOD
 $h=@file_get_contents($cookie);
 @file_put_contents($cookie, $add, FILE_APPEND | LOCK_EX);
 }
-/*
+*/
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $noob."/login.php");
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -98,7 +99,6 @@ $post=$post."&recaptcha_challenge_field=03AHJ_VuuzO2g9g6IILiu2pyaterQVaBodP0EWtw
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
-*/
 }
 $l=$noob."/series.php";
   $ch = curl_init();

@@ -19,6 +19,8 @@ function fix_s($s) {
      $s = str_replace("&#8211;","-",$s);
      $s = str_replace("&nbsp;","",$s);
      $s = str_replace("&quot;","'",$s);
+     $s=str_replace("&bdquo;","'",$s);
+     $s=str_replace("&rdquo;","'",$s);
      $s=str_replace("&#8","",$s);
      
     $s=str_replace("\u015e","S",$s);

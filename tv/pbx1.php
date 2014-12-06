@@ -166,9 +166,9 @@ ret;
 <?php
 $link="http://www.worldtimeserver.com/current_time_in_RO.aspx";
 $html=file_get_contents($link);
-$t1=explode('<div id="analog-digital">',$html);
+$t1=explode('<span class="font6">',$html);
 $t2=explode("<strong>",$t1[1]);
-$t3=explode("</strong>",$t2[1]);
+$t3=explode("</",$t1[1]);
 $d=strtotime(trim($t3[0]));
 $date_array = getdate($d);
 $day = $date_array[yday] + 24;

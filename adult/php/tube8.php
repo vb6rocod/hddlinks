@@ -242,9 +242,10 @@ $videos = array_values($videos);
 foreach($videos as $video) {
     $t1 = explode('<a href="', $video);
     $t2 = explode('"', $t1[1]);
+    $link = $t2[0];
     $link = $host."/scripts/adult/php/tube8_link.php?file=".$t2[0];
 
-    $t1 = explode(' src="', $video);
+    $t1 = explode('src="', $video);
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
     if (strpos($image,".gif") !== false) {

@@ -409,6 +409,15 @@ columnCount=5
 <location>http://www.digi24.ro/video</location>
 <annotation>DIGI 24 | Articole video si stiri video</annotation>
 </item>
+
+<item>
+<title>Digi24 Emisiuni</title>
+<link><?php echo $host; ?>/scripts/tv/php/digi24e_main.php</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/digi24.png" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/digi24.png</image>
+<location>http://www.digi24.ro</location>
+<annotation>DIGI 24 | Emisiuni</annotation>
+</item>
 <!--
 <item>
 <title>Ora de Business</title>

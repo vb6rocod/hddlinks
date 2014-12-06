@@ -32,7 +32,7 @@ $t1=explode('src="',$h);
 $t2=explode("'",$t1[1]);
 $baseimg=$t2[0];
 $baseimg=$noob."/2img/";
-$baseimg="http://107.6.170.83/~nooboard/2img/";
+//$baseimg="http://107.6.170.83/~nooboard/2img/";
 $p=0;
 ?>
 <rss version="2.0">
