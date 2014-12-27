@@ -159,6 +159,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $host = "http://127.0.0.1/cgi-bin";
+/*
 echo '
 	<item>
 	<title>Toate</title>
@@ -168,17 +169,18 @@ echo '
 	<mediaDisplay name="threePartsView"/>
 	</item>
 ';
+*/
 $html = file_get_contents("http://www.990.ro/toate-filmele-pagina-1.html");
-$html=str_between($html,'Filme dupa gen','</ul');
+$html=str_between($html,'Gen:','</ul');
 $videos = explode('<li', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
-	$t1 = explode('href="',$video);
-	$t2 = explode('"',$t1[1]);
+	$t1 = explode("href='",$video);
+	$t2 = explode("'",$t1[1]);
 	$link=substr($t2[0], 0, -1);
-	$link=str_replace("&","%26",$link);
-	$link="http://www.990.ro/".$link;
+	$link=str_replace("&amp;","*",$link);
+	$link="http://www.990.ro/toate-filmele.php".$link;
 	$link = $host."/scripts/filme/php/990_filme.php?query=1,".$link;
 	
 	$t3 = explode(">",$t1[1]);

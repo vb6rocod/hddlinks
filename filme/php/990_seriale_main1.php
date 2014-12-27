@@ -187,29 +187,29 @@ function str_between($string, $start, $end){
   <image></image>
   </item>
   ';
-$html = file_get_contents("http://www.990.ro/seriale.html");
+$html = file_get_contents("http://www.990.ro/seriale-lista.html");
 //$html=str_between($html,'ul id="ddsubmenu1"','</table');
 $host = "http://127.0.0.1/cgi-bin";
-$videos = explode("<div class='ss", $html);
-unset($videos[0]);
-$videos = array_values($videos);
+$html=str_between($html,'<div class="tabber"',"<div align='center'");
+	$videos = explode("<a href=", $html);
+	unset($videos[0]);
+	$videos=array_values($videos);
+	foreach($videos as $video) {
+    $t1 = explode("'", $video);
+    //$t2 = explode(, $t1[1]);
+    $link = $t1[1];
+    $link1 = trim("http://www.990.ro/".$link);
 
-foreach($videos as $video) {
-    $t1 = explode('href="', $video);
-    $t2 = explode('"', $t1[1]);
-    $link = $t2[0];
-    $link = trim("http://www.990.ro/".$link);
-    
-    $t3 = explode('>',$t1[1]);
+    $t3 = explode('>',$video);
     $t4 = explode('<',$t3[1]);
     $title = trim($t4[0]);
     $img=strtolower($title);
     $image="http://www.990.ro/filme/".str_replace(" ","_",$img).".jpg";
  	$image="";
 
-    $link1 = $link;
+    //$link1 = $link;
     if (preg_match("/html/",$link)) {
-    $link = $host."/scripts/filme/php/990_seriale.php?file=".$link.",".urlencode($title);
+    $link = $host."/scripts/filme/php/990_seriale.php?file=".$link1.",".urlencode($title);
     echo '
     <item>
     <title>'.$title.'</title>

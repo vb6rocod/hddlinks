@@ -225,7 +225,7 @@ foreach($videos as $video) {
        $descriere = substr($descriere,0,-strlen(strrchr($descriere," ")))."...";
        }
 	if($link!="") {
-		$link = "http://127.0.0.1/cgi-bin/scripts/filme/php/filmeonlinecc_link.php?file=".$link.",".urlencode($titlu);
+		$link = "http://127.0.0.1/cgi-bin/scripts/filme/php/filme_link.php?file=".$link.",".urlencode($titlu);
 		echo'
 		<item>
 		<title>'.$titlu.'</title>

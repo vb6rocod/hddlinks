@@ -156,7 +156,9 @@ if($query) {
    $queryArr = explode(',', $query);
    $page = $queryArr[0];
    $search = $queryArr[1];
+   $search1=str_replace("*","&",$search);
 }
+
 if($page > 1) { ?>
 
 <item>
@@ -178,7 +180,7 @@ if($search) {
 <?php } ?>
 
 <?php
-$html = file_get_contents($search.$page.".html");
+$html = file_get_contents($search1.$page);
 $host = "http://127.0.0.1/cgi-bin";
 $videos = explode("div style='position:relative; float:left; border:0px solid #000;'", $html);
 unset($videos[0]);

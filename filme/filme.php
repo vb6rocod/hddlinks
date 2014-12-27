@@ -301,14 +301,14 @@ ret;
 <annotation>http://www.filmhd.ro</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
 <item>
 <title>filmehd-online</title>
 <link><?php echo $host; ?>/scripts/filme/php/filmehd-online_main.php</link>
 <annotation>http://www.filmehd-online.net/</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>onlinehd</title>
 <link><?php echo $host; ?>/scripts/filme/php/onlinehd_main.php</link>
@@ -381,14 +381,14 @@ ret;
 <annotation>http://eurotube.do.am</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
 <item>
 <title>filmeonline3d</title>
 <link><?php echo $host; ?>/scripts/filme/php/filmeonline3d_main.php</link>
 <annotation>http://www.filmeonline3d.ro</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>filme-bune</title>
 <link><?php echo $host; ?>/scripts/filme/php/filme-bune_main.php</link>

@@ -747,7 +747,7 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
      $h = file_get_contents($l1);
      $link=str_between($h,"url=","&");
    }
-} elseif ((strpos($filelink, 'fastupload.rol.ro') !== false)  || (strpos($filelink, 'fastupload.ro') !== false) || (strpos($filelink, 'superweb.rol.ro') !== false)) {
+} elseif ((strpos($filelink, 'fastupload.rol.ro') !== false)  || (strpos($filelink, 'fastupload.ro') !== false) || (strpos($filelink, 'superweb') !== false)) {
    $h = file_get_contents($filelink);
    $link=str_between($h,"file': '","'");
    $t1=explode("tracks':",$h);
