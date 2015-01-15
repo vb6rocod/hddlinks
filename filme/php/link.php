@@ -1528,12 +1528,21 @@ $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
   }
    $ch = curl_init($filelink);
    curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
    curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt($ch, CURLOPT_REFERER, "http://filmehd.net");
    $h = curl_exec($ch);
    curl_close($ch);
    $h1=urldecode(str_between($h,'document.write(unescape("','"'));
    $link=str_between($h1,'file: "','"');
+} elseif (strpos($filelink,"ok.ru") !==false) {
+  $h1=file_get_contents($filelink);
+  $id=str_between($h1,'data-player-id="embed_video_','"');
+  $l="http://ok.ru/dk?cmd=videoPlayerMetadata&mid=".$id;
+  $h2=file_get_contents($l);
+  $p=json_decode($h2,1);
+  $link=$p["videos"][4]["url"];
+  if (!$link) $link= $p["videos"][3]["url"];
 } elseif (strpos($filelink,"upafile.com") !==false) {
   $h=file_get_contents($filelink);
   $link=unpack_DivXBrowserPlugin(1,$h,false);

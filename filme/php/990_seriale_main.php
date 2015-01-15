@@ -224,7 +224,8 @@ foreach($videos as $video) {
     $t2 = explode("'", $t1[1]);
     $image = "http://www.990.ro/".$t2[0];
     $link1 = $link;
-    $link = $host."/scripts/filme/php/990_seriale.php?file=".$link.",".urlencode($title);
+    if (strpos($link1,"http://www.990.ro/") === false) $link1 = trim("http://www.990.ro/".$link);
+    $link = $host."/scripts/filme/php/990_seriale.php?file=".$link1.",".urlencode($title);
     echo '
     <item>
     <title>'.$title.'</title>

@@ -338,6 +338,15 @@ columnCount=5
 </item>
 
 <item>
+<title>Starea Natiei</title>
+<link><?php echo $host; ?>/scripts/tv/php/tvrplus.php?query=http://www.tvrplus.ro/emisiune-starea-natiei-7972,Starea+na%C5%A3iei</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/tvrplus.jpg" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/tvrplus.jpg</image>
+<location>http://tvrplus.ro</location>
+<annotation>Starea Natiei - TVR Plus</annotation>
+</item>
+
+<item>
 <title>National 24 Plus</title>
 <link><?php echo $host; ?>/scripts/tv/php/n24.php?query=1,</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/n24.png" />

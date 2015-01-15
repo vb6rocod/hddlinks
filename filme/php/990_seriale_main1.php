@@ -198,8 +198,9 @@ $html=str_between($html,'<div class="tabber"',"<div align='center'");
     $t1 = explode("'", $video);
     //$t2 = explode(, $t1[1]);
     $link = $t1[1];
-    $link1 = trim("http://www.990.ro/".$link);
-
+    //$link1 = trim("http://www.990.ro/".$link);
+	$link1 = $link;
+	if (strpos($link1,"http://www.990.ro/") === false) $link1 = trim("http://www.990.ro/".$link);
     $t3 = explode('>',$video);
     $t4 = explode('<',$t3[1]);
     $title = trim($t4[0]);
