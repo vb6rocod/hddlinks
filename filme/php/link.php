@@ -1533,8 +1533,12 @@ $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
    curl_setopt($ch, CURLOPT_REFERER, "http://filmehd.net");
    $h = curl_exec($ch);
    curl_close($ch);
-   $h1=urldecode(str_between($h,'document.write(unescape("','"'));
-   $link=str_between($h1,'file: "','"');
+   $h=urldecode($h);
+   //echo $response;
+   $t1=explode('onReady(function(){jwplayer()',$h);
+   $t2=explode('file:"',$t1[1]);
+   $t3=explode('"',$t2[1]);
+   $link=$t3[0];
 } elseif (strpos($filelink,"ok.ru") !==false) {
   $h1=file_get_contents($filelink);
   $id=str_between($h1,'data-player-id="embed_video_','"');

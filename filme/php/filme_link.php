@@ -391,10 +391,24 @@ if (strpos($filelink,"filmeonlinesubtitrate") !== false) {
 //  $filelink="http://filmedivix.com/filmeonline/".str_between($html,"filmedivix.com/filmeonline/",'"');
 //  $html = file_get_contents($filelink);
 } elseif (strpos($filelink,"http://filmehd.net") !== false) {
-  $html=file_get_contents($filelink);
-  $i1=str_between($html,"js_content.php","'");
+  $html1=file_get_contents($filelink);
+  $i1=str_between($html1,"js_content.php","'");
   $filelink="http://filmehd.net/js_content.php".$i1;
   $html=file_get_contents($filelink);
+  $f=explode("return p}",$html);
+  $e=explode("'.split",$f[1]);
+  $ls=$e[0];
+  $t1=explode("||",$ls);
+  $t2=$t1[1];
+  if (strpos($t2,"ok") !== false) {
+  //echo $t2;
+  preg_match_all("/\d+/",$t2,$m);
+  //print_r ($m);
+  $id=$m[0][2];
+  //echo $id;
+  $html=' "http://ok.ru/videoembed/'.$id.'" '.$html;
+  //echo $html;
+  }
 } elseif (strpos($filelink,"fsplay.net") !== false) {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $filelink);
@@ -482,6 +496,7 @@ if (!file_exists($dat)) {
 	  ';
 }
 }
+$html=str_replace("https","http",$html);
 if(preg_match_all("/(\/\/.*?)(\"|\')+/i",$html,$matches)) {
 $links=$matches[1];
 //print_r ($links);

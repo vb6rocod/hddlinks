@@ -265,6 +265,13 @@ ret;
 <annotation>http://voxfilmeonline.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+
+<item>
+<title>topvideohd</title>
+<link><?php echo $host; ?>/scripts/filme/php/topvideohd_main.php</link>
+<annotation>http://www.topvideohd.com</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
 <!--
 <item>
 <title>totul-hd</title>

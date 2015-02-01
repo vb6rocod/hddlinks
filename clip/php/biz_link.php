@@ -8,6 +8,8 @@ function str_between($string, $start, $end){
 $link = $_GET["file"];
 $link=urldecode($link);
 $html=file_get_contents($link);
-$link=str_between($html,'url": "','"');
+$t1=explode('url": "',$html);
+$t2=explode('"',$t1[2]);
+$link=$t2[0];
 print $link;
 ?>

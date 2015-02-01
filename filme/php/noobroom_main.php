@@ -74,6 +74,7 @@ $h=@file_get_contents($cookie);
 @file_put_contents($cookie, $add, FILE_APPEND | LOCK_EX);
 }
 */
+
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $noob."/login.php");
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -99,6 +100,7 @@ $h=@file_get_contents($cookie);
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
+
 }
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $noob."/genre.php");
