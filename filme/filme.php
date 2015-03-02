@@ -188,12 +188,7 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
-<item>
-<title>filmeonline</title>
-<link><?php echo $host; ?>/scripts/filme/php/filmeonline_main.php</link>
-<annotation>http://www.filmeonline.org</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
+
 
 <item>
 <title>movie-inn</title>
@@ -216,13 +211,14 @@ ret;
 <annotation>http://movietv.to</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
 <item>
 <title>filmbox</title>
 <link><?php echo $host; ?>/scripts/filme/php/filmbox_main.php</link>
 <annotation>filmbox</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>spicetv - filme HD</title>
@@ -250,7 +246,19 @@ ret;
 <annotation>http://seenow.ro</annotation>
 <media:thumbnail url="image/movies.png" />
 </item>
-
+<?php
+$f="/usr/local/etc/dvdplayer/seenow_p.txt";
+if (file_exists($f)) {
+echo '
+<item>
+<title>Seenow filme premium (Pay per view)</title>
+<link>'.$host.'/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/pay-per-view-27-pagina-,Seenow+Premium</link>
+<annotation>http://seenow.ro</annotation>
+<media:thumbnail url="image/movies.png" />
+</item>
+';
+}
+?>
 <!--
 <item>
 <title>inviatapenet</title>
@@ -259,12 +267,7 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
-<item>
-<title>voxfilmeonline</title>
-<link><?php echo $host; ?>/scripts/filme/php/voxfilmeonline_main.php</link>
-<annotation>http://voxfilmeonline.com</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
+
 
 <item>
 <title>topvideohd</title>
@@ -272,6 +275,14 @@ ret;
 <annotation>http://www.topvideohd.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+
+<item>
+<title>filmeonline2013</title>
+<link><?php echo $host; ?>/scripts/filme/php/filmeonline2013_main.php</link>
+<annotation>http://www.filmeonline2013.biz/</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
 <!--
 <item>
 <title>totul-hd</title>
@@ -351,6 +362,14 @@ ret;
 <annotation>http://www.filmeonline.cc</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+
+<item>
+<title>voxfilmeonline</title>
+<link><?php echo $host; ?>/scripts/filme/php/voxfilmeonline_main.php</link>
+<annotation>http://voxfilmeonline.com</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
 <!--
 <item>
 <title>vezi-online</title>
@@ -367,10 +386,12 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+
+
 <item>
-<title>filmeonline2013</title>
-<link><?php echo $host; ?>/scripts/filme/php/filmeonline2013_main.php</link>
-<annotation>http://www.filmeonline2013.biz/</annotation>
+<title>filmeonline</title>
+<link><?php echo $host; ?>/scripts/filme/php/filmeonline_main.php</link>
+<annotation>http://www.filmeonline.org</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
 <!--

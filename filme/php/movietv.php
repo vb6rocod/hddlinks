@@ -255,8 +255,9 @@ $srt[$id]="OK";
 }
 }
 $cookie="/tmp/movietv.txt";
+//$cookie="D:\\m.txt";
 //echo $tip;
-/*
+
 $l="http://movietv.to/movies";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
@@ -268,15 +269,16 @@ $l="http://movietv.to/movies";
   $html = curl_exec($ch);
   curl_close($ch);
 $token=str_between($html,"token: '","'");
-*/
+
 if ($tip=="genres")
-$l="http://movietv.to/titles/paginate?_token=".$token."&perPage=16&page=".$page."&order=release_dateDesc&type=movie&minRating=&maxRating="."&genres%5B%5D=".$link;
+$l="http://movietv.to/titles1/paginate?_token=".$token."&perPage=20&page=".$page."&order=created_atDesc&type=movie&minRating=&maxRating="."&genres%5B%5D=".$link;
 elseif ($tip=="release")
-$l="http://movietv.to/titles/paginate?_token=".$token."&perPage=16&page=".$page."&order=".$link."&type=movie&minRating=&maxRating=";
+$l="http://movietv.to/titles1/paginate?_token=".$token."&perPage=20&page=".$page."&order=".$link."&type=movie&minRating=&maxRating=";
 elseif ($tip=="search")
-$l="http://movietv.to/titles/paginate?_token=".$token."&perPage=16&page=1&order=release_dateDesc&query=".$link."&type=movie&minRating=&maxRating=";
+$l="http://movietv.to/titles1/paginate?_token=".$token."&perPage=20&page=1&order=release_dateDesc&query=".$link."&type=movie&minRating=&maxRating=";
 elseif ($tip=="actor")
-$l="http://movietv.to/titles/paginate?_token=".$token."&perPage=16&page=1&order=release_dateDesc&cast=".$link."&type=movie&minRating=&maxRating=";
+$l="http://movietv.to/titles1/paginate?_token=".$token."&perPage=20&page=1&order=release_dateDesc&cast=".$link."&type=movie&minRating=&maxRating=";
+//echo $l;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -284,8 +286,10 @@ $l="http://movietv.to/titles/paginate?_token=".$token."&perPage=16&page=1&order=
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  curl_setopt ($ch, CURLOPT_REFERER, "http://movietv.to/");
   $html = curl_exec($ch);
   curl_close($ch);
+  //echo $html;
 $p=json_decode($html,1);
 //print_r ($p);
 $tot_pg = intval($p["totalPages"]);

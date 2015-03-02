@@ -7,18 +7,20 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
 $html = file_get_contents($link);
-$link = str_between($html, "flashvars.videoUrl = '", "'");
+$link = str_between($html, "quality_480p=", '"');
 if ($link <> "") {
-print $link;
+//print $link;
 }
 if($link=="") {
-	$link = str_between($html, "flashvars.video_url = '", "'");
+ $link = str_between($html, "quality_240p=", '"');
 	$link = urldecode($link);
-print $link;
+//print $link;
 }
 if ($link == "") {
-$link=str_between($html,'video_url=','&');
+$link = str_between($html, "quality_180p=", '"');
 	$link = urldecode($link);
-print $link;
+//print $link;
 }
+$link=urldecode($link);
+print $link;
 ?>

@@ -522,6 +522,7 @@ columnCount=5
 <annotation>Zona IT este singura emisiune de IT difuzata in HD din Romania. Aici veti gasi teste Hardware si Software, Jocuri si Concursuri.</annotation>
 </item>
 
+<!--
 <item>
 <title>tele-tv.info</title>
 <link><?php echo $host; ?>/scripts/tv/php/tele-tv.php?file=1,emisiuni,Emisiuni</link>
@@ -530,6 +531,7 @@ columnCount=5
 <location>http://www.tele-tv.info</location>
 <annotation>Tv online, tv live, tv online gratis, webcam online, jocuri online, broadcast, programe tv online! - www.tele-tv.info:</annotation>
 </item>
+-->
 <!--
 <item>
 <title>CancanTV</title>

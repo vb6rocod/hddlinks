@@ -210,6 +210,21 @@ $t1=explode('|',$l);
 $l=$t1[0];
 }
 }
+$f="/usr/local/etc/dvdplayer/seenow_p.txt";
+if (!$token && file_exists($f)) {
+//print_r ($p);
+
+$token=$p['qualities'][0]['token'];
+$str_name=$p['qualities'][0]['stream name'];
+$app=$p['qualities'][0]['application name'];
+$l="http://[%server_name%]:8888/seenow/".$str_name."?user_id=0&transaction_id=0&publisher=24&p_item_id=".$id."&token=".$token;;
+if ($app == "seenow")
+$l="http://[%server_name%]:8888/".$app."/".$str_name."?user_id=0&transaction_id=0&publisher=24&p_item_id=".$id."&token=".$token;
+else
+$l="http://[%server_name%]:1937/".$app."/_definst_/".$str_name."/playlist.m3u8?user_id=0&transaction_id=0&publisher=24&p_item_id=".$id."&token=".$token;
+}
+//http://fms60.mediadirect.ro:8888/seenow/mediapro/Last_Vegas_900p_hp.mp4?user_id=0&transaction_id=0&publisher=24&p_item_id=100286&token=2cb902ff6889a78d950d67545b6c93ab3107f16b3a5bf210
+//http://fms59.mediadirect.ro:8888/seenow/mediapro/Last_Vegas_900p_hp.mp4?user_id=0&transaction_id=0&publisher=24&p_item_id=100286&token=83487538656299c90b4f84bf76e6d473721da0282253dbfe
 if (strpos($l,"radio") !== false) {
 $audio=$p["audio stream name"];
 $img=$p["thumbnail"];
@@ -242,6 +257,7 @@ if ($sub) {
 if ($p) if (array_key_exists("indexUrl",$p)) $svr=$p["indexUrl"];
 if ($svr) {
 $h=file_get_contents($svr);
+//echo $h;
 $t1=explode('server=',$h);
 $t2=explode('&',$t1[1]);
 $serv=$t2[0];

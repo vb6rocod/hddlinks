@@ -389,5 +389,29 @@ ret;
      </onClick>
     <id>10190</id>
      </item>
+	 
+     <item>
+     <title>TVR MOldova</title>
+     <onClick>
+     <script>
+     showIdle();
+     url="http://127.0.0.1/cgi-bin/scripts/tv/php/tvrplus_tv_link.php?file=18," + buf;
+     url1=getUrl(url);
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
+     cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "TVR Moldova");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer_tv1.rss");
+     </script>
+     </onClick>
+    <id></id>
+     </item>
      </channel>
 </rss>

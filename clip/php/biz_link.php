@@ -9,7 +9,7 @@ $link = $_GET["file"];
 $link=urldecode($link);
 $html=file_get_contents($link);
 $t1=explode('url": "',$html);
-$t2=explode('"',$t1[2]);
+$t2=explode('"',$t1[1]);
 $link=$t2[0];
 print $link;
 ?>

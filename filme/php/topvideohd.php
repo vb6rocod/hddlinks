@@ -232,7 +232,7 @@ foreach($videos as $video) {
        $descriere = substr($descriere,0,300);
        $descriere = substr($descriere,0,-strlen(strrchr($descriere," ")))."...";
        }
-
+    //if (strpos($titlu,"Kill") === false) {
 	if($link!="") {
 		//$link = "http://127.0.0.1/cgi-bin/scripts/filme/php/onlinemoca_link.php?file=".$link.",".urlencode($titlu);
 		$link = "http://127.0.0.1/cgi-bin/scripts/filme/php/filme_link.php?file=".$link.",".urlencode($titlu);
@@ -247,6 +247,7 @@ foreach($videos as $video) {
 		</item>
 		';
 	}
+	//}
 }
 
 ?>

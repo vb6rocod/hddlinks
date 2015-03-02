@@ -128,7 +128,7 @@ cat <<EOF
 Content-type: video/mp4
 
 EOF
-exec /opt/bin/curl -s --cookie "/tmp/movietv.txt"  "'.$movie.'"';
+exec /opt/bin/curl --referer "http://movietv.to" -s --cookie "/tmp/movietv.txt"  "'.$movie.'"';
 $fp = fopen('/usr/local/etc/www/cgi-bin/scripts/util/m.cgi', 'w');
 fwrite($fp, $out);
 fclose($fp);

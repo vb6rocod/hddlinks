@@ -184,6 +184,7 @@ foreach($videos as $video) {
     $image="http://d1.a4w.ro/avod/".$link.".jpg";
   	$title=str_between($video,'class="title_new">','<');
 	$title=ucfirst(strtolower($title));
+	$title = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$title);
 	if ( strpos($title,'maruta') !== false ) $title=ucwords(strtolower($title));
   $link = $host."/scripts/tv/php/protv.php?query=1,".$link.",".urlencode($title);
   if ($title) {
@@ -223,6 +224,7 @@ foreach($videos as $video) {
     $image="http://d1.a4w.ro/avod/".$link.".jpg";
   	$title=str_between($video,'class="title_new">','<');
 	$title=ucfirst(strtolower($title));
+	$title = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$title);
 	if ( strpos($title,'maruta') !== false ) $title=ucwords(strtolower($title));
   $link = $host."/scripts/tv/php/protv.php?query=1,".$link.",".urlencode($title);
   if ($title) {
@@ -262,6 +264,7 @@ foreach($videos as $video) {
     $image="http://d1.a4w.ro/avod/".$link.".jpg";
   	$title=str_between($video,'class="title_new">','<');
 	$title=ucfirst(strtolower($title));
+	$title = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$title);
 	if ( strpos($title,'maruta') !== false ) $title=ucwords(strtolower($title));
   $link = $host."/scripts/tv/php/protv.php?query=1,".$link.",".urlencode($title);
   if ($title) {

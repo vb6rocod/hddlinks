@@ -374,6 +374,9 @@ foreach($videos as $video) {
   if (strpos($link,"m3u8") === false && $link)
   print_ch($title,$link,$a[$title]);
 }
+print_ch("TVR MOLDOVA", "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://195.22.232.3/rtplive/program25.stream",$a[""]);
+//print_ch("TVR MOLDOVA", "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-y%20mp4:tvr.stream_360p%20-W%20http://stream.tvmd.info/player.swf%20-p%20http://www.tvmd.info,rtmp://87.248.160.8/edge/_definst_",$a[""]);
+print_ch("Jurnal TV", "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://195.22.232.3/rtplive/program3.stream",$a[""]);
 print_ch("PVTV", "http://92.61.114.188:8080/pvtv-ro.flv",$a["PVTV"]);
 //print_ch("Dolcesport 1", "http://127.0.0.1/cgi-bin/translate?stream,,rtmp://178.21.120.198:1936/live3/flv:dolcesport",$a["DolceSport 1"]);
 //print_ch("Antena Monden", "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://stream1.aplay.ro:1935/live/_definst_/mp4:AntenaMonden_1000","Antena Monden");

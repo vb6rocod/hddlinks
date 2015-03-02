@@ -7,6 +7,6 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
     $html = file_get_contents($link);
-    $link = urldecode(str_between($html, 'so.addVariable("file", "', '"'));
+    $link = urldecode(str_between($html, 'source src="', '"'));
 print $link;
 ?>

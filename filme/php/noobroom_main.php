@@ -484,6 +484,16 @@ $link = "/usr/local/etc/www/cgi-bin/scripts/filme/php/noobroom.rss";
 	<mediaDisplay name="threePartsView"/>
 	</item>
 	';
+    $title="Ultimele subtitrate";
+    $link1 = $host."/scripts/filme/php/noobroom_sub.php";
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link1.'</link>
+	<annotation>'.$title.'</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
     $title="Alfabetic";
     $link=$noob."/azlist.php";
     $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
