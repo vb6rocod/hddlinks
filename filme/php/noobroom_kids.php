@@ -592,7 +592,7 @@ $link = "/usr/local/etc/www/cgi-bin/scripts/filme/php/noobroom.rss";
   <image></image>
   </item>
   ';
-$link="http://hdforall.uphero.com/srt/";
+$link="http://hdforall.netau.net/srt/m/";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

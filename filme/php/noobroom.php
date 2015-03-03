@@ -440,7 +440,7 @@ fclose($fh);
 $noob=file_get_contents($ff);
 }
 $cookie="/tmp/noobroom.txt";
-$link="http://hdforall.uphero.com/srt/";
+$link="http://hdforall.netau.net/srt/m/";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

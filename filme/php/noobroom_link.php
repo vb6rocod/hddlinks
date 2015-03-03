@@ -121,9 +121,9 @@ else
 exec ("rm -f /tmp/test.xml");
 if ($subtitle == "on") {
   if ($tv=="0")
-    $file="http://hdforall.uphero.com/srt/".$id.".srt";
+    $file="http://hdforall.netau.net/srt/m/".$id.".srt";
   else
-    $file="http://hdforall.uphero.com/srt/tv/".$id.".srt";
+    $file="http://hdforall.netau.net/srt/s/".$id.".srt";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $file);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -133,6 +133,7 @@ if ($subtitle == "on") {
   curl_setopt($ch, CURLOPT_TIMEOUT, 30);
   $h = curl_exec($ch);
   curl_close($ch);
+  /*
   if (strpos($h,"302 Found") !== false) {
   if ($tv=="0")
     $file="http://hdforall.uphero.com/srt/en/".$id.".srt";
@@ -147,6 +148,7 @@ if ($subtitle == "on") {
   $h = curl_exec($ch);
   curl_close($ch);
   }
+  */
   if (!$h) {
   if ($tv=="0")
     $file="http://nobsub.googlecode.com/hg/m/".$id.".srt";

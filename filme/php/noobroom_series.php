@@ -377,7 +377,7 @@ echo '
 error_reporting(0);
 set_time_limit(60);
 $cookie="/tmp/noobroom.txt";
-$link="http://hdforall.uphero.com/srt/tv/";
+$link="http://hdforall.netau.net/srt/s/";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
