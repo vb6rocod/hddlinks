@@ -1523,11 +1523,26 @@ $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
   //http://videomega.tv/iframe.php?ref=IHcNODXJUC&width=660&height=360
   //echo $filelink;
   //http://videomega.tv/validatehash.php?hashkey=072077082085098097079074089065065089074079097098085082077072
+  //http://videomega.tv/?ref=P155K0FF0550FF0K551P
+  $filelink=str_replace("http://videomega.tv/?ref=","http://videomega.tv/cdn.php?ref=",$filelink);
   if (strpos($filelink,"validatehash") !== false) {
-    $h1=file_get_contents($filelink);
+   $ch = curl_init($filelink);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt($ch, CURLOPT_REFERER, "http://filmehd.net");
+   //curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+   //curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+   $h1 = curl_exec($ch);
+   curl_close($ch);
+    $h1=str_replace("scri","",$h1);
+    //echo $h1;
+    $hash=str_between($h1,'var ref="','"');
+    $filelink="http://videomega.tv/cdn.php?ref=".$hash;
     $hash=str_between($h1,'var ref="','"');
     $filelink="http://videomega.tv/cdn.php?ref=".$hash;
   }
+  //echo $filelink;
    $ch = curl_init($filelink);
    curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
@@ -1536,11 +1551,21 @@ $link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
    $h = curl_exec($ch);
    curl_close($ch);
    $h=urldecode($h);
-   //echo $response;
+   $h=str_replace("scri","",$h);
+   //echo $h;
+   $t1=explode('tracks : [{file: "',$h);
+
+   $t2=explode('"',$t1[1]);
+   $srt=$t2[0];
    $t1=explode('onReady(function(){jwplayer()',$h);
    $t2=explode('file:"',$t1[1]);
    $t3=explode('"',$t2[1]);
    $link=$t3[0];
+   exec ("rm -f /tmp/test.xml");
+   if ($srt) {
+   $l_srt="http://127.0.0.1/cgi-bin/scripts/util/srt_xml.php?file=".urlencode($srt);
+   $h=file_get_contents($l_srt);
+   }
 } elseif (strpos($filelink,"ok.ru") !==false) {
   $h1=file_get_contents($filelink);
   $id=str_between($h1,'data-player-id="embed_video_','"');

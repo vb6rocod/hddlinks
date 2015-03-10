@@ -202,14 +202,14 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>Filmbox TV (Abonament)</title>
 <link><?php echo $host; ?>/scripts/tv/php/seenow_e.php?query=1,http://www.seenow.ro/ro/filmbox-live-62-pagina-,Filmbox+TV+(abonament)</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>TVRPlus TV</title>
 <link>/usr/local/etc/www/cgi-bin/scripts/tv/php/tvrplus_tv.rss</link>

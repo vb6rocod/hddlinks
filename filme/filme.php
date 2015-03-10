@@ -334,14 +334,14 @@ echo '
 <mediaDisplay name="threePartsView"/>
 </item>
 
-
+<!--
 <item>
 <title>seriale.filmesubtitrate</title>
 <link><?php echo $host; ?>/scripts/filme/php/filmesubtitrate.php?query=,http://www.fsplay.net/filme-online-subtitrate</link>
 <annotation>http://www.seriale.filmesubtitrate.info/filme-online-subtitrate</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>990</title>
 <link><?php echo $host; ?>/scripts/filme/php/990_filme_main.php</link>

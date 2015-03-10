@@ -420,7 +420,15 @@ if (strpos($filelink,"filmeonlinesubtitrate") !== false) {
   curl_close($ch);
   $html= decode_entities($html);
 } else {
-  $html = file_get_contents($filelink);
+$filelink=str_replace(" ","%20",$filelink);
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $filelink);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  //curl_setopt($ch,CURLOPT_REFERER,"http://www.topvideohd.com/");
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20100101 Firefox/14.0.1');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  $html=curl_exec($ch);
+  curl_close($ch);
   //echo $html;
   if (strpos($filelink,"vezi-online.net") !== false) {
     //$h1=str_between($html,'class="player">','</div');
@@ -557,6 +565,7 @@ for ($i=0;$i<count($links);$i++) {
           $server = str_between($cur_link,"http://","/");
         }
         $last_link=$cur_link;
+        //echo $cur_link;
         if (strpos($cur_link,"google") !==false) {
           $t1=explode("docid=",$cur_link);
           $t2=explode("&",$t1[1]);
@@ -572,6 +581,10 @@ for ($i=0;$i<count($links);$i++) {
         }
         if ((strpos($cur_link, 'fastupload.rol.ro') !== false)  || (strpos($cur_link, 'fastupload.ro') !== false) || (strpos($cur_link, 'superweb') !==false)) {
           $mysrt_roshare="asasas";
+        }
+        if (strpos($cur_link, 'videomega') !== false)
+          $mysrt_roshare="asasas";
+          echo $cur_link;
           /*
           $ch = curl_init($cur_link);
           curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
@@ -592,7 +605,7 @@ for ($i=0;$i<count($links);$i++) {
           $ret1=explode(",",$ret);
           $mysrt=$ret1[1];
           */
-        }
+        //}
         if (!$server) $server = "LINK";
         $title=$server;
         if (preg_match("/vk\.com/",$cur_link)) {
