@@ -1,2 +1,2 @@
-10.03.2015
-http://hddlinks.googlecode.com/hg/scripts_t.zip
+21.04.2019
+https://raw.githubusercontent.com/vb6rocod/hddlinks/master/scripts_t.zip
